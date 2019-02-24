@@ -1,5 +1,6 @@
 package utils;
 
+import entity.Project;
 import org.json.simple.JSONObject;
 import services.answers.IAnswer;
 
@@ -17,6 +18,14 @@ public class JsonParser {
             json.put(entry.getKey(), entry.getValue());
         }
 
+        return json;
+    }
+
+    public static JSONObject toJson(Project project) {
+        JSONObject json = new JSONObject();
+        json.put("id", project.getId());
+        json.put("date", project.getDate().toString());
+        json.put("description", project.getDescription());
         return json;
     }
 }

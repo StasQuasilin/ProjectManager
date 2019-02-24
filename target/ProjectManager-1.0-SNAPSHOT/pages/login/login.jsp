@@ -33,10 +33,10 @@
                        <fmt:message key="login.sign.in"/>
                    </button>
                    <div style="padding-top: 4pt;">
-                       <button onclick="location.href='${context}/registration.j'">
+                       <button onclick="location.href='${context}/registration'">
                            <fmt:message key="login.registration"/>
                        </button>
-                       <button onclick="location.href='${context}/restore.j'">
+                       <button onclick="location.href='${context}/restore'">
                            <fmt:message key="login.password.restore"/>
                        </button>
                    </div>

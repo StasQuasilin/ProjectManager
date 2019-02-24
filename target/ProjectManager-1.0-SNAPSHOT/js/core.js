@@ -33,3 +33,15 @@ function PostAPI(address, params){
     xhr.send(body.join('&'));
     return xhr;
 }
+function validEmail(inp){
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if (re.test(inp.value)){
+        return true;
+    } else {
+        inp.setAttribute('wrong', 'wrong');
+        inp.onfocus = function(){
+            this.removeAttribute('wrong');
+        };
+        return false;
+    }
+}

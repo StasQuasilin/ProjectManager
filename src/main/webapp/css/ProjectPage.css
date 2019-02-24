@@ -1,0 +1,30 @@
+.project-title{
+    font-style: italic;
+    font-weight: bold;
+    font-size: 16pt;
+    border-bottom: solid gray 2pt;
+    text-align: left;
+    padding: 0 4pt;
+}
+.project-container{
+    text-align: left;
+    margin-left: 24pt;
+    display: flex;
+    max-height: 100%;
+    flex-wrap: wrap;
+    margin-bottom: 12pt;
+}
+.right-button{
+    float: right;
+    border-radius: 18pt;
+    padding: 0 6pt;
+    border: solid;
+    font-size: 16pt;
+    position: absolute;
+}
+.right-button:hover{
+    box-shadow: 0 0 6pt 4pt green;
+}
+.right-button:active{
+    box-shadow: inset 0 0 2pt 2pt green;
+}

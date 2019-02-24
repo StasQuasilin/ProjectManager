@@ -1,6 +1,7 @@
 package filters;
 
 import org.apache.log4j.Logger;
+import services.hibernate.HibernateSessionFactory;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
@@ -19,9 +20,7 @@ public class ContextFilter implements Filter {
 
     public void init(FilterConfig filterConfig) throws ServletException {
         log.info("Init new context filter");
-
-//        HibernateSessionFactory.init();
-
+        HibernateSessionFactory.init();
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -37,6 +36,6 @@ public class ContextFilter implements Filter {
     }
 
     public void destroy() {
-//        HibernateSessionFactory.shutdown();
+        HibernateSessionFactory.shutdown();
     }
 }
