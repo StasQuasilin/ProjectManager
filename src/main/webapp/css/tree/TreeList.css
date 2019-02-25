@@ -1,0 +1,24 @@
+.tree-title{
+    width: 100%;
+    height: fit-content;
+    padding: 8pt 16pt;
+    font-style: italic;
+    background: linear-gradient(0.25turn, #e6ffe6 70%, transparent);
+}
+.tree-title, .tree-title span{
+    color: #fbba00;
+    font-weight: bold;
+
+}
+.tree-title-item{
+    background: transparent;
+    text-shadow: 0 0 2pt #ececec;
+    padding: 0 4pt;
+}
+.tree-title-item:hover{
+    border-bottom: dashed gray 1pt;
+}
+.child-box{
+    border: solid #e6ffe6 2pt;
+    height: 100%;
+}
