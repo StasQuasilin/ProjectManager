@@ -11,6 +11,7 @@ public class User {
     private int id;
     private String email;
     private String password;
+    private String language;
 
     @Id
     @GeneratedValue
@@ -37,5 +38,14 @@ public class User {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Basic
+    @Column(name = "language")
+    public String getLanguage() {
+        return language;
+    }
+    public void setLanguage(String language) {
+        this.language = language;
     }
 }

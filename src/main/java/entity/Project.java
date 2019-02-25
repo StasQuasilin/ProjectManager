@@ -10,9 +10,11 @@ import java.sql.Date;
 @Table(name = "projects")
 public class Project {
     private int id;
-    private User creator;
-    private Date date;
+    private User owner;
+    private Date beginDate;
+    private Date completeDate;
     private String title;
+    private Budget budget;
     private String description;
 
     @Id
@@ -25,21 +27,30 @@ public class Project {
     }
 
     @OneToOne
-    @JoinColumn(name = "creator")
-    public User getCreator() {
-        return creator;
+    @JoinColumn(name = "owner")
+    public User getOwner() {
+        return owner;
     }
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setOwner(User creator) {
+        this.owner = creator;
     }
 
     @Basic
-    @Column(name = "date")
-    public Date getDate() {
-        return date;
+    @Column(name = "begin_date")
+    public Date getBeginDate() {
+        return beginDate;
     }
-    public void setDate(Date date) {
-        this.date = date;
+    public void setBeginDate(Date date) {
+        this.beginDate = date;
+    }
+
+    @Basic
+    @Column(name = "complete_date")
+    public Date getCompleteDate() {
+        return completeDate;
+    }
+    public void setCompleteDate(Date completeDate) {
+        this.completeDate = completeDate;
     }
 
     @Basic
@@ -58,5 +69,14 @@ public class Project {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "budget")
+    public Budget getBudget() {
+        return budget;
+    }
+    public void setBudget(Budget budget) {
+        this.budget = budget;
     }
 }

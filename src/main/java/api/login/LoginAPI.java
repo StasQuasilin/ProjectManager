@@ -50,6 +50,7 @@ public class LoginAPI extends HttpServlet {
             answer = new SuccessAnswer();
             req.getSession().setAttribute("uid", user.getId());
             req.getSession().setAttribute("token", LoginFilter.addUser(user));
+            req.getSession().setAttribute("language", user.getLanguage());
         }
 
         body.clear();

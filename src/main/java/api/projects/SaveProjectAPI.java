@@ -1,8 +1,11 @@
 package api.projects;
 
 import constants.API;
+import entity.Budget;
+import entity.BudgetType;
 import entity.Project;
 import entity.User;
+import services.LanguageBase;
 import services.hibernate.Hibernator;
 import utils.DateParser;
 import utils.PostUtil;
@@ -22,11 +25,17 @@ import java.util.HashMap;
 public class SaveProjectAPI extends HttpServlet {
 
     private static final Hibernator hibernator = Hibernator.getInstance();
+    private static final LanguageBase LANGUAGE_BASE = LanguageBase.getBase();
 
     private static final String ID = "id";
     private static final String TITLE = "title";
-    private static final String DATE = "date";
+    private static final String BEGIN_DATE = "begin_date";
+    private static final String COMPLETE_DATE = "complete_date";
     private static final String DESCRIPTION = "description";
+    private static final String BUDGET_TYPE = "budgetType";
+    private static final String BUDGET_SUM = "budgetSum";
+    private static final String BUDGET_CURRENCY = "budget_currency";
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HashMap<String, String> body = PostUtil.parseBody(req);
@@ -36,18 +45,20 @@ public class SaveProjectAPI extends HttpServlet {
         }else {
             project = new Project();
             String uid = req.getSession().getAttribute("uid").toString();
-            project.setCreator(hibernator.get(User.class, "id", Integer.parseInt(uid)));
+            project.setOwner(hibernator.get(User.class, "id", Integer.parseInt(uid)));
         }
         project.setTitle(body.get(TITLE));
 
-        if (body.containsKey(DATE)){
-            project.setDate(DateParser.parseFromEditor(body.get(DATE)));
-        }
+        project.setBeginDate(DateParser.parseFromEditor(body.get(BEGIN_DATE)));
+        project.setCompleteDate(DateParser.parseFromEditor(body.get(COMPLETE_DATE)));
+
         if (body.containsKey(DESCRIPTION)){
             project.setDescription(body.get(DESCRIPTION));
         }
+
         hibernator.save(project);
         body.clear();
+        PostUtil.write(resp, ":)");
 
     }
 }

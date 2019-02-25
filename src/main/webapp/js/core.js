@@ -45,3 +45,11 @@ function validEmail(inp){
         return false;
     }
 }
+function getChildElemById(parent, childId){
+    var elems = parent.getElementsByTagName("*");
+    for (var i = 0; i < elems.length; i++){
+        if (elems[i].id == childId){
+            return elems[i];
+        }
+    }
+}

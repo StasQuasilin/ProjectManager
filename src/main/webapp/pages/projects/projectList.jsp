@@ -7,6 +7,7 @@
 <html>
 <head>
   <link rel="stylesheet" href="${context}/css/ProjectPage.css">
+  <link rel="stylesheet" href="${context}/ProjectBox.css">
   <script src="${context}/js/projects/projectList.js"></script>
 </head>
 <body>

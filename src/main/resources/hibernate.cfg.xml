@@ -16,6 +16,8 @@
         <mapping class="entity.User"/>
         <mapping class="entity.RegistrationConfirm"/>
         <mapping class="entity.Project"/>
+        <mapping class="entity.Budget"/>
+        <mapping class="entity.Task"/>
 
     </session-factory>
 </hibernate-configuration>

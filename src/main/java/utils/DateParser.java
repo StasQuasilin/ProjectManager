@@ -30,8 +30,7 @@ public class DateParser {
 
     public static Date parseToNull(String date) {
         try {
-            Date result = new Date(new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
-            return result;
+            return new Date(new SimpleDateFormat("yyyy-MM-dd").parse(date).getTime());
         } catch (Exception ignored) {}
         return null;
     }
@@ -43,12 +42,16 @@ public class DateParser {
     public static Date parseFromEditor(String date, String format){
         try {
             return new Date(parseToLong(date, format));
-        } catch (ParseException e) {
+        } catch (Exception e) {
             return Date.valueOf(LocalDate.now());
         }
     }
 
     public static long parseToLong(String date, String format) throws ParseException {
         return new SimpleDateFormat(format).parse(date).getTime();
+    }
+
+    public static String toString(Date date) {
+        return new SimpleDateFormat("dd.MM.yyyy").format(date);
     }
 }

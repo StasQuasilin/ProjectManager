@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="${context}/css/Main.css">
     <title><fmt:message key="${title}"/></title>
     <script src="${context}/js/core.js"></script>
+    <script src="${context}/js/utils/DateUtils.js"></script>
     <script>
         ctx = '${context}';
     </script>

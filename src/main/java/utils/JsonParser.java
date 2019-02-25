@@ -1,5 +1,6 @@
 package utils;
 
+import entity.Budget;
 import entity.Project;
 import org.json.simple.JSONObject;
 import services.answers.IAnswer;
@@ -24,8 +25,23 @@ public class JsonParser {
     public static JSONObject toJson(Project project) {
         JSONObject json = new JSONObject();
         json.put("id", project.getId());
-        json.put("date", project.getDate().toString());
+        json.put("title", project.getTitle());
+        json.put("beginDate", project.getBeginDate().toString());
+        json.put("completeDate", project.getCompleteDate().toString());
         json.put("description", project.getDescription());
+        if (project.getBudget() != null){
+            json.put("budget", toJson(project.getBudget()));
+        }
+        return json;
+    }
+
+    private static JSONObject toJson(Budget budget) {
+        JSONObject json = new JSONObject();
+        json.put("id", budget.getId());
+        json.put("title", budget.getTitle());
+        json.put("sum", budget.getBudgetSum());
+        json.put("currency", budget.getCurrency());
+
         return json;
     }
 }

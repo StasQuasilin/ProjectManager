@@ -27,8 +27,9 @@ public class ProjectListAPI extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String uid = req.getSession().getAttribute("uid").toString();
-        List<Project> projects = hibernator.query(Project.class, "creator", Integer.parseInt(uid));
+        List<Project> projects = hibernator.query(Project.class, "owner", Integer.parseInt(uid));
         JSONArray array = projects.stream().map(JsonParser::toJson).collect(Collectors.toCollection(JSONArray::new));
         PostUtil.write(resp, array.toJSONString());
+        array.clear();
     }
 }
