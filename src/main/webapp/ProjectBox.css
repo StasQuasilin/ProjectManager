@@ -2,7 +2,7 @@
     border-radius: 10pt;
     box-shadow: 0 2pt 4pt 2pt gray;
     width: 200pt;
-    height: 120pt;
+    height: fit-content;
     margin: 8pt;
     text-align: center;
     border: solid transparent 4pt;
@@ -36,7 +36,7 @@
     border-radius: 8pt;
     background: transparent;
     padding: 1.2pt;
-    margin: 1pt;
+    margin: 2pt;
 
 }
 .progress-bar {

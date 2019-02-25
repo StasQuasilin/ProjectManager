@@ -18,6 +18,15 @@ $(document).ready(function(){
                     getChildElemById(box, 'project-title').innerText = answer[j].title;
                     getChildElemById(box, 'project-begin-date').innerText = dateFormatter(answer[j].beginDate);
                     getChildElemById(box, 'project-complete-date').innerText = dateFormatter(answer[j].completeDate);
+                    getChildElemById(box, 'active-tasks').innerText = answer[j].active;
+                    getChildElemById(box, 'canceled-tasks').innerText = answer[j].canceled;
+                    getChildElemById(box, 'done-tasks').innerText = answer[j].done;
+                    getChildElemById(box, 'done-progress-bar').style.width = answer[j].progress + '%';
+                    box.id=answer[j].id;
+
+                    box.onclick=function(){
+                        location.href=ctx + '/tree.j?project='+this.id;
+                    }
                 }
             } catch (e){
 

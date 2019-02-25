@@ -1,10 +1,7 @@
 package api.projects;
 
 import constants.API;
-import entity.Budget;
-import entity.BudgetType;
-import entity.Project;
-import entity.User;
+import entity.*;
 import services.LanguageBase;
 import services.hibernate.Hibernator;
 import utils.DateParser;
@@ -46,9 +43,11 @@ public class SaveProjectAPI extends HttpServlet {
             project = new Project();
             String uid = req.getSession().getAttribute("uid").toString();
             project.setOwner(hibernator.get(User.class, "id", Integer.parseInt(uid)));
+            Task task = new Task(project.getTitle());
+            project.setTask(task);
         }
-        project.setTitle(body.get(TITLE));
 
+        project.setTitle(body.get(TITLE));
         project.setBeginDate(DateParser.parseFromEditor(body.get(BEGIN_DATE)));
         project.setCompleteDate(DateParser.parseFromEditor(body.get(COMPLETE_DATE)));
 
@@ -56,7 +55,7 @@ public class SaveProjectAPI extends HttpServlet {
             project.setDescription(body.get(DESCRIPTION));
         }
 
-        hibernator.save(project);
+        hibernator.save(project.getTask(), project);
         body.clear();
         PostUtil.write(resp, ":)");
 

@@ -59,7 +59,7 @@
         </span>
       </div>
       <div class="progress-bar-background">
-        <div class="progress-bar"></div>
+        <div class="progress-bar" id="done-progress-bar"></div>
       </div>
     </div>
 

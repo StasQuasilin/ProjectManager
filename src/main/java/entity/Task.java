@@ -13,6 +13,13 @@ public class Task {
     private Task parent;
     private String title;
 
+    public Task() {}
+
+    public Task(String title) {
+        status = TaskStatus.active.toString();
+        this.title = title;
+    }
+
     @Id
     @GeneratedValue
     public int getId() {

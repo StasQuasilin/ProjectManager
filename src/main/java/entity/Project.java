@@ -16,6 +16,7 @@ public class Project {
     private String title;
     private Budget budget;
     private String description;
+    private Task task;
 
     @Id
     @GeneratedValue
@@ -60,6 +61,7 @@ public class Project {
     }
     public void setTitle(String title) {
         this.title = title;
+        task.setTitle(title);
     }
 
     @Basic
@@ -78,5 +80,14 @@ public class Project {
     }
     public void setBudget(Budget budget) {
         this.budget = budget;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "task")
+    public Task getTask() {
+        return task;
+    }
+    public void setTask(Task task) {
+        this.task = task;
     }
 }

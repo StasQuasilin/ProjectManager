@@ -22,13 +22,17 @@ public class JsonParser {
         return json;
     }
 
-    public static JSONObject toJson(Project project) {
+    public static JSONObject toJson(Project project, int active, int done, int canceled) {
         JSONObject json = new JSONObject();
         json.put("id", project.getId());
         json.put("title", project.getTitle());
         json.put("beginDate", project.getBeginDate().toString());
         json.put("completeDate", project.getCompleteDate().toString());
         json.put("description", project.getDescription());
+        json.put("active", active);
+        json.put("done", done);
+        json.put("canceled", canceled);
+        json.put("progress", active + done > 0 ? 1f * active / (active + done) : 0);
         if (project.getBudget() != null){
             json.put("budget", toJson(project.getBudget()));
         }
