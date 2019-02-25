@@ -5,7 +5,7 @@
 <fmt:setBundle basename="messages"/>
 <html>
 <head>
-    <link rel="stylesheet" href="css/Main.css">
+    <link rel="stylesheet" href="${context}/css/Main.css">
     <title><fmt:message key="${title}"/></title>
     <script src="${context}/js/core.js"></script>
     <script>

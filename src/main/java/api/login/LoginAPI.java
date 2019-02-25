@@ -3,6 +3,7 @@ package api.login;
 import constants.API;
 import constants.Keys;
 import entity.User;
+import filters.LoginFilter;
 import services.LanguageBase;
 import services.answers.ErrorAnswer;
 import services.answers.IAnswer;
@@ -47,9 +48,11 @@ public class LoginAPI extends HttpServlet {
             answer.add("msg", lang.get(language, WRONG_PASSWORD));
         } else {
             answer = new SuccessAnswer();
-            body.clear();
+            req.getSession().setAttribute("uid", user.getId());
+            req.getSession().setAttribute("token", LoginFilter.addUser(user));
         }
 
+        body.clear();
         PostUtil.write(resp, JsonParser.toJson(answer).toJSONString());
 
     }

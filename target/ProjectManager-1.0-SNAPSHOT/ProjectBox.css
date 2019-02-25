@@ -1,0 +1,40 @@
+.project-box{
+    border-radius: 10pt;
+    box-shadow: 0 2pt 4pt 2pt gray;
+    width: 200pt;
+    height: 120pt;
+    margin-left: 16pt;
+    margin-top: 16pt;
+    text-align: center;
+    border: solid transparent 4pt;
+    background: url('img/y6OxrrQV3B0.jpg') center;
+}
+.project-box:hover{
+    border: solid #ffd400 4pt;
+}
+.project-box-title{
+    background-color: transparent;
+    border-bottom: solid gray 1pt;
+    width: 100%;
+    font-weight: bold;
+}
+.project-box-title span{
+    background-color: transparent;
+}
+
+.progress-bar-background{
+    margin-top: 90pt;
+    width: 96%;
+    border: solid #5ab306 1.2pt;
+    border-radius: 8pt;
+    background: transparent;
+    padding: 1.2pt;
+
+}
+.progress-bar {
+    background-color: #5ab306;
+    width: 0;
+    min-width: 6pt ;
+    height: 6pt;
+    border-radius: 8pt;
+}

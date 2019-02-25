@@ -1533,11 +1533,29 @@
       <column name="viewowner" sqlType="name" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="definition" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
     </table>
+    <table name="hibernate_sequence" schema="public" catalog="pm_db" type="SEQUENCE"/>
+    <table name="projects" schema="public" catalog="pm_db" type="TABLE">
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgncHJvamVjdHNfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
+      <column name="creator" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="title" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="description" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
+      <column name="date" sqlType="date" precision="13" scale="0" nullable="true" jdbcType="91"/>
+      <primary-key name="projects_pkey" columns="id"/>
+    </table>
+    <table name="projects_id_seq" schema="public" catalog="pm_db" type="SEQUENCE"/>
+    <table name="registration_confirm" schema="public" catalog="pm_db" type="TABLE">
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgncmVnaXN0cmF0aW9uX2NvbmZpcm1faWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
+      <column name="token" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="email" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="password" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="registration_confirm_pkey" columns="id"/>
+    </table>
+    <table name="registration_confirm_id_seq" schema="public" catalog="pm_db" type="SEQUENCE"/>
     <table name="users" schema="public" catalog="pm_db" type="TABLE">
       <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndXNlcnNfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
-      <column name="email" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="email" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
       <column name="password" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <primary-key name="users_pkey" columns="id,email"/>
+      <primary-key name="users_pkey" columns="id"/>
       <index name="unique_email" unique="true" columns="email"/>
       <index name="unique_id" unique="true" columns="id"/>
     </table>

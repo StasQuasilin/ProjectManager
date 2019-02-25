@@ -5,39 +5,40 @@
 <fmt:setBundle basename="messages"/>
 <html>
 <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.2.3/jquery.min.js"></script>
 </head>
 <body>
 <table border="1" style="height: 100%; width: 100%">
     <tr>
         <td rowspan="2" valign="top">
             <ul class="menu">
-                <li class="menu-item">
-                <span><fmt:message key="menu.projects"/></span>
+                <li class="menu-item" onclick="location.href='${context}/projects.j'">
+                    <span><fmt:message key="menu.projects"/></span>
                 </li>
-                <li class="menu-item">
-                <span><fmt:message key="menu.calendar"/></span>
+                <li class="menu-item" onclick="location.href='${context}/tree.j'">
+                    <span><fmt:message key="menu.task.tree"/></span>
                 </li>
-                <li class="menu-item">
-                <span><fmt:message key="menu.budget"/></span>
+                <li class="menu-item" onclick="location.href='${context}/calendar.j'">
+                    <span><fmt:message key="menu.calendar"/></span>
                 </li>
-                <li class="menu-item">
-                <span><fmt:message key="menu.messages"/></span>
+                <li class="menu-item" onclick="location.href='${context}/budget.j'">
+                    <span><fmt:message key="menu.budget"/></span>
                 </li>
-                <li class="menu-item">
-                <span><fmt:message key="menu.friends"/></span>
+                <li class="menu-item" onclick="location.href='${context}/messages.j'">
+                    <span><fmt:message key="menu.messages"/></span>
                 </li>
-                <li class="menu-item">
-                <span><fmt:message key="menu.commandos"/></span>
+                <li class="menu-item"  onclick="location.href='${context}/commandos.j'">
+                    <span><fmt:message key="menu.commandos"/></span>
                 </li>
-                <li class="menu-item">
-                <span><fmt:message key="menu.settings"/></span>
+                <li class="menu-item" onclick="location.href='${context}/settings.j'">
+                    <span><fmt:message key="menu.settings"/></span>
                 </li>
             </ul>
         </td>
         <td width="100%">
             <div class="title">
                 <span >
-                    ${title}
+                    <fmt:message key="${title}"/>
                 </span>
             </div>
         </td>
