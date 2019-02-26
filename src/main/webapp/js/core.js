@@ -18,7 +18,7 @@ function toBase64(str){
             return String.fromCharCode('0x' + p1);
         }));
 }
-function PostAPI(address, params){
+function PostAPI(address, params, handler){
     var body = [];
 
     if (params != null){
@@ -31,7 +31,21 @@ function PostAPI(address, params){
     var xhr = new XMLHttpRequest();
     xhr.open('POST', ctx + address, true);
     xhr.send(body.join('&'));
-    return xhr;
+    if (!handler){
+        return xhr;
+    } else {
+        xhr.onreadystatechange = function(){
+            if (xhr.readyState == 4 && xhr.status == 200){
+                try {
+                    handler(JSON.parse(xhr.responseText));
+                } catch(e){
+                    console.error("Error parse " + xhr.responseText);
+                }
+
+
+            }
+        }
+    }
 }
 function validEmail(inp){
     var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

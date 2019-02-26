@@ -31,11 +31,11 @@
     </tr>
     <div id="task-child-instance" class="task-child" style="display: none">
         <span id="child-title"></span>
-        <div class="tree-menu">
+        <div id="menu" class="tree-menu">
             <c:set var="editLabel"><fmt:message key="edit"/></c:set>
             <c:set var="deleteLabel"><fmt:message key="delete"/></c:set>
-            <div class="edit" title="${editLabel}"></div>
-            <div class="delete" title="${deleteLabel}"></div>
+            <div class="edit" id="edit" title="${editLabel}"></div>
+            <div class="delete" id="delete" title="${deleteLabel}"></div>
         </div>
     </div>
 </table>

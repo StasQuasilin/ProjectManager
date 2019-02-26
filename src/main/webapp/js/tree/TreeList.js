@@ -38,31 +38,56 @@ function showProject(id){
 }
 
 function showTree(parameters){
-    var xhr = PostAPI('/api/tree/list', parameters);
-    xhr.onreadystatechange = function () {
-        if (xhr.readyState == 4 && xhr.status == 200){
-            var answer = JSON.parse(xhr.responseText);
-            if (answer){
-                console.log(answer);
-                title.innerHTML='';
+    childBox.innerHTML = '';
+    PostAPI('/api/tree/list', parameters, function(txt){
+        console.log(txt);
+        title.innerHTML='';
+        buildTitle(txt);
 
-                var tasks = buildTitle(answer);
-                childBox.innerHTML = '';
-                for (var i in tasks){
-                    addTask(tasks[i]);
-                }
-            }
-        }
-    }
+    });
 }
 function addTask(task){
     var span = childInstance.cloneNode(true);
-    getChildElemById(span, 'child-title').innerText = task.title;
+    var title = getChildElemById(span, 'child-title');
+    title.innerText = task.title;
+    var menu = getChildElemById(span, 'menu');
+
+    var edit = getChildElemById(menu, 'edit');
+    edit.parent = span;
+    edit.label=title;
+    edit.id=task.id;
+    edit.onclick = function(){
+        this.label.style.display='none';
+        var inp = document.createElement('input');
+        inp.value = this.label.innerText;
+        inp.parent = this;
+
+        this.parent.appendChild(inp);
+        inp.onkeyup=function(){
+            if (event.key == 'Escape'){
+                this.parent.parent.removeChild(inp);
+                this.parent.label.style.display='inline-block';
+            } else if (event.key == 'Enter'){
+                if (valid(this)) {
+                    this.parent.parent.removeChild(inp);
+                    this.parent.label.innerText = this.value;
+                    this.parent.label.style.display = 'inline-block';
+                    var p = [];
+                    p.id = this.parent.id;
+                    p.name = this.value;
+                    PostAPI('/api/tree/edit/task', p);
+                }
+            }
+        };
+        inp.select();
+    };
     span.style.display='block';
     childBox.appendChild(span);
     span.id = task.id;
     span.onclick = function(){
-        showTask(this.id);
+        if (event.target == this) {
+            showTask(this.id);
+        }
     }
 }
 function buildTitle(json){
@@ -85,10 +110,18 @@ function buildTitle(json){
         addChildButton.onclick=function(){
             addChild(json.id);
         };
-        return json['tasks'];
+        for (var i in json.tasks){
+            addTask(json.tasks[i]);
+        }
     }
 }
 function addChild(parent){
+    console.log('add task for ' + parent);
     var p = [];
     p.parent = parent;
+    PostAPI('/api/tree/new/task', p, function(txt){
+        console.log(txt);
+        addTask(txt);
+    });
+
 }

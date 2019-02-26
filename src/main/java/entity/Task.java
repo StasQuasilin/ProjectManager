@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "tasks")
-public class Task {
+public class Task implements Comparable<Task>{
     private int id;
     private String status;
     private Task parent;
@@ -54,5 +54,10 @@ public class Task {
     }
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @Override
+    public int compareTo(Task o) {
+        return o.getTitle().compareTo(title);
     }
 }

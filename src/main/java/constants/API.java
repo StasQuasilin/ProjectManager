@@ -20,5 +20,8 @@ public class API {
 
     public class TREE{
         public static final String LIST = "/api/tree/list";
+        public static final String NEW_TASK = "/api/tree/new/task";
+        public static final String EDIT_TASK = "/api/tree/edit/task";
+
     }
 }

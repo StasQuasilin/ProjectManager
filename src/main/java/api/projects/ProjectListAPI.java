@@ -43,16 +43,25 @@ public class ProjectListAPI extends HttpServlet {
                 p.setTask(task);
                 hibernator.save(task, p);
             }
+            int active = calculateTaskCount(task, TaskStatus.active);
+            int done = calculateTaskCount(task, TaskStatus.done);
+            int canceled = calculateTaskCount(task, TaskStatus.canceled);
 
-            List<Task> active = getChildTask(task, TaskStatus.active);
-            List<Task> done = getChildTask(task, TaskStatus.done);
-            List<Task> canceled = getChildTask(task, TaskStatus.canceled);
-
-            array.add(JsonParser.toJson(p, active.size(), done.size(), canceled.size()));
+            array.add(JsonParser.toJson(p, active, done, canceled));
         }
 
         PostUtil.write(resp, array.toJSONString());
         array.clear();
+    }
+    synchronized int calculateTaskCount(Task parent, TaskStatus status){
+        List<Task> tasks = getChildTask(parent, status);
+        int total = tasks.size();
+        for (Task t : tasks){
+            total += calculateTaskCount(t, status);
+        }
+        tasks.clear();
+        return total;
+
     }
     HashMap<String, Object> parameters;
     synchronized List<Task> getChildTask(Task parent, TaskStatus status){

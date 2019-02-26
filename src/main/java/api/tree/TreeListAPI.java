@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -47,8 +48,7 @@ public class TreeListAPI extends HttpServlet {
         } else {
             sub.addAll(hibernator.query(Project.class, null).stream().map(Project::getTask).collect(Collectors.toList()));
         }
+        Collections.sort(sub);
         PostUtil.write(resp, JsonParser.toJson(task, sub).toJSONString());
-
-
     }
 }

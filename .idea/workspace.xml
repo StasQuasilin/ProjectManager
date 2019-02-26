@@ -2,25 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7e966a92-8481-44b7-92aa-c3af70c6fe6c" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/img/buttons/activate.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/img/buttons/add.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/img/buttons/delete.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/img/buttons/edit.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/img/buttons/finish.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/img/buttons/pause.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/img/buttons/postpone.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/js/tree/TreeList.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/api/tree/TreeListAPI.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/api/tree/EditTaskAPI.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/api/tree/NewTaskAPI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/constants/API.java" afterPath="$PROJECT_DIR$/src/main/java/constants/API.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/utils/JsonParser.java" afterPath="$PROJECT_DIR$/src/main/java/utils/JsonParser.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/META-INF/MANIFEST.MF" afterPath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/META-INF/MANIFEST.MF" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/ProjectBox.css" afterPath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/ProjectBox.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/css/tree/TreeList.css" afterPath="$PROJECT_DIR$/src/main/webapp/css/tree/TreeList.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/api/projects/ProjectListAPI.java" afterPath="$PROJECT_DIR$/src/main/java/api/projects/ProjectListAPI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/entity/Task.java" afterPath="$PROJECT_DIR$/src/main/java/entity/Task.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/tree/TreeList.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/tree/TreeList.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/api/tree/TreeListAPI.java" afterPath="$PROJECT_DIR$/src/main/java/api/tree/TreeListAPI.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/base.jsp" afterPath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/base.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/js/core.js" afterPath="$PROJECT_DIR$/src/main/webapp/js/core.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/js/core.js" afterPath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/js/core.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/WEB-INF/classes/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/target/ProjectManager-1.0-SNAPSHOT/WEB-INF/classes/hibernate.cfg.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" afterPath="$PROJECT_DIR$/target/classes/hibernate.cfg.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/messages_ru.properties" afterPath="$PROJECT_DIR$/src/main/resources/messages_ru.properties" />
@@ -160,44 +153,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Project.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/entity/Project.java">
+      <file leaf-file-name="messages_ru.properties" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/messages_ru.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.6283084">
+              <caret line="54" column="11" selection-start-line="54" selection-start-column="11" selection-end-line="54" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ProjectLengthAPI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/api/info/ProjectLengthAPI.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="63" column="29" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
-              <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#434#435#0" expanded="false" />
-                <element signature="e#459#460#0" expanded="false" />
-                <element signature="e#491#492#0" expanded="false" />
-                <element signature="e#519#520#0" expanded="false" />
-                <element signature="e#595#596#0" expanded="false" />
-                <element signature="e#623#624#0" expanded="false" />
-                <element signature="e#664#665#0" expanded="false" />
-                <element signature="e#700#701#0" expanded="false" />
-                <element signature="e#778#779#0" expanded="false" />
-                <element signature="e#810#811#0" expanded="false" />
-                <element signature="e#852#853#0" expanded="false" />
-                <element signature="e#889#890#0" expanded="false" />
-                <element signature="e#973#974#0" expanded="false" />
-                <element signature="e#1008#1009#0" expanded="false" />
-                <element signature="e#1061#1062#0" expanded="false" />
-                <element signature="e#1109#1110#0" expanded="false" />
-                <element signature="e#1180#1181#0" expanded="false" />
-                <element signature="e#1208#1209#0" expanded="false" />
-                <element signature="e#1396#1397#0" expanded="false" />
-                <element signature="e#1430#1431#0" expanded="false" />
-                <element signature="e#1483#1484#0" expanded="false" />
-                <element signature="e#1529#1530#0" expanded="false" />
-                <element signature="e#1609#1610#0" expanded="false" />
-                <element signature="e#1638#1639#0" expanded="false" />
-                <element signature="e#1681#1682#0" expanded="false" />
-                <element signature="e#1717#1718#0" expanded="false" />
-                <element signature="e#1791#1792#0" expanded="false" />
-                <element signature="e#1818#1819#0" expanded="false" />
-                <element signature="e#1855#1856#0" expanded="false" />
-                <element signature="e#1887#1888#0" expanded="false" />
-              </folding>
+              <caret line="87" column="59" selection-start-line="87" selection-start-column="59" selection-end-line="87" selection-end-column="59" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -207,36 +178,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="110" column="16" selection-start-line="110" selection-start-column="16" selection-end-line="110" selection-end-column="16" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projectList.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/projects/projectList.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="27" column="67" selection-start-line="27" selection-start-column="67" selection-end-line="27" selection-end-column="67" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projectList.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/projects/projectList.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="58" selection-start-line="9" selection-start-column="58" selection-end-line="9" selection-end-column="58" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="projectBox.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/projects/projectBox.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="61" column="43" selection-start-line="61" selection-start-column="43" selection-end-line="61" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -252,15 +193,33 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Hibernator.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/services/hibernate/Hibernator.java">
+      <file leaf-file-name="SaveProjectAPI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/api/projects/SaveProjectAPI.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
+              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="treeList.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/tree/treeList.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-16.346153">
+              <caret line="37" column="42" selection-start-line="37" selection-start-column="42" selection-end-line="37" selection-end-column="42" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TreeList.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/tree/TreeList.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="76" column="26" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#429#430#0" expanded="false" />
-                <element signature="e#460#461#0" expanded="false" />
+                <element signature="e#0#49#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -270,44 +229,45 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/api/projects/ProjectListAPI.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="60" column="50" selection-start-line="60" selection-start-column="50" selection-end-line="60" selection-end-column="50" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SaveProjectAPI.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/api/projects/SaveProjectAPI.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="treeList.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/tree/treeList.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-16.346153">
-              <caret line="37" column="48" selection-start-line="37" selection-start-column="48" selection-end-line="37" selection-end-column="48" />
+              <caret line="49" column="65" selection-start-line="49" selection-start-column="65" selection-end-line="49" selection-end-column="65" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TreeList.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/tree/TreeList.js">
+      <file leaf-file-name="pm_db.public.tasks" pinned="false" current-in-tab="false">
+        <entry file="dbDummy://dbtable:/baed64a7/4d1b9397-6a78-47ba-95d6-8616113d32fd/pm_db.public.tasks">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+          <provider editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TreeListAPI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/api/tree/TreeListAPI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.79588336">
-              <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
               <folding>
-                <element signature="e#0#49#0" expanded="false" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="core.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/js/core.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="41" column="69" selection-start-line="41" selection-start-column="69" selection-end-line="41" selection-end-column="69" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -356,18 +316,32 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/constants/API.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
+              <caret line="23" column="69" selection-start-line="23" selection-start-column="69" selection-end-line="23" selection-end-column="69" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TreeView.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/tree/TreeView.jsp">
+      <file leaf-file-name="EditTaskAPI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/api/tree/EditTaskAPI.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
-              <folding />
+              <caret line="37" column="21" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="NewTaskAPI.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/api/tree/NewTaskAPI.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -386,24 +360,10 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/entity/Task.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
+              <caret line="60" column="45" selection-start-line="60" selection-start-column="45" selection-end-line="60" selection-end-column="45" />
               <folding>
-                <element signature="e#433#434#0" expanded="false" />
-                <element signature="e#458#459#0" expanded="false" />
-                <element signature="e#490#491#0" expanded="false" />
-                <element signature="e#518#519#0" expanded="false" />
-                <element signature="e#591#592#0" expanded="false" />
-                <element signature="e#620#621#0" expanded="false" />
-                <element signature="e#663#664#0" expanded="false" />
-                <element signature="e#699#700#0" expanded="false" />
-                <element signature="e#777#778#0" expanded="false" />
-                <element signature="e#806#807#0" expanded="false" />
-                <element signature="e#847#848#0" expanded="false" />
-                <element signature="e#883#884#0" expanded="false" />
-                <element signature="e#954#955#0" expanded="false" />
-                <element signature="e#982#983#0" expanded="false" />
-                <element signature="e#1023#1024#0" expanded="false" />
-                <element signature="e#1057#1058#0" expanded="false" />
+                <element signature="e#1134#1135#0" expanded="true" />
+                <element signature="e#1186#1187#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -417,8 +377,8 @@
         <option value="My JSP" />
         <option value="CSS File" />
         <option value="Jsp File" />
-        <option value="Class" />
         <option value="JavaScript File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -438,8 +398,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/index.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/utils/Branches.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/pages/index.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/controllers/login/LoginController.java" />
         <option value="$PROJECT_DIR$/src/main/java/controllers/login/RegistrationController.java" />
@@ -467,28 +425,30 @@
         <option value="$PROJECT_DIR$/src/main/java/api/login/LoginAPI.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/pages/projects/projectEdit.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/api/info/ProjectLengthAPI.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/js/core.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/utils/DateUtils.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/base.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/pages/projects/projectList.jsp" />
-        <option value="$PROJECT_DIR$/src/main/resources/messages_ru.properties" />
         <option value="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
         <option value="$PROJECT_DIR$/src/main/java/entity/TaskStatus.java" />
-        <option value="$PROJECT_DIR$/src/main/java/api/projects/ProjectListAPI.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/pages/projects/projectBox.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/ProjectBox.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/projects/projectList.js" />
         <option value="$PROJECT_DIR$/src/main/java/entity/Project.java" />
-        <option value="$PROJECT_DIR$/src/main/java/entity/Task.java" />
         <option value="$PROJECT_DIR$/src/main/java/api/projects/SaveProjectAPI.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/pages/tree/TreeView.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/tree/TreeView.css" />
-        <option value="$PROJECT_DIR$/src/main/java/constants/API.java" />
-        <option value="$PROJECT_DIR$/src/main/java/api/tree/TreeListAPI.java" />
         <option value="$PROJECT_DIR$/src/main/java/utils/JsonParser.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/pages/tree/treeList.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/css/tree/TreeList.css" />
+        <option value="$PROJECT_DIR$/src/main/java/api/tree/NewTaskAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/js/core.js" />
+        <option value="$PROJECT_DIR$/src/main/java/api/projects/ProjectListAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/pages/tree/treeList.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/constants/API.java" />
+        <option value="$PROJECT_DIR$/src/main/java/api/tree/EditTaskAPI.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/js/tree/TreeList.js" />
+        <option value="$PROJECT_DIR$/src/main/java/entity/Task.java" />
+        <option value="$PROJECT_DIR$/src/main/java/api/tree/TreeListAPI.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/messages_ru.properties" />
       </list>
     </option>
   </component>
@@ -1437,7 +1397,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="D:/dev" />
+    <property name="last_opened_file_path" value="D:/ARHIVE/dev/allynote" />
     <property name="recentsLimit" value="5" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -1873,12 +1833,12 @@
       <updated>1550826983767</updated>
       <workItem from="1550826989725" duration="16976000" />
       <workItem from="1551076601587" duration="26944000" />
-      <workItem from="1551161482245" duration="15788000" />
+      <workItem from="1551161482245" duration="22762000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="59708000" />
+    <option name="totallyTimeSpent" value="66682000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1296" height="1000" extended-state="6" />
@@ -1893,11 +1853,11 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928804" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32911393" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32911393" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5128645" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.4871355" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.4871355" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5128645" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32928804" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1964,20 +1924,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/DateContainers/EQ.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/services/answers/SuccessAnswer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/services/answers/IAnswer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.20411664">
@@ -1996,6 +1942,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="26" selection-start-line="3" selection-start-column="26" selection-end-line="3" selection-end-column="26" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2078,6 +2025,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="56" column="0" selection-start-line="56" selection-start-column="0" selection-end-line="56" selection-end-column="0" />
+          <folding>
+            <element signature="e#1078#1079#0" expanded="true" />
+            <element signature="e#1135#1136#0" expanded="true" />
+            <element signature="e#1581#1582#0" expanded="true" />
+            <element signature="e#1651#1652#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2112,6 +2065,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="30" column="92" selection-start-line="30" selection-start-column="92" selection-end-line="30" selection-end-column="92" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2120,23 +2074,6 @@
         <state vertical-scroll-proportion="-15.538462">
           <caret line="157" column="29" selection-start-line="157" selection-start-column="29" selection-end-line="157" selection-end-column="29" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/api/info/ProjectLengthAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="87" column="59" selection-start-line="87" selection-start-column="59" selection-end-line="87" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/core.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -2152,6 +2089,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="3" column="22" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2159,14 +2097,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="29" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/messages_ru.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="62" column="28" selection-start-line="62" selection-start-column="28" selection-end-line="62" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -2195,16 +2125,6 @@
             <element signature="imports" expanded="false" />
             <element signature="e#429#430#0" expanded="false" />
             <element signature="e#460#461#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/api/projects/ProjectListAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="60" column="50" selection-start-line="60" selection-start-column="50" selection-end-line="60" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2273,41 +2193,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/entity/Task.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="19" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="19" />
-          <folding>
-            <element signature="e#433#434#0" expanded="false" />
-            <element signature="e#458#459#0" expanded="false" />
-            <element signature="e#490#491#0" expanded="false" />
-            <element signature="e#518#519#0" expanded="false" />
-            <element signature="e#591#592#0" expanded="false" />
-            <element signature="e#620#621#0" expanded="false" />
-            <element signature="e#663#664#0" expanded="false" />
-            <element signature="e#699#700#0" expanded="false" />
-            <element signature="e#777#778#0" expanded="false" />
-            <element signature="e#806#807#0" expanded="false" />
-            <element signature="e#847#848#0" expanded="false" />
-            <element signature="e#883#884#0" expanded="false" />
-            <element signature="e#954#955#0" expanded="false" />
-            <element signature="e#982#983#0" expanded="false" />
-            <element signature="e#1023#1024#0" expanded="false" />
-            <element signature="e#1057#1058#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/api/projects/SaveProjectAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/tree/TreeView.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2320,14 +2205,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="1" column="29" selection-start-line="1" selection-start-column="29" selection-end-line="1" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/constants/API.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="21" column="59" selection-start-line="21" selection-start-column="59" selection-end-line="21" selection-end-column="59" />
           <folding />
         </state>
       </provider>
@@ -2350,29 +2227,6 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="dbDummy://dbtable:/baed64a7/4d1b9397-6a78-47ba-95d6-8616113d32fd/pm_db.public.tasks">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-      <provider editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/api/tree/TreeListAPI.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="49" column="45" selection-start-line="49" selection-start-column="45" selection-end-line="49" selection-end-column="45" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2408,14 +2262,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/tree/treeList.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-16.346153">
-          <caret line="37" column="48" selection-start-line="37" selection-start-column="48" selection-end-line="37" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/css/tree/TreeList.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2424,13 +2270,123 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/api/tree/NewTaskAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="38" column="21" selection-start-line="38" selection-start-column="21" selection-end-line="38" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/js/core.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="41" column="69" selection-start-line="41" selection-start-column="69" selection-end-line="41" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/api/projects/ProjectListAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="49" column="65" selection-start-line="49" selection-start-column="65" selection-end-line="49" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/api/projects/SaveProjectAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="50" column="0" selection-start-line="50" selection-start-column="0" selection-end-line="50" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/pages/tree/treeList.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.346153">
+          <caret line="37" column="42" selection-start-line="37" selection-start-column="42" selection-end-line="37" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/constants/API.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="23" column="69" selection-start-line="23" selection-start-column="69" selection-end-line="23" selection-end-column="69" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/api/tree/EditTaskAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="37" column="21" selection-start-line="37" selection-start-column="21" selection-end-line="37" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/js/tree/TreeList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.79588336">
-          <caret line="92" column="22" selection-start-line="92" selection-start-column="22" selection-end-line="92" selection-end-column="22" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="76" column="26" selection-start-line="76" selection-start-column="26" selection-end-line="76" selection-end-column="26" />
           <folding>
             <element signature="e#0#49#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="dbDummy://dbtable:/baed64a7/4d1b9397-6a78-47ba-95d6-8616113d32fd/pm_db.public.tasks">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+      <provider editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/entity/Task.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="60" column="45" selection-start-line="60" selection-start-column="45" selection-end-line="60" selection-end-column="45" />
+          <folding>
+            <element signature="e#1134#1135#0" expanded="true" />
+            <element signature="e#1186#1187#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/api/tree/TreeListAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="52" column="0" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/api/info/ProjectLengthAPI.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="87" column="59" selection-start-line="87" selection-start-column="59" selection-end-line="87" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/messages_ru.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6283084">
+          <caret line="54" column="11" selection-start-line="54" selection-start-column="11" selection-end-line="54" selection-end-column="11" />
+          <folding />
         </state>
       </provider>
     </entry>
