@@ -17,4 +17,8 @@ public class API {
         public static final String LIST = "/api/project/list";
         public static final String SAVE = "/api/project/save";
     }
+
+    public class TREE{
+        public static final String LIST = "/api/tree/list";
+    }
 }

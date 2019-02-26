@@ -1533,29 +1533,43 @@
       <column name="viewowner" sqlType="name" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
       <column name="definition" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="12"/>
     </table>
+    <table name="budgets" schema="public" catalog="pm_db" type="TABLE">
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgnYnVkZ2V0c19pZF9zZXEnOjpyZWdjbGFzcyk=" autoIncrement="true"/>
+      <column name="title" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="varchar" precision="15" scale="0" nullable="false" jdbcType="12"/>
+      <column name="sum" sqlType="float4" precision="8" scale="8" nullable="false" jdbcType="7" def="MA=="/>
+      <column name="owner" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="currency" sqlType="varchar" precision="8" scale="0" nullable="false" jdbcType="12"/>
+      <primary-key name="budgets_pkey" columns="id"/>
+    </table>
+    <table name="budgets_id_seq" schema="public" catalog="pm_db" type="SEQUENCE"/>
     <table name="hibernate_sequence" schema="public" catalog="pm_db" type="SEQUENCE"/>
     <table name="projects" schema="public" catalog="pm_db" type="TABLE">
       <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgncHJvamVjdHNfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
-      <column name="creator" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="title" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
+      <column name="complete_date" sqlType="date" precision="13" scale="0" nullable="false" jdbcType="91"/>
+      <column name="owner" sqlType="int4" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="description" sqlType="varchar" precision="255" scale="0" nullable="true" jdbcType="12"/>
-      <column name="date" sqlType="date" precision="13" scale="0" nullable="true" jdbcType="91"/>
+      <column name="budget" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="begin_date" sqlType="date" precision="13" scale="0" nullable="true" jdbcType="91"/>
+      <column name="task" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="projects_pkey" columns="id"/>
     </table>
     <table name="projects_id_seq" schema="public" catalog="pm_db" type="SEQUENCE"/>
-    <table name="registration_confirm" schema="public" catalog="pm_db" type="TABLE">
-      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgncmVnaXN0cmF0aW9uX2NvbmZpcm1faWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
-      <column name="token" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <column name="email" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <column name="password" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <primary-key name="registration_confirm_pkey" columns="id"/>
+    <table name="tasks" schema="public" catalog="pm_db" type="TABLE">
+      <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndGFza3NfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
+      <column name="status" sqlType="varchar" precision="12" scale="0" nullable="false" jdbcType="12"/>
+      <column name="parent" sqlType="int4" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="title" sqlType="varchar" precision="45" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="tasks_pkey" columns="id"/>
     </table>
-    <table name="registration_confirm_id_seq" schema="public" catalog="pm_db" type="SEQUENCE"/>
+    <table name="tasks_id_seq" schema="public" catalog="pm_db" type="SEQUENCE"/>
     <table name="users" schema="public" catalog="pm_db" type="TABLE">
       <column name="id" sqlType="serial" precision="10" scale="0" nullable="false" jdbcType="4" def="bmV4dHZhbCgndXNlcnNfaWRfc2VxJzo6cmVnY2xhc3Mp" autoIncrement="true"/>
       <column name="email" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
       <column name="password" sqlType="varchar" precision="45" scale="0" nullable="false" jdbcType="12"/>
-      <primary-key name="users_pkey" columns="id"/>
+      <column name="language" sqlType="varchar" precision="2" scale="0" nullable="true" jdbcType="12"/>
+      <primary-key name="users_pkey" columns="id,email"/>
       <index name="unique_email" unique="true" columns="email"/>
       <index name="unique_id" unique="true" columns="id"/>
     </table>

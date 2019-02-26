@@ -7,18 +7,17 @@
 <html>
 <head>
     <link rel="stylesheet" href="${context}/css/tree/TreeList.css">
+    <script src="${context}/js/tree/TreeList.js"></script>
 </head>
 <body>
 <table style="height: 100%; width: 100%">
     <tr>
         <td>
-            <div id="tree-title" class="tree-title">
-                <span class="tree-title-item">Root</span> /
-                <span class="tree-title-item">Child 1</span> /
-                <span class="tree-title-item">Child 2</span> /
-                <span class="tree-title-item">Child 3</span> /
-                <span class="tree-title-item">Child 4</span>
-
+            <div class="tree-title">
+                <div id="tree-title" style="display: inherit;"></div>
+                <div class="tree-menu">
+                    <div class="add" id="add-child"></div>
+                </div>
             </div>
         </td>
         <td rowspan="2" valign="top">
@@ -27,11 +26,18 @@
     </tr>
     <tr>
         <td height="100%" width="100%" valign="top">
-            <div id="child-box" class="child-box">
-                Child
-            </div>
+            <div id="child-box" class="child-box"></div>
         </td>
     </tr>
+    <div id="task-child-instance" class="task-child" style="display: none">
+        <span id="child-title"></span>
+        <div class="tree-menu">
+            <c:set var="editLabel"><fmt:message key="edit"/></c:set>
+            <c:set var="deleteLabel"><fmt:message key="delete"/></c:set>
+            <div class="edit" title="${editLabel}"></div>
+            <div class="delete" title="${deleteLabel}"></div>
+        </div>
+    </div>
 </table>
 </body>
 </html>

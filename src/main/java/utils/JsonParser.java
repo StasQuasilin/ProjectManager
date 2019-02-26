@@ -2,10 +2,16 @@ package utils;
 
 import entity.Budget;
 import entity.Project;
+import entity.Task;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import services.answers.IAnswer;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by szpt_user045 on 22.02.2019.
@@ -47,5 +53,104 @@ public class JsonParser {
         json.put("currency", budget.getCurrency());
 
         return json;
+    }
+
+    public static JSONObject toJson(Task task) {
+        JSONObject json = new JSONObject();
+        json.put("id", task.getId());
+        json.put("title", task.getTitle());
+        json.put("status", task.getStatus());
+        Task parent = task.getParent();
+        if (parent != null){
+            json.put("parent", parent.getId());
+        } else {
+            json.put("parent", parent);
+        }
+
+        return json;
+    }
+
+    public static JSONObject toJson(Task task, List<Task> tasks) {
+        JSONObject json = new JSONObject();
+        if (task != null) {
+            json = toJson(task);
+            json.put("tasks", toJson(tasks));
+            if (task.getParent() != null){
+                return toParentTask(task.getParent(), json);
+            }
+        } else {
+            json.put("tasks", toJson(tasks));
+        }
+
+        return json;
+    }
+    static JSONObject toParentTask(Task parent, JSONObject child){
+        JSONObject json = toJson(parent);
+        json.put("child", child);
+
+        if (parent.getParent()!= null) {
+            return toParentTask(parent.getParent(), json);
+        }
+
+        return json;
+    }
+
+    public static void main(String[] args) {
+        Task task1 = createTask(1, null);
+        Task task2 = createTask(2, task1);
+        Task task3 = createTask(3, task2);
+        Task task4 = createTask(4, task3);
+
+        List<Task> childs = new LinkedList<>();
+        childs.add(createTask(1, task4));
+        childs.add(createTask(2, task4));
+        childs.add(createTask(3, task4));
+        childs.add(createTask(4, task4));
+
+//        System.out.println(prettyJson(toJson(task4, childs).toJSONString()));
+        System.out.println(prettyJson(toJson(null, childs).toJSONString()));
+
+    }
+    static Task createTask(int num, Task parent){
+        Task task = new Task("Task #" + num);
+        task.setId(num);
+        task.setParent(parent);
+        return task;
+    }
+
+    public static String prettyJson(String json){
+        int tabLevel = 0;
+        StringBuilder builder = new StringBuilder();
+        for (char c : json.toCharArray()){
+            if (c == '}' || c == ']'){
+                tabLevel--;
+                builder.append('\n');
+                for (int i = 0; i < tabLevel; i++){
+                    builder.append('\t');
+                }
+            }
+
+            builder.append(c);
+            if (c == '{' || c == '['){
+                builder.append('\n');
+                tabLevel++;
+                for (int i = 0; i < tabLevel; i++){
+                    builder.append('\t');
+                }
+            }
+
+            if (c == ','){
+                builder.append('\n');
+                for (int i = 0; i < tabLevel; i++){
+                    builder.append('\t');
+                }
+            }
+        }
+        return builder.toString();
+    }
+
+
+    private static JSONArray toJson(List<Task> tasks) {
+        return tasks.stream().map(JsonParser::toJson).collect(Collectors.toCollection(JSONArray::new));
     }
 }
