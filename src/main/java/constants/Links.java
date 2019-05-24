@@ -7,7 +7,7 @@ public class Links {
     public static final String LOGIN = "/login";
     public static final String REGISTRATION = "/registration";
     public static final String RESTORE = "/restore";
-    public static final String HOME = "/home.j";
+    public static final String HOME = "/ProjectManager.j";
     public static final String PROJECTS = "/projects.j";
     public static final String PROJECT_EDIT = "/projects/edit.j";
     public static final String TREE = "/tree.j";

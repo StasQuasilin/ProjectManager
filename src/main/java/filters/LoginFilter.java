@@ -15,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by ZPT_USER on 20.07.2018.
  */
-@WebFilter(value = {"*.j", "/api/*"})
+//@WebFilter(value = {"*.j", "/api/*"})
 public class LoginFilter implements Filter {
 
     private static final String TOKEN = "token";

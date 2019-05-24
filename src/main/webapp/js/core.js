@@ -1,69 +1,136 @@
 /**
- * Created by szpt_user045 on 22.02.2019.
+ * Created by quasilin on 13.03.2019.
  */
-var ctx;
-function valid(input){
-    if(input.value == ''){
-        input.setAttribute('wrong', 'wrong');
-        input.onfocus = function(){
-            this.removeAttribute('wrong');
-        };
-        return false;
-    }
-    return true;
-}
-function toBase64(str){
-    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g,
-        function toSolidBytes(match, p1) {
-            return String.fromCharCode('0x' + p1);
-        }));
-}
-function PostAPI(address, params, handler){
-    var body = [];
-
-    if (params != null){
-        for (var k in params){
-            body[body.length] = k +'='+params[k];
+const POST = 'POST';
+function PostReq(url, parametrs, onSuccess, onError, debug){
+    if (url) {
+        if (debug) {
+            console.log('[ Application Core ] Request to \'' + url + '\'...');
         }
-
-    }
-
-    var xhr = new XMLHttpRequest();
-    xhr.open('POST', ctx + address, true);
-    xhr.send(body.join('&'));
-    if (!handler){
-        return xhr;
-    } else {
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState == 4 && xhr.status == 200){
-                try {
-                    handler(JSON.parse(xhr.responseText));
-                } catch(e){
-                    console.error("Error parse " + xhr.responseText);
+        setTimeout(function(){
+            var xhr = new XMLHttpRequest();
+            xhr.onload = function (e) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        if (debug) {
+                            console.log('[ Application Core ] Request successfuly');
+                        }
+                        if (onSuccess) {
+                            onSuccess(xhr.responseText);
+                        }
+                    }else if (xhr.status === 401) {
+                        location.reload();
+                    } else if (onError) {
+                        onError(xhr.status + ':' + xhr.statusText);
+                    } else {
+                        console.error(xhr.status + ':' + xhr.statusText)
+                    }
                 }
+            };
 
+            if (url.substring(0, context.length) != context) {
+                url = context + url;
+            }
+            xhr.open(POST, url, true);
+            xhr.send(JSON.stringify(parametrs));
+        }, 0)
+    } else {
+        console.error('Empty url!!!');
+    }
+}
+function PostApi(url, parameters, onSuccess, onError, debug){
+    PostReq(url, parameters, function(answer){
+        if (onSuccess){
+            if (answer != '') {
+                try {
+                    var json = JSON.parse(answer)
+                    try {
+                        onSuccess(json);
+                    } catch (on) {
+                        console.error('[ Application Core ] ' + on);
+                    }
 
+                } catch (e) {
+                    console.error('[ Application Core ] Can\'t parse \'' + answer + '\'')
+                    if (onError) {
+                        onError(answer);
+                    }
+                }
+            } else{
+                console.log('[ Application Core ] Empty answer body');
             }
         }
-    }
+    }, function(err){
+        if (onError){
+            onError(err);
+        }
+    }, debug)
 }
-function validEmail(inp){
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if (re.test(inp.value)){
-        return true;
-    } else {
-        inp.setAttribute('wrong', 'wrong');
-        inp.onfocus = function(){
-            this.removeAttribute('wrong');
-        };
-        return false;
-    }
-}
-function getChildElemById(parent, childId){
+function GetChildElemById(parent, childId){
     var elems = parent.getElementsByTagName("*");
     for (var i = 0; i < elems.length; i++){
         if (elems[i].id == childId){
             return elems[i];
         }
     }
+}
+function valid(input, min){
+    if (min && input.value.length < min || input.value == 0){
+        input.setAttribute('invalid');
+        input.onclick=function(){
+            input.removeAttribute('invalid');
+        };
+        return false;
+    }
+    return true;
+}
+function find(url, input, list, onClick){
+    var timer;
+    var value;
+    return function() {
+        if (this.value != value && this.value.length > 2) {
+            value = this.value
+
+            if (timer) {
+                clearTimeout(timer);
+            }
+            timer = setTimeout(function () {
+                $(list).html('');
+
+                var parameters = [];
+                parameters.key = input.value;
+                PostApi(url, parameters, function (e) {
+                    if (e.length > 0) {
+                        input.lock=true;
+                        list.style.display = 'block';
+                        for (var i in e) {
+                            console.log(e[i]);
+                            var item = document.createElement('div');
+                            item.setAttribute('class', 'custom-data-list-item');
+                            item.innerText = e[i].value;
+                            item.data = e[i];
+                            item.onclick = function () {
+                                onClick(this.data);
+                                list.style.display = 'none';
+                            };
+                            list.appendChild(item);
+                        }
+                    } else {
+                        input.lock=false;
+                        list.style.display = 'none';
+                    }
+                })
+            }, 500)
+        }
+    }
+}
+function randomUUID(){
+    const s4 = function(){
+        return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    }
+    return s4() + '-' + s4() + '-' + s4() + s4() + '-' + s4() + '-' + s4();
+}
+Vue.rowName = function(date){
+    var d = new Date(date);
+    return 'container-item-' + d.getDay()
 }

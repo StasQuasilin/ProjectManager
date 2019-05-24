@@ -2,7 +2,6 @@ package controllers.home;
 
 import constants.Links;
 
-import javax.jws.WebService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,8 +16,10 @@ import java.io.IOException;
 public class HomeController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute("title", "home.title");
-        req.setAttribute("currentPage", "/pages/home/home.jsp");
-        req.getRequestDispatcher("/base.jsp").forward(req, resp);
+        req.setAttribute("projects", Links.PROJECTS);
+        req.setAttribute("tree", Links.TREE);
+        req.setAttribute("calendar", Links.CALENDAR);
+        req.setAttribute("budget", Links.BUDGET);
+        req.getRequestDispatcher("/pages/home/home.jsp").forward(req, resp);
     }
 }

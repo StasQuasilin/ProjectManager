@@ -1,8 +1,12 @@
 package controllers.projects;
 
+import constants.API;
 import constants.Links;
+import controllers.IModal;
+import controllers.IPage;
 import entity.Project;
 import org.apache.log4j.Logger;
+import org.json.simple.JSONObject;
 import services.hibernate.Hibernator;
 
 import javax.servlet.ServletException;
@@ -16,26 +20,26 @@ import java.io.IOException;
  * Created by quasilin on 24.02.2019.
  */
 @WebServlet(Links.PROJECT_EDIT)
-public class ProjectEdit extends HttpServlet {
+public class ProjectEdit extends IModal {
 
     private static final Logger log = Logger.getLogger(ProjectEdit.class);
     public static final Hibernator hibernator = Hibernator.getInstance();
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        try {
-            int id = Integer.parseInt(req.getParameter("id"));
-            req.setAttribute("project",hibernator.get(Project.class, "id", id));
-            req.setAttribute("title", "project.edit");
-        } catch (Exception ignored){
-            req.setAttribute("title", "project.create");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JSONObject body = parseBody(req);
+        if (body != null) {
+            if (body.containsKey("id")){
+                long id = (long) body.remove("id");
+                req.setAttribute("project",hibernator.get(Project.class, "id", id));
+                req.setAttribute("title", "project.edit");
+            } else {
+                req.setAttribute("title", "project.create");
+            }
         }
-        req.setAttribute("currentPage", "/pages/home/home.jsp");
+
         req.setAttribute("pageContent", "/pages/projects/projectEdit.jsp");
-        req.getRequestDispatcher("/base.jsp").forward(req, resp);
-
-
-
+        req.setAttribute("save", API.PROJECT.SAVE);
+        showModal(req, resp);
     }
 }

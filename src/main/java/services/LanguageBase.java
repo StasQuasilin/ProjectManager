@@ -8,7 +8,7 @@ public class LanguageBase{
 
     static LanguageBase base = new LanguageBase();
 
-    final String[] languages = {"ru"};
+    final String[] languages = {"ua"};
     final String baseName = "messages_";
     public static LanguageBase getBase() {
         return base;
@@ -27,7 +27,7 @@ public class LanguageBase{
         try {
             return ResourceBundle.getBundle(baseName + language).getString(key);
         } catch (MissingResourceException e){
-            return "%" + key + "%";
+            return "???" + key + "???";
         }
     }
 }

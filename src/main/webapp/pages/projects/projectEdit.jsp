@@ -1,37 +1,13 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="ru"/>
+<fmt:setLocale value="ua"/>
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-  <%--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.2.3/jquery.min.js"></script>--%>
-  <script src="${context}/js/projects/projectEdit.js"></script>
-    <link rel="stylesheet" href="${context}/css/projects/ProjectEdit.css">
-  <link rel="stylesheet" type="text/css" href="${context}/datetimepicker/jquery.datetimepicker.css"/>
-  <script src="${context}/datetimepicker/jquery.js"></script>
-  <script src="${context}/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
-  <script type="text/javascript">
-    $(function(){
-      $.datetimepicker.setLocale('${language}');
-      $('#date-begin').datetimepicker({
-        lazyInit:true,
-        format:'d.m.Y',
-        timepicker: false,
-        dayOfWeekStart:1
-      });
-      $('#date-complete').datetimepicker({
-        lazyInit:true,
-        format:'d.m.Y',
-        timepicker: false,
-        dayOfWeekStart:1
-      });
-    });
-  </script>
-</head>
-<body>
-<table width="100%" style="height: 100%">
+<script src="${context}/js/projects/projectEdit.js"></script>
+<link rel="stylesheet" href="${context}/css/projects/ProjectEdit.css">
+<table>
   <tr>
     <td style="height: 100%" align="center">
       <div style="display: flex; flex-wrap: wrap; width: fit-content">
@@ -164,15 +140,14 @@
       </div>
       <div class="container">
         <input type="hidden" id="id">
-        <button>
+        <button onclick="closeModal()">
           <fmt:message key="buttons.cancel"/>
         </button>
-        <button onclick="saveProject()">
+        <button>
           <fmt:message key="buttons.save"/>
         </button>
       </div>
     </td>
   </tr>
 </table>
-</body>
 </html>
