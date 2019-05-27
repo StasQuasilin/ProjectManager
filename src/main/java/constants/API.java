@@ -24,4 +24,9 @@ public class API {
         public static final String EDIT_TASK = "/api/tree/edit/task";
 
     }
+
+    public class BUDGET {
+        public static final String EDIT = "/api/budget/edit";
+        public static final String UPDATE = "/api/budget/list";
+    }
 }

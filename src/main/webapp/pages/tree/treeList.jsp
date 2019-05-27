@@ -1,15 +1,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value=""/>
+<fmt:setLocale value="ua"/>
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <link rel="stylesheet" href="${context}/css/tree/TreeList.css">
-    <script src="${context}/js/tree/TreeList.js"></script>
-</head>
-<body>
 <table style="height: 100%; width: 100%">
     <tr>
         <td>
@@ -39,5 +34,4 @@
         </div>
     </div>
 </table>
-</body>
 </html>

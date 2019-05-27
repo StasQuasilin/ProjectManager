@@ -1,16 +1,25 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: quasilin
-  Date: 24.02.2019
-  Time: 10:23
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<fmt:setLocale value="ua"/>
+<fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-    <title></title>
-</head>
-<body>
+<script src="${context}/js/projects/projectList.js"></script>
+<script>
+  projectList.api.update = '${update}';
+  projectList.update();
+</script>
+<div id="title-content" style="display: inline-block; background: transparent; margin: 0 4pt">
+  <button onclick="loadModal('${edit}')">
+    <fmt:message key="budget.new"/>
+  </button>
+</div>
 
-</body>
+<div id="list">
+  <div v-for="(value, key) in items">
+    {{value.title}}
+    {{value.sum}} {{value.currency}}
+  </div>
+</div>
 </html>

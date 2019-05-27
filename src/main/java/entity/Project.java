@@ -1,5 +1,7 @@
 package entity;
 
+import entity.budget.Budget;
+
 import javax.persistence.*;
 import java.sql.Date;
 

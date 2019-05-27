@@ -15,5 +15,11 @@
     <div class="menu-item" onclick="loadPage('${calendar}')">
         <fmt:message key="menu.calendar"/>
     </div>
+    <div class="menu-item" onclick="loadPage('${budget}')">
+        <fmt:message key="menu.budget"/>
+    </div>
+    <div class="menu-item" onclick="loadPage('${settings}')">
+        <fmt:message key="menu.settings"/>
+    </div>
 </div>
 </html>

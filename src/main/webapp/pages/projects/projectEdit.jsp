@@ -5,149 +5,195 @@
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<script src="${context}/js/projects/projectEdit.js"></script>
 <link rel="stylesheet" href="${context}/css/projects/ProjectEdit.css">
-<table>
-  <tr>
-    <td style="height: 100%" align="center">
-      <div style="display: flex; flex-wrap: wrap; width: fit-content">
-        <div class="container">
-          <table>
-            <tr>
-              <td>
-                <label for="title">
-                  <span>
-                    <fmt:message key="project.edit.title"/>*
-                  </span>
-                </label>
-              </td>
-              <td>
-                <input type="text" id="title" autocomplete="off">
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="date-begin">
-                  <span>
-                    <fmt:message key="project.edit.date.begin"/>
-                  </span>
-                </label>
-              </td>
-              <td>
-                <input id="date-begin" type="text" readonly autocomplete="off" onchange="getProjectLength()">
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="date-complete">
-                  <span>
-                    <fmt:message key="project.edit.date-complete"/>
-                  </span>
-                </label>
-              </td>
-              <td>
-                <input type="text" readonly id="date-complete" autocomplete="off" onchange="getProjectLength()">
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2" align="right" class="project-description-label">
-                <fmt:message key="project.length"/>:<span id="project-length" ></span>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <div style="display:flex; flex-wrap: wrap">
-                  <tag onclick="addMonths(1)">
-                    +<fmt:message key="project.edit.date.month"/>
-                  </tag>
-                  <tag onclick="addMonths(3)">
-                    +<fmt:message key="project.edit.date.3month"/>
-                  </tag>
-                  <tag onclick="addMonths(6)">
-                    +<fmt:message key="project.edit.date.6month"/>
-                  </tag>
-                  <tag onclick="addMonths(12)">
-                    +<fmt:message key="project.edit.date.1year"/>
-                  </tag>
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <label for="description">
-                  <span>
-                    <fmt:message key="project.edit.description"/>
-                  </span>
-                </label>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <textarea id="description" style="width: 100%; resize: none"></textarea>
-              </td>
-            </tr>
-          </table>
+<script src="${context}/js/projects/projectEdit.js"></script>
+<script>
+  edit.api.save = '${save}';
+  edit.budgets.push({
+    id:-1,
+    name:'<fmt:message key="project.edit.no.budget"/>'
+  });
+  edit.budgets.push({
+    id:-2,
+    name:'<fmt:message key="project.edit.new.budget"/>'
+  });
+  <c:forEach items="${budgetTypes}" var="t">
+  edit.budgetTypes.push({
+    id:'${t}',
+    name:'<fmt:message key="project.budget.${t}"/>'
+  });
+  </c:forEach>
+  <c:forEach items="${budgets}" var="budget">
+  edit.budgets.push({
+    id:${budget.id},
+    name:'${budget.name}'
+  });
+  </c:forEach>
+  edit.project = {
+    title:'',
+    begin:new Date().toISOString().substring(0, 10),
+    complete:new Date().toISOString().substring(0, 10),
+    budget:{
+      id:edit.budgets[0].id,
+      sum:0,
+      type:edit.budgetTypes[0].id
+    }
+  }
+</script>
+<div id="editor">
+  <table>
+    <tr>
+      <td colspan="2">
+        <label for="title">
+          <fmt:message key="project.edit.title"/>
+        </label>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input id="title" style="width: 100%" v-model="project.title">
+      </td>
+    </tr>
+    <tr>
+      <td align="right">
+        <label for="begin">
+          <fmt:message key="project.edit.date-begin"/>
+        </label>
+      </td>
+      <td>
+        <input id="begin" v-model="new Date(project.begin).toLocaleDateString()" class="date-input" >
+      </td>
+    </tr>
+    <tr>
+      <td align="right">
+        <label for="complete">
+          <fmt:message key="project.edit.date-complete"/>
+        </label>
+      </td>
+      <td>
+        <input id="complete" v-model="new Date(project.complete).toLocaleDateString()" class="date-input">
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <fmt:message key="project.length"/>:
+        {{projectLength}}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="font-size: 8pt">
+        <div style="display: inline-block">
+          <div>
+            <a v-on:click="addMonth(1)">
+              <span>
+                +<fmt:message key="project.edit.date.month"/>
+              </span>
+            </a>
+          </div>
+          <div>
+            <a v-on:click="addMonth(-1)">
+              <span>
+                -<fmt:message key="project.edit.date.month"/>
+              </span>
+            </a>
+          </div>
         </div>
-        <div class="container">
-          <table>
-            <tr>
-              <td colspan="2" align="center">
-                <fmt:message key="project.budget"/>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="2">
-                <input id="budget-none" checked type="radio" name="budget-type">
-                <label for="budget-none">
-                  <span>
-                    <fmt:message key="project.budget.none"/>
-                  </span>
-                </label>
-                <input id="budget-fixed" type="radio" name="budget-type">
-                <label for="budget-fixed">
-                  <span>
-                    <fmt:message key="project.budget.fixed"/>
-                  </span>
-                </label>
-                <input id="budget-float" type="radio" name="budget-type">
-                <label for="budget-float">
-                  <span>
-                    <fmt:message key="project.budget.float"/>
-                  </span>
-                </label>
+        <div style="display: inline-block">
+          <div>
+            <a v-on:click="addMonth(3)">
+              <span>
+                +<fmt:message key="project.edit.date.3month"/>
+              </span>
+            </a>
+          </div>
+          <div>
+            <a v-on:click="addMonth(-3)">
+              <span>
+                -<fmt:message key="project.edit.date.3month"/>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div style="display: inline-block">
+          <div>
+            <a v-on:click="addMonth(6)">
+              <span>
+                +<fmt:message key="project.edit.date.6month"/>
+              </span>
+            </a>
+          </div>
+          <div>
+            <a v-on:click="addMonth(-6)">
+              <span>
+                -<fmt:message key="project.edit.date.6month"/>
+              </span>
+            </a>
+          </div>
+        </div>
+        <div style="display: inline-block">
+          <div>
+            <a v-on:click="addMonth(12)">
+              <span>
+                +<fmt:message key="project.edit.date.1year"/>
+              </span>
+            </a>
+          </div>
+          <div>
+            <a v-on:click="addMonth(-12)">
+              <span>
+                -<fmt:message key="project.edit.date.1year"/>
+              </span>
+            </a>
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="budget">
+          <fmt:message key="project.budget"/>
+        </label>
+      </td>
+      <td>
+        <select id="budget" style="width: 100%" v-model="project.budget.id">
+          <option v-for="budget in budgets" :value="budget.id">
+            {{budget.name}}
+          </option>
+        </select>
+      </td>
+    </tr>
+    <template v-if="project.budget.id == -2">
+      <tr>
+        <td>
+          <label for="sum">
+            <fmt:message key="project.budget.sum"/>
+          </label>
+        </td>
+        <td>
+          <input id="sum" type="number" step="0.01" v-model="project.budget.sum">
+        </td>
+      </tr>
+      <tr v-for="bt in budgetTypes">
+        <td colspan="2">
+          <input type="radio" name="budgetSize" id="bt.id" :value="bt.id" v-model="project.budget.type">
+          <label :for="bt.id">
+            {{bt.name}}
+          </label>
+        </td>
+      </tr>
 
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <label for="budget-sum">
-                  <span>
-                    <fmt:message key="project.budget.sum"/>
-                  </span>
-                </label>
-              </td>
-              <td>
-                <input id="budget-sum" class="budget-sum" type="number" step="100" min="0" value="0">
-                <input id="budget-currency" class="budget-currency" list="currency">
-                <datalist id="currency">
-                  <option>UAH</option>
-                  <option>USD</option>
-                </datalist>
-              </td>
-            </tr>
-          </table>
-        </div>
-      </div>
-      <div class="container">
-        <input type="hidden" id="id">
+    </template>
+    <tr>
+      <td colspan="2" align="center">
         <button onclick="closeModal()">
           <fmt:message key="buttons.cancel"/>
         </button>
-        <button>
+        <button v-on:click="save">
           <fmt:message key="buttons.save"/>
         </button>
-      </div>
-    </td>
-  </tr>
-</table>
+      </td>
+    </tr>
+  </table>
+</div>
+
 </html>

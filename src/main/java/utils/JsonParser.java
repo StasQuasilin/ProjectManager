@@ -1,11 +1,10 @@
 package utils;
 
-import entity.Budget;
+import entity.budget.Budget;
 import entity.Project;
 import entity.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import services.answers.IAnswer;
 
 import java.util.LinkedList;
@@ -51,6 +50,8 @@ public class JsonParser {
         json.put("title", budget.getTitle());
         json.put("sum", budget.getBudgetSum());
         json.put("currency", budget.getCurrency());
+        json.put("size", budget.getBudgetSize().toString());
+        json.put("type", budget.getBudgetType().toString());
 
         return json;
     }
@@ -74,12 +75,12 @@ public class JsonParser {
         JSONObject json = new JSONObject();
         if (task != null) {
             json = toJson(task);
-            json.put("tasks", toJson(tasks));
+            json.put("tasks", toTaskJson(tasks));
             if (task.getParent() != null){
                 return toParentTask(task.getParent(), json);
             }
         } else {
-            json.put("tasks", toJson(tasks));
+            json.put("tasks", toTaskJson(tasks));
         }
 
         return json;
@@ -107,7 +108,7 @@ public class JsonParser {
         childs.add(createTask(3, task4));
         childs.add(createTask(4, task4));
 
-//        System.out.println(prettyJson(toJson(task4, childs).toJSONString()));
+//        System.out.println(prettyJson(toTaskJson(task4, childs).toJSONString()));
         System.out.println(prettyJson(toJson(null, childs).toJSONString()));
 
     }
@@ -150,7 +151,15 @@ public class JsonParser {
     }
 
 
-    private static JSONArray toJson(List<Task> tasks) {
+    private static JSONArray toTaskJson(List<Task> tasks) {
         return tasks.stream().map(JsonParser::toJson).collect(Collectors.toCollection(JSONArray::new));
+    }
+
+    public static JSONArray toJson(List<Budget> budgets) {
+        JSONArray array = new JSONArray();
+        for (Budget budget : budgets) {
+            array.add(toJson(budget));
+        }
+        return array;
     }
 }

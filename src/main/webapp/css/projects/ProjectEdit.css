@@ -25,3 +25,7 @@ tag:hover{
     font-size: 9pt;
     color: gray;
 }
+.date-input {
+    width: 8em;
+    text-align: right;
+}

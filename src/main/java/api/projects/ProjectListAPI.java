@@ -1,6 +1,7 @@
 package api.projects;
 
 import constants.API;
+import controllers.IAPI;
 import entity.Project;
 import entity.Task;
 import entity.TaskStatus;
@@ -26,14 +27,13 @@ import java.util.stream.Collectors;
  * Created by quasilin on 24.02.2019.
  */
 @WebServlet(API.PROJECT.LIST)
-public class ProjectListAPI extends HttpServlet {
+public class ProjectListAPI extends IAPI {
 
     private static final Hibernator hibernator = Hibernator.getInstance();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String uid = req.getSession().getAttribute("uid").toString();
-        List<Project> projects = hibernator.query(Project.class, "owner", Integer.parseInt(uid));
+        List<Project> projects = hibernator.query(Project.class, "owner", getUid(req));
 
         JSONArray array = new JSONArray();
         for (Project p : projects){

@@ -3,7 +3,7 @@ package controllers.projects;
 import constants.API;
 import constants.Links;
 import controllers.IModal;
-import controllers.IPage;
+import entity.budget.BudgetSize;
 import entity.Project;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -11,7 +11,6 @@ import services.hibernate.Hibernator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -40,6 +39,7 @@ public class ProjectEdit extends IModal {
 
         req.setAttribute("pageContent", "/pages/projects/projectEdit.jsp");
         req.setAttribute("save", API.PROJECT.SAVE);
+        req.setAttribute("budgetTypes", BudgetSize.values());
         showModal(req, resp);
     }
 }
