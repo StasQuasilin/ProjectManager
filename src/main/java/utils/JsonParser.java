@@ -37,6 +37,7 @@ public class JsonParser {
         json.put("active", active);
         json.put("done", done);
         json.put("canceled", canceled);
+        json.put("time", project.getTimeProgress());
         json.put("progress", active + done > 0 ? 1f * active / (active + done) : 0);
         if (project.getBudget() != null){
             json.put("budget", toJson(project.getBudget()));
@@ -75,6 +76,7 @@ public class JsonParser {
         JSONObject json = new JSONObject();
         if (task != null) {
             json = toJson(task);
+            json.put("path", toPathJson(task));
             json.put("tasks", toTaskJson(tasks));
             if (task.getParent() != null){
                 return toParentTask(task.getParent(), json);
@@ -85,6 +87,13 @@ public class JsonParser {
 
         return json;
     }
+
+    private static JSONObject toPathJson(Task task) {
+        JSONObject json = new JSONObject();
+
+        return json;
+    }
+
     static JSONObject toParentTask(Task parent, JSONObject child){
         JSONObject json = toJson(parent);
         json.put("child", child);

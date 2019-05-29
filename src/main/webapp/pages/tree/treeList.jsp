@@ -5,33 +5,30 @@
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<table style="height: 100%; width: 100%">
-    <tr>
-        <td>
-            <div class="tree-title">
-                <div id="tree-title" style="display: inherit;"></div>
-                <div class="tree-menu">
-                    <div class="add" id="add-child"></div>
-                </div>
-            </div>
-        </td>
-        <td rowspan="2" valign="top">
-            <jsp:include page="TreeView.jsp"/>
-        </td>
-    </tr>
-    <tr>
-        <td height="100%" width="100%" valign="top">
-            <div id="child-box" class="child-box"></div>
-        </td>
-    </tr>
-    <div id="task-child-instance" class="task-child" style="display: none">
-        <span id="child-title"></span>
-        <div id="menu" class="tree-menu">
-            <c:set var="editLabel"><fmt:message key="edit"/></c:set>
-            <c:set var="deleteLabel"><fmt:message key="delete"/></c:set>
-            <div class="edit" id="edit" title="${editLabel}"></div>
-            <div class="delete" id="delete" title="${deleteLabel}"></div>
-        </div>
+<link rel="stylesheet" href="${context}/css/tree/TreeList.css">
+<script src="${context}/js/tree/TreeList.js"></script>
+<script>
+    tree.api.update='${update}';
+    tree.update();
+</script>
+<div id="tree">
+    <div style="text-align: left" class="tree-title">
+        <a v-on:click="select(-1)"><fmt:message key="tree.all"/></a>/<a>{{tree.title}}</a>
+        <span v-if="tree.title" class="add-button" :parent="selected" onclick="loadModal('${edit}')">
+            +<fmt:message key="tree.add.task"/>
+        </span>
     </div>
-</table>
+    <div v-for="t in tree.tasks" v-on:click="select(t.id)">
+        <div :id="t.id" v-on:click="select(t.id)" class="child-box">
+            <span v-if="t.status == 'active'">
+
+            </span>
+            <span>
+                {{t.title}}
+            </span>
+        </div>
+
+    </div>
+</div>
+
 </html>

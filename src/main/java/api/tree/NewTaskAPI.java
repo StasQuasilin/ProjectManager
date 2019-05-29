@@ -18,7 +18,7 @@ import java.util.HashMap;
 /**
  * Created by szpt_user045 on 26.02.2019.
  */
-@WebServlet(API.TREE.NEW_TASK)
+@WebServlet(API.Tree.NEW_TASK)
 public class NewTaskAPI extends HttpServlet {
 
     private static final Hibernator hibernator = Hibernator.getInstance();

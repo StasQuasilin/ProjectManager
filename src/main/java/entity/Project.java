@@ -4,6 +4,8 @@ import entity.budget.Budget;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 /**
  * Created by quasilin on 24.02.2019.
@@ -91,5 +93,14 @@ public class Project {
     }
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    @Transient
+    public float getTimeProgress() {
+        long b = beginDate.getTime();
+        long n = Date.valueOf(LocalDate.now()).getTime();
+        long c = completeDate.getTime();
+        return 1f * (n - b) / (c - n);
+
     }
 }

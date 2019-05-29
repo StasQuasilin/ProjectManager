@@ -17,60 +17,58 @@
       <fmt:message key="project.new"/>
     </button>
   </div>
-<div id="list" style="display: flex">
-  <div v-for="(value, key) in items">
-    <div class="project-box">
-      <div class="project-box-title">
-        <span style="font-size: 14pt">{{value.title}}</span>
-      </div>
-      <div class="date-container">
-        <span>
-          <fmt:message key="project.edit.date-begin"/>:{{new Date(value.beginDate).toLocaleDateString()}}
+<div id="list" class="project-container">
+  <div v-for="(value, key) in items" class="project-box">
+    <div class="project-box-title">
+      <span style="font-size: 14pt">{{value.title}}</span>
+    </div>
+    <div class="date-container">
+      <span>
+        <fmt:message key="project.edit.date-begin"/>:{{new Date(value.beginDate).toLocaleDateString()}}
+      </span>
+    </div>
+    <div class="date-container">
+      <span>
+        <fmt:message key="project.edit.date-complete"/>:{{new Date(value.completeDate).toLocaleDateString()}}
+      </span>
+    </div>
+    <div class="budget-container">
+      <span>
+        <fmt:message key="project.budget"/>:
+        <span v-if="value.budget">0/{{value.budget.sum}}</span>
+        <span v-else>
+          0
         </span>
-      </div>
-      <div class="date-container">
-        <span>
-          <fmt:message key="project.edit.date-complete"/>:{{new Date(value.completeDate).toLocaleDateString()}}
-        </span>
-      </div>
-      <div class="budget-container">
-        <span>
-          <fmt:message key="project.budget"/>:
-          <span v-if="value.budget">0/{{value.budget.sum}}</span>
-          <span v-else>
-            0
-          </span>
-        </span>
-      </div>
-      <div class="date-container">
-        <span style="font-weight: bold">
-          <fmt:message key="project.tasks"/>
-        </span>
-      </div>
-      <div class="date-container">
-        <span>
-          <fmt:message key="project.tasks.active"/>:
-          <span id="active-tasks">{{value.active}}</span>
-        </span>
-      </div>
-      <div class="date-container">
-        <span>
-          <fmt:message key="project.tasks.canceled"/>:
-          <span id="canceled-tasks">{{value.canceled}}</span>
-        </span>
-      </div>
-      <div class="date-container">
-        <span>
-          <fmt:message key="project.tasks.done"/>:
-          <span id="done-tasks">{{value.done}}</span>
-        </span>
-      </div>
-      <div class="progress-bar-background">
-        <div class="progress-bar"></div>
-      </div>
-      <div class="progress-bar-background">
-        <div class="progress-bar"></div>
-      </div>
+      </span>
+    </div>
+    <div class="date-container">
+      <span style="font-weight: bold">
+        <fmt:message key="project.tasks"/>
+      </span>
+    </div>
+    <div class="date-container">
+      <span>
+        <fmt:message key="project.tasks.active"/>:
+        <span id="active-tasks">{{value.active}}</span>
+      </span>
+    </div>
+    <div class="date-container">
+      <span>
+        <fmt:message key="project.tasks.canceled"/>:
+        <span id="canceled-tasks">{{value.canceled}}</span>
+      </span>
+    </div>
+    <div class="date-container">
+      <span>
+        <fmt:message key="project.tasks.done"/>:
+        <span id="done-tasks">{{value.done}}</span>
+      </span>
+    </div>
+    <div class="progress-bar-background">
+      <div class="progress-bar" :style="{width:value.time + '%'}"></div>
+    </div>
+    <div class="progress-bar-background">
+      <div class="progress-bar"></div>
     </div>
   </div>
 </div>

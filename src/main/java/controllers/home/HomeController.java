@@ -21,6 +21,7 @@ public class HomeController extends HttpServlet {
         req.setAttribute("tree", Links.TREE);
         req.setAttribute("calendar", Links.CALENDAR);
         req.setAttribute("budget", Links.BUDGET);
+        req.setAttribute("payments", Links.PAYMENTS);
         req.setAttribute("settings", Links.SETTINGS);
         req.getRequestDispatcher("/pages/home/home.jsp").forward(req, resp);
     }

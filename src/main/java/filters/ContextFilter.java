@@ -25,13 +25,11 @@ public class ContextFilter implements Filter {
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)servletRequest;
+        req.setAttribute("uid", 1);
         req.setAttribute("context", req.getContextPath());
-        req.setAttribute("language", req.getSession().getAttribute("lang"));
         req.setCharacterEncoding("UTF-8");
         req.setAttribute("previous", req.getRequestURI());
-        req.setAttribute("now", Date.valueOf(LocalDate.now()));
-        req.setAttribute("month", LocalDate.now().getMonthValue());
-        req.setAttribute("year", LocalDate.now().getYear());
+
         filterChain.doFilter(req, servletResponse);
     }
 

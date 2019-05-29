@@ -6,6 +6,11 @@
     background: linear-gradient(0.25turn, #e6ffe6 70%, transparent);
     display: inline-block;
 }
+.add-button{
+    background-color: #f4b400;
+    border-radius: 8pt;
+    color: white;
+}
 .tree-title *{
     background: transparent;
 }

@@ -18,6 +18,9 @@
     <div class="menu-item" onclick="loadPage('${budget}')">
         <fmt:message key="menu.budget"/>
     </div>
+    <div class="menu-item" onclick="loadPage('${payments}')">
+        <fmt:message key="menu.payments"/>
+    </div>
     <div class="menu-item" onclick="loadPage('${settings}')">
         <fmt:message key="menu.settings"/>
     </div>

@@ -18,15 +18,20 @@ public class API {
         public static final String SAVE = "/api/project/save";
     }
 
-    public class TREE{
+    public class Tree {
         public static final String LIST = "/api/tree/list";
         public static final String NEW_TASK = "/api/tree/new/task";
         public static final String EDIT_TASK = "/api/tree/edit/task";
 
     }
 
-    public class BUDGET {
+    public class Budget {
         public static final String EDIT = "/api/budget/edit";
         public static final String UPDATE = "/api/budget/list";
+    }
+
+    public class Payments {
+        public static final String EDIT = "/api/payments/edit";
+        public static final String UPDATE = "/api/payments/list";
     }
 }

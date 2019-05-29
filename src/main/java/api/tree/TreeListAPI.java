@@ -1,10 +1,10 @@
 package api.tree;
 
 import constants.API;
+import controllers.IAPI;
 import entity.Project;
 import entity.Task;
-import jdk.internal.org.objectweb.asm.tree.FieldInsnNode;
-import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import services.hibernate.Hibernator;
 import utils.JsonParser;
 import utils.PostUtil;
@@ -24,8 +24,8 @@ import java.util.stream.Collectors;
 /**
  * Created by szpt_user045 on 26.02.2019.
  */
-@WebServlet(API.TREE.LIST)
-public class TreeListAPI extends HttpServlet {
+@WebServlet(API.Tree.LIST)
+public class TreeListAPI extends IAPI {
 
     private static final Hibernator hibernator = Hibernator.getInstance();
     private static final String PROJECT = "project";
@@ -33,22 +33,24 @@ public class TreeListAPI extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        HashMap<String, String> body = PostUtil.parseBody(req);
-        Task task = null;
-        if (body.containsKey(TASK)){
-            task = hibernator.get(Task.class, "id", Integer.parseInt(body.get(TASK)));
-        } else if (body.containsKey(PROJECT)){
-            Project project = hibernator.get(Project.class, "id", Integer.parseInt(body.get(PROJECT)));
-            task = project.getTask();
-        }
+        JSONObject body = parseBody(req);
+        if(body != null) {
+            System.out.println(body);
+            long selected = (long) body.get("selected");
+            Task task;
+            if (selected == -1) {
+                task = null;
+            } else {
+                task = hibernator.get(Task.class, "id", selected);
+            }
+            final HashMap<String, Object> parameters = new HashMap<>();
+            parameters.put("owner", getUid(req));
+            parameters.put("parent", task);
 
-        LinkedList<Task> sub = new LinkedList<>();
-        if (task != null){
-            sub.addAll(hibernator.query(Task.class, "parent", task));
+            JSONObject json = JsonParser.toJson(task, hibernator.query(Task.class, parameters));
+            write(resp, json.toJSONString());
         } else {
-            sub.addAll(hibernator.query(Project.class, null).stream().map(Project::getTask).collect(Collectors.toList()));
+            write(resp, ERROR);
         }
-        Collections.sort(sub);
-        PostUtil.write(resp, JsonParser.toJson(task, sub).toJSONString());
     }
 }

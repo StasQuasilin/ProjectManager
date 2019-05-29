@@ -17,7 +17,7 @@ import java.util.HashMap;
 /**
  * Created by szpt_user045 on 26.02.2019.
  */
-@WebServlet(API.TREE.EDIT_TASK)
+@WebServlet(API.Tree.EDIT_TASK)
 public class EditTaskAPI extends HttpServlet {
 
     private static final Hibernator HIBERNATOR = Hibernator.getInstance();

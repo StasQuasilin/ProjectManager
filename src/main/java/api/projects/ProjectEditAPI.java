@@ -5,6 +5,7 @@ import controllers.IAPI;
 import entity.*;
 import entity.budget.Budget;
 import entity.budget.BudgetSize;
+import entity.budget.BudgetType;
 import org.json.simple.JSONObject;
 import utils.Util;
 
@@ -14,7 +15,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Created by quasilin on 24.02.2019.
@@ -72,7 +75,11 @@ public class ProjectEditAPI extends IAPI {
                         budget = new Budget();
                         budget.setTitle(project.getTitle());
                         budget.setOwner(project.getOwner());
+                        budget.setBudgetType(BudgetType.project);
+                        budget.setCurrency("uah");
+                        budget.setCreate(Timestamp.valueOf(LocalDateTime.now()));
                         project.setBudget(budget);
+
                         save = true;
                     }
 

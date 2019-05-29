@@ -16,4 +16,7 @@ public class Links {
     public static final String MESSAGES = "/messages.j";
     public static final String COMMANDOS = "/commandos.j";
     public static final String SETTINGS = "/settings.j";
+    public static final String PAYMENTS = "/payments.j";
+    public static final String PAYMENTS_EDIT = "/payments/edit.j";
+    public static final String TREE_EDIT = "/tree/edit.j";
 }

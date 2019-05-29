@@ -18,6 +18,9 @@
 
 <div id="list">
   <div v-for="(value, key) in items">
+    <span v-if="value.type == 'project'">
+    </span>
+    {{value}}
     {{value.title}}
     {{value.sum}} {{value.currency}}
   </div>

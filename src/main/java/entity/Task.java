@@ -12,6 +12,7 @@ public class Task implements Comparable<Task>{
     private String status;
     private Task parent;
     private String title;
+    private User owner;
 
     public Task() {}
 
@@ -54,6 +55,15 @@ public class Task implements Comparable<Task>{
     }
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "owner")
+    public User getOwner() {
+        return owner;
+    }
+    public void setOwner(User owner) {
+        this.owner = owner;
     }
 
     @Override

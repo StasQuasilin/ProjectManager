@@ -19,8 +19,8 @@ public class BudgetList extends IPage {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("title", "budget.title");
         req.setAttribute("pageContent", "/pages/budget/budgetList.jsp");
-        req.setAttribute("edit", API.BUDGET.EDIT);
-        req.setAttribute("update", API.BUDGET.UPDATE);
+        req.setAttribute("edit", API.Budget.EDIT);
+        req.setAttribute("update", API.Budget.UPDATE);
         showPage(req, resp);
     }
 }
