@@ -34,4 +34,9 @@ public class API {
         public static final String EDIT = "/api/payments/edit";
         public static final String UPDATE = "/api/payments/list";
     }
+
+    public class Task {
+        public static final String DELETE = "/api/task/delete";
+        public static final String STATUS = "/api/task/status";
+    }
 }

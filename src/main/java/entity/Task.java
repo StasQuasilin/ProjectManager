@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Table(name = "tasks")
 public class Task implements Comparable<Task>{
     private int id;
-    private String status;
+    private TaskStatus status;
     private Task parent;
     private String title;
     private User owner;
@@ -17,7 +17,7 @@ public class Task implements Comparable<Task>{
     public Task() {}
 
     public Task(String title) {
-        status = TaskStatus.active.toString();
+        status = TaskStatus.active;
         this.title = title;
     }
 
@@ -30,12 +30,12 @@ public class Task implements Comparable<Task>{
         this.id = id;
     }
 
-    @Basic
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
-    public String getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 

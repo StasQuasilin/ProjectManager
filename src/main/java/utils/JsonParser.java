@@ -61,7 +61,7 @@ public class JsonParser {
         JSONObject json = new JSONObject();
         json.put("id", task.getId());
         json.put("title", task.getTitle());
-        json.put("status", task.getStatus());
+        json.put("status", task.getStatus().toString());
         Task parent = task.getParent();
         if (parent != null){
             json.put("parent", parent.getId());

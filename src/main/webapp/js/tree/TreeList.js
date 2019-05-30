@@ -2,7 +2,8 @@ var tree = new Vue({
     el: '#tree',
     data:{
         api:{
-            update:''
+            update:'',
+            edit:''
         },
         tree:{},
         selected:-1
@@ -20,6 +21,10 @@ var tree = new Vue({
         select:function(id){
             this.selected = id;
             this.update();
+        },
+        newTask:function(){
+            loadModal(this.api.edit, {parent: this.selected});
         }
+
     }
 });

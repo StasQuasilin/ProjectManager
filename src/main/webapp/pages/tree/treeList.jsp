@@ -9,12 +9,13 @@
 <script src="${context}/js/tree/TreeList.js"></script>
 <script>
     tree.api.update='${update}';
+    tree.api.edit = '${edit}';
     tree.update();
 </script>
 <div id="tree">
     <div style="text-align: left" class="tree-title">
         <a v-on:click="select(-1)"><fmt:message key="tree.all"/></a>/<a>{{tree.title}}</a>
-        <span v-if="tree.title" class="add-button" :parent="selected" onclick="loadModal('${edit}')">
+        <span v-if="tree.title" class="add-button" :parent="selected" v-on:click="newTask">
             +<fmt:message key="tree.add.task"/>
         </span>
     </div>

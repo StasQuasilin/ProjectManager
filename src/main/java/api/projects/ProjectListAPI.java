@@ -67,7 +67,7 @@ public class ProjectListAPI extends IAPI {
     synchronized List<Task> getChildTask(Task parent, TaskStatus status){
         parameters = new HashMap<>();
         parameters.put("parent", parent);
-        parameters.put("status", status.toString());
+        parameters.put("status", status);
         return hibernator.query(Task.class, parameters);
     }
 }
