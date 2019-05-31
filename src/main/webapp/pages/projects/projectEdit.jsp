@@ -17,18 +17,22 @@
     id:-2,
     name:'<fmt:message key="project.edit.new.budget"/>'
   });
+  <c:forEach items="${budgets}" var="b">
+  edit.budgets.push({
+    id:${b.id},
+    name:'${b.title}',
+    sum:${b.budgetSum},
+    type:'<fmt:message key="project.budget.${b.budgetSize}"/>',
+    currency:'${b.currency}'
+  });
+  </c:forEach>
   <c:forEach items="${budgetTypes}" var="t">
   edit.budgetTypes.push({
     id:'${t}',
     name:'<fmt:message key="project.budget.${t}"/>'
   });
   </c:forEach>
-  <c:forEach items="${budgets}" var="budget">
-  edit.budgets.push({
-    id:${budget.id},
-    name:'${budget.name}'
-  });
-  </c:forEach>
+
   edit.project = {
     title:'',
     begin:new Date().toISOString().substring(0, 10),
@@ -182,6 +186,23 @@
         </td>
       </tr>
 
+    </template>
+    <template v-else-if="project.budget.id != -1">
+      <template v-for="b in budgets" v-if="b.id == project.budget.id"+>
+        <tr>
+          <td>
+            <fmt:message key="project.budget.sum"/>
+          </td>
+          <td>
+            {{b.sum}}&nbsp;{{b.currency}}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" align="right">
+            {{b.type}}
+          </td>
+        </tr>
+      </template>
     </template>
     <tr>
       <td colspan="2" align="center">

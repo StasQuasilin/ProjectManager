@@ -3,6 +3,7 @@ package controllers.projects;
 import constants.API;
 import constants.Links;
 import controllers.IModal;
+import entity.budget.Budget;
 import entity.budget.BudgetSize;
 import entity.Project;
 import org.apache.log4j.Logger;
@@ -40,6 +41,7 @@ public class ProjectEdit extends IModal {
         req.setAttribute("pageContent", "/pages/projects/projectEdit.jsp");
         req.setAttribute("save", API.PROJECT.SAVE);
         req.setAttribute("budgetTypes", BudgetSize.values());
+        req.setAttribute("budgets", hibernator.query(Budget.class, null));
         showModal(req, resp);
     }
 }

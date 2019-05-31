@@ -76,7 +76,9 @@ public class JsonParser {
         JSONObject json = new JSONObject();
         if (task != null) {
             json = toJson(task);
-            json.put("path", toPathJson(task));
+            JSONArray path = new JSONArray();
+            toPathJson(task, path);
+            json.put("path", path);
             json.put("tasks", toTaskJson(tasks));
             if (task.getParent() != null){
                 return toParentTask(task.getParent(), json);
@@ -88,10 +90,16 @@ public class JsonParser {
         return json;
     }
 
-    private static JSONObject toPathJson(Task task) {
-        JSONObject json = new JSONObject();
+    private static void toPathJson(Task task, JSONArray array) {
 
-        return json;
+        if (task.getParent() != null){
+            JSONObject json = new JSONObject();
+            json.put("id", task.getParent().getId());
+            json.put("title", task.getParent().getTitle());
+            array.add(json);
+            toPathJson(task.getParent(), array);
+        }
+
     }
 
     static JSONObject toParentTask(Task parent, JSONObject child){

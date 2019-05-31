@@ -1,28 +1,31 @@
-/**
- * Created by quasilin on 24.02.2019.
- */
-function saveProject(){
-    var id = document.getElementById('id');
-    var title = document.getElementById('title');
-    var date = document.getElementById('date');
-    var description = document.getElementById('description');
-    if (valid(title)){
-        var p = [];
-        if (id.value){
-            p.id = id.value;
+var edit = new Vue({
+    el: '#editor',
+    data:{
+        api:{
+            save:'',
+            length:''
+        },
+        project:{},
+        budgets:[],
+        budgetTypes:[]
+    },
+    computed:{
+        projectLength:function(){
+            return '--';
         }
-        p.title = title.value;
-        if (date.value){
-            p.date = date.value;
-        }
-        if (description.value){
-            p.description = description.value;
-        }
-        var xhr = PostAPI('/api/project/save', p);
-        xhr.onreadystatechange = function(){
-            if (xhr.readyState == 4 && xhr.status == 200){
-
-            }
+    },
+    methods:{
+        addMonth:function(count){
+            var comp = new Date(this.project.complete);
+            comp.setMonth(comp.getMonth() + count);
+            this.project.complete = comp.toISOString().substring(0, 10);
+        },
+        save:function(){
+            PostApi(this.api.save, this.project, function(a){
+                if (a.status == 'success'){
+                    closeModal();
+                }
+            })
         }
     }
-}
+});
