@@ -1,0 +1,92 @@
+.project-box{
+    border-radius: 10pt;
+    box-shadow: 0 2pt 4pt 2pt gray;
+    width: 200pt;
+    height: fit-content;
+    margin: 8pt;
+    text-align: center;
+    border: solid transparent 4pt;
+    position: relative;
+    overflow: hidden;
+    /*background: url('img/y6OxrrQV3B0.jpg') center;*/
+}
+.project-box .edit-menu{
+    display: none;
+}
+.project-box:hover .edit-menu{
+    display: block;
+}
+.project-box-container{
+    border-radius: 5pt;
+    background-color: rgba(245, 245, 245, 0.6);
+    height: 100%;
+}
+.project-box *span{
+    background-color: transparent;
+    text-shadow: 0 0 4px white;
+}
+.project-box:hover{
+    border: solid #ffd400 4pt;
+}
+.project-box-title{
+    background-color: transparent;
+    border-bottom: solid gray 1pt;
+    width: 100%;
+    font-weight: bold;
+}
+.project-box-title span{
+    background-color: transparent;
+}
+
+.progress-bar-background{
+    width: 96%;
+    border: solid #5ab306 1.2pt;
+    border-radius: 8pt;
+    background: transparent;
+    padding: 1.2pt;
+    margin: 2pt;
+
+}
+.progress-bar {
+    background-color: #5ab306;
+    width: 0;
+    min-width: 6pt ;
+    height: 6pt;
+    border-radius: 8pt;
+}
+.date-container{
+    font-size: 10pt;
+    text-align: right;
+    background: transparent;
+    text-shadow: 0 0 2pt white;
+    padding: 0 2pt;
+}
+.date-container span{
+    background: transparent;
+}
+.budget-container{
+    font-size: 12pt;
+    text-align: right;
+    background: transparent;
+    text-shadow: 0 0 2pt white;
+    padding: 0 2pt;
+}
+.budget-container span{
+    background: transparent;
+}
+.edit-menu{
+    background-color: rgba(42, 97, 255, 0.26);
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 8pt 0;
+
+    font-weight: bold;
+}
+.edit-menu .edit-button{
+    background: transparent;
+    color: white;
+}
+.edit-menu .edit-button:hover{
+    text-decoration: underline;
+}

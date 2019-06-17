@@ -1,0 +1,98 @@
+.tree-title{
+    width: 95%;
+    height: 17pt;
+    padding: 8pt 16pt;
+    font-style: italic;
+    background: linear-gradient(0.25turn, #e6ffe6 70%, transparent);
+    display: inline-block;
+}
+.add-button{
+    background-color: #f4b400;
+    border-radius: 8pt;
+    color: white;
+}
+.tree-title *{
+    background: transparent;
+}
+.tree-title, .tree-title span{
+    color: #fbba00;
+    font-weight: bold;
+
+}
+.tree-title-item{
+    background: transparent;
+    text-shadow: 0 0 2pt #ececec;
+    padding: 0 4pt;
+}
+.tree-title-item:hover{
+    border-bottom: dashed gray 1pt;
+}
+.child-box{
+    border: solid #e6ffe6 2pt;
+    height: 100%;
+    overflow-y: scroll;
+}
+.child-box::-webkit-scrollbar{
+    width: 6px;
+}
+.child-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+.child-box::-webkit-scrollbar-thumb {
+    border-radius: 4pt;
+    background: #fbba00;
+}
+.child-box::-webkit-scrollbar-thumb:hover {
+    background: #f4b400;
+}
+.task-child{
+    width: 95%;
+    font-size: 12pt;
+    margin: 8pt 4pt;
+    background: linear-gradient(0.25turn, #e6ffe6 70%, transparent);
+    padding: 8pt;
+    border: solid #e6ffe6 2pt;
+}
+.task-child * {
+    background-color: transparent;
+}
+.task-child:hover .tree-menu{
+    display: inline-block;
+}
+.task-child .tree-menu{
+    display: none;
+}
+.tree-menu{
+    display: inline-block;
+    font-style: normal;
+    /*background-color: #e6ffe6;*/
+    float: right;
+    padding: 0 12pt;
+    border-radius: 8pt;
+}
+
+.tree-menu * {
+    box-shadow: 0 0 2pt gray;
+    border-radius: 8pt;
+    width: 20pt;
+    height: 20pt;
+    display: inline-block;
+
+}
+
+.tree-menu .add{
+    background: url('../../img/buttons/add.png') center;
+    background-size: 98%;
+
+}
+.tree-menu .add:hover, .tree-menu .edit:hover, .tree-menu .delete:hover{
+    box-shadow: 0 0 4pt #fbba00;
+}
+.tree-menu .edit{
+    background: url('../../img/buttons/edit.png') center;
+    background-size: 98%;
+}
+.tree-menu .delete{
+    background: url('../../img/buttons/delete.png') center;
+    background-size: 98%;
+}
