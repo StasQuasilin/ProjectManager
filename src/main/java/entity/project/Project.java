@@ -1,10 +1,11 @@
-package entity;
+package entity.project;
 
+import constants.Keys;
+import entity.user.User;
 import entity.budget.Budget;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 /**
@@ -12,7 +13,7 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = "projects")
-public class Project {
+public class Project implements Keys {
     private int id;
     private User owner;
     private Date beginDate;
@@ -32,7 +33,7 @@ public class Project {
     }
 
     @OneToOne
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = OWNER)
     public User getOwner() {
         return owner;
     }
@@ -41,7 +42,7 @@ public class Project {
     }
 
     @Basic
-    @Column(name = "begin_date")
+    @Column(name = PROJECT_BEGIN)
     public Date getBeginDate() {
         return beginDate;
     }
@@ -50,7 +51,7 @@ public class Project {
     }
 
     @Basic
-    @Column(name = "complete_date")
+    @Column(name = PROJECT_END)
     public Date getCompleteDate() {
         return completeDate;
     }
@@ -59,7 +60,7 @@ public class Project {
     }
 
     @Basic
-    @Column(name = "title")
+    @Column(name = TITLE)
     public String getTitle() {
         return title;
     }
@@ -69,7 +70,7 @@ public class Project {
     }
 
     @Basic
-    @Column(name = "description")
+    @Column(name = DESCRIPTION)
     public String getDescription() {
         return description;
     }
@@ -78,7 +79,7 @@ public class Project {
     }
 
     @OneToOne
-    @JoinColumn(name = "budget")
+    @JoinColumn(name = BUDGET)
     public Budget getBudget() {
         return budget;
     }
@@ -87,7 +88,7 @@ public class Project {
     }
 
     @OneToOne
-    @JoinColumn(name = "task")
+    @JoinColumn(name = TASK)
     public Task getTask() {
         return task;
     }

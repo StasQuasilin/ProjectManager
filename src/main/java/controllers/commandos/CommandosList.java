@@ -1,6 +1,6 @@
 package controllers.commandos;
 
-import constants.Links;
+import constants.Branches;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by quasilin on 24.02.2019.
  */
-@WebServlet(Links.COMMANDOS)
+@WebServlet(Branches.COMMANDOS)
 public class CommandosList extends HttpServlet {
 
     @Override

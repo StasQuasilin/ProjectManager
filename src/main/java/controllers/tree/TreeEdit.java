@@ -1,7 +1,7 @@
 package controllers.tree;
 
 import constants.API;
-import constants.Links;
+import constants.Branches;
 import controllers.IModal;
 import org.json.simple.JSONObject;
 
@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by szpt_user045 on 30.05.2019.
  */
-@WebServlet(Links.TREE_EDIT)
+@WebServlet(Branches.TREE_EDIT)
 public class TreeEdit extends IModal{
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

@@ -1,8 +1,8 @@
 package utils;
 
 import entity.budget.Budget;
-import entity.Project;
-import entity.Task;
+import entity.project.Project;
+import entity.project.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import services.answers.IAnswer;

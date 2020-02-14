@@ -1,4 +1,8 @@
-package entity;
+package entity.project;
+
+import com.sun.istack.NotNull;
+import constants.Keys;
+import entity.user.User;
 
 import javax.persistence.*;
 
@@ -7,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = "tasks")
-public class Task implements Comparable<Task>{
+public class Task implements Comparable<Task>, Keys {
     private int id;
     private TaskStatus status;
     private Task parent;
@@ -31,7 +35,7 @@ public class Task implements Comparable<Task>{
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status")
+    @Column(name = STATUS)
     public TaskStatus getStatus() {
         return status;
     }
@@ -40,7 +44,7 @@ public class Task implements Comparable<Task>{
     }
 
     @OneToOne
-    @JoinColumn(name = "parent")
+    @JoinColumn(name = PARENT)
     public Task getParent() {
         return parent;
     }
@@ -49,7 +53,7 @@ public class Task implements Comparable<Task>{
     }
 
     @Basic
-    @Column(name = "title")
+    @Column(name = TITLE)
     public String getTitle() {
         return title;
     }
@@ -58,7 +62,7 @@ public class Task implements Comparable<Task>{
     }
 
     @OneToOne
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = OWNER)
     public User getOwner() {
         return owner;
     }

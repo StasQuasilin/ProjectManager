@@ -1,11 +1,10 @@
 package filters;
 
-import constants.Links;
-import entity.User;
+import constants.Branches;
+import entity.user.UserAccess;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class LoginFilter implements Filter {
 
     private static final Logger log = Logger.getLogger(LoginFilter.class);
 //    private static final Hibernator hibernator = Hibernator.getHibernator();
-    private static final HashMap<String, User> activeUsers = new HashMap<>();
+    private static final HashMap<String, UserAccess> activeUsers = new HashMap<>();
 
     public void init(FilterConfig filterConfig) throws ServletException {
 
@@ -37,14 +36,14 @@ public class LoginFilter implements Filter {
             filterChain.doFilter(servletRequest, servletResponse);
         } else {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
-            response.sendRedirect(request.getContextPath() + Links.LOGIN);
+            response.sendRedirect(request.getContextPath() + Branches.LOGIN);
         }
 
     }
 
-    public static String addUser(User user){
+    public static String addUser(UserAccess userAccess){
         String token = getToken();
-        activeUsers.put(token, user);
+        activeUsers.put(token, userAccess);
         return token;
     }
 

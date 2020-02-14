@@ -1,6 +1,8 @@
 package entity.budget;
 
-import entity.User;
+import constants.Keys;
+import entity.user.User;
+import entity.user.UserAccess;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -9,8 +11,9 @@ import java.sql.Timestamp;
  * Created by szpt_user045 on 25.02.2019.
  */
 @Entity
-@Table(name = "budgets")
-public class Budget {
+@Table(name = Keys.BUDGETS)
+public class Budget implements Keys {
+
     private int id;
     private String title;
     private BudgetSize budgetSize;
@@ -30,7 +33,7 @@ public class Budget {
     }
 
     @Basic
-    @Column(name = "title")
+    @Column(name = TITLE)
     public String getTitle() {
         return title;
     }
@@ -39,7 +42,7 @@ public class Budget {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "size")
+    @Column(name = SIZE)
     public BudgetSize getBudgetSize() {
         return budgetSize;
     }
@@ -48,7 +51,7 @@ public class Budget {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type")
+    @Column(name = TYPE)
     public BudgetType getBudgetType() {
         return budgetType;
     }
@@ -57,7 +60,7 @@ public class Budget {
     }
 
     @Basic
-    @Column(name = "sum")
+    @Column(name = SUM)
     public float getBudgetSum() {
         return budgetSum;
     }
@@ -66,7 +69,7 @@ public class Budget {
     }
 
     @Basic
-    @Column(name = "currency")
+    @Column(name = CURRENCY)
     public String getCurrency() {
         return currency;
     }
@@ -75,7 +78,7 @@ public class Budget {
     }
 
     @OneToOne
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = OWNER)
     public User getOwner() {
         return owner;
     }
@@ -84,7 +87,7 @@ public class Budget {
     }
 
     @Basic
-    @Column(name = "created")
+    @Column(name = CREATED)
     public Timestamp getCreate() {
         return create;
     }

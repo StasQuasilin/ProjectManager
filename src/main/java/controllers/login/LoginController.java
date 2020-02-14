@@ -1,6 +1,6 @@
 package controllers.login;
 
-import constants.Links;
+import constants.Branches;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by szpt_user045 on 22.02.2019.
  */
-@WebServlet(Links.LOGIN)
+@WebServlet(Branches.LOGIN)
 public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

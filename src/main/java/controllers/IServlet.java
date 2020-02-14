@@ -1,5 +1,6 @@
 package controllers;
 
+import constants.Keys;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -12,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by szpt_user045 on 24.05.2019.
  */
-public class IServlet extends HttpServlet {
+public class IServlet extends HttpServlet implements Keys {
 
     final JSONParser parser = new JSONParser();
     public static final Hibernator hibernator = Hibernator.getInstance();

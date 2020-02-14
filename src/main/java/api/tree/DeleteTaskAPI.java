@@ -1,8 +1,8 @@
 package api.tree;
 
 import constants.API;
-import controllers.IAPI;
-import entity.Task;
+import controllers.ServletAPI;
+import entity.project.Task;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
@@ -15,7 +15,7 @@ import java.io.IOException;
  * Created by szpt_user045 on 30.05.2019.
  */
 @WebServlet(API.Task.DELETE)
-public class DeleteTaskAPI extends IAPI {
+public class DeleteTaskAPI extends ServletAPI {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);

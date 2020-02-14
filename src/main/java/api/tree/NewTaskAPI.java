@@ -1,7 +1,7 @@
 package api.tree;
 
 import constants.API;
-import entity.Task;
+import entity.project.Task;
 import services.LanguageBase;
 import services.hibernate.Hibernator;
 import utils.JsonParser;

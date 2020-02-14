@@ -1,6 +1,6 @@
 package controllers.login;
 
-import constants.Links;
+import constants.Branches;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by szpt_user045 on 22.02.2019.
  */
-@WebServlet(Links.REGISTRATION)
+@WebServlet(Branches.REGISTRATION)
 public class RegistrationController extends HttpServlet {
 
     @Override

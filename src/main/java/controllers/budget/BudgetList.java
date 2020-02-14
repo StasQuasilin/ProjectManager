@@ -1,7 +1,7 @@
 package controllers.budget;
 
 import constants.API;
-import constants.Links;
+import constants.Branches;
 import controllers.IPage;
 
 import javax.servlet.ServletException;
@@ -13,7 +13,7 @@ import java.io.IOException;
 /**
  * Created by quasilin on 24.02.2019.
  */
-@WebServlet(Links.BUDGET)
+@WebServlet(Branches.BUDGET)
 public class BudgetList extends IPage {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

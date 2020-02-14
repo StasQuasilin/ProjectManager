@@ -1,9 +1,9 @@
 package api.tree;
 
 import constants.API;
-import controllers.IAPI;
-import entity.Task;
-import entity.TaskStatus;
+import controllers.ServletAPI;
+import entity.project.Task;
+import entity.project.TaskStatus;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
@@ -16,7 +16,7 @@ import java.io.IOException;
  * Created by szpt_user045 on 30.05.2019.
  */
 @WebServlet(API.Task.STATUS)
-public class ChangeStatusAPI extends IAPI {
+public class ChangeStatusAPI extends ServletAPI {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);

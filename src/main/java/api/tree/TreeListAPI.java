@@ -1,31 +1,24 @@
 package api.tree;
 
 import constants.API;
-import controllers.IAPI;
-import entity.Project;
-import entity.Task;
+import controllers.ServletAPI;
+import entity.project.Task;
 import org.json.simple.JSONObject;
 import services.hibernate.Hibernator;
 import utils.JsonParser;
-import utils.PostUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Created by szpt_user045 on 26.02.2019.
  */
 @WebServlet(API.Tree.LIST)
-public class TreeListAPI extends IAPI {
+public class TreeListAPI extends ServletAPI {
 
     private static final Hibernator hibernator = Hibernator.getInstance();
     private static final String PROJECT = "project";

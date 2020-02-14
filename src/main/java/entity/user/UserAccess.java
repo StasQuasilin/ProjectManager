@@ -1,4 +1,6 @@
-package entity;
+package entity.user;
+
+import constants.Keys;
 
 import javax.persistence.*;
 
@@ -6,15 +8,15 @@ import javax.persistence.*;
  * Created by szpt_user045 on 22.02.2019.
  */
 @Entity
-@Table(name = "users")
-public class User {
+@Table(name = Keys.USER_ASSES)
+public class UserAccess implements Keys{
     private int id;
     private String email;
     private String password;
-    private String language;
+    private User user;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -23,7 +25,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "email")
+    @Column(name = LOGIN)
     public String getEmail() {
         return email;
     }
@@ -32,7 +34,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "password")
+    @Column(name = PASSWORD)
     public String getPassword() {
         return password;
     }
@@ -40,12 +42,13 @@ public class User {
         this.password = password;
     }
 
-    @Basic
-    @Column(name = "language")
-    public String getLanguage() {
-        return language;
+    @OneToOne
+    @JoinColumn(name = USER)
+    public User getUser() {
+        return user;
     }
-    public void setLanguage(String language) {
-        this.language = language;
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

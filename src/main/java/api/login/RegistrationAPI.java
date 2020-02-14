@@ -2,7 +2,7 @@ package api.login;
 
 import constants.API;
 import entity.RegistrationConfirm;
-import entity.User;
+import entity.user.UserAccess;
 import services.LanguageBase;
 import services.answers.ErrorAnswer;
 import services.answers.IAnswer;
@@ -38,8 +38,8 @@ public class RegistrationAPI extends HttpServlet{
         String lang = "ru";
 
         IAnswer answer;
-        User user = hibernator.get(User.class, "login", email);
-        if (user != null){
+        UserAccess userAccess = hibernator.get(UserAccess.class, "login", email);
+        if (userAccess != null){
             answer = new ErrorAnswer();
             answer.add("msg", language.get(lang, ALREADY_USE));
         } else {

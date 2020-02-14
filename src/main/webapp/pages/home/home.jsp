@@ -10,7 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
     <link rel="stylesheet" href="${context}/css/Main.css">
     <script src="${context}/js/core.js"></script>
-    <script src="${context}/vue/Application.js"></script>
     <script>
         const context = '${context}'
     </script>

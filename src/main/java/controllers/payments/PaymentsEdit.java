@@ -1,12 +1,11 @@
 package controllers.payments;
 
 import constants.API;
-import constants.Links;
+import constants.Branches;
 import controllers.IModal;
 import entity.budget.Budget;
 import entity.payments.PaymentType;
 
-import javax.jws.WebService;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +15,7 @@ import java.io.IOException;
 /**
  * Created by szpt_user045 on 28.05.2019.
  */
-@WebServlet(Links.PAYMENTS_EDIT)
+@WebServlet(Branches.PAYMENTS_EDIT)
 public class PaymentsEdit extends IModal {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

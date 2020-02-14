@@ -1,11 +1,11 @@
 package controllers.projects;
 
 import constants.API;
-import constants.Links;
+import constants.Branches;
 import controllers.IModal;
 import entity.budget.Budget;
 import entity.budget.BudgetSize;
-import entity.Project;
+import entity.project.Project;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
 import services.hibernate.Hibernator;
@@ -19,7 +19,7 @@ import java.io.IOException;
 /**
  * Created by quasilin on 24.02.2019.
  */
-@WebServlet(Links.PROJECT_EDIT)
+@WebServlet(Branches.PROJECT_EDIT)
 public class ProjectEdit extends IModal {
 
     private static final Logger log = Logger.getLogger(ProjectEdit.class);
@@ -29,7 +29,7 @@ public class ProjectEdit extends IModal {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);
         if (body != null) {
-            if (body.containsKey("id")){
+            if (body.containsKey(ID)){
                 long id = (long) body.remove("id");
                 req.setAttribute("project",hibernator.get(Project.class, "id", id));
                 req.setAttribute("title", "project.edit");
@@ -38,8 +38,8 @@ public class ProjectEdit extends IModal {
             }
         }
 
-        req.setAttribute("pageContent", "/pages/projects/projectEdit.jsp");
-        req.setAttribute("save", API.PROJECT.SAVE);
+        req.setAttribute(PAGE_CONTENT, "/pages/projects/projectEdit.jsp");
+        req.setAttribute(SAVE, API.PROJECT.SAVE);
         req.setAttribute("budgetTypes", BudgetSize.values());
         req.setAttribute("budgets", hibernator.query(Budget.class, null));
         showModal(req, resp);

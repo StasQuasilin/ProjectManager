@@ -10,8 +10,8 @@
             <!--<http-method>GET</http-method>-->
             <!--<http-method>POST</http-method>-->
         <!--</web-resource-collection>-->
-        <!--<user-data-constraint>-->
+        <!--<userAccess-data-constraint>-->
             <!--<transport-guarantee>CONFIDENTIAL</transport-guarantee>-->
-        <!--</user-data-constraint>-->
+        <!--</userAccess-data-constraint>-->
     <!--</security-constraint>-->
 </web-app>

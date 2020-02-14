@@ -1,11 +1,13 @@
 package api.projects;
 
 import constants.API;
-import controllers.IAPI;
-import entity.*;
+import controllers.ServletAPI;
 import entity.budget.Budget;
 import entity.budget.BudgetSize;
 import entity.budget.BudgetType;
+import entity.project.Project;
+import entity.project.Task;
+import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.Util;
 
@@ -23,7 +25,7 @@ import java.time.LocalDateTime;
  * Created by quasilin on 24.02.2019.
  */
 @WebServlet(API.PROJECT.SAVE)
-public class ProjectEditAPI extends IAPI {
+public class ProjectEditAPI extends ServletAPI {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -40,8 +42,8 @@ public class ProjectEditAPI extends IAPI {
                 project = hibernator.get(Project.class, "id", id);
             }else {
                 project = new Project();
-                String uid = req.getSession().getAttribute("uid").toString();
-                project.setOwner(hibernator.get(User.class, "id", Integer.parseInt(uid)));
+                String uid = req.getSession().getAttribute(UID).toString();
+                project.setOwner(hibernator.get(User.class, ID, Integer.parseInt(uid)));
                 Task task = new Task(project.getTitle());
                 project.setTask(task);
                 save = true;

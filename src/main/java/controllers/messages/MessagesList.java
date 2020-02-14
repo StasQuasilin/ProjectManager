@@ -1,6 +1,6 @@
 package controllers.messages;
 
-import constants.Links;
+import constants.Branches;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,7 +12,7 @@ import java.io.IOException;
 /**
  * Created by quasilin on 24.02.2019.
  */
-@WebServlet(Links.MESSAGES)
+@WebServlet(Branches.MESSAGES)
 public class MessagesList extends HttpServlet {
 
     @Override

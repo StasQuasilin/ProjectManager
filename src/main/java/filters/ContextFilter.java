@@ -1,5 +1,6 @@
 package filters;
 
+import constants.Keys;
 import org.apache.log4j.Logger;
 import services.hibernate.HibernateSessionFactory;
 
@@ -13,22 +14,18 @@ import java.time.LocalDate;
 /**
  * Created by Quasilin on 09.09.2018.
  */
-@WebFilter(value = "*")
-public class ContextFilter implements Filter {
-
-    private static final Logger log = Logger.getLogger(ContextFilter.class);
+@WebFilter(value = Keys.STAR)
+public class ContextFilter implements Filter, Keys {
 
     public void init(FilterConfig filterConfig) throws ServletException {
-        log.info("Init new context filter");
         HibernateSessionFactory.init();
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)servletRequest;
-        req.setAttribute("uid", 1);
-        req.setAttribute("context", req.getContextPath());
-        req.setCharacterEncoding("UTF-8");
-        req.setAttribute("previous", req.getRequestURI());
+        req.setAttribute(CONTEXT, req.getContextPath());
+        req.setCharacterEncoding(ENCODING);
+        req.getSession().setAttribute(LANGUAGE, "uk");
 
         filterChain.doFilter(req, servletResponse);
     }

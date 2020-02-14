@@ -43,7 +43,7 @@ function PostApi(url, parameters, onSuccess, onError, debug){
         if (onSuccess){
             if (answer != '') {
                 try {
-                    var json = JSON.parse(answer)
+                    var json = JSON.parse(answer);
                     try {
                         onSuccess(json);
                     } catch (on) {

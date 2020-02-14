@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * Created by szpt_user045 on 24.05.2019.
  */
-public abstract class IAPI extends IServlet {
+public abstract class ServletAPI extends IServlet {
 
     static final String ENCODING = "UTF-8";
     public static final String SUCCESS = JsonParser.toJson(new SuccessAnswer()).toJSONString();

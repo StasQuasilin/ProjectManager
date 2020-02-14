@@ -1,33 +1,28 @@
 package api.projects;
 
 import constants.API;
-import controllers.IAPI;
-import entity.Project;
-import entity.Task;
-import entity.TaskStatus;
-import javafx.beans.binding.ObjectExpression;
+import controllers.ServletAPI;
+import entity.project.Project;
+import entity.project.Task;
+import entity.project.TaskStatus;
 import org.json.simple.JSONArray;
-import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 import services.hibernate.Hibernator;
 import utils.JsonParser;
 import utils.PostUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Properties;
-import java.util.stream.Collectors;
 
 /**
  * Created by quasilin on 24.02.2019.
  */
 @WebServlet(API.PROJECT.LIST)
-public class ProjectListAPI extends IAPI {
+public class ProjectListAPI extends ServletAPI {
 
     private static final Hibernator hibernator = Hibernator.getInstance();
 
