@@ -37,6 +37,10 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="Tomcat 8.5.33" level="application_server_libraries" />
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="vue" level="application" />
+    <orderEntry type="library" name="vuetify" level="application" />
+    <orderEntry type="library" name="jquery" level="application" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:javax.servlet-api:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:jstl:1.2" level="project" />
     <orderEntry type="library" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" level="project" />
@@ -63,5 +67,7 @@
     <orderEntry type="library" name="Maven: com.sun.xml.bind:jaxb-core:2.2.11" level="project" />
     <orderEntry type="library" name="Maven: javax.activation:activation:1.1.1" level="project" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="vue" level="application" />
+    <orderEntry type="library" name="vuetify" level="application" />
   </component>
 </module>

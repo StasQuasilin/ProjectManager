@@ -1,6 +1,5 @@
 package controllers.projects;
 
-import constants.API;
 import constants.Branches;
 import constants.Keys;
 import controllers.IPage;
@@ -16,10 +15,13 @@ import java.io.IOException;
  */
 @WebServlet(Branches.PROJECTS)
 public class ProjectList extends IPage implements Keys {
+    private static final String _TITLE = "projects.title";
+    private static final String _CONTENT = "/pages/projects/projectList.jsp";
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute(TITLE, "projects.title");
-        req.setAttribute(PAGE_CONTENT, "/pages/projects/projectList.jsp");
+        req.setAttribute(TITLE, _TITLE);
+        req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(EDIT, Branches.PROJECT_EDIT);
 
         showPage(req, resp);
