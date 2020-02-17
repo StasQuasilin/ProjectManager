@@ -1,13 +1,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value=""/>
+<fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<head>
-
-</head>
 <body>
   <div class="project-box">
     <div class="project-box-container">
@@ -62,7 +59,6 @@
         <div class="progress-bar" id="done-progress-bar"></div>
       </div>
     </div>
-
   </div>
 </body>
 </html>

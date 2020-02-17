@@ -19,4 +19,6 @@ public interface Branches {
     String PAYMENTS = "/payments.j";
     String PAYMENTS_EDIT = "/payments/edit.j";
     String TREE_EDIT = "/tree/edit.j";
+    String SOCKET_ADDRESS = "/socket";
+    String SOCKET_PROTOCOL = "ws://";
 }

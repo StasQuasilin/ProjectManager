@@ -13,8 +13,8 @@ import java.io.IOException;
 public abstract class ServletAPI extends IServlet {
 
     static final String ENCODING = "UTF-8";
-    public static final String SUCCESS = JsonParser.toJson(new SuccessAnswer()).toJSONString();
-    public static final String ERROR = JsonParser.toJson(new ErrorAnswer()).toJSONString();
+    public static final String SUCCESS = "SUCCESS";//JsonParser.toJson(new SuccessAnswer()).toJSONString();
+    public static final String ERROR = "ERROR";//JsonParser.toJson(new ErrorAnswer()).toJSONString();
 
     public void write(HttpServletResponse resp, String text) throws IOException {
         resp.setCharacterEncoding(ENCODING);

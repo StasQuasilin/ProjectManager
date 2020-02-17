@@ -40,9 +40,9 @@ public class EditTaskAPI extends ServletAPI {
             task.setOwner(hibernator.get(User.class, ID, getUid(req)));
             task.setStatus(TaskStatus.active);
             hibernator.save(task);
-            write(resp, SUCCESS);
+//            write(resp, SUCCESS);
         } else {
-            write(resp, ERROR);
+//            write(resp, ERROR);
         }
     }
 }

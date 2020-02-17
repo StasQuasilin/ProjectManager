@@ -3,7 +3,7 @@ package utils;
 import entity.budget.Budget;
 import entity.budget.BudgetArticle;
 import entity.budget.BudgetPoint;
-import services.DateContainers.LT;
+import services.hibernate.DateContainers.LT;
 import services.hibernate.Hibernator;
 
 import java.sql.Date;

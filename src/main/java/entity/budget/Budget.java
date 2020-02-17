@@ -3,6 +3,8 @@ package entity.budget;
 import constants.Keys;
 import entity.user.User;
 import entity.user.UserAccess;
+import org.json.simple.JSONObject;
+import utils.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -12,7 +14,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = Keys.BUDGETS)
-public class Budget implements Keys {
+public class Budget implements JsonAble, Keys {
 
     private int id;
     private String title;
@@ -94,5 +96,15 @@ public class Budget implements Keys {
 
     public void setCreate(Timestamp create) {
         this.create = create;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = pool.getObject();
+        object.put(ID, id);
+        object.put(TITLE, title);
+        object.put(AMOUNT, budgetSum);
+
+        return object;
     }
 }

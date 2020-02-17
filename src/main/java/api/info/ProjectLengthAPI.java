@@ -71,7 +71,6 @@ public class ProjectLengthAPI extends HttpServlet {
             IAnswer answer = new SuccessAnswer();
             answer.add("length", String.join(", ", list));
 
-            PostUtil.write(resp, JsonParser.toJson(answer).toJSONString());
             body.clear();
             list.clear();
         } catch (Exception e){

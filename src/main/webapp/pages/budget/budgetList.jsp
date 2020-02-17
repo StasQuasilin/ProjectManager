@@ -5,7 +5,7 @@
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<script src="${context}/js/projects/projectList.js"></script>
+<script src="${context}/vue/projects/projectList.js"></script>
 <script>
   projectList.api.update = '${update}';
   projectList.update();

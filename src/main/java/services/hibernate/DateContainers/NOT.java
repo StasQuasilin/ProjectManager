@@ -1,4 +1,4 @@
-package services.DateContainers;
+package services.hibernate.DateContainers;
 
 /**
  * Created by szpt_user045 on 13.11.2018.

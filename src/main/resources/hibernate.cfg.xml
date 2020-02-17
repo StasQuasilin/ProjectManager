@@ -17,6 +17,7 @@
         <mapping class="entity.user.User"/>
         <mapping class="entity.user.Person"/>
         <mapping class="entity.project.Project"/>
+        <mapping class="entity.project.ProjectMember"/>
         <mapping class="entity.budget.Budget"/>
         <mapping class="entity.budget.BudgetPoint"/>
         <mapping class="entity.budget.BudgetArticle"/>

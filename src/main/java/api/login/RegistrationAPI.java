@@ -53,7 +53,7 @@ public class RegistrationAPI extends HttpServlet{
         }
 
 
-        PostUtil.write(resp, JsonParser.toJson(answer).toJSONString());
+//        PostUtil.write(resp, JsonParser.toJson(answer).toJSONString());
         body.clear();
 
     }

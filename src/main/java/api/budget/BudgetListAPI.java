@@ -19,6 +19,6 @@ public class BudgetListAPI extends ServletAPI {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<entity.budget.Budget> budgets = hibernator.query(entity.budget.Budget.class, "owner", getUid(req));
-        write(resp, JsonParser.toJson(budgets).toJSONString());
+//        write(resp, JsonParser.toJson(budgets).toJSONString());
     }
 }

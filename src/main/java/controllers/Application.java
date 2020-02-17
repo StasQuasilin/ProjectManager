@@ -22,6 +22,9 @@ public class Application extends HttpServlet implements Keys {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute(PROJECTS, Branches.PROJECTS);
         req.setAttribute(BUDGET, Branches.BUDGET);
+        req.setAttribute(SOCKET_PROTOCOL, Branches.SOCKET_PROTOCOL);
+        req.setAttribute(SOCKET_SERVER, req.getRequestURI());
+        req.setAttribute(SOCKET_ADDRESS, Branches.SOCKET_ADDRESS);
         req.getRequestDispatcher(APPLICATION).forward(req, resp);
     }
 }

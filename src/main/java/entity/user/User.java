@@ -47,8 +47,12 @@ public class User implements Keys {
     public String getTheme() {
         return theme;
     }
-
     public void setTheme(String theme) {
         this.theme = theme;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
     }
 }

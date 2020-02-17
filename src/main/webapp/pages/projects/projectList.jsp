@@ -7,9 +7,12 @@
 <html>
   <link rel="stylesheet" href="${context}/css/ProjectPage.css">
   <link rel="stylesheet" href="${context}/ProjectBox.css">
-  <script src="${context}/js/projects/projectList.js"></script>
+  <script src="${context}/vue/projects/projectList.vue"></script>
   <script>
-    projectList.api.update = '${update}';
+    <c:forEach items="${subscribes}" var="subscribe">
+    subscriber.subscribe('${subscribe}', projectList.update);
+    </c:forEach>
+
   </script>
   <div id="title-content" style="display: inline-block; background: transparent; margin: 0 4pt">
     <button onclick="loadModal('${edit}')">
@@ -23,18 +26,18 @@
     </div>
     <div class="date-container">
       <span>
-        <fmt:message key="project.edit.date-begin"/>:{{new Date(value.beginDate).toLocaleDateString()}}
+        <fmt:message key="project.edit.date-begin"/>: {{new Date(value.begin).toLocaleDateString()}}
       </span>
     </div>
     <div class="date-container">
       <span>
-        <fmt:message key="project.edit.date-complete"/>:{{new Date(value.completeDate).toLocaleDateString()}}
+        <fmt:message key="project.edit.date-complete"/>: {{new Date(value.end).toLocaleDateString()}}
       </span>
     </div>
     <div class="budget-container">
       <span>
         <fmt:message key="project.budget"/>:
-        <span v-if="value.budget">0/{{value.budget.sum}}</span>
+        <span v-if="value.budget">0/{{value.budget.amount}}</span>
         <span v-else>
           0
         </span>

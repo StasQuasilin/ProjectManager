@@ -53,7 +53,6 @@ public class LoginAPI extends HttpServlet implements Keys {
         }
 
         body.clear();
-        PostUtil.write(resp, JsonParser.toJson(answer).toJSONString());
 
     }
 }

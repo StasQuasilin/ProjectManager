@@ -1,7 +1,7 @@
 package services.hibernate;
 
 import org.hibernate.Session;
-import services.DateContainers.*;
+import services.hibernate.DateContainers.*;
 import services.State;
 
 import javax.persistence.criteria.*;

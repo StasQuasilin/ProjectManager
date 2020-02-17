@@ -34,7 +34,6 @@ public class NewTaskAPI extends HttpServlet {
             Task task = new Task(LANGUAGE_BASE.get(language, "new.task"));
             task.setParent(parent);
             hibernator.save(task);
-            PostUtil.write(resp, JsonParser.toJson(task).toJSONString());
         }
         body.clear();
     }

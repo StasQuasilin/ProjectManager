@@ -14,11 +14,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+    <script src="${context}/js/subscriber.js"></script>
     <link rel="stylesheet" href="${context}/css/Application.css">
     <script src="${context}/js/Application.js"></script>
     <script src="${context}/js/core.js"></script>
     <script>
         const context = '${context}';
+        const UserID = 2;
+        subscriber.init('${socketProtocol}', window.location.host + '${socketServer}', '${socketAddress}');
     </script>
 </head>
 <body>

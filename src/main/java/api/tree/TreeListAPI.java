@@ -39,8 +39,8 @@ public class TreeListAPI extends ServletAPI {
             parameters.put("owner", getUid(req));
             parameters.put("parent", task);
 
-            JSONObject json = JsonParser.toJson(task, hibernator.query(Task.class, parameters));
-            write(resp, json.toJSONString());
+//            JSONObject json = JsonParser.toJson(task, hibernator.query(Task.class, parameters));
+//            write(resp, json.toJSONString());
         } else {
             write(resp, ERROR);
         }
