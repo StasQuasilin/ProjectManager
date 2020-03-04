@@ -21,4 +21,12 @@ public interface Branches {
     String TREE_EDIT = "/tree/edit.j";
     String SOCKET_ADDRESS = "/socket";
     String SOCKET_PROTOCOL = "ws://";
+    String TASK_EDIT = "/task/edit.j";
+    String TRANSACTIONS = "/transactions.j";
+    String TRANSACTIONS_EDIT = "/transaction/edit.j";
+    String TRANSACTION_REMOVE = "/transaction/remove.j";
+    String BUDGET_EDIT = "/budget/edit.j";
+    String KANBAN = "/kanban/view.j";
+    String PROJECT_DELETE = "/project/delete.j";
+    String TRANSACTION_PLAN = "/transaction/plan.j";
 }

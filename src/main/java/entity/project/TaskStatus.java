@@ -7,5 +7,6 @@ public enum TaskStatus {
     done,
     postponed,
     canceled,
+    progressing,
     active
 }

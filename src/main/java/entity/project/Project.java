@@ -24,9 +24,10 @@ public class Project implements Keys, JsonAble {
     private Budget budget;
     private String description;
     private Task task;
+    private ProjectType type;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -87,6 +88,16 @@ public class Project implements Keys, JsonAble {
     public void setTask(Task task) {
         this.task = task;
     }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = TYPE)
+    public ProjectType getType() {
+        return type;
+    }
+    public void setType(ProjectType type) {
+        this.type = type;
+    }
+
 
     @Transient
     public float getTimeProgress() {

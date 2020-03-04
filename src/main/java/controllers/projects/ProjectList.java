@@ -15,7 +15,7 @@ import java.io.IOException;
  * Created by quasilin on 23.02.2019.
  */
 @WebServlet(Branches.PROJECTS)
-public class ProjectList extends IPage implements Keys {
+public class ProjectList extends IPage{
 
     private static final String _TITLE = "projects.title";
     private static final String _CONTENT = "/pages/projects/projectList.jsp";
@@ -26,6 +26,7 @@ public class ProjectList extends IPage implements Keys {
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(EDIT, Branches.PROJECT_EDIT);
+        req.setAttribute(DELETE, Branches.PROJECT_DELETE);
         req.setAttribute(SUBSCRIBES, subscribes);
 
         showPage(req, resp);

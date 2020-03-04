@@ -2,7 +2,25 @@
     user-select: none;
     font-family: 'Segoe UI', 'Roboto', arial, sans-serif;
 }
-
+.modal-layer{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 100;
+}
 body{
     margin: 0;
+}
+::-webkit-scrollbar {
+    width: 4px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: #fbba00;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #f4b400;
 }

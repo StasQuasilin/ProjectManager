@@ -1,15 +1,17 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="ua"/>
+<fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-<script src="${context}/vue/projects/projectList.js"></script>
 <script>
-  projectList.api.update = '${update}';
-  projectList.update();
+  var projectBox = {}
 </script>
+<script src="${context}/vue/projects/projectList.vue"></script>
+<script>
+  list.api.edit = '${edit}';
+</script>
+<jsp:include page="../subscribePage.jsp"/>
 <div id="title-content" style="display: inline-block; background: transparent; margin: 0 4pt">
   <button onclick="loadModal('${edit}')">
     <fmt:message key="budget.new"/>
@@ -17,12 +19,9 @@
 </div>
 
 <div id="list">
-  <div v-for="(value, key) in items">
-    <span v-if="value.type == 'project'">
-    </span>
-    {{value}}
+  <div v-for="(value, key) in items" v-on:click="edit(value.id)">
     {{value.title}}
-    {{value.sum}} {{value.currency}}
+    {{value.amount}} {{value.currency}}
   </div>
 </div>
 </html>

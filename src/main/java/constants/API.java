@@ -7,6 +7,17 @@ public class API {
     public static final String LOGIN = "/a/login";
     public static final String REGISTRATION = "/a/registration";
     public static final String RESTORE = "/a/restore";
+    public static final String API = "/api/v1";
+    public static final String TASK_EDIT = API + "/task/edit";
+    public static final String TRANSACTION_EDIT = API + "/transaction/edit";
+    public static final String FIND_TRANSACTION_CATEGORY = API + "/find/transaction/category";
+    public static final String FIND_PERSON = API + "/find/person";
+    public static final String BUDGET_EDIT = API + "/budget/edit";
+    public static final String GET_SUB_TASK = API + "/get/sub/task";
+    public static final String CHANGE_TASK_STATUS = API + "/change/status";
+    public static final String PROJECT_DELETE = API + "/project/delete";
+    public static final String TASK_TIME_EDIT = API + "/task/time/edit";
+    public static final String GET_CALENDAR_ITEMS = API + "/calendar/items";
 
     public class INFO {
         public static final String PROJECT_LENGTH = "/api/info/project/length";

@@ -1,6 +1,8 @@
 package entity.user;
 
 import constants.Keys;
+import org.json.simple.JSONObject;
+import utils.JsonAble;
 
 import javax.persistence.*;
 
@@ -9,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = Keys.PERSON)
-public class Person implements Keys{
+public class Person implements Keys, JsonAble{
     private int id;
     private String surname;
     private String forename;
@@ -39,5 +41,13 @@ public class Person implements Keys{
     }
     public void setForename(String forename) {
         this.forename = forename;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = pool.getObject();
+        object.put(ID, id);
+        object.put(VALUE, surname + SPACE + forename);
+        return object;
     }
 }

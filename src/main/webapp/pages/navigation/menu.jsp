@@ -15,8 +15,14 @@
     <div class="menu-item" onclick="loadPage('${projects}')">
         <fmt:message key="menu.projects"/>
     </div>
-    <div class="menu-item">
+    <div class="menu-item" onclick="loadPage('${kanban}')">
+        <fmt:message key="menu.kanban"/>
+    </div>
+    <div class="menu-item" onclick="loadPage('${calendar}')">
         <fmt:message key="menu.calendar"/>
+    </div>
+    <div class="menu-item" onclick="loadPage('${transactions}')">
+        <fmt:message key="menu.transactions"/>
     </div>
     <div class="menu-item" onclick="loadPage('${budget}')">
         <fmt:message key="menu.budget"/>

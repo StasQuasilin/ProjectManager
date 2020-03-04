@@ -1,8 +1,6 @@
 package api.socket;
 
-import api.socket.handlers.ISocketHandler;
-import api.socket.handlers.MessageHandler;
-import api.socket.handlers.ProjectHandler;
+import api.socket.handlers.*;
 import entity.user.User;
 
 import javax.websocket.Session;
@@ -23,17 +21,32 @@ public class SubscribeMaster {
     private final HashMap<Subscribe, ISocketHandler> handlers = new HashMap<>();
 
     private SubscribeMaster() {
-        handlers.put(Subscribe.messages, new MessageHandler(Subscribe.messages));
-        handlers.put(Subscribe.projects, new ProjectHandler(Subscribe.projects));
+        addHandler(new MessageHandler(Subscribe.messages));
+        addHandler(new ProjectHandler(Subscribe.projects));
+        addHandler(new CalendarHandler(Subscribe.calendar));
+        addHandler(new BudjetHandlet(Subscribe.budget));
+        addHandler(new TransactionHadler(Subscribe.transactions));
+    }
+
+    private void addHandler(ISocketHandler handler){
+        handlers.put(handler.getSubscribe(), handler);
     }
 
     public void subscribe(Subscribe subscribe, User user, Session session) throws IOException {
-        ISocketHandler handler = handlers.get(subscribe);
-        handler.subscribe(user, session);
+        if (handlers.containsKey(subscribe)) {
+            ISocketHandler handler = handlers.get(subscribe);
+            handler.subscribe(user, session);
+        }
     }
 
     public void unsubscribe(Subscribe subscribe, User user) {
-        ISocketHandler handler = handlers.get(subscribe);
-        handler.unsubscribe(user);
+        if (handlers.containsKey(subscribe)) {
+            ISocketHandler handler = handlers.get(subscribe);
+            handler.unsubscribe(user);
+        }
+    }
+
+    public ISocketHandler getHandler(Subscribe subscribe){
+        return handlers.get(subscribe);
     }
 }

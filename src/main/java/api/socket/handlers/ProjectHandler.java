@@ -16,8 +16,6 @@ import java.io.IOException;
  */
 public class ProjectHandler extends ISocketHandler {
 
-    dbDAO dao = dbDAOService.getDao();
-
     public ProjectHandler(Subscribe subscribe) {
         super(subscribe);
     }

@@ -5,7 +5,11 @@ var edit = new Vue({
             save:'',
             length:''
         },
-        project:{},
+        project:{
+            title:'',
+            begin:new Date().toISOString().substring(0, 10),
+            end:new Date().toISOString().substring(0, 10)
+        },
         budgets:[],
         budgetTypes:[]
     },
@@ -16,13 +20,14 @@ var edit = new Vue({
     },
     methods:{
         addMonth:function(count){
-            var comp = new Date(this.project.complete);
-            comp.setMonth(comp.getMonth() + count);
-            this.project.complete = comp.toISOString().substring(0, 10);
+            var end = new Date(this.project.end);
+            end.setMonth(end.getMonth() + count);
+            this.project.end = end.toISOString().substring(0, 10);
         },
         save:function(){
+            console.log(this.project);
             PostApi(this.api.save, this.project, function(a){
-                if (a.status == 'success'){
+                if (a.status === 'success'){
                     closeModal();
                 }
             })

@@ -14,6 +14,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
     <script src="${context}/js/subscriber.js"></script>
     <link rel="stylesheet" href="${context}/css/Application.css">
     <script src="${context}/js/Application.js"></script>

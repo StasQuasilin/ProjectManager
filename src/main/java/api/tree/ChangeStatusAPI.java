@@ -21,10 +21,10 @@ public class ChangeStatusAPI extends ServletAPI {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);
         if(body != null) {
-            Task task = hibernator.get(Task.class, "id", body.get("id"));
+//            Task task = hibernator.get(Task.class, "id", body.get("id"));
             TaskStatus status = TaskStatus.valueOf(String.valueOf(body.get("status")));
-            task.setStatus(status);
-            hibernator.save(task);
+//            task.setStatus(status);
+//            hibernator.save(task);
             write(resp, SUCCESS);
         } else {
             write(resp, ERROR);

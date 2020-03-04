@@ -4,6 +4,8 @@ import api.socket.Subscribe;
 import constants.Keys;
 import entity.user.User;
 import org.json.simple.JSONObject;
+import services.hibernate.dbDAO;
+import services.hibernate.dbDAOService;
 import utils.JsonPool;
 
 import javax.websocket.Session;
@@ -17,10 +19,17 @@ public abstract class ISocketHandler implements Keys {
 
     private final HashMap<User, Session> sessions = new HashMap<>();
     public JsonPool pool = JsonPool.getPool();
+    public dbDAO dao = dbDAOService.getDao();
 
     private Subscribe subscribe;
     public ISocketHandler(Subscribe subscribe) {
         this.subscribe = subscribe;
+    }
+
+    public void send(User user, JSONObject data) throws IOException {
+        if (sessions.containsKey(user)) {
+            send(sessions.get(user), data);
+        }
     }
 
     public void send(Session session, JSONObject data) throws IOException {
@@ -43,4 +52,7 @@ public abstract class ISocketHandler implements Keys {
 
     public abstract void onSubscribe(User user, Session session) throws IOException;
 
+    public Subscribe getSubscribe() {
+        return subscribe;
+    }
 }

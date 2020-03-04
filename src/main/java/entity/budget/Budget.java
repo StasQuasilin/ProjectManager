@@ -104,6 +104,8 @@ public class Budget implements JsonAble, Keys {
         object.put(ID, id);
         object.put(TITLE, title);
         object.put(AMOUNT, budgetSum);
+        object.put(TYPE, budgetType.toString());
+        object.put(CURRENCY, currency);
 
         return object;
     }

@@ -1,5 +1,8 @@
-var projectList = new Vue({
+var list = new Vue({
     el: '#list',
+    components:{
+        'project-box':projectBox
+    },
     data:{
         api:{},
         items:{}
@@ -14,10 +17,20 @@ var projectList = new Vue({
             }
             for (var r in items.remove){
                 if (items.remove.hasOwnProperty(r)){
-                    let item = items.remove(r);
-                    Vue.delete(this.items, item);
+                    let item = items.remove[r];
+                    Vue.delete(this.items, item.id);
                 }
             }
+        },
+        removeProject:function(id){
+            loadModal(this.api.remove, {id:id}, function(a){
+                if(a.status === 'success'){
+                    closeModal();
+                }
+            })
+        },
+        edit:function(id){
+            loadModal(this.api.edit, {id:id});
         },
         byRole:function(role){
             return Object.values(this.items).filter(function(item){

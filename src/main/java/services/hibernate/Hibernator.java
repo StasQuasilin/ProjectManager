@@ -1,20 +1,22 @@
 package services.hibernate;
 
+import constants.Keys;
 import org.hibernate.Session;
 import services.hibernate.DateContainers.*;
 import services.State;
 
 import javax.persistence.criteria.*;
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Quasilin on 09.09.2018.
  */
 public class Hibernator {
     private static final Hibernator instance = new Hibernator();
+
+
+    private static final String SLASH = Keys.SLASH;
 
     public static Hibernator getInstance() {
         return instance;
@@ -91,45 +93,53 @@ public class Hibernator {
                         objectPath = objectPath.get(s);
                     }
                 }
-
-                if (entry.getValue() == null || entry.getValue().equals(State.isNull)){
-                    predicates[i] = criteriaBuilder.isNull(objectPath);
-                } else if(entry.getValue().equals(State.notNull)) {
-                    predicates[i] = criteriaBuilder.isNotNull(objectPath);
-                } else if (entry.getValue() instanceof EQ){
-                    EQ eq = (EQ) entry.getValue();
-                    predicates[i] = criteriaBuilder.equal(objectPath, eq.getDate());
-                }else if (entry.getValue() instanceof NOT) {
-                    NOT not = (NOT) entry.getValue();
-                    predicates[i] = criteriaBuilder.notEqual(objectPath, not.getObject());
-                } else if (entry.getValue() instanceof BETWEEN){
-                    BETWEEN between = (BETWEEN) entry.getValue();
-                    predicates[i] = criteriaBuilder.between(objectPath,between.getFrom(),between.getTo());
-                }else if (entry.getValue() instanceof GE) {
-                    GE ge = (GE) entry.getValue();
-                    predicates[i] = criteriaBuilder.greaterThanOrEqualTo(objectPath, ge.getDate());
-                    query.orderBy(criteriaBuilder.asc(objectPath));
-                }else if (entry.getValue() instanceof GT) {
-                    GT gt = (GT) entry.getValue();
-                    predicates[i] = criteriaBuilder.greaterThan(objectPath, gt.getDate());
-                    query.orderBy(criteriaBuilder.asc(objectPath));
-                } else if (entry.getValue() instanceof LE) {
-                    LE le = (LE) entry.getValue();
-                    predicates[i] = criteriaBuilder.lessThanOrEqualTo(objectPath, le.getDate());
-                    query.orderBy(criteriaBuilder.desc(objectPath));
-                } else if (entry.getValue() instanceof LT) {
-                    LT lt = (LT) entry.getValue();
-                    predicates[i] = criteriaBuilder.lessThan(objectPath, lt.getDate());
-                    query.orderBy(criteriaBuilder.desc(objectPath));
-                } else {
-                    predicates[i] = criteriaBuilder.equal(objectPath, entry.getValue());
+                if (!entry.getValue().equals(State.ignore)) {
+                    if (entry.getValue() == null || entry.getValue().equals(State.isNull)) {
+                        predicates[i] = criteriaBuilder.isNull(objectPath);
+                    } else if (entry.getValue().equals(State.notNull)) {
+                        predicates[i] = criteriaBuilder.isNotNull(objectPath);
+                    } else if (entry.getValue() instanceof EQ) {
+                        EQ eq = (EQ) entry.getValue();
+                        predicates[i] = criteriaBuilder.equal(objectPath, eq.getDate());
+                    } else if (entry.getValue() instanceof NOT) {
+                        NOT not = (NOT) entry.getValue();
+                        predicates[i] = criteriaBuilder.notEqual(objectPath, not.getObject());
+                    } else if (entry.getValue() instanceof BETWEEN) {
+                        BETWEEN between = (BETWEEN) entry.getValue();
+                        predicates[i] = criteriaBuilder.between(objectPath, between.getFrom(), between.getTo());
+                    } else if (entry.getValue() instanceof GE) {
+                        GE ge = (GE) entry.getValue();
+                        predicates[i] = criteriaBuilder.greaterThanOrEqualTo(objectPath, ge.getDate());
+                        query.orderBy(criteriaBuilder.asc(objectPath));
+                    } else if (entry.getValue() instanceof GT) {
+                        GT gt = (GT) entry.getValue();
+                        predicates[i] = criteriaBuilder.greaterThan(objectPath, gt.getDate());
+                        query.orderBy(criteriaBuilder.asc(objectPath));
+                    } else if (entry.getValue() instanceof LE) {
+                        LE le = (LE) entry.getValue();
+                        predicates[i] = criteriaBuilder.lessThanOrEqualTo(objectPath, le.getDate());
+                        query.orderBy(criteriaBuilder.desc(objectPath));
+                    } else if (entry.getValue() instanceof LT) {
+                        LT lt = (LT) entry.getValue();
+                        predicates[i] = criteriaBuilder.lessThan(objectPath, lt.getDate());
+                        query.orderBy(criteriaBuilder.desc(objectPath));
+                    } else {
+                        predicates[i] = criteriaBuilder.equal(objectPath, entry.getValue());
+                    }
                 }
                 i++;
             }
             query.where(predicates);
         }
-
+        comebackParams(parameters);
         return query;
+    }
+
+    private void comebackParams(HashMap<String, Object> parameters) {
+        if (parameters != null){
+            parameters.clear();
+            pool.add(parameters);
+        }
     }
 
 
@@ -278,6 +288,112 @@ public class Hibernator {
         return sum;
     }
 
+    private <T> Path<Date> parsePath(Root<T> root, String value){
+        Path<Date> objectPath = null;
+        String[] split = value.split(SLASH);
+
+        for (String s : split){
+            if (objectPath == null) {
+                objectPath = root.get(s);
+            } else {
+                objectPath = objectPath.get(s);
+            }
+        }
+
+        return objectPath;
+    }
+
+
+    <K, T> Predicate[] buildPredicates(CriteriaBuilder criteriaBuilder, CriteriaQuery<T> query, Root<K> root, HashMap<String, Object> param){
+        if (param != null){
+            Predicate[] predicates = new Predicate[param.size()];
+            int i = 0;
+
+            for (Map.Entry<String, Object> entry : param.entrySet()){
+
+                Path<Date> path = parsePath(root, entry.getKey());
+
+                if (entry.getValue() == null || entry.getValue().equals(State.isNull)){
+                    predicates[i] = criteriaBuilder.isNull(path);
+                } else if(entry.getValue().equals(State.notNull)) {
+                    predicates[i] = criteriaBuilder.isNotNull(path);
+                } else if (entry.getValue() instanceof EQ){
+                    EQ eq = (EQ) entry.getValue();
+                    predicates[i] = criteriaBuilder.greaterThanOrEqualTo(path, eq.getDate());
+                }else if (entry.getValue() instanceof NOT) {
+                    NOT not = (NOT) entry.getValue();
+                    predicates[i] = criteriaBuilder.notEqual(path, not.getObject());
+                } else if (entry.getValue() instanceof BETWEEN){
+                    BETWEEN between = (BETWEEN) entry.getValue();
+                    predicates[i] = criteriaBuilder.between(path, between.getFrom(), between.getTo());
+                }else if (entry.getValue() instanceof GE) {
+                    GE ge = (GE) entry.getValue();
+                    predicates[i] = criteriaBuilder.greaterThanOrEqualTo(path, ge.getDate());
+                    query.orderBy(criteriaBuilder.asc(path));
+                }else if (entry.getValue() instanceof GT) {
+                    GT gt = (GT) entry.getValue();
+                    predicates[i] = criteriaBuilder.greaterThan(path, gt.getDate());
+                    query.orderBy(criteriaBuilder.asc(path));
+                } else if (entry.getValue() instanceof LE) {
+                    LE le = (LE) entry.getValue();
+                    predicates[i] = criteriaBuilder.lessThanOrEqualTo(path, le.getDate());
+                    query.orderBy(criteriaBuilder.desc(path));
+                } else if (entry.getValue() instanceof LT) {
+                    LT lt = (LT) entry.getValue();
+                    predicates[i] = criteriaBuilder.lessThan(path, lt.getDate());
+                    query.orderBy(criteriaBuilder.desc(path));
+                } else {
+                    predicates[i] = criteriaBuilder.equal(path, entry.getValue());
+                }
+                i++;
+            }
+            return predicates;
+        }
+        return new Predicate[0];
+    }
+
+    public <T> List<T> find (Class<T> tClass, HashMap<String, String> findData, HashMap<String, Object> params){
+
+        Session session = HibernateSessionFactory.getSession();
+        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+        CriteriaQuery<T> query = criteriaBuilder.createQuery(tClass);
+        Root<T> from = query.from(tClass);
+
+        ArrayList<Predicate> predicates = new ArrayList<>();
+        Collections.addAll(predicates, buildPredicates(criteriaBuilder, query, from, params));
+        if (findData != null) {
+
+            for (Map.Entry<String, String> entry : findData.entrySet()){
+                String[] split = entry.getKey().split("/");
+                Path<String> objectPath = null;
+
+                for (String s : split){
+                    if (objectPath == null) {
+                        objectPath = from.get(s);
+                    } else {
+                        objectPath = objectPath.get(s);
+                    }
+                }
+                Predicate predicate;
+                if (entry.getValue() != null) {
+                    predicate = criteriaBuilder.like(criteriaBuilder.upper(objectPath), "%" + entry.getValue().toUpperCase() + "%");
+                } else {
+                    predicate = criteriaBuilder.isNull(objectPath);
+                }
+                predicates.add(predicate);
+            }
+        }
+        Predicate[] p = new Predicate[predicates.size()];
+        predicates.toArray(p);
+        query.where(p);
+        List<T> resultList = session.createQuery(query).getResultList();
+
+        HibernateSessionFactory.putSession(session);
+
+        return resultList;
+    }
+
+
 
     public void save(Object ... objects) {
         Session session = HibernateSessionFactory.getSession();
@@ -286,4 +402,13 @@ public class Hibernator {
         }
         session.beginTransaction().commit();
     }
+    private final ArrayList<HashMap<String, Object>> pool = new ArrayList<>();
+    public HashMap<String, Object> getParams() {
+        if (pool.size() == 0){
+            return new HashMap<>();
+        }
+        return pool.remove(0);
+    }
+
+
 }

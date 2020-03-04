@@ -21,7 +21,6 @@ public class PaymentsEdit extends IModal {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute("paymentTypes", PaymentType.values());
         req.setAttribute("type", req.getParameter("type"));
-        req.setAttribute("budgets", hibernator.query(Budget.class, "owner", getUid(req)));
         req.setAttribute("title", "title.payments.edit");
         req.setAttribute("pageContent", "/pages/payments/paymentsEdit.jsp");
         req.setAttribute("save", API.Payments.EDIT);

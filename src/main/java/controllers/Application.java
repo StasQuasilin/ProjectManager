@@ -21,6 +21,9 @@ public class Application extends HttpServlet implements Keys {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute(PROJECTS, Branches.PROJECTS);
+        req.setAttribute(KANBAN, Branches.KANBAN);
+        req.setAttribute(CALENDAR, Branches.CALENDAR);
+        req.setAttribute(TRANSACTIONS, Branches.TRANSACTIONS);
         req.setAttribute(BUDGET, Branches.BUDGET);
         req.setAttribute(SOCKET_PROTOCOL, Branches.SOCKET_PROTOCOL);
         req.setAttribute(SOCKET_SERVER, req.getRequestURI());

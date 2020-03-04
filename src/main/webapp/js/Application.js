@@ -14,6 +14,9 @@ $(document).ready(function(){
 
 function loadPage(url, parameters){
     if (url) {
+        if (typeof unsubscribe === 'function'){
+            unsubscribe();
+        }
         coverlet.style.display='block';
         if (parameters == undefined){
             parameters = null;
