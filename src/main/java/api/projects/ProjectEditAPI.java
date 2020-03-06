@@ -45,6 +45,7 @@ public class ProjectEditAPI extends ServletAPI {
                 project.setOwner(user);
                 Task task = new Task();
                 task.setStatus(TaskStatus.active);
+                task.setOwner(user);
                 project.setTask(task);
                 ProjectType type = ProjectType.valueOf(String.valueOf(body.get(TYPE)));
                 project.setType(type);

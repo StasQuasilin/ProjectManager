@@ -22,7 +22,7 @@
     <script src="${context}/js/core.js"></script>
     <script>
         const context = '${context}';
-        const UserID = 2;
+        const UserID = ${user.id}
         subscriber.init('${socketProtocol}', window.location.host + '${socketServer}', '${socketAddress}');
     </script>
 </head>

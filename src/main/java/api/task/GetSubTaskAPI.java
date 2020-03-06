@@ -1,7 +1,6 @@
 package api.task;
 
 import constants.API;
-import constants.Branches;
 import controllers.ServletAPI;
 import entity.project.Task;
 import entity.project.TaskStatus;
@@ -26,7 +25,7 @@ public class GetSubTaskAPI extends ServletAPI {
         if (body != null){
             JSONArray array = pool.getArray();
             TaskStatus status = TaskStatus.valueOf(String.valueOf(body.get(STATUS)));
-            for (Task task : dao.getTaskByParent(body.get(PARENT), status)){
+            for (Task task : dao.getTasksByParent(body.get(PARENT), status)){
                 array.add(task.toJson());
             }
             JSONObject json = new SuccessAnswer(RESULT, array).toJson();

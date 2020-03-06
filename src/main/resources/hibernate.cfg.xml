@@ -24,6 +24,7 @@
         <mapping class="entity.budget.BudgetPoint"/>
         <mapping class="entity.budget.BudgetArticle"/>
         <mapping class="entity.project.Task"/>
+        <mapping class="entity.budget.Counterparty"/>
 
 
     </session-factory>

@@ -21,6 +21,7 @@ public class Budget implements JsonAble, Keys {
     private BudgetSize budgetSize;
     private BudgetType budgetType;
     private float budgetSum;
+    private float limit;
     private String currency;
     private User owner;
     private Timestamp create;
@@ -71,6 +72,15 @@ public class Budget implements JsonAble, Keys {
     }
 
     @Basic
+    @Column(name = LIMIT)
+    public float getLimit() {
+        return limit;
+    }
+    public void setLimit(float limit) {
+        this.limit = limit;
+    }
+
+    @Basic
     @Column(name = CURRENCY)
     public String getCurrency() {
         return currency;
@@ -93,7 +103,6 @@ public class Budget implements JsonAble, Keys {
     public Timestamp getCreate() {
         return create;
     }
-
     public void setCreate(Timestamp create) {
         this.create = create;
     }

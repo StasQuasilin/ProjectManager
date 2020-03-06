@@ -24,7 +24,7 @@ public class ContextFilter implements Filter, Keys {
     User user;
     public void init(FilterConfig filterConfig) throws ServletException {
         HibernateSessionFactory.init();
-        user = dao.getObjectById(User.class, 2);
+        user = dao.getObjectById(User.class, 1);
     }
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

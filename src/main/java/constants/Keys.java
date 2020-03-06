@@ -53,6 +53,7 @@ public interface Keys {
     String CREATED = "created";
     String CURRENCY = "currency";
     String SUM = "sum";
+    String LIMIT = "limit";
     String TYPE = "type";
     String DATA = "data";
     String SIZE = "size";
@@ -93,4 +94,6 @@ public interface Keys {
     String INDEX = "index";
     String LENGTH = "length";
     String GET_ITEMS = "getItems";
+    String IS_GROUP = "isGroup";
+    String COUNTERPARTY = "counterparty";
 }

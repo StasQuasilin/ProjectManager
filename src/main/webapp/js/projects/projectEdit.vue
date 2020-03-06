@@ -8,8 +8,11 @@ var edit = new Vue({
         project:{
             title:'',
             begin:new Date().toISOString().substring(0, 10),
-            end:new Date().toISOString().substring(0, 10)
+            end:new Date().toISOString().substring(0, 10),
+            type:'project'
+
         },
+        useEndDate:false,
         budgets:[],
         budgetTypes:[]
     },
@@ -26,6 +29,9 @@ var edit = new Vue({
         },
         save:function(){
             console.log(this.project);
+            if (!this.project.id){
+                this.project.id = -1;
+            }
             PostApi(this.api.save, this.project, function(a){
                 if (a.status === 'success'){
                     closeModal();

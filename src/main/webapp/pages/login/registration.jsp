@@ -1,9 +1,12 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value=""/>
+<fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <html>
+<title>
+    <fmt:message key="${title}"/>
+</title>
 <head>
     <script src="${context}/js/login/registration.js"></script>
 </head>

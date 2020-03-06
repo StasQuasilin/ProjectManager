@@ -37,7 +37,7 @@ public class ProjectRemoveAPI extends ServletAPI{
     private void removeTask(Task task) throws IOException {
         dao.remove(task);
         updateUtil.onRemove(task);
-        for (Task t : dao.getTaskByParent(task, State.ignore)){
+        for (Task t : dao.getTasksByParent(task, State.ignore)){
             removeTask(t);
         }
     }

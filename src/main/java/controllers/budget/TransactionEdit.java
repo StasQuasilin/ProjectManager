@@ -7,7 +7,6 @@ import entity.budget.Transaction;
 import entity.budget.TransactionType;
 import entity.user.User;
 import org.json.simple.JSONObject;
-import sun.net.ftp.FtpClient;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

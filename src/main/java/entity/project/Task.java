@@ -27,6 +27,7 @@ public class Task implements Comparable<Task>, Keys, JsonAble {
     private User owner;
     private User doer;
     private String description;
+    private boolean isGroup;
 
     public Task() {}
 
@@ -134,6 +135,15 @@ public class Task implements Comparable<Task>, Keys, JsonAble {
         this.description = description;
     }
 
+    @Basic
+    @Column(name = "is_group")
+    public boolean isGroup() {
+        return isGroup;
+    }
+    public void setGroup(boolean group) {
+        isGroup = group;
+    }
+
     @Override
     public int compareTo(Task o) {
         return o.getTitle().compareTo(title);
@@ -157,6 +167,7 @@ public class Task implements Comparable<Task>, Keys, JsonAble {
         object.put(PATH, buildPath());
         object.put(COST, cost);
         object.put(DESCRIPTION, description);
+        object.put(IS_GROUP, isGroup);
         return object;
     }
 

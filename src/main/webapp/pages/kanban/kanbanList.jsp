@@ -73,16 +73,20 @@
                     })
                 },
                 editTask:function(task){
+                    console.log(task);
                     if (!task){
                         task = {
-
+                            id:-1,
+                            title:'New task',
+                            status:'active'
                         };
                         this.todo.push(task);
+                    } else {
+                        Vue.set(task, 'edit', true);
                     }
-                    Vue.set(task, 'edit', true);
                 },
                 saveTask:function(task){
-                    var t = Object.assign({}, task);
+                    let t = Object.assign({}, task);
                     t.parent = this.task.id;
                     delete t.edit;
                     if (!t.id){
@@ -99,10 +103,10 @@
                 },
                 drop:function(a, status){
                     const self = this;
-                    var checkList = function(){
-                        a.forEach(function(item){
-                            if (item.save){
-                                PostApi(self.api.changeStatus, {id:item.id, status:status}, function(a){
+                    let checkList = function () {
+                        a.forEach(function (item) {
+                            if (item.save) {
+                                PostApi(self.api.changeStatus, {id: item.id, status: status}, function (a) {
                                     console.log(a);
                                 });
                                 item.status = status;
@@ -168,15 +172,20 @@
                         </div>
                         <draggable :list="todo" group="task" style="border: solid grey 1pt; min-height: 480px" @add="drop(todo, 'active')" >
                                 <div class="border-item" v-for="task in todo" v-on:dragend="drag(task)"
-                                     :key="task.id" v-on:click.right="editTask(task)"
-                                     v-on:click="open(task)">
+                                     :key="task.id">
                                     <div v-if="!task.edit">
-                                        <span>
-                                            {{task.title}}
+                                        <span v-on:click="open(task)">
+                                            <span v-if="task.isGroup">
+                                                >
+                                            </span>
+                                            <span>
+                                                &nbsp;{{task.title}}
+                                            </span>
                                         </span>
-                                        <span style="font-size: 10pt">
-                                            {{task.status}}
+                                        <span v-on:click="editTask(task)">
+                                            ...
                                         </span>
+
                                     </div>
                                     <div v-else>
                                         <table>

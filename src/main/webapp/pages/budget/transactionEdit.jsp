@@ -77,17 +77,25 @@
         <tr>
             <td>
                 <span>
-                    <fmt:message key="transaction.date"/>
+                    <label for="date">
+                        <fmt:message key="transaction.date"/>
+                    </label>
                 </span>
-                <span>
-                    {{new Date(transaction.date).toLocaleDateString()}}
-                </span>
+                <input id="date" v-model="transaction.date" autocomplete="off">
+<%--                <span>--%>
+<%--                    {{new Date(transaction.date).toLocaleDateString()}}--%>
+<%--                </span>--%>
             </td>
             <td>
                 <div>
-                    <span v-for="t in types" v-on:click="transaction.type = t.id">
-                        {{t.name}}
-                    </span>
+                    <template v-for="t in types">
+                        <b v-if="t.id == transaction.type">
+                            {{t.name}}
+                        </b>
+                        <button v-else v-on:click="transaction.type = t.id">
+                            {{t.name}}
+                        </button>
+                    </template>
                 </div>
                 <div v-if="transaction.type === 'income' || transaction.type === 'outcome'">
                     <div>
@@ -96,13 +104,15 @@
                                 <fmt:message key="payment.edit.sum"/>
                             </label>
                         </span>
-                        <span v-if="transaction.type=='income'">
-                            +
-                        </span>
-                        <span v-else>
-                            -
-                        </span>
-                        <input id="sum" v-model="transaction.sum">
+                        <div style="display: inline-block; border: solid black 1pt; background-color: white; padding: 0 2pt">
+                            <span v-if="transaction.type=='income'">
+                                +
+                            </span>
+                            <span v-else>
+                                -
+                            </span>
+                            <input id="sum" v-model="transaction.sum" onfocus="this.select()" style="border: none; background: transparent">
+                        </div>
                     </div>
                     <div>
                         <label for="category">

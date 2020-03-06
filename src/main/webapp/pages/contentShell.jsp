@@ -4,8 +4,14 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-<div id="title" style="background: transparent; display: inline-block">
-  <fmt:message key="${title}"/>
+<div style="background: transparent; display: inline-block">
+  <div id="title">
+    <fmt:message key="${title}"/>
+    <div style="float: right">
+      ${user.person.surname} ${user.person.forename}
+    </div>
+  </div>
 </div>
+
 <jsp:include page="${pageContent}"/>
 </html>

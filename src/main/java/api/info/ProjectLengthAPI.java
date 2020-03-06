@@ -1,13 +1,11 @@
 package api.info;
 
-import com.sun.deploy.util.ArrayUtil;
 import constants.API;
 import org.apache.log4j.Logger;
 import services.LanguageBase;
 import services.answers.IAnswer;
 import services.answers.SuccessAnswer;
 import utils.DateParser;
-import utils.JsonParser;
 import utils.PostUtil;
 
 import javax.servlet.ServletException;
@@ -16,14 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by szpt_user045 on 25.02.2019.

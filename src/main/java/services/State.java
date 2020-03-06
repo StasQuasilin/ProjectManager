@@ -7,6 +7,6 @@ import java.sql.Date;
  */
 public enum State {
     notNull,
-    isNull,
-    ignore
+    ignore,
+    isNull
 }

@@ -132,7 +132,7 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
-    public List<Task> getTaskByParent(Object parent, Object status) {
+    public List<Task> getTasksByParent(Object parent, Object status) {
         HashMap<String, Object> params = hibernator.getParams();
         params.put(PARENT, parent);
         params.put(STATUS, status);
@@ -151,5 +151,13 @@ public class HibernateDAO implements dbDAO, Keys {
     @Override
     public void remove(Object o) {
         hibernator.delete(o);
+    }
+
+    @Override
+    public TransactionCategory getCategoryByName(String name, User owner) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put(NAME, name);
+        params.put(OWNER, owner);
+        return hibernator.get(TransactionCategory.class, params);
     }
 }

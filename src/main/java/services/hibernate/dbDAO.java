@@ -29,8 +29,8 @@ public interface dbDAO {
     BudgetPoint getBudgetPoint(Budget budget, Date date, PointScale scale);
     List<BudgetPoint> getBudgetPoints(Date from, Date to, Budget budget, PointScale scale);
     List<Transaction> getTransactionsByBudget(Budget budget, Date date);
-    List<Task> getTaskByParent(Object parent, Object status);
+    List<Task> getTasksByParent(Object parent, Object status);
     List<Task> getTaskByDoer(User user, TaskStatus progressing);
-
     void remove(Object o);
+    TransactionCategory getCategoryByName(String name, User owner);
 }

@@ -5,7 +5,7 @@
 <fmt:setBundle basename="messages"/>
 <html>
 <link rel="stylesheet" href="${context}/css/projects/ProjectEdit.css">
-<script src="${context}/js/projects/projectEdit.js"></script>
+<script src="${context}/js/projects/projectEdit.vue"></script>
 <script>
 edit.api.save = '${save}';
 <c:if test="${not empty project}">
@@ -36,88 +36,95 @@ edit.project = ${project.toJson()};
           <input id="begin" v-model="new Date(project.begin).toLocaleDateString()" class="date-input" >
         </td>
       </tr>
-      <tr>
-        <td align="right">
-          <label for="complete">
-            <fmt:message key="project.edit.date-complete"/>
-          </label>
-        </td>
-        <td>
-          <input id="complete" v-model="new Date(project.end).toLocaleDateString()" class="date-input">
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2">
-          <fmt:message key="project.length"/>:
-          {{projectLength}}
-        </td>
-      </tr>
-      <tr>
-        <td colspan="2" style="font-size: 8pt">
-          <div style="display: inline-block">
-            <div>
-              <a v-on:click="addMonth(1)">
+      <template v-if="useEndDate">
+        <tr>
+          <td align="right">
+            <label for="complete">
+              <fmt:message key="project.edit.date-complete"/>
+            </label>
+          </td>
+          <td>
+            <input id="complete" v-model="new Date(project.end).toLocaleDateString()" class="date-input">
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <fmt:message key="project.length"/>:
+            {{projectLength}}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2" style="font-size: 8pt">
+            <div style="display: inline-block">
+              <div>
+                <a v-on:click="addMonth(1)">
                 <span>
                   +<fmt:message key="project.edit.date.month"/>
                 </span>
-              </a>
-            </div>
-            <div>
-              <a v-on:click="addMonth(-1)">
+                </a>
+              </div>
+              <div>
+                <a v-on:click="addMonth(-1)">
                 <span>
                   -<fmt:message key="project.edit.date.month"/>
                 </span>
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
-          <div style="display: inline-block">
-            <div>
-              <a v-on:click="addMonth(3)">
+            <div style="display: inline-block">
+              <div>
+                <a v-on:click="addMonth(3)">
                 <span>
                   +<fmt:message key="project.edit.date.3month"/>
                 </span>
-              </a>
-            </div>
-            <div>
-              <a v-on:click="addMonth(-3)">
+                </a>
+              </div>
+              <div>
+                <a v-on:click="addMonth(-3)">
                 <span>
                   -<fmt:message key="project.edit.date.3month"/>
                 </span>
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
-          <div style="display: inline-block">
-            <div>
-              <a v-on:click="addMonth(6)">
+            <div style="display: inline-block">
+              <div>
+                <a v-on:click="addMonth(6)">
                 <span>
                   +<fmt:message key="project.edit.date.6month"/>
                 </span>
-              </a>
-            </div>
-            <div>
-              <a v-on:click="addMonth(-6)">
+                </a>
+              </div>
+              <div>
+                <a v-on:click="addMonth(-6)">
                 <span>
                   -<fmt:message key="project.edit.date.6month"/>
                 </span>
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
-          <div style="display: inline-block">
-            <div>
-              <a v-on:click="addMonth(12)">
+            <div style="display: inline-block">
+              <div>
+                <a v-on:click="addMonth(12)">
                 <span>
                   +<fmt:message key="project.edit.date.1year"/>
                 </span>
-              </a>
-            </div>
-            <div>
-              <a v-on:click="addMonth(-12)">
+                </a>
+              </div>
+              <div>
+                <a v-on:click="addMonth(-12)">
                 <span>
                   -<fmt:message key="project.edit.date.1year"/>
                 </span>
-              </a>
+                </a>
+              </div>
             </div>
-          </div>
+          </td>
+        </tr>
+      </template>
+      <tr v-else>
+        <td colspan="2" align="right">
+          <span v-on:click="useEndDate=true"><fmt:message key="add.project.end"/></span>
         </td>
       </tr>
       <tr>

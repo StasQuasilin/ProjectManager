@@ -1,13 +1,18 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<fmt:setLocale value="ru"/>
+<fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <html>
+<title>
+    <fmt:message key="${title}"/>
+</title>
 <head>
     <script src="${context}/js/login/login.js"></script>
 </head>
+<link rel="stylesheet" href="${context}/css/login.css">
 <body>
+
     <table style="height: 100%; width: 100%">
         <tr>
            <td align="center">
@@ -33,12 +38,12 @@
                        <fmt:message key="login.sign.in"/>
                    </button>
                    <div style="padding-top: 4pt;">
-                       <button onclick="location.href='${context}/registration'">
+                       <a href="${context}/registration">
                            <fmt:message key="login.registration"/>
-                       </button>
-                       <button onclick="location.href='${context}/restore'">
+                       </a>
+                       <a href="${context}/restore">
                            <fmt:message key="login.password.restore"/>
-                       </button>
+                       </a>
                    </div>
                    <span class="alert" id="alert">&nbsp;</span>
                </div>

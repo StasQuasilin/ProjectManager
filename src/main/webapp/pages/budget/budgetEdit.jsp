@@ -16,6 +16,7 @@
             api:{},
             types:[],
             budget:{
+                id:-1,
                 title:'',
                 type:-1,
                 amount:0

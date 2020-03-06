@@ -9,6 +9,7 @@ import entity.project.TaskType;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import services.answers.SuccessAnswer;
+import utils.TaskUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,20 +36,27 @@ public class TaskEditAPI extends ServletAPI {
             if (task == null){
                 task = new Task();
                 task.setOwner(user);
-                task.setStatus(TaskStatus.progressing);
+                task.setStatus(TaskStatus.active);
                 task.setType(TaskType.once);
             }
 
             String title = String.valueOf(body.get(TITLE));
             task.setTitle(title);
 
-            Task parent = dao.getObjectById(Task.class, body.get(PARENT));
-            task.setParent(parent);
+            Task parent = null;
+            if (body.containsKey(PARENT)) {
+                parent = dao.getObjectById(Task.class, body.get(PARENT));
+                task.setParent(parent);
+            }
 
             dao.save(task);
             JSONObject json = new SuccessAnswer(RESULT, task.getId()).toJson();
             write(resp, json.toJSONString());
             pool.put(json);
+
+            if (parent != null) {
+                TaskUtil.checkParenthood(parent);
+            }
 
             updateUtil.onSave(task);
         }

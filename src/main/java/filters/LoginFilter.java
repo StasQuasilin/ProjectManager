@@ -5,6 +5,7 @@ import entity.user.UserAccess;
 import org.apache.log4j.Logger;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -14,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by ZPT_USER on 20.07.2018.
  */
-//@WebFilter(value = {"*.j", "/api/*"})
+//@WebFilter(value = {Branches.HOME, "*.j", "/api/*"})
 public class LoginFilter implements Filter {
 
     private static final String TOKEN = "token";
@@ -23,7 +24,7 @@ public class LoginFilter implements Filter {
 //    private static final Hibernator hibernator = Hibernator.getHibernator();
     private static final HashMap<String, UserAccess> activeUsers = new HashMap<>();
 
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
 
     }
 

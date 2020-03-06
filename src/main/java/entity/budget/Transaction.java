@@ -17,12 +17,11 @@ import java.sql.Date;
 @Table(name = Tables.TRANSACTIONS)
 public class Transaction implements Keys, JsonAble {
     private int id;
-    private TransactionType type;
     private Date date;
     private TransactionCategory category;
-    private Person payer;
-    private Person payee;
+    private TransactionType type;
     private Budget budget;
+    private Counterparty counterparty;
     private float sum;
     private String comment;
     private User owner;
@@ -55,30 +54,21 @@ public class Transaction implements Keys, JsonAble {
     }
 
     @OneToOne
+    @JoinColumn(name = COUNTERPARTY)
+    public Counterparty getCounterparty() {
+        return counterparty;
+    }
+    public void setCounterparty(Counterparty counterparty) {
+        this.counterparty = counterparty;
+    }
+
+    @OneToOne
     @JoinColumn(name = CATEGORY)
     public TransactionCategory getCategory() {
         return category;
     }
     public void setCategory(TransactionCategory category) {
         this.category = category;
-    }
-
-    @OneToOne
-    @JoinColumn(name = PAYER)
-    public Person getPayer() {
-        return payer;
-    }
-    public void setPayer(Person payer) {
-        this.payer = payer;
-    }
-
-    @OneToOne
-    @JoinColumn(name = PAYEE)
-    public Person getPayee() {
-        return payee;
-    }
-    public void setPayee(Person payee) {
-        this.payee = payee;
     }
 
     @OneToOne
@@ -124,12 +114,6 @@ public class Transaction implements Keys, JsonAble {
         object.put(TYPE, type.toString());
         object.put(DATE, date.toString());
         object.put(CATEGORY, category.toJson());
-        if (payer != null) {
-            object.put(PAYER, payer.toJson());
-        }
-        if (payee != null) {
-            object.put(PAYEE, payee.toJson());
-        }
         object.put(BUDGET, budget.toJson());
         object.put(SUM, sum);
         if (comment != null) {
