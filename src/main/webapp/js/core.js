@@ -28,7 +28,7 @@ function PostReq(url, parametrs, onSuccess, onError, debug){
             }
         };
 
-        if (url.substring(0, context.length) != context) {
+        if (url.substring(0, context.length) !== context) {
             url = context + url;
         }
         xhr.open(POST, url, true);

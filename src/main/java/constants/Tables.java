@@ -12,4 +12,5 @@ public interface Tables {
     String COUNTERPARTYES = "counterpartyes";
     String CURRENCYES = "currencyes";
     String USER_CURRENCY = "user_currency";
+    String USER_ASSES = "user_access";
 }

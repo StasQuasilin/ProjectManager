@@ -1,12 +1,14 @@
 package services.hibernate;
 
 import constants.Keys;
+import entity.RegistrationConfirm;
 import entity.budget.*;
 import entity.project.Project;
 import entity.project.ProjectMember;
 import entity.project.Task;
 import entity.project.TaskStatus;
 import entity.user.User;
+import entity.user.UserAccess;
 import services.State;
 import services.hibernate.DateContainers.BETWEEN;
 
@@ -169,5 +171,15 @@ public class HibernateDAO implements dbDAO, Keys {
     @Override
     public <T> List<T> getObjects(Class<T> tClass) {
         return hibernator.query(tClass, null);
+    }
+
+    @Override
+    public UserAccess getUserAccessByEmail(Object email) {
+        return hibernator.get(UserAccess.class, EMAIL, email);
+    }
+
+    @Override
+    public RegistrationConfirm getRegistrationConfirmByEmail(String email) {
+        return hibernator.get(RegistrationConfirm.class, EMAIL, email);
     }
 }

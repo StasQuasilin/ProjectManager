@@ -40,7 +40,6 @@ public interface Keys {
     String TASKS = "tasks";
     String PERSON = "person";
     String LOGIN = "login";
-    String PASSWORD = "password";
     String USERS = "users";
     String USER_ASSES = "userAccess";
     String SURNAME = "surname";
@@ -106,4 +105,9 @@ public interface Keys {
     String CURRENCY_EDIT = "currencyEdit";
     String CURRENCY_REMOVE = "currencyRemove";
     String USER_CURRENCY = "userCurrency";
+    String REGISTRATION = "registration";
+    String EMAIL = "email";
+    String PASSWORD = "password";
+    String LANGUAGES = "languages";
+    String REDIRECT = "redirect";
 }

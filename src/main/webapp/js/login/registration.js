@@ -6,7 +6,7 @@ function registration(){
     var password = document.getElementById('password');
     var alert = document.getElementById('alert');
 
-    if (validEmail(email) & valid(password)){
+    if (email && password){
         var parameters = [];
         parameters.email = email.value;
         parameters.password = toBase64(password.value);

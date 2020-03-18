@@ -8,7 +8,7 @@ public class LanguageBase{
 
     static LanguageBase base = new LanguageBase();
 
-    final String[] languages = {"ua"};
+    final String[] languages = {"uk"};
     final String baseName = "messages_";
     public static LanguageBase getBase() {
         return base;
@@ -29,5 +29,9 @@ public class LanguageBase{
         } catch (MissingResourceException e){
             return "???" + key + "???";
         }
+    }
+
+    public String[] getLanguages() {
+        return languages;
     }
 }

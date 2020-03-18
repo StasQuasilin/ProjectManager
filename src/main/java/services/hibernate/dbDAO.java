@@ -1,10 +1,12 @@
 package services.hibernate;
 
+import entity.RegistrationConfirm;
 import entity.budget.*;
 import entity.project.Project;
 import entity.project.Task;
 import entity.project.TaskStatus;
 import entity.user.User;
+import entity.user.UserAccess;
 
 import java.sql.Date;
 import java.util.List;
@@ -35,4 +37,6 @@ public interface dbDAO {
     TransactionCategory getCategoryByName(String name, User owner);
     List<UserCurrency> getUserCurrency(User user);
     <T> List<T> getObjects(Class<T> tClass);
+    UserAccess getUserAccessByEmail(Object email);
+    RegistrationConfirm getRegistrationConfirmByEmail(String email);
 }

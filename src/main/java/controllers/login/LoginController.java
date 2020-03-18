@@ -1,5 +1,6 @@
 package controllers.login;
 
+import constants.API;
 import constants.Branches;
 import controllers.IPage;
 
@@ -22,8 +23,7 @@ public class LoginController extends IPage {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute(TITLE, _TITLE);
+        req.setAttribute(LOGIN, API.LOGIN);
         req.getRequestDispatcher(_CONTENT).forward(req, resp);
-
-
     }
 }

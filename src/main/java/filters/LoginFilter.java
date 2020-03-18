@@ -1,5 +1,6 @@
 package filters;
 
+import constants.API;
 import constants.Branches;
 import entity.user.UserAccess;
 import org.apache.log4j.Logger;
@@ -15,7 +16,7 @@ import java.util.UUID;
 /**
  * Created by ZPT_USER on 20.07.2018.
  */
-//@WebFilter(value = {Branches.HOME, "*.j", "/api/*"})
+@WebFilter(value = {Branches.HOME, "*.j", API.API})
 public class LoginFilter implements Filter {
 
     private static final String TOKEN = "token";

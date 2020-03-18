@@ -13,6 +13,9 @@ public class RegistrationConfirm {
     private String token;
     private String email;
     private String password;
+    private String lang;
+    private String surname;
+    private String forename;
 
     public RegistrationConfirm() {
         token = UUID.randomUUID().toString();
