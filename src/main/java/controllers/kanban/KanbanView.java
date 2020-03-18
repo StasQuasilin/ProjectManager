@@ -37,6 +37,7 @@ public class KanbanView extends IPage {
         req.setAttribute(SAVE, API.TASK_EDIT);
         req.setAttribute(CHANGE_STATUS, API.CHANGE_TASK_STATUS);
         req.setAttribute(GET_SUB_TASKS, API.GET_SUB_TASK);
+        req.setAttribute(REMOVE_TASK, Branches.REMOVE_TASK);
         showPage(req, resp);
     }
 }

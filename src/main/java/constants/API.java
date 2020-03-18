@@ -18,6 +18,9 @@ public class API {
     public static final String PROJECT_DELETE = API + "/project/delete";
     public static final String TASK_TIME_EDIT = API + "/task/time/edit";
     public static final String GET_CALENDAR_ITEMS = API + "/calendar/items";
+    public static final String TASK_REMOVE = API + "/task/remove";
+    public static final String CURRENCY_EDIT = API + "/currency/add";
+    public static final String CURRENCY_REMOVE = API + "/currency/remove";
 
     public class INFO {
         public static final String PROJECT_LENGTH = "/api/info/project/length";

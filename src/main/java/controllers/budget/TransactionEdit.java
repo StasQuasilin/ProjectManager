@@ -33,6 +33,7 @@ public class TransactionEdit extends IModal {
         req.setAttribute(TYPES, TransactionType.values());
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
+        req.setAttribute(CURRENCY, dao.getUserCurrency(user));
         req.setAttribute(BUDGETS, dao.getBudgetsByUser(user));
         req.setAttribute(FIND_CATEGORY, API.FIND_TRANSACTION_CATEGORY);
         req.setAttribute(FIND_PERSON, API.FIND_PERSON);

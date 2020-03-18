@@ -10,7 +10,7 @@ import java.util.Map;
 /**
  * Created by szpt_user045 on 19.02.2019.
  */
-public abstract class IAnswer implements JsonAble, Keys {
+public abstract class IAnswer extends JsonAble implements Keys {
 
     public abstract String type();
     private HashMap<String, Object> params;

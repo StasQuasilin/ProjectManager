@@ -1,6 +1,7 @@
 package entity.project;
 
 import constants.Keys;
+import entity.budget.Budget;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -15,7 +16,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tasks")
-public class Task implements Comparable<Task>, Keys, JsonAble {
+public class Task extends JsonAble implements Comparable<Task>, Keys {
     private int id;
     private Date date;
     private Timestamp timestamp;
@@ -28,6 +29,7 @@ public class Task implements Comparable<Task>, Keys, JsonAble {
     private User doer;
     private String description;
     private boolean isGroup;
+    private Budget budget;
 
     public Task() {}
 
@@ -144,15 +146,32 @@ public class Task implements Comparable<Task>, Keys, JsonAble {
         isGroup = group;
     }
 
+    @OneToOne
+    @JoinColumn(name = BUDGET)
+    public Budget getBudget() {
+        return budget;
+    }
+    public void setBudget(Budget budget) {
+        this.budget = budget;
+    }
+
     @Override
     public int compareTo(Task o) {
         return o.getTitle().compareTo(title);
     }
 
     @Override
-    public JSONObject toJson() {
+    public JSONObject shortJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
+        object.put(TITLE, title);
+        return object;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = shortJson();
+
         if (date != null){
             object.put(DATE, date.toString());
         }
@@ -160,7 +179,7 @@ public class Task implements Comparable<Task>, Keys, JsonAble {
             object.put(TIMESTAMP, timestamp.toString());
         }
         object.put(STATUS, status.toString());
-        object.put(TITLE, title);
+
         if (parent != null) {
             object.put(PARENT, parent.getId());
         }
@@ -174,7 +193,7 @@ public class Task implements Comparable<Task>, Keys, JsonAble {
     private JSONArray buildPath() {
         JSONArray array = pool.getArray();
         if (parent != null){
-            array.add(parent.getTitle());
+            array.add(parent.shortJson());
             array.addAll(parent.buildPath());
         }
         return array;

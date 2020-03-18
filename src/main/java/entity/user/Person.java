@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = Keys.PERSON)
-public class Person implements Keys, JsonAble{
+public class Person extends JsonAble implements Keys {
     private int id;
     private String surname;
     private String forename;

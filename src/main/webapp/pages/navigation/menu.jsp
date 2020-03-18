@@ -30,7 +30,7 @@
     <div class="menu-item">
         <fmt:message key="menu.messages"/>
     </div>
-    <div class="menu-item">
+    <div class="menu-item" onclick="loadPage('${settings}')">
         <fmt:message key="menu.settings"/>
     </div>
 </div>

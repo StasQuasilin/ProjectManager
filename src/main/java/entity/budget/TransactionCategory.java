@@ -13,7 +13,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = Tables.TRANSACTION_CATEGORY)
-public class TransactionCategory implements Keys, JsonAble {
+public class TransactionCategory extends JsonAble implements Keys {
     private int id;
     private String name;
     private User owner;

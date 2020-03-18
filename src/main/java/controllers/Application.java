@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
 /**
  * Created by szpt_user045 on 14.02.2020.
  */
@@ -25,6 +24,7 @@ public class Application extends HttpServlet implements Keys {
         req.setAttribute(CALENDAR, Branches.CALENDAR);
         req.setAttribute(TRANSACTIONS, Branches.TRANSACTIONS);
         req.setAttribute(BUDGET, Branches.BUDGET);
+        req.setAttribute(SETTINGS, Branches.SETTINGS);
         req.setAttribute(SOCKET_PROTOCOL, Branches.SOCKET_PROTOCOL);
         req.setAttribute(SOCKET_SERVER, req.getRequestURI());
         req.setAttribute(SOCKET_ADDRESS, Branches.SOCKET_ADDRESS);

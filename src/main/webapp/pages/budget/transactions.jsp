@@ -29,7 +29,7 @@
     <div id="list">
         <div v-for="t in items" v-on:click="edit(t.id)">
             <div>
-                {{t.date}} {{t.sum.toLocaleString()}}
+                {{t.type}} {{new Date(t.date).toLocaleDateString()}} {{t.sum.toLocaleString()}} {{t.currency.sign}}
             </div>
             <div>
                 {{t.category.name}}

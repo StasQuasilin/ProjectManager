@@ -160,4 +160,14 @@ public class HibernateDAO implements dbDAO, Keys {
         params.put(OWNER, owner);
         return hibernator.get(TransactionCategory.class, params);
     }
+
+    @Override
+    public List<UserCurrency> getUserCurrency(User user) {
+        return hibernator.query(UserCurrency.class, USER, user);
+    }
+
+    @Override
+    public <T> List<T> getObjects(Class<T> tClass) {
+        return hibernator.query(tClass, null);
+    }
 }

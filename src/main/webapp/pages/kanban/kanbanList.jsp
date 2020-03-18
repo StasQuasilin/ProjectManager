@@ -59,10 +59,16 @@
             },
             methods:{
                 open:function(task){
-                    if (!task.edit) {
-                        this.task = task;
-                        this.getSubTasks(task.id);
+                    if (task){
+                        if (!task.edit) {
+                            this.task = task;
+                            this.getSubTasks(task.id);
+                        }
+                    } else {
+                        this.task = null;
+                        this.getSubTasks(null);
                     }
+
                 },
                 getSubTasks:function(parent){
                     const self = this;
@@ -84,6 +90,9 @@
                     } else {
                         Vue.set(task, 'edit', true);
                     }
+                },
+                removeTask:function(id){
+                    loadModal(this.api.removeTask, {id:id})
                 },
                 saveTask:function(task){
                     let t = Object.assign({}, task);
@@ -125,6 +134,7 @@
             }
         });
         kanban.api.saveTask = '${save}';
+        kanban.api.removeTask = '${removeTask}';
         kanban.api.getSub = '${getSubTasks}';
         kanban.api.changeStatus = '${changeStatus}';
         <c:forEach items="${tasks}" var="task">
@@ -137,7 +147,7 @@
     <table id="kanban" style="width: 100%; height: 100%">
         <tr>
             <td>
-                <template v-if="task.title">
+                <template v-if="task && task.title">
                     <b>
                         {{task.title}}
                     </b>
@@ -145,9 +155,9 @@
                         /
                     </span>
                 </template>
-                <span v-if="task.path" v-for="p in task.path" v-on:click="open()">
+                <span v-if="task && task.path" v-for="p in task.path" v-on:click="open(p)">
                     <a>
-                        {{p}}
+                        {{p.title}}
                     </a>
                     <span>
                         /
@@ -182,9 +192,14 @@
                                                 &nbsp;{{task.title}}
                                             </span>
                                         </span>
-                                        <span v-on:click="editTask(task)">
-                                            ...
-                                        </span>
+                                        <div style="display: inline-block; float: right">
+                                            <span v-on:click="editTask(task)">
+                                                ...
+                                            </span>
+                                            <span v-on:click="removeTask(task.id)">
+                                                &times;
+                                            </span>
+                                        </div>
 
                                     </div>
                                     <div v-else>

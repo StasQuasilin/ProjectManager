@@ -15,7 +15,7 @@ import java.sql.Date;
  */
 @Entity
 @Table(name = Tables.TRANSACTIONS)
-public class Transaction implements Keys, JsonAble {
+public class Transaction extends JsonAble implements Keys {
     private int id;
     private Date date;
     private TransactionCategory category;
@@ -23,6 +23,7 @@ public class Transaction implements Keys, JsonAble {
     private Budget budget;
     private Counterparty counterparty;
     private float sum;
+    private Currency currency;
     private String comment;
     private User owner;
 
@@ -89,6 +90,15 @@ public class Transaction implements Keys, JsonAble {
         this.sum = sum;
     }
 
+    @OneToOne
+    @JoinColumn(name = CURRENCY)
+    public Currency getCurrency() {
+        return currency;
+    }
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
     @Basic
     @Column(name = COMMENT)
     public String getComment() {
@@ -116,6 +126,7 @@ public class Transaction implements Keys, JsonAble {
         object.put(CATEGORY, category.toJson());
         object.put(BUDGET, budget.toJson());
         object.put(SUM, sum);
+        object.put(CURRENCY, currency.toJson());
         if (comment != null) {
             object.put(COMMENT, comment);
         }

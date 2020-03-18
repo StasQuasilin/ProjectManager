@@ -29,4 +29,6 @@ public interface Branches {
     String KANBAN = "/kanban/view.j";
     String PROJECT_DELETE = "/project/delete.j";
     String TRANSACTION_PLAN = "/transaction/plan.j";
+    String REMOVE_TASK = "/task/remove.j";
+    String CURRENCY_SETTINGS = "/settings/currency.j";
 }

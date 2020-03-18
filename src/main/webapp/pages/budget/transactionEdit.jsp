@@ -16,10 +16,12 @@
             api:{},
             types:[],
             budgets:[],
+            currencyList:[],
             transaction:{
                 type:'',
                 date:new Date().toISOString().substring(0, 10),
                 sum:0,
+                currency:'',
                 category:{
                     id:-1,
                     name:''
@@ -71,6 +73,9 @@
     edit.transaction.budget = edit.budgets[0];
     </c:otherwise>
     </c:choose>
+    <c:forEach items="${currency}" var="c">
+    edit.currencyList.push(${c.currency.toJson()});
+    </c:forEach>
 </script>
 <html>
     <table id="editor">
@@ -112,6 +117,11 @@
                                 -
                             </span>
                             <input id="sum" v-model="transaction.sum" onfocus="this.select()" style="border: none; background: transparent">
+                            <select>
+                                <option v-for="c in currencyList" :value="c.id">
+                                    {{c.sign}}
+                                </option>
+                            </select>
                         </div>
                     </div>
                     <div>

@@ -10,4 +10,6 @@ public interface Tables {
     String TRANSACTION_CATEGORY = "transaction_category";
     String BUDGET_POINTS = "budget_points";
     String COUNTERPARTYES = "counterpartyes";
+    String CURRENCYES = "currencyes";
+    String USER_CURRENCY = "user_currency";
 }

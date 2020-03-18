@@ -14,7 +14,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = Keys.BUDGETS)
-public class Budget implements JsonAble, Keys {
+public class Budget extends JsonAble implements Keys {
 
     private int id;
     private String title;

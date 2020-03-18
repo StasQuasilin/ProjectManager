@@ -33,4 +33,6 @@ public interface dbDAO {
     List<Task> getTaskByDoer(User user, TaskStatus progressing);
     void remove(Object o);
     TransactionCategory getCategoryByName(String name, User owner);
+    List<UserCurrency> getUserCurrency(User user);
+    <T> List<T> getObjects(Class<T> tClass);
 }

@@ -96,4 +96,14 @@ public interface Keys {
     String GET_ITEMS = "getItems";
     String IS_GROUP = "isGroup";
     String COUNTERPARTY = "counterparty";
+    String REMOVE_TASK = "removeTask";
+    String CHILDREN = "children";
+    String SIGN = "sign";
+    String CODE = "code";
+    String MAIN = "main";
+    String SETTINGS = "settings";
+    String CURRENCY_SETTINGS = "currencySettings";
+    String CURRENCY_EDIT = "currencyEdit";
+    String CURRENCY_REMOVE = "currencyRemove";
+    String USER_CURRENCY = "userCurrency";
 }

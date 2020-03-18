@@ -16,12 +16,11 @@ import java.time.LocalDate;
  */
 @Entity
 @Table(name = Tables.PROJECTS)
-public class Project implements Keys, JsonAble {
+public class Project extends JsonAble implements Keys {
     private int id;
     private User owner;
     private Date beginDate;
     private Date completeDate;
-    private Budget budget;
     private String description;
     private Task task;
     private ProjectType type;
@@ -72,15 +71,6 @@ public class Project implements Keys, JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = BUDGET)
-    public Budget getBudget() {
-        return budget;
-    }
-    public void setBudget(Budget budget) {
-        this.budget = budget;
-    }
-
-    @OneToOne
     @JoinColumn(name = TASK)
     public Task getTask() {
         return task;
@@ -115,9 +105,6 @@ public class Project implements Keys, JsonAble {
         object.put(TITLE, task.getTitle());
         object.put(BEGIN, beginDate.toString());
         object.put(END, completeDate.toString());
-        if (budget != null) {
-            object.put(BUDGET, budget.toJson());
-        }
         object.put(DESCRIPTION, description);
         return object;
     }

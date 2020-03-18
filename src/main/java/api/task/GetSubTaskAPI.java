@@ -25,7 +25,11 @@ public class GetSubTaskAPI extends ServletAPI {
         if (body != null){
             JSONArray array = pool.getArray();
             TaskStatus status = TaskStatus.valueOf(String.valueOf(body.get(STATUS)));
-            for (Task task : dao.getTasksByParent(body.get(PARENT), status)){
+            Object parent = null;
+            if (body.containsKey(PARENT)){
+                parent = body.get(PARENT);
+            }
+            for (Task task : dao.getTasksByParent(parent, status)){
                 array.add(task.toJson());
             }
             JSONObject json = new SuccessAnswer(RESULT, array).toJson();
