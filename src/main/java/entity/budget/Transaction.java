@@ -126,7 +126,9 @@ public class Transaction extends JsonAble implements Keys {
         object.put(CATEGORY, category.toJson());
         object.put(BUDGET, budget.toJson());
         object.put(SUM, sum);
-        object.put(CURRENCY, currency.toJson());
+        if (currency != null){
+            object.put(CURRENCY, currency.toJson());
+        }
         if (comment != null) {
             object.put(COMMENT, comment);
         }

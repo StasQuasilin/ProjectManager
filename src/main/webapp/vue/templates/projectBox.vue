@@ -16,7 +16,9 @@ var projectBox = {
     template:'<div style="border: solid black 1pt">' +
         '<div class="project-box-title">' +
             '<span>&nbsp;{{project.title}}</span>' +
-            '<span v-on:click="onDelete()">&times;</span>' +
+            '<div style="float: right">' +
+                '<span v-on:click="onDelete()">&times;</span>' +
+            '</div>' +
         '</div>' +
         '<div v-on:click="onEdit()">' +
             '<div class="date-container">' +
