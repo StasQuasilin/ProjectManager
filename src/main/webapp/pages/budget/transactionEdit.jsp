@@ -139,7 +139,32 @@
                     </div>
                 </div>
                 <div v-else-if="transaction.type === 'transfer'">
-                    TRANSFER
+                    <table>
+                        <tr>
+                            <td>
+                                <fmt:message key="transfer.from"/>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <fmt:message key="transfer.to"/>
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <fmt:message key="payment.edit.sum"/>
+                            </td>
+                        </tr>
+                        <tr>
+
+                        </tr>
+                    </table>
                 </div>
                 <div v-else>
                     DEBT

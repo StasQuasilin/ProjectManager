@@ -26,13 +26,21 @@
         list.api.edit = '${edit}'
     </script>
     <jsp:include page="../subscribePage.jsp"/>
-    <div id="list">
+    <div id="list" style="padding: 2pt">
         <div v-for="t in items" v-on:click="edit(t.id)">
             <div>
-                {{t.type}} {{new Date(t.date).toLocaleDateString()}} {{t.sum.toLocaleString()}} {{t.currency.sign}}
+                {{new Date(t.date).toLocaleDateString()}}
             </div>
             <div>
-                {{t.category.name}}
+                <template v-if="t.type === 'income'">
+                    +
+                </template>
+                <span>
+                    {{t.sum.toLocaleString()}} {{t.currency.sign}}
+                </span>
+                <span>
+                    {{t.category.name}}
+                </span>
             </div>
         </div>
     </div>

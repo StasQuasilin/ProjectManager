@@ -39,7 +39,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 100%; height: 100%" id="content">
+            <td style="width: 100%; height: 100%; vertical-align: top" id="content">
                 Content
             </td>
         </tr>
