@@ -33,7 +33,7 @@ edit.project = ${project.toJson()};
           </label>
         </td>
         <td>
-          <input id="begin" v-model="new Date(project.begin).toLocaleDateString()" class="date-input" >
+          <input id="begin" v-model="project.begin" class="date-input" >
         </td>
       </tr>
       <template v-if="useEndDate">
@@ -44,7 +44,7 @@ edit.project = ${project.toJson()};
             </label>
           </td>
           <td>
-            <input id="complete" v-model="new Date(project.end).toLocaleDateString()" class="date-input">
+            <input id="complete" v-model="project.end" class="date-input">
           </td>
         </tr>
         <tr>

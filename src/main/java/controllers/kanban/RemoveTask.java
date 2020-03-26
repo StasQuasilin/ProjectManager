@@ -24,7 +24,7 @@ public class RemoveTask extends IModal {
         if (body != null){
             Task task = dao.getObjectById(Task.class, body.get(ID));
             req.setAttribute(TASK, task);
-            req.setAttribute(CHILDREN, dao.getTasksByParent(task, State.ignore));
+            req.setAttribute(CHILDREN, dao.getTasksByParent(getUser(req), task, State.ignore));
             req.setAttribute(REMOVE, API.TASK_REMOVE);
             req.setAttribute(TITLE, _TITLE);
             req.setAttribute(PAGE_CONTENT, _CONTENT);

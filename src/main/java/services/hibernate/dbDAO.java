@@ -19,6 +19,7 @@ public interface dbDAO {
     List<Project> getProjectsByOwner(User user);
     List<Project> getProjectsByMembers(User user);
     <T> T getObjectById(Class<T> tClass, Object id);
+    List<Task> getTaskByUserAndParent(User user, Object parent);
     List<Task> getTaskByUser(User user);
     List<Task> getTaskByUser(User user, TaskStatus status);
     List<Task> getTaskByUser(User user, TaskStatus status, Object parent);
@@ -31,7 +32,7 @@ public interface dbDAO {
     BudgetPoint getBudgetPoint(Budget budget, Date date, PointScale scale);
     List<BudgetPoint> getBudgetPoints(Date from, Date to, Budget budget, PointScale scale);
     List<Transaction> getTransactionsByBudget(Budget budget, Date date);
-    List<Task> getTasksByParent(Object parent, Object status);
+    List<Task> getTasksByParent(User user, Object parent, Object status);
     List<Task> getTaskByDoer(User user, TaskStatus progressing);
     void remove(Object o);
     TransactionCategory getCategoryByName(String name, User owner);
@@ -39,4 +40,5 @@ public interface dbDAO {
     <T> List<T> getObjects(Class<T> tClass);
     UserAccess getUserAccessByEmail(Object email);
     RegistrationConfirm getRegistrationConfirmByEmail(String email);
+    List<Task> getTaskToDo(Task parent);
 }

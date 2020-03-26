@@ -26,6 +26,8 @@ public class SubscribeMaster {
         addHandler(new CalendarHandler(Subscribe.calendar));
         addHandler(new BudjetHandlet(Subscribe.budget));
         addHandler(new TransactionHadler(Subscribe.transactions));
+        addHandler(new TreeHandler(Subscribe.tree));
+        addHandler(new KanbanHandler(Subscribe.kanban));
     }
 
     private void addHandler(ISocketHandler handler){

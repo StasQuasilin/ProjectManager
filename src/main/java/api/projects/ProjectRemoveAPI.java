@@ -5,6 +5,7 @@ import constants.API;
 import controllers.ServletAPI;
 import entity.project.Project;
 import entity.project.Task;
+import entity.user.User;
 import org.json.simple.JSONObject;
 import services.State;
 
@@ -28,17 +29,17 @@ public class ProjectRemoveAPI extends ServletAPI{
         if (body != null){
             Project project = dao.getObjectById(Project.class, body.get(ID));
             dao.remove(project);
-            removeTask(project.getTask());
+            removeTask(project.getTask(), getUser(req));
             write(resp, SUCCESS);
             updateUtil.onRemove(project);
         }
     }
 
-    private void removeTask(Task task) throws IOException {
+    private void removeTask(Task task, User user) throws IOException {
         dao.remove(task);
         updateUtil.onRemove(task);
-        for (Task t : dao.getTasksByParent(task, State.ignore)){
-            removeTask(t);
+        for (Task t : dao.getTasksByParent(user, task, State.ignore)){
+            removeTask(t, user);
         }
     }
 }

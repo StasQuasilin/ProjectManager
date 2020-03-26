@@ -10,7 +10,7 @@ var projectBox = {
             }
         },
         onEdit:function(){
-            console.log('Edit');
+            this.props.onEdit(this.project.id);
         }
     },
     template:'<div style="border: solid black 1pt">' +

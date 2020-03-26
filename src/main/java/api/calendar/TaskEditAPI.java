@@ -55,7 +55,7 @@ public class TaskEditAPI extends ServletAPI {
             pool.put(json);
 
             if (parent != null) {
-                TaskUtil.checkParenthood(parent);
+                TaskUtil.checkParenthood(parent, getUser(req));
             }
 
             updateUtil.onSave(task);

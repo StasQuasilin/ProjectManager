@@ -48,6 +48,19 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
+    public List<Task> getTaskToDo(Task parent) {
+        List<Task> tasks = new ArrayList<>();
+        for (Task task : hibernator.query(Task.class, PARENT, parent)){
+            if (task.isGroup()){
+                tasks.addAll(getTaskToDo(task));
+            } else {
+                tasks.add(task);
+            }
+        }
+        return tasks;
+    }
+
+    @Override
     public List<Task> getTaskByUser(User user, TaskStatus status) {
         return getTaskByUser(user, status, State.notNull);
     }
@@ -134,10 +147,19 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
-    public List<Task> getTasksByParent(Object parent, Object status) {
+    public List<Task> getTasksByParent(User user, Object parent, Object status) {
         HashMap<String, Object> params = hibernator.getParams();
+        params.put(OWNER, user);
         params.put(PARENT, parent);
         params.put(STATUS, status);
+        return hibernator.query(Task.class, params);
+    }
+
+    @Override
+    public List<Task> getTaskByUserAndParent(User user, Object parent) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put(OWNER, user);
+        params.put(PARENT, parent);
         return hibernator.query(Task.class, params);
     }
 

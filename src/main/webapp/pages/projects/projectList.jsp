@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="${context}/ProjectBox.css">
   <script src="${context}/vue/templates/projectBox.vue"></script>
   <script src="${context}/vue/projects/projectList.vue"></script>
+  <jsp:include page="../subscribePage.jsp"/>
   <script>
     list.api.edit = '${edit}';
     list.api.remove = '${delete}';
@@ -18,9 +19,10 @@
       onDelete:function(id){
         list.removeProject(id);
       }
-    }
+    };
+    subscribe(list);
   </script>
-  <jsp:include page="../subscribePage.jsp"/>
+
 
   <div id="title-content" style="display: inline-block; background: transparent; margin: 0 4pt">
     <button onclick="loadModal('${edit}')">

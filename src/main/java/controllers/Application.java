@@ -20,6 +20,7 @@ public class Application extends HttpServlet implements Keys {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute(PROJECTS, Branches.PROJECTS);
+        req.setAttribute(TREE, Branches.TREE);
         req.setAttribute(KANBAN, Branches.KANBAN);
         req.setAttribute(CALENDAR, Branches.CALENDAR);
         req.setAttribute(TRANSACTIONS, Branches.TRANSACTIONS);

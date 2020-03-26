@@ -8,5 +8,5 @@ public enum Subscribe {
     calendar,
     budget,
     transactions,
-    projects
+    tree, kanban, projects
 }

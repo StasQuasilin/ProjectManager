@@ -24,7 +24,6 @@ public class ProjectHandler extends ISocketHandler {
     public void onSubscribe(User user, Session session) throws IOException {
         JSONArray array = pool.getArray();
         for(Project p : dao.getProjectsByOwner(user)){
-
             JSONObject json = p.toJson();
             json.put(ROLE, OWNER);
             array.add(json);

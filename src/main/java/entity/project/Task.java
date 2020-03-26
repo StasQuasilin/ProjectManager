@@ -28,7 +28,7 @@ public class Task extends JsonAble implements Comparable<Task>, Keys {
     private User owner;
     private User doer;
     private String description;
-    private boolean isGroup;
+    private int children;
     private Budget budget;
 
     public Task() {}
@@ -138,12 +138,12 @@ public class Task extends JsonAble implements Comparable<Task>, Keys {
     }
 
     @Basic
-    @Column(name = "is_group")
-    public boolean isGroup() {
-        return isGroup;
+    @Column(name = CHILDREN)
+    public int getChildren() {
+        return children;
     }
-    public void setGroup(boolean group) {
-        isGroup = group;
+    public void setChildren(int children) {
+        this.children = children;
     }
 
     @OneToOne
@@ -184,9 +184,9 @@ public class Task extends JsonAble implements Comparable<Task>, Keys {
             object.put(PARENT, parent.getId());
         }
         object.put(PATH, buildPath());
-        object.put(COST, cost);
         object.put(DESCRIPTION, description);
-        object.put(IS_GROUP, isGroup);
+        object.put(IS_GROUP, children > 0);
+        object.put(CHILDREN, children);
         return object;
     }
 
@@ -197,5 +197,10 @@ public class Task extends JsonAble implements Comparable<Task>, Keys {
             array.addAll(parent.buildPath());
         }
         return array;
+    }
+
+    @Transient
+    public boolean isGroup() {
+        return children > 0;
     }
 }

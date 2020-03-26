@@ -31,7 +31,7 @@ public class TaskRemoveAPI extends ServletAPI {
             updateUtil.onRemove(task);
             Task parent = task.getParent();
             if (parent != null){
-                TaskUtil.checkParenthood(parent);
+                TaskUtil.checkParenthood(parent, getUser(req));
             }
 
 

@@ -1,5 +1,6 @@
 package controllers.kanban;
 
+import api.socket.Subscribe;
 import constants.API;
 import constants.Branches;
 import controllers.IPage;
@@ -21,23 +22,16 @@ import java.io.IOException;
 public class KanbanView extends IPage {
     private static final String _TITLE = "title.kanban";
     private static final String _CONTENT = "/pages/kanban/kanbanList.jsp";
+    private static final Subscribe[] subscribes = new Subscribe[]{Subscribe.kanban};
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        JSONObject body = parseBody(req);
-        if (body != null){
-
-        }
-        User user = getUser(req);
-        req.setAttribute(TASKS, dao.getProjectsByOwner(user));
-        req.setAttribute(TaskStatus.progressing.toString(), dao.getTaskByDoer(user, TaskStatus.progressing));
-        req.setAttribute(TaskStatus.done.toString(), dao.getTaskByDoer(user, TaskStatus.done));
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(SAVE, API.TASK_EDIT);
         req.setAttribute(CHANGE_STATUS, API.CHANGE_TASK_STATUS);
-        req.setAttribute(GET_SUB_TASKS, API.GET_SUB_TASK);
         req.setAttribute(REMOVE_TASK, Branches.REMOVE_TASK);
+        req.setAttribute(SUBSCRIBES, subscribes);
         showPage(req, resp);
     }
 }

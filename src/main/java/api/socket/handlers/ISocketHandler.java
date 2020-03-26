@@ -55,4 +55,14 @@ public abstract class ISocketHandler implements Keys {
     public Subscribe getSubscribe() {
         return subscribe;
     }
+
+//    JSONArray array = pool.getArray();
+//
+//        for (Transaction transaction : dao.getTransactionsByUser(user, null)){
+//            array.add(transaction.toJson());
+//        }
+//
+//        JSONObject object = pool.getObject();
+//        object.put(UPDATE, array);
+//        send(session, object);
 }

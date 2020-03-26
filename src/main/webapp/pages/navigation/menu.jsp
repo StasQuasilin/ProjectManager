@@ -15,6 +15,9 @@
     <div class="menu-item" onclick="loadPage('${projects}')">
         <fmt:message key="menu.projects"/>
     </div>
+    <div class="menu-item" onclick="loadPage('${tree}')">
+        <fmt:message key="menu.task.tree"/>
+    </div>
     <div class="menu-item" onclick="loadPage('${kanban}')">
         <fmt:message key="menu.kanban"/>
     </div>
