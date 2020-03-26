@@ -26,17 +26,28 @@
         kanban.inProgress.push(${t.toJson()});
         </c:forEach>
         subscribe(kanban);
+        let props = {
+            onSave:function(a, b){
+                kanban.drop(a, b);
+            }
+        };
+        kanban.todoProps = Object.assign({}, props);
+        kanban.todoProps.title= '<fmt:message key="kanban.todo"/>';
+        kanban.processingProps = Object.assign({}, props);
+        kanban.processingProps.title= '<fmt:message key="kanban.processing"/>';
+        kanban.doneProps = Object.assign({}, props);
+        kanban.doneProps.title= '<fmt:message key="kanban.done"/>';
 
     </script>
     <div id="kanban" style="height: 100%; width: 100%">
         <div class="border-holder">
-            <board :color="'green'" :title="'TODO'" :items="todo" :status="'todo'"></board>
+            <board :color="'green'" :items="todo" :status="'todo'" :props="todoProps"></board>
         </div>
         <div class="border-holder">
-            <board :color="'green'" :title="'PROGRESSING'" :items="inProgress" :status="'processing'"></board>
+            <board :color="'green'" :items="inProgress" :status="'processing'" :props="processingProps"></board>
         </div>
         <div class="border-holder">
-            <board :color="'green'" :title="'DONE'" :items="done" :status="'done'" ></board>
+            <board :color="'green'" :items="done" :status="'done'" :props="doneProps" ></board>
         </div>
     </div>
 </html>

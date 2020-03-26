@@ -8,7 +8,10 @@ var kanban = new Vue({
         task:{},
         todo:[],
         inProgress:[],
-        done:[]
+        done:[],
+        todoProps:{},
+        processingProps:{},
+        doneProps:{}
     },
     methods:{
         sort:function(){
@@ -82,7 +85,7 @@ var kanban = new Vue({
             })
         },
         drop:function(a, status){
-            console.log(a.title);
+            console.log(a);
             console.log(status);
         },
         check:function(task){

@@ -72,8 +72,6 @@ public interface Keys {
     String UNSUBSCRIBE = "unsubscribe";
     String UPDATE = "update";
     String SLASH = "/";
-    String PAYER = "payer";
-    String PAYEE = "payee";
     String COMMENT = "comment";
     String VALUE = "value";
     String SPACE = " ";

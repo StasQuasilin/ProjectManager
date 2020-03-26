@@ -4,11 +4,15 @@ var board = {
         items:Array,
         title:String,
         status:String,
-        onSave:Function
+        props:Object
     },
     methods:{
         add:function(item){
-            this.onSave(this.items[item.newIndex].title,  this.status);
+            console.log(item);
+            if (this.props){
+                this.props.onSave(this.items[item.newIndex],  this.status);
+            }
+
         },
         drag:function(item){
             let e = window.event;
@@ -25,7 +29,7 @@ var board = {
                 '<tr>' +
                     '<td class="board-title-holder">' +
                         '<div class="board-title">' +
-                            '{{title}}' +
+                            '{{props.title}}' +
                         '</div>' +
                     '</td>' +
                 '</tr>' +
