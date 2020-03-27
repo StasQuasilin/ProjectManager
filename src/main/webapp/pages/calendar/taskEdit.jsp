@@ -17,14 +17,16 @@
             <c:forEach items="${parents}" var="parent">
             edit.parents.push(${parent.toJson()});
             </c:forEach>
-            edit.task.parent = edit.parents[0].id;
+            edit.task.parent.id = edit.parents[0].id;
+            <c:if test="${not empty date}">
+                edit.task.date = '${date} ${time}:00:00';
+                edit.task.end = '${date} ${time + 1}:00:00';
+            </c:if>
+
             <c:if test="${not empty task}">
             edit.task = ${task.toJson()}
             if (!edit.task.date){
                 edit.task.date = -1;
-            }
-            if (!edit.task.deadline){
-                edit.task.deadline = -1;
             }
             </c:if>
 
@@ -44,7 +46,7 @@
             </tr>
             <tr>
                 <td>
-                    <fmt:message key="task.date"/>
+                    <fmt:message key="task.from"/>
                 </td>
                 <td>
                     <span>
@@ -53,26 +55,43 @@
                         </span>
                         <span v-else>
                             {{new Date(task.date).toLocaleDateString()}}
+                            {{new Date(task.date).toLocaleTimeString().substring(0, 5)}}
                         </span>
                     </span>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <fmt:message key="task.deadline"/>
+                    <fmt:message key="task.to"/>
                 </td>
                 <td>
                     <span>
-                        <span v-if="task.deadline == -1">
+                        <span v-if="task.end == -1">
                             <fmt:message key="none"/>
                         </span>
                         <span v-else>
-                            {{new Date(task.deadline).toLocaleDateString()}}
+                            {{new Date(task.end).toLocaleDateString()}}
+                            {{new Date(task.end).toLocaleTimeString().substring(0, 5)}}
                         </span>
                     </span>
                 </td>
             </tr>
-
+            <tr>
+                <td>
+                    <label for="length">
+                        <fmt:message key="task.length"/>
+                    </label>
+                </td>
+                <td>
+                    <span v-on:click="plusLength(-1)">
+                        -
+                    </span>
+                    <input id="length" style="width: 5em" autocomplete="off" v-model.number="task.length" v-on:keyup="checkLength()">
+                    <span v-on:click="plusLength(1)">
+                        +
+                    </span>
+                </td>
+            </tr>
             <tr >
                 <td>
                     <label for="parent">
@@ -80,7 +99,7 @@
                     </label>
                 </td>
                 <td>
-                    <select id="parent" v-model="task.parent">
+                    <select id="parent" v-model="task.parent.id">
                         <option v-for="parent in parents" :value="parent.id">
                             {{parent.title}}
                         </option>
@@ -90,14 +109,14 @@
                     </select>
                 </td>
             </tr>
-            <tr v-if="task.parent == -2">
+            <tr v-if="task.parent.id == -2">
                 <td>
                     <label for="groupName">
                         <fmt:message key="task.group.name"/>
                     </label>
                 </td>
                 <td>
-                    <input id="groupName">
+                    <input id="groupName" v-model="task.parent.title" autocomplete="off">
                 </td>
             </tr>
             <tr v-if="!editDescription">

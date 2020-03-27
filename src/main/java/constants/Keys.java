@@ -20,6 +20,7 @@ public interface Keys {
     String PARENT = "parent";
     String PARENTS = "parents";
     String TITLE = "title";
+    String TIME = "time";
     String PATH = "path";
     String AMOUNT = "amount";
     String ROLE = "role";
@@ -30,6 +31,7 @@ public interface Keys {
     String PROJECT_END = "project_end";
     String BEGIN = "begin";
     String END = "end";
+    String _END = "_end";
     String DESCRIPTION = "description";
     String BUDGET = "budget";
     String TRANSACTIONS = "transactions";
@@ -71,6 +73,7 @@ public interface Keys {
     String SUBSCRIBE = "subscribe";
     String UNSUBSCRIBE = "unsubscribe";
     String UPDATE = "update";
+    String ITEMS = "items";
     String SLASH = "/";
     String COMMENT = "comment";
     String VALUE = "value";

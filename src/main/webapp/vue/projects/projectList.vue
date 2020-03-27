@@ -8,7 +8,7 @@ var list = new Vue({
         items:{}
     },
     methods:{
-        update:function(items){
+        handle:function(items){
             for (var u in items.update){
                 if (items.update.hasOwnProperty(u)){
                     let item = items.update[u];

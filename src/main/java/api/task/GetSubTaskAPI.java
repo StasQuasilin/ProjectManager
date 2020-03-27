@@ -1,7 +1,9 @@
 package api.task;
 
 import constants.API;
+import constants.Keys;
 import controllers.ServletAPI;
+import entity.TreeItem;
 import entity.project.Task;
 import entity.project.TaskStatus;
 import org.json.simple.JSONArray;
@@ -24,14 +26,23 @@ public class GetSubTaskAPI extends ServletAPI {
         JSONObject body = parseBody(req);
         if (body != null){
             JSONArray array = pool.getArray();
-            Object parent = null;
+            Object parentId = null;
             if (body.containsKey(PARENT)){
-                parent = body.get(PARENT);
+                parentId = body.get(PARENT);
             }
-            for (Task task : dao.getTaskByUserAndParent(getUser(req), parent)){
+            for (Task task : dao.getTaskByUserAndParent(getUser(req), parentId)){
                 array.add(task.toJson());
             }
-            JSONObject json = new SuccessAnswer(RESULT, array).toJson();
+
+            SuccessAnswer answer = new SuccessAnswer(RESULT, array);
+
+            Task parentTask = dao.getObjectById(Task.class, parentId);
+            if (parentTask.getParent() == null){
+                TreeItem treeItem = dao.getObjectById(TreeItem.class, parentId);
+                answer.add(Keys.TREE, treeItem.toJson());
+            }
+
+            JSONObject json = answer.toJson();
             write(resp, json.toJSONString());
             pool.put(json);
         }

@@ -1,6 +1,7 @@
 package utils;
 
 import api.socket.UpdateUtil;
+import entity.calendar.CalendarItem;
 import entity.project.Task;
 import entity.user.User;
 import services.State;
@@ -8,6 +9,8 @@ import services.hibernate.dbDAO;
 import services.hibernate.dbDAOService;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 public class TaskUtil {
@@ -30,13 +33,9 @@ public class TaskUtil {
     }
 
     public static void main(String[] args) {
-        for (Task parent : dao.getObjects(Task.class)){
-            List<Task> tasks = dao.getTaskByUserAndParent(parent.getOwner(), parent);
-            System.out.println("Task: " + parent.getTitle() + ", children: " + tasks.size());
-            parent.setChildren(tasks.size());
-            dao.save(parent);
-
+        Date date = Date.valueOf(LocalDate.now());
+        for (CalendarItem calendarItem : dao.getCalendarItems(date)){
+            System.out.println(calendarItem.getTask().getTitle());
         }
-        System.out.println("DONE");
     }
 }

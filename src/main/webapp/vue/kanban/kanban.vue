@@ -85,8 +85,9 @@ var kanban = new Vue({
             })
         },
         drop:function(a, status){
-            console.log(a);
-            console.log(status);
+            PostApi(this.api.changeStatus, {id:a.id, status:status}, function(a){
+                console.log(a);
+            });
         },
         check:function(task){
             console.log(task)

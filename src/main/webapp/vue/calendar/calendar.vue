@@ -1,4 +1,4 @@
-var list = new Vue({
+var calendar = new Vue({
     el:'#calendar',
     components:{
         'calendar-item':calendarBox
@@ -39,21 +39,48 @@ var list = new Vue({
         initTime:function(){
             this.time = new Date().getHours();
             const self = this;
-            var updateTime= function(){
+            let updateTime= function(){
                 console.log('init time');
                 self.initTime();
             };
             setTimeout(updateTime, (60 - new Date().getMinutes()) * 60 * 1000 )
         },
-        update:function(data){
-            for (var i in data.update){
+        handle:function(data){
+            for (let i in data.update){
                 if (data.update.hasOwnProperty(i)){
-                    var item = data.update[i];
+                    let item = data.update[i];
                     this.items.push(item);
-                    //Vue.set(this.items, item.id, item);
                 }
             }
-            console.log(data)
+            this.items = data.items;
+            console.log(data);
+            this.getCalendar();
+        },
+        getCalendar:function(){
+            let formattedItems = {};
+            for (let i in this.items){
+                if (this.items.hasOwnProperty(i)){
+                    let item = this.items[i];
+                    let begin = new Date(item.begin);
+                    let end = new Date(item.end);
+                    item.length = Math.ceil( (end - begin) / 1000 / 60 / 60 );
+                    formattedItems[begin.getHours()] = item;
+                }
+            }
+            let calendar = {};
+            for (let i = 0; i < 24; ){
+                if(formattedItems[i]){
+                    let item = formattedItems[i];
+                    calendar[i] = item;
+                    i+=item.length;
+                } else {
+                    calendar[i] = {
+                        empty: true
+                    };
+                    i++
+                }
+            }
+            return calendar;
         },
         add:function(a){
             console.log(a);
@@ -69,14 +96,14 @@ var list = new Vue({
         },
         checkCalendar:function(){
             var items = this.calendarItems.filter(function(item){
-                return item.empty == undefined
+                return item.empty === undefined
             });
             for (var i = 0; i < 24; i++){
                 var found = false;
                 for (var j in items){
                     if(items.hasOwnProperty(j)){
                         var item = items[j];
-                        if(item.index == i){
+                        if(item.index === i){
                             found = true;
                         }
                     }
@@ -105,9 +132,17 @@ var list = new Vue({
                 console.log(a)
             });
         },
-        edit:function(id){
+        edit:function(id, time){
             console.log('Edit ' + id);
-            loadModal(this.api.edit, {id:id})
+            let param = {
+                id:id
+            };
+            if (time){
+                param.date = this.date;
+                param.time = time;
+            }
+
+            loadModal(this.api.edit, param);
         }
     }
 });

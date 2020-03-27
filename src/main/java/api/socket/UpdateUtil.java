@@ -4,6 +4,7 @@ import api.socket.handlers.ISocketHandler;
 import constants.Keys;
 import entity.budget.Budget;
 import entity.budget.Transaction;
+import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.project.Task;
 import org.json.simple.JSONArray;
@@ -74,5 +75,14 @@ public class UpdateUtil implements Keys {
         array.add(task.toJson());
         object.put(REMOVE, array);
         handler.send(task.getOwner(), object);
+    }
+
+    public void onSave(CalendarItem item) throws IOException {
+        ISocketHandler handler = subscribeMaster.getHandler(Subscribe.calendar);
+        JSONObject object = pool.getObject();
+        JSONArray array = pool.getArray();
+        array.add(item.toJson());
+        object.put(UPDATE, array);
+        handler.send(item.getTask().getOwner(), object);
     }
 }

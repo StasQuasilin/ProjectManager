@@ -25,7 +25,11 @@ var calendarBox = {
     template:'<div class="calendar-item" @dragstart="onDrag($event)">' +
         '<div>' +
             '<div class="calendar-item-path">' +
-                '{{item.path}}' +
+                '<span v-for="(p, pIdx) in item.path">' +
+                    '{{p.title}}' +
+                    '<span v-if="pIdx < item.path.length - 1"> - </span>' +
+                '</span>' +
+
             '</div>' +
             '<div class="calendar-item-title">' +
                 '<span v-if="item.time" style="margin-right: 4pt">{{item.time}}</span>' +

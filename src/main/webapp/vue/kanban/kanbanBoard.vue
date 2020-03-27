@@ -8,7 +8,6 @@ var board = {
     },
     methods:{
         add:function(item){
-            console.log(item);
             if (this.props){
                 this.props.onSave(this.items[item.newIndex],  this.status);
             }
@@ -20,8 +19,6 @@ var board = {
                 e.preventDefault();
                 return false;
             }
-            console.log(item.id + ' ' + item.isGroup);
-            console.log(this.status);
         }
     },
     template:'<div >' +

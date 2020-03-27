@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tasks")
-public class Task extends JsonAble implements Comparable<Task>, Keys {
+public class Task extends iTask implements Comparable<Task>, Keys {
     private int id;
     private Date date;
     private Timestamp timestamp;
@@ -90,6 +90,7 @@ public class Task extends JsonAble implements Comparable<Task>, Keys {
     }
     public void setParent(Task parent) {
         this.parent = parent;
+        super.setParent(parent);
     }
 
     @Basic
@@ -188,15 +189,6 @@ public class Task extends JsonAble implements Comparable<Task>, Keys {
         object.put(IS_GROUP, children > 0);
         object.put(CHILDREN, children);
         return object;
-    }
-
-    private JSONArray buildPath() {
-        JSONArray array = pool.getArray();
-        if (parent != null){
-            array.add(parent.shortJson());
-            array.addAll(parent.buildPath());
-        }
-        return array;
     }
 
     @Transient

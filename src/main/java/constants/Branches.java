@@ -31,4 +31,5 @@ public interface Branches {
     String TRANSACTION_PLAN = "/transaction/plan.j";
     String REMOVE_TASK = "/task/remove.j";
     String CURRENCY_SETTINGS = "/settings/currency.j";
+    String CALENDAR_EDIT = "/calendar/edit.j";
 }

@@ -3,6 +3,7 @@ package api.calendar;
 import api.socket.UpdateUtil;
 import constants.API;
 import controllers.ServletAPI;
+import entity.calendar.CalendarItem;
 import entity.project.Task;
 import entity.project.TaskStatus;
 import entity.project.TaskType;
@@ -16,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
 
 /**
  * Created by szpt_user045 on 18.02.2020.
@@ -30,14 +32,21 @@ public class TaskEditAPI extends ServletAPI {
         JSONObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
-            Task task = dao.getObjectById(Task.class, body.get(ID));
             User user = getUser(req);
+
+            CalendarItem calendarItem = dao.getObjectById(CalendarItem.class, body.get(ID));
+            if(calendarItem == null){
+                calendarItem = new CalendarItem();
+            }
+
+            Task task = calendarItem.getTask();
 
             if (task == null){
                 task = new Task();
                 task.setOwner(user);
-                task.setStatus(TaskStatus.active);
+                task.setStatus(TaskStatus.progressing);
                 task.setType(TaskType.once);
+                calendarItem.setTask(task);
             }
 
             String title = String.valueOf(body.get(TITLE));
@@ -45,20 +54,36 @@ public class TaskEditAPI extends ServletAPI {
 
             Task parent = null;
             if (body.containsKey(PARENT)) {
-                parent = dao.getObjectById(Task.class, body.get(PARENT));
+                JSONObject p = (JSONObject) body.get(PARENT);
+                parent = dao.getObjectById(Task.class, p.get(ID));
+                if(parent == null){
+                    parent = new Task();
+                    parent.setTitle(String.valueOf(p.get(TITLE)));
+                    parent.setOwner(user);
+                    parent.setStatus(TaskStatus.active);
+                    dao.save(parent);
+                }
                 task.setParent(parent);
             }
 
             dao.save(task);
-            JSONObject json = new SuccessAnswer(RESULT, task.getId()).toJson();
+
+            Timestamp date = Timestamp.valueOf(String.valueOf(body.get(DATE)));
+            calendarItem.setBegin(date);
+            Timestamp end = Timestamp.valueOf(String.valueOf(body.get(END)));
+            System.out.println(end.toString());
+            calendarItem.setEnd(end);
+            dao.save(calendarItem);
+
+            JSONObject json = new SuccessAnswer(RESULT, calendarItem.getId()).toJson();
             write(resp, json.toJSONString());
             pool.put(json);
 
             if (parent != null) {
-                TaskUtil.checkParenthood(parent, getUser(req));
+                TaskUtil.checkParenthood(parent, user);
             }
 
-            updateUtil.onSave(task);
+            updateUtil.onSave(calendarItem);
         }
     }
 }

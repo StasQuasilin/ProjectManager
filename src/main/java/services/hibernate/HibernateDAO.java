@@ -3,6 +3,7 @@ package services.hibernate;
 import constants.Keys;
 import entity.RegistrationConfirm;
 import entity.budget.*;
+import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.project.ProjectMember;
 import entity.project.Task;
@@ -11,6 +12,9 @@ import entity.user.User;
 import entity.user.UserAccess;
 import services.State;
 import services.hibernate.DateContainers.BETWEEN;
+import services.hibernate.DateContainers.GE;
+import services.hibernate.DateContainers.GT;
+import services.hibernate.DateContainers.LE;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -45,6 +49,21 @@ public class HibernateDAO implements dbDAO, Keys {
     @Override
     public List<Task> getTaskByUser(User user) {
         return getTaskByUser(user, TaskStatus.active);
+    }
+
+    @Override
+    public List<Task> getParents(User user) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put(OWNER, user);
+        params.put(PARENT, null);
+        return hibernator.query(Task.class, params);
+    }
+
+    @Override
+    public List<CalendarItem> getCalendarItems(Date date) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put(BEGIN, new BETWEEN(date, Date.valueOf(date.toLocalDate().plusDays(1))));
+        return hibernator.query(CalendarItem.class, params);
     }
 
     @Override

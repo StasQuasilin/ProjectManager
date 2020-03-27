@@ -26,7 +26,7 @@
         kanban.inProgress.push(${t.toJson()});
         </c:forEach>
         subscribe(kanban);
-        let props = {
+        var props = {
             onSave:function(a, b){
                 kanban.drop(a, b);
             }
@@ -44,7 +44,7 @@
             <board :color="'green'" :items="todo" :status="'todo'" :props="todoProps"></board>
         </div>
         <div class="border-holder">
-            <board :color="'green'" :items="inProgress" :status="'processing'" :props="processingProps"></board>
+            <board :color="'green'" :items="inProgress" :status="'progressing'" :props="processingProps"></board>
         </div>
         <div class="border-holder">
             <board :color="'green'" :items="done" :status="'done'" :props="doneProps" ></board>

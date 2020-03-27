@@ -25,7 +25,7 @@ public class CalendarList extends IPage {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
-        req.setAttribute(EDIT, Branches.TASK_EDIT);
+        req.setAttribute(EDIT, Branches.CALENDAR_EDIT);
         req.setAttribute(EDIT_TIME, API.TASK_TIME_EDIT);
         req.setAttribute(GET_ITEMS, API.GET_CALENDAR_ITEMS);
         req.setAttribute(SUBSCRIBES, subscribe);

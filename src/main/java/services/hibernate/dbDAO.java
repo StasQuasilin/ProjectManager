@@ -2,6 +2,7 @@ package services.hibernate;
 
 import entity.RegistrationConfirm;
 import entity.budget.*;
+import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.project.Task;
 import entity.project.TaskStatus;
@@ -41,4 +42,6 @@ public interface dbDAO {
     UserAccess getUserAccessByEmail(Object email);
     RegistrationConfirm getRegistrationConfirmByEmail(String email);
     List<Task> getTaskToDo(Task parent);
+    List<Task> getParents(User user);
+    List<CalendarItem> getCalendarItems(Date date);
 }

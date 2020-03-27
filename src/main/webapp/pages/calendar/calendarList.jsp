@@ -6,7 +6,7 @@
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <html>
@@ -15,13 +15,13 @@
   <link rel="stylesheet" href="${context}/css/calendar.css"/>
   <jsp:include page="../subscribePage.jsp"/>
   <script>
-    list.api.getItems = '${getItems}';
-    list.api.edit = '${edit}';
-    list.api.editTime = '${editTime}';
+    calendar.api.getItems = '${getItems}';
+    calendar.api.edit = '${edit}';
+    calendar.api.editTime = '${editTime}';
     <c:forEach begin="1" end="7" var="i">
-    list.days['${i}'] = '<fmt:message key="day.${i}"/> ';
+    calendar.days['${i}'] = '<fmt:message key="day.${i}"/> ';
     </c:forEach>
-    list.getItems();
+    subscribe(calendar);
   </script>
   <body>
   <div id="title-content" style="display: inline-block; background: transparent; margin: 0 4pt">
@@ -64,16 +64,15 @@
         <td style="height: 100%">
           <div style="height: 100%; background-color: gray; overflow-y: scroll; overflow-x: hidden">
             <draggable :list="calendarItems" group="task" @add="add" @remove="remove" :move="checkTime">
-              <template v-for="(item, index) in calendarItems">
-                <template v-if="item.empty">
-                  <div class="calendar-time" :class="{'calendar-time-current' : index == time}">
+              <template v-for="(item, index) in getCalendar()">
+                <template v-if="item.empty" >
+                  <div class="calendar-time" :class="{'calendar-time-current' : index == time}" v-on:click="edit(-1, index)">
                     {{index}}:00 {{item}}
                   </div>
                 </template>
-                <calendar-item v-else :item="item"></calendar-item>
+                <calendar-item v-else :item="item.task"></calendar-item>
               </template>
             </draggable>
-
           </div>
         </td>
       </tr>
