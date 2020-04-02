@@ -1,7 +1,6 @@
 package api.socket.handlers;
 
 import api.socket.Subscribe;
-import entity.budget.Transaction;
 import entity.project.Project;
 import entity.project.Task;
 import entity.user.User;

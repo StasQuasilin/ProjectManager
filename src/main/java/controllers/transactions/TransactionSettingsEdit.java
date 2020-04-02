@@ -1,10 +1,10 @@
-package controllers.budget;
+package controllers.transactions;
 
 import constants.API;
 import constants.Branches;
 import controllers.IModal;
-import entity.transactions.Transaction;
-import entity.transactions.TransactionType;
+import entity.transactions.TransactionRepeat;
+import entity.transactions.TransactionSettings;
 import entity.user.User;
 import org.json.simple.JSONObject;
 
@@ -14,30 +14,27 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * Created by szpt_user045 on 26.02.2020.
- */
-@WebServlet(Branches.TRANSACTIONS_EDIT)
-public class TransactionEdit extends IModal {
-    private static final String _CONTENT = "/pages/budget/transactionEdit.jsp";
-    private static final String _TITLE = "title.transaction.edit";
+@WebServlet(Branches.TRANSACTION_SETTINGS)
+public class TransactionSettingsEdit extends IModal {
+    private static final String _TITLE = "title.transaction.settings.edit";
+    private static final String _CONTENT = "/pages/transactions/transactionSettings.jsp";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);
         if (body != null){
-            Transaction transaction = dao.getObjectById(Transaction.class, body.get(ID));
-            req.setAttribute(TRANSACTION, transaction);
+            TransactionSettings settings = dao.getObjectById(TransactionSettings.class, body.get(ID));
+            req.setAttribute(SETTING, settings);
         }
         User user = getUser(req);
-        req.setAttribute(TYPES, TransactionType.values());
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
-        req.setAttribute(CURRENCY, dao.getUserCurrency(user));
+        req.setAttribute(REPEATS, TransactionRepeat.values());
         req.setAttribute(BUDGETS, dao.getBudgetsByUser(user));
+        req.setAttribute(CURRENCY, dao.getUserCurrency(user));
         req.setAttribute(FIND_CATEGORY, API.FIND_TRANSACTION_CATEGORY);
-        req.setAttribute(FIND_PERSON, API.FIND_PERSON);
-        req.setAttribute(SAVE, API.TRANSACTION_EDIT);
+        req.setAttribute(SAVE, API.TRANSACTION_SETTINGS_EDIT);
         show(req, resp);
     }
+
 }

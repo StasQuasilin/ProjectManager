@@ -3,7 +3,6 @@ package controllers.payments;
 import constants.API;
 import constants.Branches;
 import controllers.IModal;
-import entity.budget.Budget;
 import entity.payments.PaymentType;
 
 import javax.servlet.ServletException;
@@ -24,6 +23,6 @@ public class PaymentsEdit extends IModal {
         req.setAttribute("title", "title.payments.edit");
         req.setAttribute("pageContent", "/pages/payments/paymentsEdit.jsp");
         req.setAttribute("save", API.Payments.EDIT);
-        showModal(req, resp);
+        show(req, resp);
     }
 }

@@ -86,7 +86,7 @@
                     <span v-on:click="plusLength(-1)">
                         -
                     </span>
-                    <input id="length" style="width: 5em" autocomplete="off" v-model.number="task.length" v-on:keyup="checkLength()">
+                    <input id="length" style="width: 5em; text-align: center" autocomplete="off" v-model.number="task.length" v-on:keyup="checkLength()">
                     <span v-on:click="plusLength(1)">
                         +
                     </span>

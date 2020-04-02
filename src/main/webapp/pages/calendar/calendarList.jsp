@@ -56,24 +56,31 @@
                 >
               </span>
             </div>
-
           </div>
         </td>
       </tr>
       <tr>
         <td style="height: 100%">
-          <div style="height: 100%; background-color: gray; overflow-y: scroll; overflow-x: hidden">
-            <draggable :list="calendarItems" group="task" @add="add" @remove="remove" :move="checkTime">
-              <template v-for="(item, index) in getCalendar()">
-                <template v-if="item.empty" >
-                  <div class="calendar-time" :class="{'calendar-time-current' : index == time}" v-on:click="edit(-1, index)">
-                    {{index}}:00 {{item}}
-                  </div>
-                </template>
-                <calendar-item v-else :item="item.task"></calendar-item>
-              </template>
-            </draggable>
-          </div>
+          <draggable :list="calendarItems" group="task" @add="add" :move="move" @end="drop" style="height: 100%; background-color: gray; overflow-y: scroll; overflow-x: hidden">
+<%--            <div style="height: 100%; background-color: gray; overflow-y: scroll; overflow-x: hidden">--%>
+<%--              <draggable :list="calendarItems" group="task" @add="add" @remove="remove">--%>
+<%--            <div v-for="index in 24" style="border: dotted 1pt; padding: 1pt; margin: 1pt">--%>
+<%--              <draggable :list="calendarBuffer[index - 1]" group="task" @add="drop(calendarBuffer[index - 1], index - 1)" @end="drop(calendarBuffer[index - 1], index - 1)">--%>
+
+                <div v-for="(item, index) in calendarItems" style="background-color: pink">
+                  {{index}}: {{item}}
+                </div>
+<%--              </draggable>--%>
+
+<%--                <template v-if="item.empty" >--%>
+<%--                  <div class="calendar-time" :class="{'calendar-time-current' : index == time}" v-on:click="edit(-1, index)">--%>
+<%--                    {{index}}:00 {{item}}--%>
+<%--                  </div>--%>
+<%--                </template>--%>
+<%--                <calendar-item v-else :item="item.task"></calendar-item>--%>
+<%--            </div>--%>
+          </draggable>
+<%--          </div>--%>
         </td>
       </tr>
     </table>

@@ -1,13 +1,10 @@
 package api.socket.handlers;
 
 import api.socket.Subscribe;
-import entity.budget.Transaction;
 import entity.project.Task;
-import entity.project.TaskStatus;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import services.State;
 
 import javax.websocket.Session;
 import java.io.IOException;

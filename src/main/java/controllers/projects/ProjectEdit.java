@@ -3,14 +3,10 @@ package controllers.projects;
 import constants.API;
 import constants.Branches;
 import controllers.IModal;
-import entity.budget.Budget;
 import entity.budget.BudgetSize;
 import entity.project.Project;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
-import services.hibernate.Hibernator;
-import services.hibernate.dbDAO;
-import services.hibernate.dbDAOService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -44,6 +40,6 @@ public class ProjectEdit extends IModal {
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(SAVE, API.PROJECT.SAVE);
         req.setAttribute(BUDGET_TYPES, BudgetSize.values());
-        showModal(req, resp);
+        show(req, resp);
     }
 }

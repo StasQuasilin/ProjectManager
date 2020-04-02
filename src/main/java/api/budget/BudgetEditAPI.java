@@ -4,6 +4,8 @@ import api.socket.UpdateUtil;
 import constants.API;
 import controllers.ServletAPI;
 import entity.budget.*;
+import entity.transactions.Transaction;
+import entity.transactions.TransactionType;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.BudgetCalculator;

@@ -6,6 +6,8 @@ import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.project.Task;
 import entity.project.TaskStatus;
+import entity.transactions.Transaction;
+import entity.transactions.TransactionCategory;
 import entity.user.User;
 import entity.user.UserAccess;
 

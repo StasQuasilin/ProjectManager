@@ -3,7 +3,7 @@ package api.socket;
 import api.socket.handlers.ISocketHandler;
 import constants.Keys;
 import entity.budget.Budget;
-import entity.budget.Transaction;
+import entity.transactions.Transaction;
 import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.project.Task;

@@ -27,7 +27,7 @@ public class TransactionsList extends IPage {
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(EDIT, Branches.TRANSACTIONS_EDIT);
-        req.setAttribute(PLAN, Branches.TRANSACTION_PLAN);
+        req.setAttribute(PLAN, Branches.TRANSACTION_SETTINGS);
         req.setAttribute(REMOVE, Branches.TRANSACTION_REMOVE);
         req.setAttribute(SUBSCRIBES, subscribes);
         showPage(req, resp);

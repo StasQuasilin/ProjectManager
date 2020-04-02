@@ -3,7 +3,7 @@ package utils;
 import entity.budget.Budget;
 import entity.budget.BudgetPoint;
 import entity.budget.PointScale;
-import entity.budget.Transaction;
+import entity.transactions.Transaction;
 import entity.user.User;
 import services.hibernate.dbDAO;
 import services.hibernate.dbDAOService;

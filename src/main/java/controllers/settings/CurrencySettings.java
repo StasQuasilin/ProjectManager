@@ -27,6 +27,6 @@ public class CurrencySettings extends IModal {
         User user = getUser(req);
         req.setAttribute(USER_CURRENCY, dao.getUserCurrency(user));
         req.setAttribute(CURRENCY, dao.getObjects(Currency.class));
-        showModal(req, resp);
+        show(req, resp);
     }
 }

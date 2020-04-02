@@ -102,7 +102,9 @@ public interface Keys {
     String SIGN = "sign";
     String CODE = "code";
     String MAIN = "main";
+    String SETTING = "setting";
     String SETTINGS = "settings";
+    String REPEATS = "repeats";
     String CURRENCY_SETTINGS = "currencySettings";
     String CURRENCY_EDIT = "currencyEdit";
     String CURRENCY_REMOVE = "currencyRemove";

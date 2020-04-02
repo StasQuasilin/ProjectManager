@@ -1,7 +1,7 @@
 package utils;
 
 import constants.Keys;
-import entity.budget.TransactionCategory;
+import entity.transactions.TransactionCategory;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import services.hibernate.dbDAO;

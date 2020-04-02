@@ -1,8 +1,10 @@
-package entity.budget;
+package entity.transactions;
 
 import constants.Keys;
 import constants.Tables;
-import entity.user.Person;
+import entity.budget.Budget;
+import entity.budget.Counterparty;
+import entity.budget.Currency;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.JsonAble;

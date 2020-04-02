@@ -4,11 +4,8 @@ import constants.API;
 import constants.Branches;
 import controllers.IModal;
 import entity.calendar.CalendarItem;
-import entity.project.Task;
-import entity.project.TaskStatus;
 import entity.user.User;
 import org.json.simple.JSONObject;
-import services.State;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -45,6 +42,6 @@ public class TaskEdit extends IModal {
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(SAVE, API.TASK_EDIT);
-        showModal(req, resp);
+        show(req, resp);
     }
 }

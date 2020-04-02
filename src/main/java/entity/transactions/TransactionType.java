@@ -1,4 +1,4 @@
-package entity.budget;
+package entity.transactions;
 
 /**
  * Created by szpt_user045 on 26.02.2020.

@@ -8,13 +8,12 @@ import entity.project.Project;
 import entity.project.ProjectMember;
 import entity.project.Task;
 import entity.project.TaskStatus;
+import entity.transactions.Transaction;
+import entity.transactions.TransactionCategory;
 import entity.user.User;
 import entity.user.UserAccess;
 import services.State;
 import services.hibernate.DateContainers.BETWEEN;
-import services.hibernate.DateContainers.GE;
-import services.hibernate.DateContainers.GT;
-import services.hibernate.DateContainers.LE;
 
 import java.sql.Date;
 import java.util.ArrayList;

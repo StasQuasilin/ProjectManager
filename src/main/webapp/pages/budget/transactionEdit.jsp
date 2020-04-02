@@ -9,48 +9,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
+<script src="${context}/vue/templates/findInput.vue"></script>
+<script src="${context}/vue/transactions/transactionEdit.vue"></script>
 <script>
-    var edit = new Vue({
-        el:'#editor',
-        data:{
-            api:{},
-            types:[],
-            budgets:[],
-            currencyList:[],
-            transaction:{
-                type:'',
-                date:new Date().toISOString().substring(0, 10),
-                sum:0,
-                currency:'',
-                category:{
-                    id:-1,
-                    name:''
-                },
-                budget:{
-                    id:-1
-                },
-                payer:{
-                    id:-1
-                },
-                comment:''
-            }
-        },
-        methods:{
-            save:function(){
-                var data = Object.assign({}, this.transaction);
-                data.budget = data.budget.id;
-                if (!data.id){
-                    data.id = -1;
-                }
-                PostApi(this.api.save, data, function(a){
-                    console.log(a);
-                    if (a.status === 'success'){
-                        closeModal();
-                    }
-                })
-            }
-        }
-    });
     edit.api.save = '${save}';
     edit.api.findCategory = '${findCategory}';
     <c:forEach items="${types}" var="type">
@@ -59,7 +20,6 @@
         name:'<fmt:message key="transaction.${type}"/>'
     });
     </c:forEach>
-
     <c:forEach items="${budgets}" var="budget">
     edit.budgets.push(${budget.toJson()});
     </c:forEach>
@@ -125,13 +85,16 @@
                         </div>
                     </div>
                     <div>
-                        <label for="category">
+                        <label>
                             <fmt:message key="payment.edit.category"/>
                         </label>
-                        <input id="category" v-model="transaction.category.name" autocomplete="off">
+                        <find :timeout="600"></find>
                     </div>
                     <div>
-                        <select v-model="transaction.budget.id">
+                        <label for="budget">
+                            <fmt:message key="payment.edit.budget"/>
+                        </label>
+                        <select id="budget" v-model="transaction.budget.id">
                             <option v-for="budget in budgets" :value="budget.id">
                                 {{budget.title}}
                             </option>

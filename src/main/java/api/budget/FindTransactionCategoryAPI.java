@@ -3,7 +3,7 @@ package api.budget;
 import constants.API;
 import constants.Keys;
 import controllers.ServletAPI;
-import entity.budget.TransactionCategory;
+import entity.transactions.TransactionCategory;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

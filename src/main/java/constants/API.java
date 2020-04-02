@@ -21,6 +21,7 @@ public class API {
     public static final String TASK_REMOVE = API + "/task/remove";
     public static final String CURRENCY_EDIT = API + "/currency/add";
     public static final String CURRENCY_REMOVE = API + "/currency/remove";
+    public static final Object TRANSACTION_SETTINGS_EDIT = API + "/transaction/settings/edit";
 
     public class INFO {
         public static final String PROJECT_LENGTH = "/api/info/project/length";

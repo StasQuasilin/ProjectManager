@@ -1,4 +1,4 @@
-package entity.budget;
+package entity.transactions;
 
 import constants.Keys;
 import constants.Tables;

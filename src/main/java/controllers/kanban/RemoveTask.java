@@ -28,7 +28,7 @@ public class RemoveTask extends IModal {
             req.setAttribute(REMOVE, API.TASK_REMOVE);
             req.setAttribute(TITLE, _TITLE);
             req.setAttribute(PAGE_CONTENT, _CONTENT);
-            showModal(req, resp);
+            show(req, resp);
         }
     }
 }

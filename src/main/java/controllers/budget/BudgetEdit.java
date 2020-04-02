@@ -34,6 +34,6 @@ public class BudgetEdit extends IModal {
         req.setAttribute(TYPES, BudgetType.values());
         req.setAttribute(SIZES, BudgetSize.values());
         req.setAttribute(SAVE, API.BUDGET_EDIT);
-        showModal(req, resp);
+        show(req, resp);
     }
 }

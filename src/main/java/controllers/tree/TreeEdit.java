@@ -24,7 +24,7 @@ public class TreeEdit extends IModal{
             req.setAttribute("title", "title.task.edit");
             req.setAttribute("pageContent", "/pages/tree/taskEdit.jsp");
             req.setAttribute("save", API.Tree.EDIT_TASK);
-            showModal(req, resp);
+            show(req, resp);
         }
     }
 }

@@ -29,7 +29,7 @@ public class ProjectDelete extends IModal {
             req.setAttribute(TITLE, _TITLE);
             req.setAttribute(PAGE_CONTENT, _CONTENT);
             req.setAttribute(DELETE, API.PROJECT_DELETE);
-            showModal(req, resp);
+            show(req, resp);
         }
     }
 }
