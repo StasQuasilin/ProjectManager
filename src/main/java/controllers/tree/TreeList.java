@@ -27,6 +27,8 @@ public class TreeList extends IPage {
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(GET_SUB_TASKS, API.GET_SUB_TASK);
         req.setAttribute(EDIT, Branches.TREE_EDIT);
+        req.setAttribute(SETTING, Branches.TASK_SETTING);
+        req.setAttribute(REMOVE, Branches.TASK_REMOVE);
         req.setAttribute(SUBSCRIBES, subscribes);
         showPage(req, resp);
     }

@@ -45,7 +45,7 @@
     background-color: white;
 }
 .calendar-item-menu-button-edit{
-    background: url('../img/buttons/edit.png');
+    background: url('../img/buttons/edit.svg');
     background-size: cover;
 }
 .calendar-item-menu-button-add{
@@ -53,7 +53,7 @@
     background-size: cover;
 }
 .calendar-item-menu-button-remove{
-    background: url('../img/buttons/delete.png');
+    background: url('../img/buttons/close.svg');
     background-size: cover;
 }
 .calendar-item:hover .calendar-item-menu{

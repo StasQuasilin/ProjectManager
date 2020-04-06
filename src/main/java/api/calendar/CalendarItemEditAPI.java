@@ -23,7 +23,7 @@ import java.sql.Timestamp;
  * Created by szpt_user045 on 18.02.2020.
  */
 @WebServlet(API.TASK_EDIT)
-public class TaskEditAPI extends ServletAPI {
+public class CalendarItemEditAPI extends ServletAPI {
 
     private final UpdateUtil updateUtil = new UpdateUtil();
 
@@ -40,7 +40,7 @@ public class TaskEditAPI extends ServletAPI {
             }
 
             Task task = calendarItem.getTask();
-
+            //todo remove this to editor
             if (task == null){
                 task = new Task();
                 task.setOwner(user);

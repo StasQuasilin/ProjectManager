@@ -4,7 +4,7 @@ var findInput = {
         object:Object,
     },
     mounted:function(){
-        console.log('Mounted ' + this.props.timeout);
+
     },
     data:function(){
         return {

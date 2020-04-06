@@ -28,7 +28,14 @@ public abstract class ISocketHandler implements Keys {
 
     public void send(User user, JSONObject data) throws IOException {
         if (sessions.containsKey(user)) {
-            send(sessions.get(user), data);
+            Session session = sessions.get(user);
+            if (session.isOpen()){
+                send(session, data);
+            } else {
+                sessions.remove(user);
+                send(user, data);
+            }
+
         }
     }
 

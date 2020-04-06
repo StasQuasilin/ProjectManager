@@ -54,7 +54,7 @@
                 </div>
             </td>
             <td style="vertical-align: top">
-                BUDGETS
+<%--                <jsp:include page="budgetList.jsp"/>--%>
             </td>
         </tr>
         <tr>

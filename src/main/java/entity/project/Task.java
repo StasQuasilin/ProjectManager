@@ -25,11 +25,12 @@ public class Task extends iTask implements Comparable<Task>, Keys {
     private Task parent;
     private String title;
     private float cost;
+    private Budget budget;
     private User owner;
     private User doer;
     private String description;
     private int children;
-    private Budget budget;
+
 
     public Task() {}
 
@@ -188,11 +189,20 @@ public class Task extends iTask implements Comparable<Task>, Keys {
         object.put(DESCRIPTION, description);
         object.put(IS_GROUP, children > 0);
         object.put(CHILDREN, children);
+        if (doer != null){
+            object.put(DOER, doer.toJson());
+        }
+        object.put(COAST, cost);
         return object;
     }
 
     @Transient
     public boolean isGroup() {
         return children > 0;
+    }
+
+    @Transient
+    public boolean isTop(){
+        return parent == null;
     }
 }

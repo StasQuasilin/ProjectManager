@@ -48,6 +48,8 @@ public class Person extends JsonAble implements Keys {
         JSONObject object = pool.getObject();
         object.put(ID, id);
         object.put(VALUE, surname + SPACE + forename);
+        object.put(SURNAME, surname);
+        object.put(FORENAME, forename);
         return object;
     }
 }

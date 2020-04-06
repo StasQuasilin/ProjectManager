@@ -1,8 +1,14 @@
+.board-cell{
+    width: 33.33%;
+}
 .board{
     border: solid black 1pt;
     height: 100%;
     width: 100%;
     border-collapse: collapse;
+}
+.button-holder{
+    padding-right: 2pt;
 }
 .board-title-holder{
     background-color: #e6ffe6;
@@ -49,7 +55,10 @@
 }
 .border-holder{
     height: 100%;
-    width: 32.7%;
+    width: 100%;
     background-color: orange;
     display: inline-block;
+}
+.doer{
+    float: right;
 }

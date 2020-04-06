@@ -2,9 +2,9 @@
     background-color: #ffbe28;
     text-align: center;
     width: 100%;
+    border-radius: 6pt 6pt 0 0;
 }
 .modal-content{
-    overflow: hidden;
     border: solid gray 1.2pt;
     border-radius: 8pt;
     background-color: aliceblue;

@@ -30,6 +30,9 @@
         <mapping class="entity.budget.UserCurrency"/>
         <mapping class="entity.TreeItem"/>
         <mapping class="entity.calendar.CalendarItem"/>
+        <mapping class="entity.ActionTime"/>
+        <mapping class="entity.task.TaskStatistic"/>
+        <mapping class="entity.task.TimeLog"/>
 
     </session-factory>
 </hibernate-configuration>

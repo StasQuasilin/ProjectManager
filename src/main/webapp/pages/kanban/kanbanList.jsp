@@ -15,6 +15,7 @@
 <script src="${context}/vue/kanban/kanban.vue"></script>
 <jsp:include page="../subscribePage.jsp"/>
     <script>
+        kanban.api.show = '${show}';
         kanban.api.saveTask = '${save}';
         kanban.api.removeTask = '${removeTask}';
         kanban.api.getSub = '${getSubTasks}';
@@ -25,8 +26,11 @@
         <c:forEach items="${progressing}" var="t">
         kanban.inProgress.push(${t.toJson()});
         </c:forEach>
-        subscribe(kanban);
+
         var props = {
+            open:function(task){
+                kanban.open(task)
+            },
             onSave:function(a, b){
                 kanban.drop(a, b);
             }
@@ -37,17 +41,28 @@
         kanban.processingProps.title= '<fmt:message key="kanban.processing"/>';
         kanban.doneProps = Object.assign({}, props);
         kanban.doneProps.title= '<fmt:message key="kanban.done"/>';
+        subscribe(kanban);
 
     </script>
     <div id="kanban" style="height: 100%; width: 100%">
-        <div class="border-holder">
-            <board :color="'green'" :items="todo" :status="'todo'" :props="todoProps"></board>
-        </div>
-        <div class="border-holder">
-            <board :color="'green'" :items="inProgress" :status="'progressing'" :props="processingProps"></board>
-        </div>
-        <div class="border-holder">
-            <board :color="'green'" :items="done" :status="'done'" :props="doneProps" ></board>
-        </div>
+        <table style="width: 100%; height: 100%; border-collapse: collapse">
+            <tr>
+                <td class="board-cell">
+                    <div class="border-holder">
+                        <board :color="'green'" :items="todo" :status="'active'" :props="todoProps"></board>
+                    </div>
+                </td>
+                <td class="board-cell">
+                    <div class="border-holder">
+                        <board :color="'green'" :items="inProgress" :status="'progressing'" :props="processingProps"></board>
+                    </div>
+                </td>
+                <td class="board-cell">
+                    <div class="border-holder">
+                        <board :color="'green'" :items="done" :status="'done'" :props="doneProps" ></board>
+                    </div>
+                </td>
+            </tr>
+        </table>
     </div>
 </html>

@@ -28,6 +28,7 @@ public class KanbanView extends IPage {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
+        req.setAttribute(SHOW, Branches.KANBAN_SHOW);
         req.setAttribute(SAVE, API.TASK_EDIT);
         req.setAttribute(CHANGE_STATUS, API.CHANGE_TASK_STATUS);
         req.setAttribute(REMOVE_TASK, Branches.REMOVE_TASK);

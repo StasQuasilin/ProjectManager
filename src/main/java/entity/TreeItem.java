@@ -1,5 +1,6 @@
 package entity;
 
+import entity.project.TaskStatus;
 import entity.project.iTask;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,6 +15,7 @@ import static constants.Keys.*;
 @Table(name = "tasks")
 public class TreeItem extends iTask {
     private int id;
+    private TaskStatus status;
     private String title;
     private TreeItem parent;
     private Set<TreeItem> children;
@@ -25,6 +27,15 @@ public class TreeItem extends iTask {
     }
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    public TaskStatus getStatus() {
+        return status;
+    }
+    public void setStatus(TaskStatus status) {
+        this.status = status;
     }
 
     @Basic
@@ -58,6 +69,7 @@ public class TreeItem extends iTask {
     public JSONObject shortJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
+        object.put(STATUS, status.toString());
         object.put(TITLE, title);
         object.put(CHILDREN, children());
         return object;

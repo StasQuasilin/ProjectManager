@@ -2,6 +2,7 @@ package entity.project;
 
 import constants.Keys;
 import constants.Tables;
+import entity.task.TaskStatistic;
 import entity.user.User;
 import entity.budget.Budget;
 import org.json.simple.JSONObject;
@@ -95,7 +96,6 @@ public class Project extends JsonAble implements Keys {
         long n = Date.valueOf(LocalDate.now()).getTime();
         long c = completeDate.getTime();
         return 1f * (n - b) / (c - n);
-
     }
 
     @Override

@@ -114,4 +114,11 @@ public interface Keys {
     String PASSWORD = "password";
     String LANGUAGES = "languages";
     String REDIRECT = "redirect";
+    String FIND_TASK = "findTask";
+    String INITIALS = "initials";
+    String COAST = "coast";
+    String SHOW = "show";
+    String TIMERS = "timers";
+    String TIMER_START = "timerStart";
+    String TIMER_STOP = "timerStop";
 }

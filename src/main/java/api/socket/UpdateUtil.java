@@ -22,12 +22,13 @@ public class UpdateUtil implements Keys {
     JsonPool pool = JsonPool.getPool();
 
     public void onSave(Task task) throws IOException {
-        ISocketHandler handler = subscribeMaster.getHandler(Subscribe.calendar);
         JSONObject object = pool.getObject();
         JSONArray array = pool.getArray();
         array.add(task.toJson());
         object.put(UPDATE, array);
-        handler.send(task.getOwner(), object);
+        subscribeMaster.getHandler(Subscribe.tree).send(task.getOwner(), object);
+        subscribeMaster.getHandler(Subscribe.calendar).send(task.getOwner(), object);
+        subscribeMaster.getHandler(Subscribe.kanban).send(task.getOwner(), object);
     }
 
     public void onSave(Transaction transaction) throws IOException {

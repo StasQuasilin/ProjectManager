@@ -6,6 +6,13 @@ var board = {
         status:String,
         props:Object
     },
+    data:function(){
+        return{
+            active:'active',
+            progressing:'progressing',
+            done:'done'
+        }
+    },
     methods:{
         add:function(item){
             if (this.props){
@@ -33,7 +40,7 @@ var board = {
                 '<tr>' +
                     '<td class="board-content-holder">' +
                         '<draggable class="board-content" :list="items" group="task" style="border: solid grey 1pt;" @add="add">' +
-                            '<div class="border-item" v-for="task in items" v-on:dragstart="drag(task)" :key="task.id">' +
+                            '<div v-on:click="props.open(task)" class="border-item" v-for="task in items" v-on:dragstart="drag(task)" :key="task.id">' +
                                 '<div class="border-item-path">' +
                                     '<span v-for="(p, pIdx) in task.path">' +
                                         '<span>' +
@@ -43,7 +50,13 @@ var board = {
                                     '</span>' +
                                 '</div>' +
                                 '<div>' +
-                                    '{{task.title}}' +
+                                    '<span>' +
+                                        '{{task.title}}' +
+                                    '</span>' +
+                                    '<div v-if="task.doer" class="doer" :title="task.doer.person.value">' +
+                                        '{{task.doer.person.surname.substring(0, 1)}}' +
+                                        '{{task.doer.person.forename.substring(0, 1)}}' +
+                                    '</div>' +
                                 '</div>' +
                             '</div>' +
                         '</draggable>' +

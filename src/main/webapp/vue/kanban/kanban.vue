@@ -26,6 +26,9 @@ var kanban = new Vue({
             }
             this.sort();
         },
+        open:function(task){
+            loadModal(this.api.show, {id:task.id})
+        },
         update:function(item){
 
             let list = null;
@@ -84,9 +87,10 @@ var kanban = new Vue({
                 Vue.set(task, 'edit', false);
             })
         },
-        drop:function(a, status){
-            PostApi(this.api.changeStatus, {id:a.id, status:status}, function(a){
-                console.log(a);
+        drop:function(item, status){
+            PostApi(this.api.changeStatus, {id:item.id, status:status}, function(a){
+                //todo fix it;
+                item.status = status;
             });
         },
         check:function(task){

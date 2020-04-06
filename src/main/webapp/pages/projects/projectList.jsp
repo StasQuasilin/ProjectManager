@@ -13,6 +13,13 @@
     list.api.edit = '${edit}';
     list.api.remove = '${delete}';
     list.props = {
+      titles:{
+        dateBegin:'<fmt:message key="project.edit.date-begin"/>',
+        dateComplete:'<fmt:message key="project.edit.date-complete"/>',
+        todo:'<fmt:message key="project.tasks.active"/>',
+        progressing:'<fmt:message key="project.tasks.progressing"/>',
+        done:'<fmt:message key="project.tasks.done"/>'
+      },
       onEdit:function(id){
         list.edit(id);
       },

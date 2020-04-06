@@ -13,9 +13,13 @@ var calendar = new Vue({
     },
     mounted:function(){
         for (let i = 0; i < 24; i++){
-            this.calendarItems.push({empty: true});
+            this.calendarItems.push({
+                index:i,
+                empty: true,
+                item:null
+            });
         }
-        this.initTime();
+        // this.initTime();
     },
     computed:{
     },
@@ -31,8 +35,8 @@ var calendar = new Vue({
             PostApi(this.api.getItems, {date:this.date}, function(a){
                 for (var i in a){
                     if (a.hasOwnProperty(i)){
-                        var item = a[i];
-                        var date = new Date(item.timestamp);
+                        let item = a[i];
+                        let date = new Date(item.timestamp);
                         item.index = date.getHours();
                     }
                 }
@@ -41,7 +45,6 @@ var calendar = new Vue({
             })
         },
         getCalendar:function(){
-
             let formattedItems = {};
             for (let i in this.calendarItems){
                 if (this.calendarItems.hasOwnProperty(i)){
@@ -72,7 +75,7 @@ var calendar = new Vue({
                 console.log('init time');
                 self.initTime();
             };
-            setTimeout(updateTime, (60 - new Date().getMinutes()) * 60 * 1000 )
+            setTimeout(updateTime, (59 - new Date().getMinutes()) * 60 * 1000 )
         },
         handle:function(data){
             for (let i in data.update){
@@ -101,10 +104,12 @@ var calendar = new Vue({
             console.log(a);
             // let item = this.calendarBuffer.splice(0, 1)[0];
 
-            // this.getCalendar();
             let index = a.newIndex;
-            this.calendarItems.splice(index + 1, 1);
-            // let element = this.calendar[index];
+
+            // this.calendarItems.splice(index + 1, 1);
+            this.setIndices();
+            let element = this.calendarItems[index];
+            element.length = 1;
             // console.log(item);
             // this.calendarItems.push({
             //     begin:this.date + ' ' + index + ':00:00',
@@ -116,22 +121,44 @@ var calendar = new Vue({
             // this.saveTime(element, index, 1);
             // this.checkCalendar();
         },
-        drop:function(d, index){
-            console.log('Drop: ' + index);
-            console.log(d);
-            // let oldIndex = d.oldIndex;
-            // let newIndex = d.newIndex;
+        drop:function(d){
+
+            console.log("Drop");
+
+            let oldIndex = d.oldIndex;
+            let newIndex = d.newIndex;
+            console.log('New index = ' + newIndex);
+            // this.setIndices();
+            // Vue.set(this.calendarItems[newIndex], 'index', newIndex);
+            Vue.delete(this.calendarItems[newIndex], 'move');
+
             // let item = this.calendar[oldIndex];
             // let hours = newIndex - oldIndex;
             // item.begin.setHours(item.begin.getHours() + hours);
             // item.end.setHours(item.end.getHours() + hours);
             // this.getCalendar();
         },
+        setIndices:function(next){
+            for (let i in this.calendarItems){
+                if (this.calendarItems.hasOwnProperty(i) &&  i !== next){
+                    Vue.set(this.calendarItems[i], 'index', i);
+                }
+            }
+        },
         move:function(m){
-            // let index= m.draggedContext.index;
+            // console.log(m);
+            let index= m.draggedContext.index;
             // let item = this.calendar[index];
-            // let next = m.relatedContext.index;
+            let next = m.relatedContext.index;
             // let hours = next - index;
+            // console.log('From: ' + index + ' to ' + next);
+
+
+            this.setIndices(next);
+            Vue.set(this.calendarItems[index], 'index', next);
+            Vue.set(this.calendarItems[index], 'move', true);
+            // Vue.set(item, 'index', next);
+            // console.log(this.calendarItems[index].index);
 
         },
         remove:function(r){

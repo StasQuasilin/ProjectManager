@@ -22,11 +22,31 @@ var projectBox = {
         '</div>' +
         '<div v-on:click="onEdit()">' +
             '<div class="date-container">' +
+                '{{props.titles.dateBegin}} ' +
                 '{{new Date(project.begin).toLocaleDateString()}}' +
             '</div>' +
             '<div class="date-container">' +
+                '{{props.titles.dateComplete}} ' +
                 '{{new Date(project.end).toLocaleDateString()}}' +
             '</div>' +
+        '</div>' +
+        '<div class="date-container">' +
+            '<span>' +
+                '{{props.titles.todo}} :' +
+                    '<span id="active-tasks">0</span>' +
+            '</span>' +
+        '</div>' +
+        '<div class="date-container">' +
+            '<span>' +
+                '{{props.titles.progressing}} :' +
+                    '<span id="canceled-tasks">0</span>' +
+            '</span>' +
+        '</div>' +
+        '<div class="date-container">' +
+            '<span>' +
+                '{{props.titles.done}} :' +
+                    '<span id="done-tasks">0</span>' +
+            '</span>' +
         '</div>' +
     '</div>'
 };

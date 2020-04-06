@@ -10,6 +10,11 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <html>
+<style>
+  .moved{
+    background-color: darkcyan;
+  }
+</style>
   <script src="${context}/vue/templates/calendarBox.vue"></script>
   <script src="${context}/vue/calendar/calendar.vue"></script>
   <link rel="stylesheet" href="${context}/css/calendar.css"/>
@@ -67,8 +72,11 @@
 <%--            <div v-for="index in 24" style="border: dotted 1pt; padding: 1pt; margin: 1pt">--%>
 <%--              <draggable :list="calendarBuffer[index - 1]" group="task" @add="drop(calendarBuffer[index - 1], index - 1)" @end="drop(calendarBuffer[index - 1], index - 1)">--%>
 
-                <div v-for="(item, index) in calendarItems" style="background-color: pink">
-                  {{index}}: {{item}}
+                <div v-for="(item, index) in calendarItems" style="border: dotted 0.8pt" :class="{'moved' : item.move}">
+                  <span>
+                    {{item}}
+                  </span>
+<%--                  <calendar-item v-else :item="item"></calendar-item>--%>
                 </div>
 <%--              </draggable>--%>
 

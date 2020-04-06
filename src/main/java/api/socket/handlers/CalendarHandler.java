@@ -26,7 +26,7 @@ public class CalendarHandler extends ISocketHandler {
     @Override
     public void onSubscribe(User user, Session session) throws IOException {
         JSONArray tasks = pool.getArray();
-        for (Task task : dao.getTaskByUser(user, TaskStatus.progressing, State.notNull, State.isNull)){
+        for (Task task : dao.getTaskByDoer(user, TaskStatus.progressing)){
             tasks.add(task.toJson());
         }
 

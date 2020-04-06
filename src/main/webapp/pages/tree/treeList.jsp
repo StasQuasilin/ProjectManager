@@ -14,6 +14,7 @@
     <script>
         tree.api.edit = '${edit}';
         tree.api.getSubs = '${getSubTasks}';
+        tree.api.taskSettings = '${setting}';
         tree.deafaultTaskName = '<fmt:message key="default.task.name"/>';
         tree.props = {
             onSelect:function(item){
@@ -22,7 +23,7 @@
         };
         subscribe(tree);
     </script>
-    <table id="tree" class="tree">
+    <table id="tree" class="tree-page">
         <tr>
             <td style="width: 50%">
                 <template v-if="selected">
@@ -41,21 +42,34 @@
                 </div>
             </td>
             <td rowspan="2" style="background-color: cadetblue; vertical-align: top">
-                <tree-view :item="tree" :props="props"></tree-view>
+                <div class="tree">
+                    <tree-view :item="tree" :props="props"></tree-view>
+                </div>
             </td>
         </tr>
         <tr>
             <td style="height: 100%; vertical-align: top">
                 <div style="max-height: 100%; height: 100%; overflow-y: scroll; background-color: teal">
-                    <div v-on:click="select(item)" v-for="item in items" style="background-color: orange; padding: 2pt 4pt; margin: 2pt">
-                        <span v-if="item.isGroup">
-                            -
+                    <div v-for="item in items" class="tree-list-item">
+                        <span v-on:click="select(item)"
+                              style="display: inline-block;width: calc(100% - 28pt)">
+                            <span v-if="item.isGroup">
+                                -
+                            </span>
+                            <span v-else>
+                                &nbsp;
+                            </span>
+                            <span>
+                                {{item.title}}
+                            </span>
                         </span>
-                        <span v-else>
-                            &nbsp;
-                        </span>
-                        <span>
-                            {{item.title}}
+                        <span style="float: right" class="tree-list-settings" >
+                            <span v-on:click="remove(item)" title="Remove">
+                                <img style="width: 8pt;" src="${context}/img/buttons/trash.svg" alt="">
+                            </span>
+                            <span v-on:click="settings(item)" title="Settings">
+                                <img style="width: 12pt;" src="${context}/img/buttons/settings.svg" alt="">
+                            </span>
                         </span>
                     </div>
                 </div>

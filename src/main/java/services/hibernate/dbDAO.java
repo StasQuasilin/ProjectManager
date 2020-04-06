@@ -6,6 +6,8 @@ import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.project.Task;
 import entity.project.TaskStatus;
+import entity.task.TaskStatistic;
+import entity.task.TimeLog;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
 import entity.user.User;
@@ -46,4 +48,7 @@ public interface dbDAO {
     List<Task> getTaskToDo(Task parent);
     List<Task> getParents(User user);
     List<CalendarItem> getCalendarItems(Date date);
+    TaskStatistic getTaskStatistic(Task parent);
+    List<TimeLog> getTimeLogs(Task task);
+    TimeLog getActiveTimeLog(Task task);
 }

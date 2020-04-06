@@ -12,19 +12,47 @@
 .tree-view-item .tree-view-item-menu{
     display: none;
 }
+.tree-list-item {
+    background-color: orange;
+    padding: 2pt 4pt;
+    margin: 2pt
+}
+.tree-list-item:hover .tree-list-settings{
+    display: inline-block;
+}
+.tree-list-settings{
+    display: none;
+}
 .tree-view-item:hover{
     background-color: rgba(255, 255, 255, 0.52);
 }
 .tree-view-item:hover .tree-view-item-menu{
     display: inline-block;
 }
-.tree-view-item-menu{
+.tree-view-item-menu-holder{
     float: right;
+    padding: 0 4pt;
+    position: relative;
+    display: inline-block;
+}
+.tree-view-item-menu-holder .tree-view-item-menu{
+    display: none;
+}
+.tree-view-item-menu-holder:hover .tree-view-item-menu{
+    display: block;
+}
+.tree-view-item-menu{
+    position: absolute;
+}
+.tree-page{
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
 }
 .tree{
     width: 100%;
     height: 100%;
-    border-collapse: collapse;
+    overflow-y: scroll;
 }
 .tree-field{
     width: 49.5%;
@@ -115,10 +143,10 @@
     box-shadow: 0 0 4pt #fbba00;
 }
 .tree-menu .edit{
-    background: url('../../img/buttons/edit.png') center;
+    background: url('../../img/buttons/edit.svg') center;
     background-size: 98%;
 }
 .tree-menu .delete{
-    background: url('../../img/buttons/delete.png') center;
+    background: url('../../img/buttons/close.svg') center;
     background-size: 98%;
 }

@@ -7,6 +7,7 @@ import entity.project.Task;
 import entity.project.TaskStatus;
 import entity.user.User;
 import org.json.simple.JSONObject;
+import utils.TaskUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,6 +39,9 @@ public class ChangeStatusAPI extends ServletAPI {
             dao.save(task);
             write(resp, SUCCESS);
             updateUtil.onSave(task);
+            if (!task.isTop()) {
+                TaskUtil.checkParenthood(task.getParent(), user);
+            }
         }
     }
 }

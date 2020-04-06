@@ -16,14 +16,17 @@ import java.io.IOException;
  */
 @WebServlet(Branches.TREE_EDIT)
 public class TreeEdit extends IModal{
+    private static final String _TITLE = "title.task.edit";
+    private static final String _CONTENT = "/pages/tree/taskEdit.jsp";
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);
         if (body != null) {
-            req.setAttribute("parent", body.get("parent"));
-            req.setAttribute("title", "title.task.edit");
-            req.setAttribute("pageContent", "/pages/tree/taskEdit.jsp");
-            req.setAttribute("save", API.Tree.EDIT_TASK);
+            req.setAttribute(PARENT, body.get(PARENT));
+            req.setAttribute(TITLE, _TITLE);
+            req.setAttribute(PAGE_CONTENT, _CONTENT);
+            req.setAttribute(SAVE, API.Tree.EDIT_TASK);
             show(req, resp);
         }
     }

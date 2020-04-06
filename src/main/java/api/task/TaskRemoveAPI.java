@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(API.TASK_REMOVE)
+//@WebServlet(API.TASK_REMOVE)
 public class TaskRemoveAPI extends ServletAPI {
 
     private final UpdateUtil updateUtil = new UpdateUtil();
@@ -33,8 +33,6 @@ public class TaskRemoveAPI extends ServletAPI {
             if (parent != null){
                 TaskUtil.checkParenthood(parent, getUser(req));
             }
-
-
         }
     }
 }

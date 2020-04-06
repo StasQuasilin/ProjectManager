@@ -29,7 +29,6 @@ var calendarBox = {
                     '{{p.title}}' +
                     '<span v-if="pIdx < item.path.length - 1"> - </span>' +
                 '</span>' +
-
             '</div>' +
             '<div class="calendar-item-title">' +
                 '<span v-if="item.time" style="margin-right: 4pt">{{item.time}}</span>' +
@@ -40,6 +39,8 @@ var calendarBox = {
         '</div>' +
         '<div style="font-size: 10pt" v-if="item.index">' +
             '{{item.index}}:00' +
+            ' - ' +
+            '{{item.length}}' +
         '</div>' +
         '<div v-if="item.index" class="calendar-item-line">' +
         '</div>' +

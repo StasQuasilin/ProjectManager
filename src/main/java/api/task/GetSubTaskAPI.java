@@ -30,14 +30,20 @@ public class GetSubTaskAPI extends ServletAPI {
             if (body.containsKey(PARENT)){
                 parentId = body.get(PARENT);
             }
+            int id = -1;
+            if (body.containsKey(ID)){
+                id = Integer.parseInt(String.valueOf(body.get(ID)));
+            }
             for (Task task : dao.getTaskByUserAndParent(getUser(req), parentId)){
-                array.add(task.toJson());
+                if (task.getId() != id) {
+                    array.add(task.toJson());
+                }
             }
 
             SuccessAnswer answer = new SuccessAnswer(RESULT, array);
-
+            //todo do something
             Task parentTask = dao.getObjectById(Task.class, parentId);
-            if (parentTask.getParent() == null){
+            if (parentTask != null && parentTask.getParent() == null){
                 TreeItem treeItem = dao.getObjectById(TreeItem.class, parentId);
                 answer.add(Keys.TREE, treeItem.toJson());
             }

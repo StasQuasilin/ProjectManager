@@ -32,4 +32,7 @@ public interface Branches {
     String REMOVE_TASK = "/task/remove.j";
     String CURRENCY_SETTINGS = "/settings/currency.j";
     String CALENDAR_EDIT = "/calendar/edit.j";
+    String TASK_SETTING = "/task/settings.j";
+    String TASK_REMOVE = "/task/remove.j";
+    String KANBAN_SHOW = "/kanban/show.j";
 }

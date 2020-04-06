@@ -1,6 +1,7 @@
 package api.socket.handlers;
 
 import api.socket.Subscribe;
+import entity.project.Project;
 import entity.project.Task;
 import entity.user.User;
 import org.json.simple.JSONArray;
@@ -18,8 +19,8 @@ public class TreeHandler extends ISocketHandler{
     public void onSubscribe(User user, Session session) throws IOException {
         JSONArray array = pool.getArray();
 
-        for (Task task : dao.getTaskByUserAndParent(user, null)){
-            array.add(task.toJson());
+        for (Project project : dao.getProjectsByOwner(user)){
+            array.add(project.getTask().toJson());
         }
 
         JSONObject object = pool.getObject();

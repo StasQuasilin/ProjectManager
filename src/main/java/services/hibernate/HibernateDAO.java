@@ -8,6 +8,8 @@ import entity.project.Project;
 import entity.project.ProjectMember;
 import entity.project.Task;
 import entity.project.TaskStatus;
+import entity.task.TaskStatistic;
+import entity.task.TimeLog;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
 import entity.user.User;
@@ -221,5 +223,23 @@ public class HibernateDAO implements dbDAO, Keys {
     @Override
     public RegistrationConfirm getRegistrationConfirmByEmail(String email) {
         return hibernator.get(RegistrationConfirm.class, EMAIL, email);
+    }
+
+    @Override
+    public TaskStatistic getTaskStatistic(Task task) {
+        return hibernator.get(TaskStatistic.class, "task", task);
+    }
+
+    @Override
+    public List<TimeLog> getTimeLogs(Task task) {
+        return hibernator.query(TimeLog.class, "task", task);
+    }
+
+    @Override
+    public TimeLog getActiveTimeLog(Task task) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put("task", task);
+        params.put("end", null);
+        return hibernator.get(TimeLog.class, params);
     }
 }

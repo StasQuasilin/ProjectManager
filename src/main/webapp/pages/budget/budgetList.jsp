@@ -8,10 +8,12 @@
   var projectBox = {}
 </script>
 <script src="${context}/vue/projects/projectList.vue"></script>
+<jsp:include page="../subscribePage.jsp"/>
 <script>
   list.api.edit = '${edit}';
+  subscribe(list);
 </script>
-<jsp:include page="../subscribePage.jsp"/>
+
 <div id="title-content" style="display: inline-block; background: transparent; margin: 0 4pt">
   <button onclick="loadModal('${edit}')">
     <fmt:message key="budget.new"/>

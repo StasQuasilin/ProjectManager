@@ -10,6 +10,7 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <html>
+<script src="${context}/vue/templates/findInput.vue"></script>
 <script src="${context}/vue/transactions/transactionSettings.vue"></script>
 <script>
     <c:forEach items="${repeats}" var="repeat">
@@ -68,6 +69,9 @@
         <tr>
             <td>
                 <fmt:message key="payment.edit.category"/>
+            </td>
+            <td>
+                <find></find>
             </td>
         </tr>
         <tr>
