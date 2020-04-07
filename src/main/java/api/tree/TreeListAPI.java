@@ -2,10 +2,9 @@ package api.tree;
 
 import constants.API;
 import controllers.ServletAPI;
-import entity.project.Task;
+import entity.task.Task;
 import org.json.simple.JSONObject;
 import services.hibernate.Hibernator;
-import utils.JsonParser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

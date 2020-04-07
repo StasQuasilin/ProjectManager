@@ -1,10 +1,9 @@
 package entity;
 
-import entity.project.TaskStatus;
+import entity.task.TaskStatus;
 import entity.project.iTask;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import utils.JsonAble;
 
 import javax.persistence.*;
 import java.util.Set;

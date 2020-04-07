@@ -38,6 +38,10 @@ var edit = new Vue({
                     closeModal();
                 }
             });
+        },
+        removePath:function(id){
+            this.task.path.splice(id);
+            this.task.parent = this.task.path[this.task.path.length - 1];
         }
     }
 });

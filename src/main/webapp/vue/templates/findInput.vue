@@ -8,7 +8,7 @@ var findInput = {
     },
     data:function(){
         return {
-            input:'Input',
+            input:'',
             items:[],
             timer:-1,
             timeout:500
@@ -17,21 +17,33 @@ var findInput = {
     methods:{
         find:function(){
             clearTimeout(this.timer);
-            const self = this;
-            let findReq = function(){
-                self.findReq();
-            };
-            this.timer = setTimeout(findReq, this.timeout);
+            if (this.input) {
+                const self = this;
+                let findReq = function () {
+                    self.findReq();
+                };
+                this.timer = setTimeout(findReq, this.timeout);
+            }
         },
         findReq:function(){
-            console.log('Find ' + this.input);
+            const self = this;
+            PostApi(this.props.find, {key:this.input}, function (ans) {
+                self.items = ans.result;
+            })
+        },
+        put:function(item){
+            this.input = item.name;
+            if (this.props.onPut){
+                this.props.onPut(item);
+            }
+            this.items = []
         }
     },
-    template:'<div style="display: inline-block">' +
+    template:'<div style="display: inline-block; position: relative">' +
             '<input v-model="input" v-on:keyup="find()">' +
             '<div class="custom-data-list" v-if="items.length > 0">' +
-                '<div class="custom-data-list-item" v-for="item in items">' +
-                    '{{item}}' +
+                '<div class="custom-data-list-item" v-for="item in items" v-on:click="put(item)">' +
+                    '{{item.name}}' +
                 '</div>' +
             '</div>' +
         '</div>'

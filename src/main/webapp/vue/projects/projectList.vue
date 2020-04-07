@@ -1,21 +1,24 @@
 var list = new Vue({
     el: '#list',
     components:{
-        'project-box':projectBox
+        'item-view':itemView
     },
     data:{
         api:{},
-        items:{}
+        items:[]
     },
     methods:{
+        getItems:function(){
+            return this.items;
+        },
         handle:function(items){
-            for (var u in items.update){
+            for (let u in items.update){
                 if (items.update.hasOwnProperty(u)){
                     let item = items.update[u];
                     Vue.set(this.items, item.id, item);
                 }
             }
-            for (var r in items.remove){
+            for (let r in items.remove){
                 if (items.remove.hasOwnProperty(r)){
                     let item = items.remove[r];
                     Vue.delete(this.items, item.id);

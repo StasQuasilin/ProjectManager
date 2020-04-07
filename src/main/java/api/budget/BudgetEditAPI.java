@@ -46,6 +46,9 @@ public class BudgetEditAPI extends ServletAPI {
             String title = String.valueOf(body.get(TITLE));
             budget.setTitle(title);
 
+            float limit = Float.parseFloat(String.valueOf(body.get(LIMIT)));
+            budget.setLimit(limit);
+
             BudgetType budgetType = BudgetType.valueOf(String.valueOf(body.get(TYPE)));
             budget.setBudgetType(budgetType);
 

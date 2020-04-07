@@ -1,13 +1,11 @@
 package controllers.task;
 
 import constants.API;
-import constants.Branches;
 import controllers.IModal;
-import entity.project.Task;
+import entity.task.Task;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

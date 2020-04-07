@@ -2,10 +2,9 @@ package api.tree;
 
 import api.socket.UpdateUtil;
 import constants.API;
-import constants.Branches;
 import controllers.ServletAPI;
-import entity.project.Task;
-import entity.project.TaskStatus;
+import entity.task.Task;
+import entity.task.TaskStatus;
 import entity.user.User;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;

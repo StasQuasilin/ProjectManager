@@ -2,7 +2,7 @@ package api.calendar;
 
 import constants.API;
 import controllers.ServletAPI;
-import entity.project.Task;
+import entity.task.Task;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;

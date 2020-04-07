@@ -1,18 +1,17 @@
 package utils;
 
 import api.socket.UpdateUtil;
-import entity.calendar.CalendarItem;
-import entity.project.Task;
-import entity.project.TaskStatus;
+import entity.project.Project;
+import entity.task.Task;
+import entity.task.TaskStatus;
 import entity.task.TaskStatistic;
+import entity.task.TimeLog;
 import entity.user.User;
-import services.State;
+import services.hibernate.HibernateSessionFactory;
+import services.hibernate.Hibernator;
 import services.hibernate.dbDAO;
 import services.hibernate.dbDAOService;
 
-import java.io.IOException;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -30,7 +29,7 @@ public class TaskUtil {
             if (!counts.containsKey(status)){
                 counts.put(status, 0);
             }
-            counts.put(status, counts.get(status) + 1);
+            counts.put(status, counts.get(status) + task.getChildrenCount(status) + 1);
         }
 
         TaskStatistic statistic = dao.getTaskStatistic(parent);
@@ -50,6 +49,11 @@ public class TaskUtil {
         int size = tasks.size();
         if (parent.getChildren() != size){
             parent.setChildren(size);
+            if (size > 0){
+                parent.setStatus(TaskStatus.folder);
+            } else {
+                parent.setStatus(TaskStatus.active);
+            }
             dao.save(parent);
         }
         if (!parent.isTop()){
@@ -58,9 +62,26 @@ public class TaskUtil {
     }
 
     public static void main(String[] args) {
-        Date date = Date.valueOf(LocalDate.now());
-        for (CalendarItem calendarItem : dao.getCalendarItems(date)){
-            System.out.println(calendarItem.getTask().getTitle());
+        Hibernator hibernator = Hibernator.getInstance();
+
+        for (Task task : hibernator.query(Task.class, null)){
+            checkParenthood(task, task.getOwner());
         }
+        HibernateSessionFactory.shutdown();
+    }
+
+    public static void checkSpellTime(Task task) {
+        List<TimeLog> logs = dao.getTimeLogs(task);
+        int spend = 0;
+        for (TimeLog log : logs){
+            spend += log.getSpend();
+        }
+        TaskStatistic statistic = task.getStatistic();
+        if (statistic == null){
+            statistic = new TaskStatistic();
+            statistic.setTask(task);
+        }
+        statistic.setSpendTime(spend);
+        dao.save(statistic);
     }
 }

@@ -1,7 +1,6 @@
 package entity.task;
 
 import constants.Keys;
-import entity.project.Task;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
@@ -75,14 +74,29 @@ public class TimeLog extends JsonAble implements Keys {
     }
 
     @Override
-    public JSONObject toJson() {
+    public JSONObject shortJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
         object.put(BEGIN, begin.toString());
         if (end != null){
             object.put(END, end.toString());
         }
+        return object;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = shortJson();
         object.put(DOER, doer.shortJson());
         return object;
+    }
+
+    @Transient
+    public long getSpend() {
+        long spend = 0;
+        if (end != null){
+            spend = end.getTime() - begin.getTime();
+        }
+        return spend;
     }
 }

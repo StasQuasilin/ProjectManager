@@ -19,7 +19,8 @@
                 id:-1,
                 title:'',
                 type:-1,
-                amount:0
+                amount:0,
+                limit:0
             }
         },
         methods:{
@@ -85,6 +86,16 @@
         </td>
         <td>
             <input id="sum" v-model="budget.amount " autocomplete="off">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="limit">
+                <fmt:message key="budget.limit"/>
+            </label>
+        </td>
+        <td>
+            <input id="limit" v-model="budget.limit" autocomplete="off">
         </td>
     </tr>
     <tr>

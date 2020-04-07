@@ -121,4 +121,9 @@ public interface Keys {
     String TIMERS = "timers";
     String TIMER_START = "timerStart";
     String TIMER_STOP = "timerStop";
+    String STATISTIC = "statistic";
+    String ACTIVE = "active";
+    String PROGRESSING = "progressing";
+    String DONE = "done";
+    String SPEND = "spend";
 }

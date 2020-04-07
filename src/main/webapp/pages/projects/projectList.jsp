@@ -39,7 +39,7 @@
   <div id="list">
     <div class="project-container">
       <div v-for="(value) in byRole('owner')" :key="value.id" >
-        <project-box :project="value" :props="props" class="project-box"></project-box>
+        <item-view :project="value" :props="props" class="project-box"></item-view>
       </div>
     </div>
   </div>

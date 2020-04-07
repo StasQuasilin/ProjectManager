@@ -23,7 +23,7 @@
 <div id="list">
   <div v-for="(value, key) in items" v-on:click="edit(value.id)">
     {{value.title}}
-    {{value.amount}} {{value.currency}}
+    {{value.limit+value.amount}} {{value.currency}}
   </div>
 </div>
 </html>

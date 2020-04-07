@@ -1,11 +1,14 @@
 package api.kanban;
 
+import api.socket.UpdateUtil;
 import constants.API;
 import constants.Keys;
 import controllers.ServletAPI;
+import entity.task.Task;
 import entity.task.TimeLog;
 import org.json.simple.JSONObject;
 import services.answers.SuccessAnswer;
+import utils.TaskUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +20,9 @@ import java.time.LocalDateTime;
 
 @WebServlet(API.TIMER_STOP)
 public class StopTimerAPI extends ServletAPI {
+
+    private UpdateUtil updateUtil = new UpdateUtil();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);
@@ -24,9 +30,14 @@ public class StopTimerAPI extends ServletAPI {
             TimeLog log = dao.getObjectById(TimeLog.class, body.get(ID));
             log.setEnd(Timestamp.valueOf(LocalDateTime.now()));
             dao.save(log);
+
             JSONObject json = new SuccessAnswer(Keys.RESULT, log.toJson()).toJson();
             write(resp, json.toJSONString());
             pool.put(json);
+
+            Task task = log.getTask();
+            TaskUtil.checkSpellTime(task);
+            updateUtil.onSave(task);
         }
     }
 }

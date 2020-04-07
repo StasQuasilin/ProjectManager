@@ -39,7 +39,7 @@
                         .. /
                     </span>
                         <span v-for="(p, idx) in task.path">
-                        {{p.title}}<span v-on:clicl="removePath(idx)">&times;</span> /
+                        {{p.title}}<span v-on:click="removePath(idx)">&times;</span> /
                     </span>
                     <span v-if="parents.length == 0" v-on:click="getPathByParent()">+</span>
                     <div v-else style="position: relative; display: inline-block; height: 10pt">

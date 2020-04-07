@@ -2,8 +2,7 @@ package api.tree;
 
 import constants.API;
 import controllers.ServletAPI;
-import entity.project.Task;
-import entity.project.TaskStatus;
+import entity.task.TaskStatus;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;

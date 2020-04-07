@@ -24,9 +24,14 @@ var edit = new Vue({
                 id:-1
             },
             comment:''
-        }
+        },
+        locale:'uk',
+        props:{}
     },
     methods:{
+        setCategory:function(category){
+            this.transaction.category = category;
+        },
         save:function(){
             var data = Object.assign({}, this.transaction);
             data.budget = data.budget.id;

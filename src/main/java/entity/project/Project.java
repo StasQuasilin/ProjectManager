@@ -2,9 +2,8 @@ package entity.project;
 
 import constants.Keys;
 import constants.Tables;
-import entity.task.TaskStatistic;
+import entity.task.Task;
 import entity.user.User;
-import entity.budget.Budget;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
 
@@ -100,9 +99,8 @@ public class Project extends JsonAble implements Keys {
 
     @Override
     public JSONObject toJson() {
-        JSONObject object = pool.getObject();
+        JSONObject object = task.toJson();
         object.put(ID, id);
-        object.put(TITLE, task.getTitle());
         object.put(BEGIN, beginDate.toString());
         object.put(END, completeDate.toString());
         object.put(DESCRIPTION, description);

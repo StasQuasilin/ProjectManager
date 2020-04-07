@@ -3,7 +3,7 @@ package controllers.task;
 import constants.API;
 import constants.Branches;
 import controllers.IModal;
-import entity.project.Task;
+import entity.task.Task;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;

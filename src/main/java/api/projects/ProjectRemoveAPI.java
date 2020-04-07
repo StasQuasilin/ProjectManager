@@ -4,7 +4,7 @@ import api.socket.UpdateUtil;
 import constants.API;
 import controllers.ServletAPI;
 import entity.project.Project;
-import entity.project.Task;
+import entity.task.Task;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import services.State;

@@ -2,7 +2,6 @@ package api.socket.handlers;
 
 import api.socket.Subscribe;
 import entity.project.Project;
-import entity.project.Task;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

@@ -58,7 +58,6 @@ public class TransactionEditAPI extends ServletAPI {
                 sum *= -1;
             }
             transaction.setSum(sum);
-
             dao.save(transaction);
             write(resp, SUCCESS);
             updateUtil.onSave(transaction);

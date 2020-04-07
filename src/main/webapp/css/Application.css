@@ -24,3 +24,15 @@ body{
 ::-webkit-scrollbar-thumb:hover {
     background: #f4b400;
 }
+.custom-data-list{
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.custom-data-list-item{
+    padding: 6pt 2pt;
+    border-bottom: dashed gray 1pt;
+    font-size: 10pt;
+}

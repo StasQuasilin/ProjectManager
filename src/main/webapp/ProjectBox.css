@@ -31,20 +31,24 @@
 }
 
 .progress-bar-background{
+    text-align: left;
     width: 96%;
-    border: solid #5ab306 1.2pt;
+    border: solid #5ab306 1px;
     border-radius: 8pt;
     background: transparent;
-    padding: 1.2pt;
-    margin: 2pt;
+    padding: 1px;
+    margin: 2px;
 
 }
 .progress-bar {
+    display: inline-block;
     background-color: #5ab306;
     width: 0;
-    min-width: 6pt ;
-    height: 6pt;
+    min-width: 4px ;
+    height: 4px;
     border-radius: 8pt;
+    text-align: center;
+    font-size: 8px;
 }
 .date-container{
     font-size: 10pt;

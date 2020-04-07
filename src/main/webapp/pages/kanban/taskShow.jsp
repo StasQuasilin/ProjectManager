@@ -30,13 +30,15 @@
 
             </td>
             <td>
-                <div>
+                <div style="text-align: center">
                     <fmt:message key="task.time.log"/>
+                </div>
+                <div>
                     <button v-if="!haveActiveTimer" v-on:click="startTimer()">
                         <fmt:message key="button.timer.start"/>
                     </button>
                 </div>
-                <div v-for="time in timeLog">
+                <div v-for="time in sortedTimeLog()">
                     <span v-if="!time.end">
                         <img style="width: 10px" src="${context}/img/buttons/active.svg" alt="">
                     </span>

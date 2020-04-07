@@ -3,7 +3,7 @@ package api.kanban;
 import constants.API;
 import constants.Keys;
 import controllers.ServletAPI;
-import entity.project.Task;
+import entity.task.Task;
 import entity.task.TimeLog;
 import org.json.simple.JSONObject;
 import services.answers.SuccessAnswer;

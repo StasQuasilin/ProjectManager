@@ -6,11 +6,12 @@
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"%>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <script src="${context}/vue/templates/findInput.vue"></script>
 <script src="${context}/vue/transactions/transactionEdit.vue"></script>
+
 <script>
     edit.api.save = '${save}';
     edit.api.findCategory = '${findCategory}';
@@ -36,22 +37,29 @@
     <c:forEach items="${currency}" var="c">
     edit.currencyList.push(${c.currency.toJson()});
     </c:forEach>
+    edit.locale='${language}';
+    edit.props = {
+        find:'${findCategory}',
+        onPut:function(item){
+            edit.setCategory(item);
+        }
+    }
 </script>
 <html>
     <table id="editor">
         <tr>
-            <td>
+            <td rowspan="2">
                 <span>
-                    <label for="date">
-                        <fmt:message key="transaction.date"/>
-                    </label>
+                    <v-date-picker
+                            :no-title="true"
+                            class="date-picker"
+                            :locale="locale"
+                            :first-day-of-week="1"
+                            v-model="transaction.date">
+                    </v-date-picker>
                 </span>
-                <input id="date" v-model="transaction.date" autocomplete="off">
-<%--                <span>--%>
-<%--                    {{new Date(transaction.date).toLocaleDateString()}}--%>
-<%--                </span>--%>
             </td>
-            <td>
+            <td style="vertical-align: top">
                 <div>
                     <template v-for="t in types">
                         <b v-if="t.id == transaction.type">
@@ -88,7 +96,7 @@
                         <label>
                             <fmt:message key="payment.edit.category"/>
                         </label>
-                        <find :timeout="600"></find>
+                        <find :props="props" :timeout="600"></find>
                     </div>
                     <div>
                         <label for="budget">
@@ -132,14 +140,16 @@
                 <div v-else>
                     DEBT
                 </div>
-                <div>
-                   <button onclick="closeModal()">
-                       <fmt:message key="buttons.cancel"/>
-                   </button>
-                    <button v-on:click="save">
-                        <fmt:message key="buttons.save"/>
-                    </button>
-                </div>
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: center">
+                <button onclick="closeModal()">
+                    <fmt:message key="buttons.cancel"/>
+                </button>
+                <button v-on:click="save">
+                    <fmt:message key="buttons.save"/>
+                </button>
             </td>
         </tr>
     </table>

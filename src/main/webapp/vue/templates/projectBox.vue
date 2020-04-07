@@ -1,4 +1,4 @@
-var projectBox = {
+var itemView = {
     props:{
         project:Object,
         props:Object
@@ -33,68 +33,26 @@ var projectBox = {
         '<div class="date-container">' +
             '<span>' +
                 '{{props.titles.todo}} :' +
-                    '<span id="active-tasks">0</span>' +
+                    '<span id="active-tasks" v-if="project.statistic">{{project.statistic.active}}</span>' +
+                    '<span id="active-tasks" v-else>0</span>' +
             '</span>' +
         '</div>' +
         '<div class="date-container">' +
             '<span>' +
                 '{{props.titles.progressing}} :' +
-                    '<span id="canceled-tasks">0</span>' +
+                    '<span id="canceled-tasks" v-if="project.statistic">{{project.statistic.progressing}}</span>' +
+                    '<span id="canceled-tasks" v-else>0</span>' +
             '</span>' +
         '</div>' +
         '<div class="date-container">' +
             '<span>' +
                 '{{props.titles.done}} :' +
-                    '<span id="done-tasks">0</span>' +
+                    '<span id="done-tasks" v-if="project.statistic">{{project.statistic.done}}</span>' +
+                    '<span id="done-tasks" v-else>0</span>' +
             '</span>' +
         '</div>' +
+        '<progress-bar v-if="project.statistic" :total="project.statistic.active + project.statistic.progressing + project.statistic.done" :value="project.statistic.done"></progress-bar>' +
+        '<progress-bar></progress-bar>' +
+        '<div style="padding: 8px 0"></div>' +
     '</div>'
 };
-//<div class="date-container">
-//    <span>
-//    <fmt:message key="project.edit.date-begin"/>: {{new Date(value.begin).toLocaleDateString()}}
-//</span>
-//</div>
-//<div class="date-container">
-//    <span>
-//    <fmt:message key="project.edit.date-complete"/>: {{new Date(value.end).toLocaleDateString()}}
-//</span>
-//</div>
-//<div class="budget-container">
-//    <span>
-//    <fmt:message key="project.budget"/>:
-//<span v-if="value.budget">0/{{value.budget.amount}}</span>
-//<span v-else>
-//0
-//</span>
-//</span>
-//</div>
-//<div class="date-container">
-//    <span style="font-weight: bold">
-//    <fmt:message key="project.tasks"/>
-//    </span>
-//    </div>
-//    <div class="date-container">
-//    <span>
-//    <fmt:message key="project.tasks.active"/>:
-//<span id="active-tasks">{{value.active}}</span>
-//</span>
-//</div>
-//<div class="date-container">
-//    <span>
-//    <fmt:message key="project.tasks.canceled"/>:
-//<span id="canceled-tasks">{{value.canceled}}</span>
-//</span>
-//</div>
-//<div class="date-container">
-//    <span>
-//    <fmt:message key="project.tasks.done"/>:
-//<span id="done-tasks">{{value.done}}</span>
-//</span>
-//</div>
-//<div class="progress-bar-background">
-//    <div class="progress-bar" :style="{width:value.time + '%'}"></div>
-//    </div>
-//    <div class="progress-bar-background">
-//    <div class="progress-bar"></div>
-//    </div>

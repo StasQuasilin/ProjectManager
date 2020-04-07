@@ -1,16 +1,13 @@
 package api.task;
 
 import api.socket.UpdateUtil;
-import constants.API;
 import controllers.ServletAPI;
-import entity.budget.Budget;
-import entity.project.Task;
+import entity.task.Task;
 import org.json.simple.JSONObject;
 import utils.BudgetCalculator;
 import utils.TaskUtil;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

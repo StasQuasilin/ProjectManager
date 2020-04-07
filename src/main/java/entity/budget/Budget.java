@@ -2,7 +2,6 @@ package entity.budget;
 
 import constants.Keys;
 import entity.user.User;
-import entity.user.UserAccess;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
 
@@ -27,7 +26,7 @@ public class Budget extends JsonAble implements Keys {
     private Timestamp create;
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -72,7 +71,7 @@ public class Budget extends JsonAble implements Keys {
     }
 
     @Basic
-    @Column(name = LIMIT)
+    @Column(name = "credit_limit")
     public float getLimit() {
         return limit;
     }
@@ -112,6 +111,7 @@ public class Budget extends JsonAble implements Keys {
         JSONObject object = pool.getObject();
         object.put(ID, id);
         object.put(TITLE, title);
+        object.put(LIMIT, limit);
         object.put(AMOUNT, budgetSum);
         object.put(TYPE, budgetType.toString());
         object.put(CURRENCY, currency);

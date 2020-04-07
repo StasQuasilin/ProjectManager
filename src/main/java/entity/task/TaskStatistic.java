@@ -1,12 +1,15 @@
 package entity.task;
 
-import entity.project.Task;
+import org.json.simple.JSONObject;
+import utils.JsonAble;
 
 import javax.persistence.*;
 
+import static constants.Keys.*;
+
 @Entity
 @Table(name = "task_statistic")
-public class TaskStatistic {
+public class TaskStatistic extends JsonAble {
     private int id;
     private Task task;
     private int activeChildren;
@@ -67,4 +70,16 @@ public class TaskStatistic {
     public void setSpendTime(int spendTime) {
         this.spendTime = spendTime;
     }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = pool.getObject();
+        object.put(ACTIVE, activeChildren);
+        object.put(PROGRESSING, progressingChildren);
+        object.put(DONE, doneChildren);
+        object.put(SPEND, spendTime);
+        return object;
+    }
+
+
 }

@@ -1,6 +1,6 @@
 package entity;
 
-import entity.project.TaskStatus;
+import entity.task.TaskStatus;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.JsonAble;

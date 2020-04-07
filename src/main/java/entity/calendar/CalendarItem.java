@@ -1,6 +1,6 @@
 package entity.calendar;
 
-import entity.project.Task;
+import entity.task.Task;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
 

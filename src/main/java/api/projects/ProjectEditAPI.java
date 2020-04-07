@@ -3,16 +3,12 @@ package api.projects;
 import api.socket.UpdateUtil;
 import constants.API;
 import controllers.ServletAPI;
-import entity.budget.Budget;
-import entity.budget.BudgetSize;
-import entity.budget.BudgetType;
 import entity.project.Project;
 import entity.project.ProjectType;
-import entity.project.Task;
-import entity.project.TaskStatus;
+import entity.task.Task;
+import entity.task.TaskStatus;
 import entity.user.User;
 import org.json.simple.JSONObject;
-import utils.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,9 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 /**
  * Created by quasilin on 24.02.2019.
@@ -44,7 +37,7 @@ public class ProjectEditAPI extends ServletAPI {
                 project = new Project();
                 project.setOwner(user);
                 Task task = new Task();
-                task.setStatus(TaskStatus.active);
+                task.setStatus(TaskStatus.root);
                 task.setOwner(user);
                 project.setTask(task);
                 ProjectType type = ProjectType.valueOf(String.valueOf(body.get(TYPE)));

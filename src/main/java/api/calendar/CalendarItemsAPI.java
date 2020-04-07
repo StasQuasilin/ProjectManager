@@ -1,9 +1,8 @@
 package api.calendar;
 
 import constants.API;
-import constants.Branches;
 import controllers.ServletAPI;
-import entity.project.Task;
+import entity.task.Task;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

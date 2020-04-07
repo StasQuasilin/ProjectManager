@@ -6,21 +6,27 @@
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <html>
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sortablejs@1.8.4/Sortable.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/2.20.0/vuedraggable.umd.min.js"></script>
     <script src="${context}/js/subscriber.js"></script>
     <link rel="stylesheet" href="${context}/css/Application.css">
+    <link rel="stylesheet" href="${context}/css/date-picker.css">
+
     <script src="${context}/js/Application.js"></script>
     <script src="${context}/js/core.js"></script>
+    <script src="${context}/vue/templates/progressBar.vue"></script>
+    <title>PM</title>
     <script>
+        Vue.component('progress-bar', bar);
         const context = '${context}';
         const UserID = ${user.id}
         subscriber.init('${socketProtocol}', window.location.host + '${socketServer}', '${socketAddress}');

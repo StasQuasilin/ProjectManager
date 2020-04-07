@@ -1,11 +1,10 @@
-package entity.project;
+package entity.task;
 
 import constants.Keys;
 import entity.budget.Budget;
+import entity.project.iTask;
 import entity.user.User;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import utils.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -30,10 +29,17 @@ public class Task extends iTask implements Comparable<Task>, Keys {
     private User doer;
     private String description;
     private int children;
+    TaskStatistic statistic;
 
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "task", cascade = CascadeType.ALL)
+    public TaskStatistic getStatistic() {
+        return statistic;
+    }
+    public void setStatistic(TaskStatistic statistic) {
+        this.statistic = statistic;
+    }
 
     public Task() {}
-
     public Task(String title) {
         status = TaskStatus.active;
         this.title = title;
@@ -193,6 +199,9 @@ public class Task extends iTask implements Comparable<Task>, Keys {
             object.put(DOER, doer.toJson());
         }
         object.put(COAST, cost);
+        if (statistic != null){
+            object.put(STATISTIC, statistic.toJson());
+        }
         return object;
     }
 
@@ -204,5 +213,20 @@ public class Task extends iTask implements Comparable<Task>, Keys {
     @Transient
     public boolean isTop(){
         return parent == null;
+    }
+
+    @Transient
+    public int getChildrenCount(TaskStatus status) {
+        if (statistic != null) {
+            switch (status) {
+                case active:
+                    return statistic.getActiveChildren();
+                case progressing:
+                    return statistic.getProgressingChildren();
+                case done:
+                    return statistic.getDoneChildren();
+            }
+        }
+        return 0;
     }
 }

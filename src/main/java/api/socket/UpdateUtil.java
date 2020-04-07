@@ -6,7 +6,7 @@ import entity.budget.Budget;
 import entity.transactions.Transaction;
 import entity.calendar.CalendarItem;
 import entity.project.Project;
-import entity.project.Task;
+import entity.task.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.JsonPool;

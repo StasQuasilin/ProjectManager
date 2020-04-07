@@ -24,7 +24,7 @@
         <mapping class="entity.transactions.TransactionSettings"/>
         <mapping class="entity.budget.BudgetPoint"/>
         <mapping class="entity.budget.BudgetArticle"/>
-        <mapping class="entity.project.Task"/>
+        <mapping class="entity.task.Task"/>
         <mapping class="entity.budget.Counterparty"/>
         <mapping class="entity.budget.Currency"/>
         <mapping class="entity.budget.UserCurrency"/>
