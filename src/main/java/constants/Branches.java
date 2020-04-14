@@ -25,7 +25,7 @@ public interface Branches {
     String TRANSACTIONS = "/transactions.j";
     String TRANSACTIONS_EDIT = "/transaction/edit.j";
     String TRANSACTION_REMOVE = "/transaction/remove.j";
-    String BUDGET_EDIT = "/budget/edit.j";
+    String ACCOUNT_EDIT = "/budget/edit.j";
     String KANBAN = "/kanban/view.j";
     String PROJECT_DELETE = "/project/delete.j";
     String TRANSACTION_SETTINGS = "/transaction/plan.j";

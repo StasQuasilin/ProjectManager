@@ -14,6 +14,7 @@ import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
 import entity.user.User;
 import entity.user.UserAccess;
+import entity.user.UserSettings;
 import services.State;
 import services.hibernate.DateContainers.BETWEEN;
 
@@ -241,5 +242,10 @@ public class HibernateDAO implements dbDAO, Keys {
         params.put("task", task);
         params.put("end", null);
         return hibernator.get(TimeLog.class, params);
+    }
+
+    @Override
+    public UserSettings getUserSettings(User user) {
+        return hibernator.get(UserSettings.class, "user", user);
     }
 }

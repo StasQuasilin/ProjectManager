@@ -1,11 +1,11 @@
-var list = new Vue({
+var lst = {
     el: '#list',
     components:{
         'item-view':itemView
     },
     data:{
         api:{},
-        items:[]
+        items: {}
     },
     methods:{
         getItems:function(){
@@ -41,4 +41,5 @@ var list = new Vue({
             })
         }
     }
-});
+};
+var list = new Vue(lst);

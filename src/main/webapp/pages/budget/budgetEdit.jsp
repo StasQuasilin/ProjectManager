@@ -20,8 +20,10 @@
                 title:'',
                 type:-1,
                 amount:0,
-                limit:0
-            }
+                limit:0,
+                currency:-1
+            },
+            currency:[]
         },
         methods:{
             save:function(){
@@ -40,12 +42,19 @@
         name:'${type}'
     });
     </c:forEach>
+    <c:forEach items="${currency}" var="c">
+    edit.currency.push(${c.currency.toJson()})
+    </c:forEach>
     <c:choose>
     <c:when test="${not empty budget}">
     edit.budget = ${budget.toJson()}
     </c:when>
     <c:otherwise>
     edit.budget.type = edit.types[0].id;
+    // edit.currency.sort(function (a, b) {
+    //     return a.main - b.main;
+    // })
+    edit.budget.currency = edit.currency[0].id;
     </c:otherwise>
     </c:choose>
 
@@ -86,6 +95,20 @@
         </td>
         <td>
             <input id="sum" v-model="budget.amount " autocomplete="off">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <label for="currency">
+                <fmt:message key="currency"/>
+            </label>
+        </td>
+        <td>
+            <select id="currency" v-model="budget.currency">
+                <option v-for="c in currency" :value="c.id">
+                    {{c.name}}
+                </option>
+            </select>
         </td>
     </tr>
     <tr>

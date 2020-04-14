@@ -35,10 +35,11 @@
 <body>
     <div id="coverlet" class="coverlet"></div>
     <div id="modal" class="modal-layer"></div>
-    <table border="1" width="100%" style="height: 100%">
+    <table border="1" style="height: 100%; width: 100%; border-collapse: collapse">
         <tr>
             <td rowspan="2" valign="top">
                 <jsp:include page="navigation/menu.jsp"/>
+                <div class="filter-holder" id="filterHolder"></div>
             </td>
             <td id="title">
                 Title

@@ -29,8 +29,6 @@
     };
     subscribe(list);
   </script>
-
-
   <div id="title-content" style="display: inline-block; background: transparent; margin: 0 4pt">
     <button onclick="loadModal('${edit}')">
       <fmt:message key="project.new"/>

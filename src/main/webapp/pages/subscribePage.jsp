@@ -4,12 +4,8 @@
         function subscribe(handler) {
             <c:forEach items="${subscribes}" var="subscribe">
             subscriber.subscribe('${subscribe}', handler.handle);
+            subscriber.unSubscribers.push('${subscribe}');
             </c:forEach>
-            unsubscribe = function(){
-                <c:forEach items="${subscribes}" var="subscribe">
-                subscriber.unsubscribe('${subscribe}');
-                </c:forEach>
-            }
         }
     </script>
 </html>

@@ -5,7 +5,7 @@
 <fmt:setBundle basename="messages"/>
 <html>
 <script>
-  var projectBox = {}
+  var itemView = {}
 </script>
 <script src="${context}/vue/projects/projectList.vue"></script>
 <jsp:include page="../subscribePage.jsp"/>
@@ -22,7 +22,7 @@
 
 <div id="list">
   <div v-for="(value, key) in items" v-on:click="edit(value.id)">
-    {{value.title}}
+    {{value.type}} {{value.title}}
     {{value.limit+value.amount}} {{value.currency}}
   </div>
 </div>

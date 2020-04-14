@@ -12,7 +12,7 @@ import java.sql.Timestamp;
  * Created by szpt_user045 on 25.02.2019.
  */
 @Entity
-@Table(name = Keys.BUDGETS)
+@Table(name = "budgets")
 public class Budget extends JsonAble implements Keys {
 
     private int id;

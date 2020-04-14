@@ -41,7 +41,7 @@ public class UpdateUtil implements Keys {
     }
 
     public void onSave(Budget budget) throws IOException {
-        ISocketHandler handler = subscribeMaster.getHandler(Subscribe.budget);
+        ISocketHandler handler = subscribeMaster.getHandler(Subscribe.accounts);
         JSONObject object = pool.getObject();
         JSONArray array = pool.getArray();
         array.add(budget.toJson());

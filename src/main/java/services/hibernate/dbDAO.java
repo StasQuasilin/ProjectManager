@@ -12,6 +12,7 @@ import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
 import entity.user.User;
 import entity.user.UserAccess;
+import entity.user.UserSettings;
 
 import java.sql.Date;
 import java.util.List;
@@ -51,4 +52,5 @@ public interface dbDAO {
     TaskStatistic getTaskStatistic(Task parent);
     List<TimeLog> getTimeLogs(Task task);
     TimeLog getActiveTimeLog(Task task);
+    UserSettings getUserSettings(User user);
 }

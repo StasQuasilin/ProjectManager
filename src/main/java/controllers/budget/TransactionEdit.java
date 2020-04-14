@@ -19,7 +19,7 @@ import java.io.IOException;
  */
 @WebServlet(Branches.TRANSACTIONS_EDIT)
 public class TransactionEdit extends IModal {
-    private static final String _CONTENT = "/pages/budget/transactionEdit.jsp";
+    private static final String _CONTENT = "/pages/transactions/transactionEdit.jsp";
     private static final String _TITLE = "title.transaction.edit";
 
     @Override
@@ -34,7 +34,7 @@ public class TransactionEdit extends IModal {
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(CURRENCY, dao.getUserCurrency(user));
-        req.setAttribute(BUDGETS, dao.getBudgetsByUser(user));
+        req.setAttribute(ACCOUNTS, dao.getBudgetsByUser(user));
         req.setAttribute(FIND_CATEGORY, API.FIND_TRANSACTION_CATEGORY);
         req.setAttribute(FIND_PERSON, API.FIND_PERSON);
         req.setAttribute(SAVE, API.TRANSACTION_EDIT);

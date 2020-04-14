@@ -21,7 +21,7 @@
         name:'<fmt:message key="transaction.${type}"/>'
     });
     </c:forEach>
-    <c:forEach items="${budgets}" var="budget">
+    <c:forEach items="${accounts}" var="budget">
     edit.budgets.push(${budget.toJson()});
     </c:forEach>
     <c:choose>

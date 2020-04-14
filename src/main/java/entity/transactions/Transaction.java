@@ -11,6 +11,9 @@ import utils.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Created by szpt_user045 on 26.02.2020.
@@ -129,7 +132,7 @@ public class Transaction extends JsonAble implements Keys {
         object.put(BUDGET, budget.toJson());
         object.put(SUM, sum);
         if (currency != null){
-            object.put(CURRENCY, currency.toJson());
+            object.put(CURRENCY, currency.shortJson());
         }
         if (comment != null) {
             object.put(COMMENT, comment);

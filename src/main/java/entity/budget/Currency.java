@@ -52,10 +52,16 @@ public class Currency extends JsonAble {
     }
 
     @Override
-    public JSONObject toJson() {
+    public JSONObject shortJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
         object.put(SIGN, sign);
+        return object;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = shortJson();
         object.put(CODE, code);
         object.put(NAME, name);
         return object;

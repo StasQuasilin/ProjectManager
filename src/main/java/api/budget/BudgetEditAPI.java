@@ -5,10 +5,14 @@ import constants.API;
 import controllers.ServletAPI;
 import entity.budget.*;
 import entity.transactions.Transaction;
+import entity.transactions.TransactionCategory;
 import entity.transactions.TransactionType;
 import entity.user.User;
+import entity.user.UserSettings;
 import org.json.simple.JSONObject;
+import services.LanguageBase;
 import utils.BudgetCalculator;
+import utils.UserSettingsUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -36,7 +40,9 @@ public class BudgetEditAPI extends ServletAPI {
             System.out.println(body);
             User user = getUser(req);
             Budget budget = dao.getObjectById(Budget.class, body.get(ID));
+            boolean newBudget = false;
             if (budget == null){
+                newBudget = true;
                 budget = new Budget();
                 budget.setOwner(user);
                 budget.setCreate(Timestamp.valueOf(LocalDateTime.now()));
@@ -52,6 +58,8 @@ public class BudgetEditAPI extends ServletAPI {
             BudgetType budgetType = BudgetType.valueOf(String.valueOf(body.get(TYPE)));
             budget.setBudgetType(budgetType);
 
+            budget.setCurrency(String.valueOf(body.get(CURRENCY)));
+
             write(resp, SUCCESS);
             dao.save(budget);
             updateUtil.onSave(budget);
@@ -64,7 +72,17 @@ public class BudgetEditAPI extends ServletAPI {
                 transaction.setSum(d);
                 transaction.setDate(Date.valueOf(LocalDate.now()));
                 transaction.setType(d > 0 ? TransactionType.income : TransactionType.outcome);
+                transaction.setOwner(user);
+                transaction.setCurrency(dao.getObjectById(Currency.class, budget.getCurrency()));
+                UserSettings settings = UserSettingsUtil.getUserSettings(user);
+                if (newBudget){
+                    transaction.setCategory(settings.getOpenCategory());
+                } else {
+                    transaction.setCategory(settings.getCorrectionCategory());
+                }
+
                 dao.save(transaction);
+                updateUtil.onSave(transaction);
                 budgetCalculator.calculate(user, budget, transaction);
             }
 

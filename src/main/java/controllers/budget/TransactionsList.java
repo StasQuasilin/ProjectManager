@@ -20,7 +20,7 @@ public class TransactionsList extends IPage {
             Subscribe.transactions
     };
     private static final String _TITLE = "title.transactions";
-    private static final String _CONTENT = "/pages/budget/transactions.jsp";
+    private static final String _CONTENT = "/pages/transactions/transactions.jsp";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,7 +29,10 @@ public class TransactionsList extends IPage {
         req.setAttribute(EDIT, Branches.TRANSACTIONS_EDIT);
         req.setAttribute(PLAN, Branches.TRANSACTION_SETTINGS);
         req.setAttribute(REMOVE, Branches.TRANSACTION_REMOVE);
-        req.setAttribute(SUBSCRIBES, subscribes);
+        req.setAttribute(ACCOUNT_EDIT, Branches.ACCOUNT_EDIT);
+        req.setAttribute(TRANSACTIONS, Subscribe.transactions);
+        req.setAttribute(FAST_TRANSACTIONS, Subscribe.fast);
+        req.setAttribute(ACCOUNTS, Subscribe.accounts);
         showPage(req, resp);
     }
 }

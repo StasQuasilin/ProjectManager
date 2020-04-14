@@ -33,6 +33,6 @@
         <mapping class="entity.ActionTime"/>
         <mapping class="entity.task.TaskStatistic"/>
         <mapping class="entity.task.TimeLog"/>
-
+        <mapping class="entity.user.UserSettings"/>
     </session-factory>
 </hibernate-configuration>

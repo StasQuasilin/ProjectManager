@@ -35,6 +35,7 @@ public interface Keys {
     String DESCRIPTION = "description";
     String BUDGET = "budget";
     String TRANSACTIONS = "transactions";
+    String FAST_TRANSACTIONS = "fastTransactions";
     String TRANSACTION = "transaction";
     String SOCKET_ADDRESS = "socketAddress";
     String SOCKET_PROTOCOL = "socketProtocol";
@@ -51,7 +52,7 @@ public interface Keys {
     String TOKEN = "token";
     String USER = "user";
     String ID = "id";
-    String BUDGETS = "budgets";
+    String ACCOUNTS = "accounts";
     String CREATED = "created";
     String CURRENCY = "currency";
     String SUM = "sum";
@@ -64,10 +65,12 @@ public interface Keys {
     String FIND_CATEGORY = "findCategory";
     String FIND_PERSON = "findPerson";
     String EDIT = "edit";
+    String ACCOUNT_EDIT = "accountEdit";
     String REMOVE= "remove";
     String THEME = "theme";
     String SAVE = "save";
     String SUBSCRIBES = "subscribes";
+    String FILTER = "filter";
     String SUBSCRIBER = "subscriber";
     String ACTION = "action";
     String SUBSCRIBE = "subscribe";

@@ -42,7 +42,10 @@
         kanban.doneProps = Object.assign({}, props);
         kanban.doneProps.title= '<fmt:message key="kanban.done"/>';
         subscribe(kanban);
-
+        <c:forEach items="${projects}" var="s">
+        subscriber.subscribe('${s}', filter.handle);
+        subscriber.unSubscribers.push('${s}')
+        </c:forEach>
     </script>
     <div id="kanban" style="height: 100%; width: 100%">
         <table style="width: 100%; height: 100%; border-collapse: collapse">

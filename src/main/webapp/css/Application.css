@@ -36,3 +36,12 @@ body{
     border-bottom: dashed gray 1pt;
     font-size: 10pt;
 }
+.filter-holder{
+    width: 100%;
+}
+.filter {
+    border-top: solid gray 1px;
+}
+.add-button:before{
+    background-image: url("/img/buttons/add.png");
+}

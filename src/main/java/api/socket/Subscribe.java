@@ -6,7 +6,8 @@ package api.socket;
 public enum Subscribe {
     messages,
     calendar,
-    budget,
+    accounts,
     transactions,
-    tree, kanban, projects
+    tree, kanban, projects,
+    fast
 }

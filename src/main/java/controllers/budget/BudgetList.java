@@ -1,7 +1,6 @@
 package controllers.budget;
 
 import api.socket.Subscribe;
-import constants.API;
 import constants.Branches;
 import controllers.IPage;
 
@@ -18,14 +17,14 @@ import java.io.IOException;
 public class BudgetList extends IPage {
 
     private static final Subscribe[] subscribes = new Subscribe[]{
-            Subscribe.budget
+            Subscribe.accounts
     };
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setAttribute(TITLE, "budget.title");
+        req.setAttribute(TITLE, "accounts.title");
         req.setAttribute(PAGE_CONTENT, "/pages/budget/budgetList.jsp");
-        req.setAttribute(EDIT, Branches.BUDGET_EDIT);
+        req.setAttribute(EDIT, Branches.ACCOUNT_EDIT);
         req.setAttribute(SUBSCRIBES, subscribes);
         showPage(req, resp);
     }

@@ -18,7 +18,9 @@ import java.io.IOException;
 public class KanbanView extends IPage {
     private static final String _TITLE = "title.kanban";
     private static final String _CONTENT = "/pages/kanban/kanbanList.jsp";
+    private static final String _FILTER = "/pages/kanban/kanbanFilter.jsp";
     private static final Subscribe[] subscribes = new Subscribe[]{Subscribe.kanban};
+    private static final Subscribe[] projectSubscribe = new Subscribe[]{Subscribe.projects};
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -29,6 +31,8 @@ public class KanbanView extends IPage {
         req.setAttribute(CHANGE_STATUS, API.CHANGE_TASK_STATUS);
         req.setAttribute(REMOVE_TASK, Branches.REMOVE_TASK);
         req.setAttribute(SUBSCRIBES, subscribes);
+        req.setAttribute(PROJECTS, projectSubscribe);
+        req.setAttribute(FILTER, _FILTER);
         showPage(req, resp);
     }
 }

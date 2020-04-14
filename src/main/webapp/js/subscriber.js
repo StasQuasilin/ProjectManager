@@ -1,6 +1,8 @@
 const subscriber = {
     socket:{},
     subscribers:{},
+    unSubscribers:[],
+    waitTimeout:800,
     init:function(protocol, server, address){
         console.log(protocol + server + address);
         this.socket = new WebSocket(protocol + server + address);
@@ -9,12 +11,12 @@ const subscriber = {
         };
         const self = this;
         this.socket.onmessage = function(env){
-            var json = JSON.parse(env.data);
+            let json = JSON.parse(env.data);
             console.log(json);
-            var type = json['type'];
-            var data = json['data'];
+            let type = json['type'];
+            let data = json['data'];
             if (type && self.subscribers[type]) {
-                var func = self.subscribers[type];
+                let func = self.subscribers[type];
                 if (typeof func === 'function') {
                     func(data, type);
                 }
@@ -29,7 +31,17 @@ const subscriber = {
             user:UserID
         }))
     },
+    unsubscribeAll:function(){
+        for (let i in this.unSubscribers){
+            if (this.unSubscribers.hasOwnProperty(i)){
+                let unsub = this.unSubscribers[i];
+                this.unsubscribe(unsub);
+            }
+        }
+        this.unSubscribers = [];
+    },
     unsubscribe:function(subscriber){
+        console.log(subscriber);
         delete this.subscribers[subscriber];
         this.send(JSON.stringify({
             action:'unsubscribe',
@@ -38,13 +50,14 @@ const subscriber = {
     },
     send:function(msg){
         console.log(msg);
-        if(this.socket.readyState == WebSocket.OPEN){
+        if(this.socket.readyState === WebSocket.OPEN){
             this.socket.send(msg);
-        } else if (this.socket.readyState == WebSocket.CONNECTING){
+        } else if (this.socket.readyState === WebSocket.CONNECTING){
             const self = this;
-            setTimeout(function(){
+            let waitFunc = function(){
                 self.send(msg)
-            }, 800)
+            }
+            setTimeout(waitFunc, this.waitTimeout)
         }
     },
     close:function(){

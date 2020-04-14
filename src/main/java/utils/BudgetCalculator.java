@@ -1,5 +1,6 @@
 package utils;
 
+import api.socket.UpdateUtil;
 import entity.budget.Budget;
 import entity.budget.BudgetPoint;
 import entity.budget.PointScale;
@@ -8,6 +9,7 @@ import entity.user.User;
 import services.hibernate.dbDAO;
 import services.hibernate.dbDAOService;
 
+import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 
@@ -17,6 +19,7 @@ import java.time.LocalDate;
 public class BudgetCalculator {
 
     dbDAO dao = dbDAOService.getDao();
+    private final UpdateUtil updateUtil = new UpdateUtil();
 
     public void calculate(User user, Budget budget, Transaction transaction) {
         Date date = transaction.getDate();
@@ -33,6 +36,7 @@ public class BudgetCalculator {
         }
         budgetPoint.setQuantity(amount);
         dao.save(budgetPoint);
+
         calculatePointByPoint(date, budget, PointScale.week);
         calculateBudget(budget);
     }
@@ -42,8 +46,16 @@ public class BudgetCalculator {
         for (BudgetPoint point : dao.getBudgetPoints(null, null, budget,PointScale.year)){
             amount += point.getQuantity();
         }
-        budget.setBudgetSum(amount);
-        dao.save(budget);
+        if (budget.getBudgetSum() != amount) {
+            budget.setBudgetSum(amount);
+            dao.save(budget);
+            try {
+                updateUtil.onSave(budget);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     }
 
     private void calculatePointByPoint(Date date, Budget budget, PointScale scale) {
@@ -72,12 +84,10 @@ public class BudgetCalculator {
 
     public static synchronized LocalDate getBeginDate(LocalDate date, PointScale scale){
         int minus;
-        switch (scale){
-            case week:
-                minus = Math.min(toBegin(date, scale), toBegin(date, PointScale.month));
-                break;
-            default:
-                minus = toBegin(date, scale);
+        if (scale == PointScale.week) {
+            minus = Math.min(toBegin(date, scale), toBegin(date, PointScale.month));
+        } else {
+            minus = toBegin(date, scale);
         }
 
         return date.minusDays(minus);
@@ -85,20 +95,16 @@ public class BudgetCalculator {
 
     public static synchronized LocalDate getEndDate(LocalDate date, PointScale scale){
         int plus;
-        switch (scale){
-            case week:
-                plus = Math.min(toEnd(date, scale), toEnd(date, PointScale.month));
-                break;
-            default:
-                plus = toEnd(date, scale);
+        if (scale == PointScale.week) {
+            plus = Math.min(toEnd(date, scale), toEnd(date, PointScale.month));
+        } else {
+            plus = toEnd(date, scale);
         }
         return date.plusDays(plus);
     }
 
     public static int toBegin(LocalDate date, PointScale scale){
         switch (scale){
-            case day:
-                return 0;
             case week:
                 return date.getDayOfWeek().getValue() - 1;
             case month:
@@ -112,8 +118,6 @@ public class BudgetCalculator {
 
     public static int toEnd(LocalDate date, PointScale scale){
         switch (scale){
-            case day:
-                return 0;
             case week:
                 return 7 - date.getDayOfWeek().getValue();
             case month:
