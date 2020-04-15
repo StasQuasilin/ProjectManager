@@ -1,10 +1,10 @@
 var findInput = {
     props:{
         props:Object,
-        object:Object,
+        object:Object
     },
     mounted:function(){
-
+        this.input = this.object[this.props.field];
     },
     data:function(){
         return {
@@ -17,7 +17,9 @@ var findInput = {
     methods:{
         find:function(){
             clearTimeout(this.timer);
-            if (this.input) {
+
+            let input = this.getInput();
+            if (input) {
                 const self = this;
                 let findReq = function () {
                     self.findReq();
@@ -27,9 +29,18 @@ var findInput = {
         },
         findReq:function(){
             const self = this;
-            PostApi(this.props.find, {key:this.input}, function (ans) {
+            this.object.id = -1;
+            let input = this.getInput();
+            PostApi(this.props.find, {key:input}, function (ans) {
                 self.items = ans.result;
             })
+        },
+        getInput:function(){
+            if (this.props.field) {
+                return this.object[this.props.field];
+            } else {
+                return this.input;
+            }
         },
         put:function(item){
             this.input = item.name;
@@ -40,7 +51,7 @@ var findInput = {
         }
     },
     template:'<div style="display: inline-block; position: relative">' +
-            '<input v-model="input" v-on:keyup="find()">' +
+            '<input v-model="object[props.field]" v-on:keyup="find()">' +
             '<div class="custom-data-list" v-if="items.length > 0">' +
                 '<div class="custom-data-list-item" v-for="item in items" v-on:click="put(item)">' +
                     '{{item.name}}' +

@@ -18,6 +18,7 @@
             <fmt:message key="transaction.plan"/>
         </button>
     </div>
+    <link rel="stylesheet" href="${context}/css/transactions/transactions.css">
     <script src="${context}/vue/templates/transactionItem.vue"></script>
     <script src="${context}/vue/templates/list.vue"></script>
     <script src="${context}/vue/transactions/fastTransactions.vue"></script>
@@ -27,7 +28,11 @@
         transactionList.api.edit = '${edit}';
         transactionList.sort = function(){
             transactionList.items.sort(function (a, b) {
-                return new Date(b.date) - new Date(a.date);
+                let sort = new Date(b.date) - new Date(a.date);
+                if (sort === 0){
+                    sort = b.id - a.id;
+                }
+                return sort;
             })
         }
         accounts.sort = function(){
@@ -47,11 +52,15 @@
     <table id="pageView" style="width: 100%; height: 100%; border-collapse: collapse" border="1">
         <tr>
             <td rowspan="2" style="width: 40%; vertical-align: top">
-                <div id="transaction" style="padding: 2pt; height: 100%; max-height: 100%; overflow-y: scroll">
+                <div id="transaction" class="transaction-list">
                     <div v-for="date in getDates()">
-                        {{new Date(date).toLocaleDateString()}}
-                        <div style="padding-left: 16pt">
-                            <item-view v-for="t in getItemsByDate(date)" :item="t" v-on:click="edit(t.id)"></item-view>
+                        <span class="transaction-date">
+                            {{new Date(date).toLocaleDateString()}}
+                        </span>
+                        <div style="padding-left: 8pt">
+                            <div class="spacer">
+                                <item-view v-for="t in getItemsByDate(date)" :item="t" v-on:click="edit(t.id)"></item-view>
+                            </div>
                         </div>
                     </div>
 

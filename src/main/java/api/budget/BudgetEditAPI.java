@@ -5,12 +5,10 @@ import constants.API;
 import controllers.ServletAPI;
 import entity.budget.*;
 import entity.transactions.Transaction;
-import entity.transactions.TransactionCategory;
 import entity.transactions.TransactionType;
 import entity.user.User;
 import entity.user.UserSettings;
 import org.json.simple.JSONObject;
-import services.LanguageBase;
 import utils.BudgetCalculator;
 import utils.UserSettingsUtil;
 
@@ -41,6 +39,7 @@ public class BudgetEditAPI extends ServletAPI {
             User user = getUser(req);
             Budget budget = dao.getObjectById(Budget.class, body.get(ID));
             boolean newBudget = false;
+            boolean rename = false;
             if (budget == null){
                 newBudget = true;
                 budget = new Budget();
@@ -50,7 +49,10 @@ public class BudgetEditAPI extends ServletAPI {
             }
 
             String title = String.valueOf(body.get(TITLE));
-            budget.setTitle(title);
+            if (budget.getTitle() == null || !budget.getTitle().equals(title)){
+                budget.setTitle(title);
+                rename = true;
+            }
 
             float limit = Float.parseFloat(String.valueOf(body.get(LIMIT)));
             budget.setLimit(limit);
@@ -83,7 +85,8 @@ public class BudgetEditAPI extends ServletAPI {
 
                 dao.save(transaction);
                 updateUtil.onSave(transaction);
-                budgetCalculator.calculate(user, budget, transaction);
+                budgetCalculator.calculate(budget, transaction);
+
             }
 
         }

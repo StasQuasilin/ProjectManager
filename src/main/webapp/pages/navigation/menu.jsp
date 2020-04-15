@@ -27,14 +27,11 @@
         <div class="menu-item" onclick="loadPage('${transactions}')">
             <fmt:message key="menu.transactions"/>
         </div>
-        <div class="menu-item" onclick="loadPage('${budget}')">
-            <fmt:message key="menu.budget"/>
-        </div>
-        <div class="menu-item">
-            <fmt:message key="menu.messages"/>
-        </div>
-        <div class="menu-item" onclick="loadPage('${settings}')">
-            <fmt:message key="menu.settings"/>
-        </div>
+<%--        <div class="menu-item">--%>
+<%--            <fmt:message key="menu.messages"/>--%>
+<%--        </div>--%>
+<%--        <div class="menu-item" onclick="loadPage('${settings}')">--%>
+<%--            <fmt:message key="menu.settings"/>--%>
+<%--        </div>--%>
     </div>
 </html>

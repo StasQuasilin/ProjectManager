@@ -2,7 +2,7 @@ var itemView = {
     props:{
         item:Object
     },
-    template:'<div v-if="item">' +
+    template:'<div v-if="item" class="transaction-list-item">' +
             '<div>' +
                 '<span>' +
                     '{{item.category.name}}: ' +
@@ -19,8 +19,12 @@ var itemView = {
                 '<span v-if="item.currency">' +
                     ' {{item.currency.sign}}' +
                 '</span>' +
+                '<span v-if="item.rate !== 1">' +
+                    ' ( {{(Math.abs(item.sum) * item.rate).toLocaleString()}} ' +
+                    '{{item.budget.currency}} )' +
+                '</span>' +
             '</div>' +
-            '<div>' +
+            '<div class="account">' +
                 '{{item.budget.title}}' +
             '</div>' +
         '</div>'

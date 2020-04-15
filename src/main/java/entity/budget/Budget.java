@@ -24,6 +24,7 @@ public class Budget extends JsonAble implements Keys {
     private String currency;
     private User owner;
     private Timestamp create;
+    private boolean isPublic;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -104,6 +105,15 @@ public class Budget extends JsonAble implements Keys {
     }
     public void setCreate(Timestamp create) {
         this.create = create;
+    }
+
+    @Basic
+    @Column(name = "is_public")
+    public boolean isPublic() {
+        return isPublic;
+    }
+    public void setPublic(boolean aPublic) {
+        isPublic = aPublic;
     }
 
     @Override

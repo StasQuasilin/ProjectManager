@@ -4,6 +4,7 @@ import api.socket.UpdateUtil;
 import constants.API;
 import controllers.ServletAPI;
 import entity.budget.Budget;
+import entity.budget.Currency;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
 import entity.transactions.TransactionType;
@@ -18,9 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 /**
  * Created by szpt_user045 on 26.02.2020.
@@ -61,10 +59,17 @@ public class TransactionEditAPI extends ServletAPI {
                 sum *= -1;
             }
             transaction.setSum(sum);
+
+            float rate = Float.parseFloat(String.valueOf(body.get(RATE)));
+            transaction.setRate(rate);
+
+            Currency currency = dao.getObjectById(Currency.class, body.get(CURRENCY));
+            transaction.setCurrency(currency);
+
             dao.save(transaction);
             write(resp, SUCCESS);
             updateUtil.onSave(transaction);
-            budgetCalculator.calculate(user, budget, transaction);
+            budgetCalculator.calculate(budget, transaction);
 
         }
     }

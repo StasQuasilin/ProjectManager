@@ -37,12 +37,14 @@
     <c:forEach items="${currency}" var="c">
     edit.currencyList.push(${c.currency.toJson()});
     </c:forEach>
+    edit.transaction.currency = edit.currencyList[0].id;
     edit.locale='${language}';
     edit.props = {
         find:'${findCategory}',
         onPut:function(item){
             edit.setCategory(item);
-        }
+        },
+        field:'name'
     }
 </script>
 <html>
@@ -70,45 +72,64 @@
                         </button>
                     </template>
                 </div>
-                <div v-if="transaction.type === 'income' || transaction.type === 'outcome'">
-                    <div>
-                        <span>
+                <table v-if="transaction.type === 'income' || transaction.type === 'outcome'">
+                    <tr>
+                        <td>
                             <label for="sum">
                                 <fmt:message key="payment.edit.sum"/>
                             </label>
-                        </span>
-                        <div style="display: inline-block; border: solid black 1pt; background-color: white; padding: 0 2pt">
+                        </td>
+                        <td>
+                            <div style="display: inline-block; border: solid black 1pt; background-color: white; padding: 0 2pt">
                             <span v-if="transaction.type=='income'">
                                 +
                             </span>
-                            <span v-else>
+                                <span v-else>
                                 -
                             </span>
-                            <input id="sum" v-model="transaction.sum" onfocus="this.select()" style="border: none; background: transparent">
-                            <select>
-                                <option v-for="c in currencyList" :value="c.id">
-                                    {{c.sign}}
+                                <input id="sum" v-model="transaction.sum" onfocus="this.select()" style="border: none; background: transparent; outline: none">
+                                <select v-model="transaction.currency">
+                                    <option v-for="c in currencyList" :value="c.id">
+                                        {{c.id}}
+                                    </option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr v-if="transaction.currency !== transaction.budget.currency">
+                        <td colspan="2">
+                            <label for="rate">
+                                <fmt:message key="currency.rate"/>
+                            </label>
+                            <input id="rate" v-model="transaction.rate" autocomplete="off" style="width: 7em">
+                            {{(transaction.sum * transaction.rate).toLocaleString()}} {{transaction.budget.currency}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label>
+                                <fmt:message key="payment.edit.category"/>
+                            </label>
+                        </td>
+                        <td>
+                            <find :props="props" :object="transaction.category"></find>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="budget">
+                                <fmt:message key="payment.edit.budget"/>
+                            </label>
+                        </td>
+                        <td>
+                            <select id="budget" v-model="transaction.budget" style="width: 100%">
+                                <option v-for="budget in budgets" :value="budget">
+                                    {{budget.title}} ( {{budget.amount.toLocaleString()}} {{budget.currency}} )
                                 </option>
                             </select>
-                        </div>
-                    </div>
-                    <div>
-                        <label>
-                            <fmt:message key="payment.edit.category"/>
-                        </label>
-                        <find :props="props" :timeout="600"></find>
-                    </div>
-                    <div>
-                        <label for="budget">
-                            <fmt:message key="payment.edit.budget"/>
-                        </label>
-                        <select id="budget" v-model="transaction.budget.id">
-                            <option v-for="budget in budgets" :value="budget.id">
-                                {{budget.title}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
+                        </td>
+                    </tr>
+                </table>
                 <div v-else-if="transaction.type === 'transfer'">
                     <table>
                         <tr>

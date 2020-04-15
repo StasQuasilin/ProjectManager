@@ -28,6 +28,7 @@ public class Transaction extends JsonAble implements Keys {
     private Budget budget;
     private Counterparty counterparty;
     private float sum;
+    private float rate;
     private Currency currency;
     private String comment;
     private User owner;
@@ -95,6 +96,20 @@ public class Transaction extends JsonAble implements Keys {
         this.sum = sum;
     }
 
+    @Basic
+    @Column(name = RATE)
+    public float getRate() {
+        return rate;
+    }
+    public void setRate(float rate) {
+        this.rate = rate;
+    }
+
+    @Transient
+    public float getTotalSum(){
+        return sum * rate;
+    }
+
     @OneToOne
     @JoinColumn(name = CURRENCY)
     public Currency getCurrency() {
@@ -131,6 +146,7 @@ public class Transaction extends JsonAble implements Keys {
         object.put(CATEGORY, category.toJson());
         object.put(BUDGET, budget.toJson());
         object.put(SUM, sum);
+        object.put(RATE, rate);
         if (currency != null){
             object.put(CURRENCY, currency.shortJson());
         }

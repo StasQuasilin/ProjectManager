@@ -5,7 +5,6 @@ import entity.budget.Budget;
 import entity.budget.BudgetPoint;
 import entity.budget.PointScale;
 import entity.transactions.Transaction;
-import entity.user.User;
 import services.hibernate.dbDAO;
 import services.hibernate.dbDAOService;
 
@@ -21,7 +20,7 @@ public class BudgetCalculator {
     dbDAO dao = dbDAOService.getDao();
     private final UpdateUtil updateUtil = new UpdateUtil();
 
-    public void calculate(User user, Budget budget, Transaction transaction) {
+    public void calculate(Budget budget, Transaction transaction) {
         Date date = transaction.getDate();
         BudgetPoint budgetPoint = dao.getBudgetPoint(budget, date, PointScale.day);
         if (budgetPoint == null){
@@ -32,7 +31,7 @@ public class BudgetCalculator {
         }
         float amount = 0;
         for (Transaction t : dao.getTransactionsByBudget(budget, date)){
-            amount += t.getSum();
+            amount += t.getTotalSum();
         }
         budgetPoint.setQuantity(amount);
         dao.save(budgetPoint);

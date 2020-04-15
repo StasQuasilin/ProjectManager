@@ -56,6 +56,7 @@ public interface Keys {
     String CREATED = "created";
     String CURRENCY = "currency";
     String SUM = "sum";
+    String RATE = "rate";
     String LIMIT = "limit";
     String TYPE = "type";
     String DATA = "data";

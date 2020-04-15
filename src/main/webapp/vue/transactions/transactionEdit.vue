@@ -12,6 +12,7 @@ var edit = new Vue({
             type:'',
             date:new Date().toISOString().substring(0, 10),
             sum:0,
+            rate:1,
             currency:'',
             category:{
                 id:-1,
@@ -33,7 +34,7 @@ var edit = new Vue({
             this.transaction.category = category;
         },
         save:function(){
-            var data = Object.assign({}, this.transaction);
+            let data = Object.assign({}, this.transaction);
             data.budget = data.budget.id;
             if (!data.id){
                 data.id = -1;
