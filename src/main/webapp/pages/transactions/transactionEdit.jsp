@@ -9,8 +9,10 @@
 <%@ page contentType="text/html;charset=UTF-8"%>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
+<link rel="stylesheet" href="${context}/css/transactions/transactionEdit.css">
 <script src="${context}/vue/templates/findInput.vue"></script>
 <script src="${context}/vue/transactions/transactionEdit.vue"></script>
+
 
 <script>
     edit.api.save = '${save}';
@@ -28,6 +30,17 @@
     <c:when test="${not empty transaction}">
     edit.transaction = ${transaction.toJson()};
     edit.transaction.sum = Math.abs(edit.transaction.sum);
+    if (!edit.transaction.counterparty){
+        edit.transaction.counterparty = {
+            id:-1,
+            name:''
+        }
+    } else {
+        edit.addCounterparty = true;
+    }
+    if (edit.transaction.comment){
+        edit.addNote = true;
+    }
     </c:when>
     <c:otherwise>
     edit.transaction.type = edit.types[0].id;
@@ -43,6 +56,13 @@
         find:'${findCategory}',
         onPut:function(item){
             edit.setCategory(item);
+        },
+        field:'name'
+    }
+    edit.counterpartyProps = {
+        find:'${findCounterparty}',
+        onPut:function(counterparty){
+            edit.setCounterparty(counterparty);
         },
         field:'name'
     }
@@ -81,10 +101,10 @@
                         </td>
                         <td>
                             <div style="display: inline-block; border: solid black 1pt; background-color: white; padding: 0 2pt">
-                            <span v-if="transaction.type=='income'">
+                            <span class="sign" v-if="transaction.type=='income'">
                                 +
                             </span>
-                                <span v-else>
+                            <span class="sign" v-else>
                                 -
                             </span>
                                 <input id="sum" v-model="transaction.sum" onfocus="this.select()" style="border: none; background: transparent; outline: none">
@@ -129,6 +149,45 @@
                             </select>
                         </td>
                     </tr>
+                    <tr v-if="addCounterparty">
+                        <td>
+                            <span v-if="transaction.type === 'income'">
+                                <fmt:message key="transaction.payeer"/>
+                            </span>
+                            <span v-else>
+                                <fmt:message key="transaction.recepient"/>
+                            </span>
+                        </td>
+                        <td>
+                            <find :props="counterpartyProps" :object="transaction.counterparty"></find>
+                            <span v-on:click="addCounterparty = false" class="mini-button">
+                                &times;
+                            </span>
+                        </td>
+                    </tr>
+                    <tr v-if="addNote">
+                        <td colspan="2">
+                            <textarea onfocus="this.select()" class="comment-field"
+                                      v-model="transaction.comment"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            <span class="mini-button" v-if="!addCounterparty" v-on:click="addCounterparty = true">
+                                <template v-if="transaction.type == 'income'">
+                                    <fmt:message key="transacton.payeer.add"/>
+                                </template>
+                                <template v-else-if="transaction.type == 'outcome'">
+                                    <fmt:message key="transaction.recepient.add"/>
+                                </template>
+                            </span>
+                            <span class="mini-button" v-if="!addNote" v-on:click="addNote = true">
+                                <fmt:message key="transaction.note.add"/>
+                            </span>
+                        </td>
+                    </tr>
+
+
                 </table>
                 <div v-else-if="transaction.type === 'transfer'">
                     <table>

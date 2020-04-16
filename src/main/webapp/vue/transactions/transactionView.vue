@@ -10,6 +10,16 @@ var transactionList = new Vue({
         }
     },
     methods:{
+        edit:function(item){
+            console.log('edit');
+            if (this.api.edit){
+                let data = {};
+                if (item && item.id){
+                    data.id = item.id;
+                }
+                loadModal(this.api.edit, data);
+            }
+        },
         getItemsByDate:function(date){
             let items = [];
             for (let i in this.items){

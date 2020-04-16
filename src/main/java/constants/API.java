@@ -24,6 +24,7 @@ public class API {
     public static final Object TRANSACTION_SETTINGS_EDIT = API + "/transaction/settings/edit";
     public static final String TIMER_START = API + "/timer/start";
     public static final String TIMER_STOP = API + "/timer/stop";
+    public static final String FIND_COUNTERPARTY = API + "/find/counterparty";
 
 
     public class INFO {

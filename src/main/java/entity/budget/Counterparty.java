@@ -2,15 +2,16 @@ package entity.budget;
 
 import constants.Tables;
 import entity.user.User;
+import org.json.simple.JSONObject;
+import utils.JsonAble;
 
 import javax.persistence.*;
 
-import static constants.Keys.NAME;
-import static constants.Keys.OWNER;
+import static constants.Keys.*;
 
 @Entity
 @Table(name = Tables.COUNTERPARTYES)
-public class Counterparty {
+public class Counterparty extends JsonAble {
     private int id;
     private User owner;
     private String name;
@@ -40,5 +41,13 @@ public class Counterparty {
     }
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = pool.getObject();
+        object.put(ID, id);
+        object.put(NAME, name);
+        return object;
     }
 }

@@ -45,3 +45,9 @@ body{
 .add-button:before{
     background-image: url("/img/buttons/add.png");
 }
+.mini-button{
+    font-size: 10pt;
+}
+.mini-button:hover{
+    text-shadow: 0 0 3px gray;
+}

@@ -58,8 +58,9 @@
                             {{new Date(date).toLocaleDateString()}}
                         </span>
                         <div style="padding-left: 8pt">
-                            <div class="spacer">
-                                <item-view v-for="t in getItemsByDate(date)" :item="t" v-on:click="edit(t.id)"></item-view>
+                            <div class="spacer" >
+                                <item-view v-for="t in getItemsByDate(date)"  v-on:click="edit(t)"
+                                           :item="t" :edit="edit"></item-view>
                             </div>
                         </div>
                     </div>

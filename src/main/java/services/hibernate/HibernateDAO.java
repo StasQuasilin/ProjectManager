@@ -139,6 +139,15 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
+    public List<Counterparty> findCounterparty(User user, String key) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put(OWNER, user);
+        HashMap<String, String> find = new HashMap<>();
+        find.put(NAME, key);
+        return hibernator.find(Counterparty.class, find, params);
+    }
+
+    @Override
     public BudgetPoint getBudgetPoint(Budget budget, Date date, PointScale scale) {
         HashMap<String, Object> params = hibernator.getParams();
         params.put(BUDGET, budget);
@@ -204,6 +213,14 @@ public class HibernateDAO implements dbDAO, Keys {
         params.put(NAME, name);
         params.put(OWNER, owner);
         return hibernator.get(TransactionCategory.class, params);
+    }
+
+    @Override
+    public Counterparty getCounterpartyByName(String name, User user) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put(NAME, name);
+        params.put(OWNER, user);
+        return hibernator.get(Counterparty.class, params);
     }
 
     @Override

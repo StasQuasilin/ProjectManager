@@ -65,6 +65,7 @@ public interface Keys {
     String PAGE_CONTENT = "pageContent";
     String FIND_CATEGORY = "findCategory";
     String FIND_PERSON = "findPerson";
+    String FIND_COUNTERPARTY = "findCounterparty";
     String EDIT = "edit";
     String ACCOUNT_EDIT = "accountEdit";
     String REMOVE= "remove";
@@ -130,4 +131,5 @@ public interface Keys {
     String PROGRESSING = "progressing";
     String DONE = "done";
     String SPEND = "spend";
+    String EMPTY = "";
 }

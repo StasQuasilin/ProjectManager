@@ -1,4 +1,4 @@
-package api.budget;
+package api.transactions;
 
 import constants.API;
 import constants.Keys;

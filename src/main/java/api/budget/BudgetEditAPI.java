@@ -72,11 +72,14 @@ public class BudgetEditAPI extends ServletAPI {
                 Transaction transaction = new Transaction();
                 transaction.setBudget(budget);
                 transaction.setSum(d);
-                transaction.setDate(Date.valueOf(LocalDate.now()));
+                Date date = Date.valueOf(LocalDate.now());
+                transaction.setDate(date);
+
                 transaction.setType(d > 0 ? TransactionType.income : TransactionType.outcome);
                 transaction.setOwner(user);
                 transaction.setCurrency(dao.getObjectById(Currency.class, budget.getCurrency()));
                 UserSettings settings = UserSettingsUtil.getUserSettings(user);
+
                 if (newBudget){
                     transaction.setCategory(settings.getOpenCategory());
                 } else {
@@ -85,7 +88,7 @@ public class BudgetEditAPI extends ServletAPI {
 
                 dao.save(transaction);
                 updateUtil.onSave(transaction);
-                budgetCalculator.calculate(budget, transaction);
+                budgetCalculator.calculate(budget, date);
 
             }
 

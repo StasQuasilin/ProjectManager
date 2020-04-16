@@ -21,3 +21,8 @@
     border-left: solid gray 1px;
     padding-left: 8px;
 }
+.transaction-list .transaction-comment{
+    font-style: italic;
+    color: gray;
+    font-size: 10pt;
+}

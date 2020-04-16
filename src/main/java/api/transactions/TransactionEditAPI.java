@@ -1,9 +1,11 @@
-package api.budget;
+package api.transactions;
 
 import api.socket.UpdateUtil;
 import constants.API;
+import constants.Keys;
 import controllers.ServletAPI;
 import entity.budget.Budget;
+import entity.budget.Counterparty;
 import entity.budget.Currency;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
@@ -12,6 +14,7 @@ import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.BudgetCalculator;
 import utils.CategoryUtil;
+import utils.CounterpartyUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,6 +31,7 @@ public class TransactionEditAPI extends ServletAPI {
 
     private final UpdateUtil updateUtil = new UpdateUtil();
     private final CategoryUtil categoryUtil = new CategoryUtil();
+    private final CounterpartyUtil counterpartyUtil = new CounterpartyUtil();
     private final BudgetCalculator budgetCalculator = new BudgetCalculator();
 
     @Override
@@ -42,10 +46,21 @@ public class TransactionEditAPI extends ServletAPI {
                 transaction.setOwner(user);
             }
 
+            Date prevDate = null;
             Date date = Date.valueOf(String.valueOf(body.get(DATE)));
+            if (transaction.getDate() == null){
+                prevDate = date;
+            } else {
+                prevDate = transaction.getDate();
+            }
             transaction.setDate(date);
 
+            Budget prevBudget = null;
             Budget budget = dao.getObjectById(Budget.class, body.get(BUDGET));
+            if (transaction.getBudget() != null && transaction.getBudget().getId() != budget.getId()){
+                prevBudget = transaction.getBudget();
+            }
+
             transaction.setBudget(budget);
 
             TransactionCategory category = categoryUtil.getCategory((JSONObject) body.get(CATEGORY), user);
@@ -66,11 +81,27 @@ public class TransactionEditAPI extends ServletAPI {
             Currency currency = dao.getObjectById(Currency.class, body.get(CURRENCY));
             transaction.setCurrency(currency);
 
+            if (body.containsKey(COUNTERPARTY)) {
+                Counterparty counterparty = counterpartyUtil.getCounterparty((JSONObject) body.get(COUNTERPARTY), user);
+                transaction.setCounterparty(counterparty);
+            } else if (transaction.getCounterparty() != null){
+                transaction.setCounterparty(null);
+            }
+
+            if (body.containsKey(COMMENT)) {
+                String comment = String.valueOf(body.get(COMMENT));
+                transaction.setComment(comment);
+            } else if (transaction.getComment() != null){
+                transaction.setComment(Keys.EMPTY);
+            }
+
             dao.save(transaction);
             write(resp, SUCCESS);
             updateUtil.onSave(transaction);
-            budgetCalculator.calculate(budget, transaction);
-
+            budgetCalculator.calculate(budget, transaction.getDate());
+            if (prevBudget != null){
+                budgetCalculator.calculate(prevBudget, prevDate);
+            }
         }
     }
 }

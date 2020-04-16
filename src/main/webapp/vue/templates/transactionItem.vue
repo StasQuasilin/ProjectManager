@@ -1,8 +1,12 @@
 var itemView = {
     props:{
-        item:Object
+        item:Object,
+        edit:Function
     },
-    template:'<div v-if="item" class="transaction-list-item">' +
+    methods:{
+
+    },
+    template:'<div v-if="item" class="transaction-list-item" v-on:click="edit(item)">' +
             '<div>' +
                 '<span>' +
                     '{{item.category.name}}: ' +
@@ -20,12 +24,19 @@ var itemView = {
                     ' {{item.currency.sign}}' +
                 '</span>' +
                 '<span v-if="item.rate !== 1">' +
-                    ' ( {{(Math.abs(item.sum) * item.rate).toLocaleString()}} ' +
+                    ' ( &times; {{item.rate.toLocaleString()}} = ' +
+                    '{{(Math.abs(item.sum) * item.rate).toLocaleString()}} ' +
                     '{{item.budget.currency}} )' +
                 '</span>' +
             '</div>' +
             '<div class="account">' +
                 '{{item.budget.title}}' +
+                '<span v-if="item.counterparty">' +
+                    ' - {{item.counterparty.name}}' +
+                '</span>' +
+            '</div>' +
+            '<div class="transaction-comment">' +
+                '{{item.comment}}' +
             '</div>' +
         '</div>'
 };

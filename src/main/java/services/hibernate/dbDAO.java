@@ -53,4 +53,6 @@ public interface dbDAO {
     List<TimeLog> getTimeLogs(Task task);
     TimeLog getActiveTimeLog(Task task);
     UserSettings getUserSettings(User user);
+    List<Counterparty> findCounterparty(User user, String key);
+    Counterparty getCounterpartyByName(String name, User user);
 }

@@ -28,7 +28,7 @@ public class Transaction extends JsonAble implements Keys {
     private Budget budget;
     private Counterparty counterparty;
     private float sum;
-    private float rate;
+    private float rate = 1;
     private Currency currency;
     private String comment;
     private User owner;
@@ -152,6 +152,9 @@ public class Transaction extends JsonAble implements Keys {
         }
         if (comment != null) {
             object.put(COMMENT, comment);
+        }
+        if (counterparty != null){
+            object.put(COUNTERPARTY, counterparty.toJson());
         }
 
         return object;

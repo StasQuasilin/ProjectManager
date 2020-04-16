@@ -20,8 +20,7 @@ public class BudgetCalculator {
     dbDAO dao = dbDAOService.getDao();
     private final UpdateUtil updateUtil = new UpdateUtil();
 
-    public void calculate(Budget budget, Transaction transaction) {
-        Date date = transaction.getDate();
+    public void calculate(Budget budget, Date date) {
         BudgetPoint budgetPoint = dao.getBudgetPoint(budget, date, PointScale.day);
         if (budgetPoint == null){
             budgetPoint = new BudgetPoint();
