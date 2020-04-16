@@ -21,7 +21,7 @@ public class TransactionHadler extends ISocketHandler {
     public void onSubscribe(User user, Session session) throws IOException {
         JSONArray array = pool.getArray();
 
-        for (Transaction transaction : dao.getTransactionsByUser(user, null)){
+        for (Transaction transaction : dao.getLimitTransactionsByUser(user, 32)){
             array.add(transaction.toJson());
         }
 

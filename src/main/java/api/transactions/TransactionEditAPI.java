@@ -46,7 +46,7 @@ public class TransactionEditAPI extends ServletAPI {
                 transaction.setOwner(user);
             }
 
-            Date prevDate = null;
+            Date prevDate;
             Date date = Date.valueOf(String.valueOf(body.get(DATE)));
             if (transaction.getDate() == null){
                 prevDate = date;
@@ -63,14 +63,16 @@ public class TransactionEditAPI extends ServletAPI {
 
             transaction.setBudget(budget);
 
-            TransactionCategory category = categoryUtil.getCategory((JSONObject) body.get(CATEGORY), user);
-            transaction.setCategory(category);
+            if (body.containsKey(CATEGORY)) {
+                TransactionCategory category = categoryUtil.getCategory((JSONObject) body.get(CATEGORY), user);
+                transaction.setCategory(category);
+            }
 
             TransactionType type = TransactionType.valueOf(String.valueOf(body.get(TYPE)));
             transaction.setType(type);
 
             float sum = Float.parseFloat(String.valueOf(body.get(SUM)));
-            if (type == TransactionType.outcome){
+            if (type == TransactionType.outcome || type == TransactionType.transfer){
                 sum *= -1;
             }
             transaction.setSum(sum);
@@ -93,6 +95,25 @@ public class TransactionEditAPI extends ServletAPI {
                 transaction.setComment(comment);
             } else if (transaction.getComment() != null){
                 transaction.setComment(Keys.EMPTY);
+            }
+
+            if (type == TransactionType.transfer){
+                Transaction child = transaction.getChild();
+                if (child == null){
+                    child = new Transaction();
+                    child.setOwner(user);
+                    transaction.setChild(child);
+                }
+                Budget transferTo = dao.getObjectById(Budget.class, body.get(TRANSFER_TO));
+                child.setType(type);
+                child.setDate(date);
+                child.setBudget(transferTo);
+                child.setSum(sum * -1);
+                child.setRate(rate);
+                child.setCurrency(dao.getObjectById(Currency.class, transferTo.getCurrency()));
+                dao.save(child);
+                budgetCalculator.calculate(transferTo, date);
+                transaction.setChild(child);
             }
 
             dao.save(transaction);

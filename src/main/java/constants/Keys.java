@@ -34,6 +34,7 @@ public interface Keys {
     String _END = "_end";
     String DESCRIPTION = "description";
     String BUDGET = "budget";
+    String TRANSFER_TO = "transferTo";
     String TRANSACTIONS = "transactions";
     String FAST_TRANSACTIONS = "fastTransactions";
     String TRANSACTION = "transaction";
@@ -52,6 +53,7 @@ public interface Keys {
     String TOKEN = "token";
     String USER = "user";
     String ID = "id";
+    String ACCOUNT = "account";
     String ACCOUNTS = "accounts";
     String CREATED = "created";
     String CURRENCY = "currency";
@@ -132,4 +134,5 @@ public interface Keys {
     String DONE = "done";
     String SPEND = "spend";
     String EMPTY = "";
+    String DETAILS = "details";
 }

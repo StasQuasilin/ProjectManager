@@ -20,6 +20,7 @@
         <mapping class="entity.project.ProjectMember"/>
         <mapping class="entity.budget.Budget"/>
         <mapping class="entity.transactions.Transaction"/>
+        <mapping class="entity.transactions.TransactionDetail"/>
         <mapping class="entity.transactions.TransactionCategory"/>
         <mapping class="entity.transactions.TransactionSettings"/>
         <mapping class="entity.budget.BudgetPoint"/>

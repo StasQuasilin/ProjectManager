@@ -51,7 +51,7 @@
     </script>
     <table id="pageView" style="width: 100%; height: 100%; border-collapse: collapse" border="1">
         <tr>
-            <td rowspan="2" style="width: 40%; vertical-align: top">
+            <td rowspan="3" style="width: 40%; vertical-align: top">
                 <div id="transaction" class="transaction-list">
                     <div v-for="date in getDates()">
                         <span class="transaction-date">
@@ -59,12 +59,15 @@
                         </span>
                         <div style="padding-left: 8pt">
                             <div class="spacer" >
-                                <item-view v-for="t in getItemsByDate(date)"  v-on:click="edit(t)"
-                                           :item="t" :edit="edit"></item-view>
+                                <template v-for="t in getItemsByDate(date)">
+                                    <item-view v-if="t.type=== 'income' || t.type === 'outcome'" v-on:click="edit(t)" :item="t" :edit="edit"></item-view>
+                                    <div v-else-if="t.children">
+                                        {{t.account.title}} --> {{t.children.account.title}} {{t.sum}} {{t.currency.id}}
+                                    </div>
+                                </template>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </td>
             <td rowspan="2" style="width: 25%; vertical-align: top">
@@ -75,8 +78,13 @@
             </td>
         </tr>
         <tr>
-            <td style="vertical-align: top">
-<%--                <jsp:include page="../budget/buyList.jsp"/>--%>
+            <td rowspan="2" style="vertical-align: top">
+                <jsp:include page="../budget/buyList.jsp"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+
             </td>
         </tr>
     </table>

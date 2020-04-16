@@ -224,6 +224,11 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
+    public List<Transaction> getLimitTransactionsByUser(User user, int limit) {
+        return hibernator.query(Transaction.class, "owner", user);
+    }
+
+    @Override
     public List<UserCurrency> getUserCurrency(User user) {
         return hibernator.query(UserCurrency.class, USER, user);
     }

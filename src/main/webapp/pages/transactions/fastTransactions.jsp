@@ -17,8 +17,8 @@
                 <span>
                     <fmt:message key="title.fast.transactions"/>
                 </span>
-                <span>
-                    <fmt:message key="button.add"/>
+                <span class="mini-button" v-on:click="edit()">
+                    + <fmt:message key="button.add"/>
                 </span>
             </td>
         </tr>

@@ -6,6 +6,8 @@ import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.task.TaskStatistic;
 import entity.task.TimeLog;
+import entity.transactions.Transaction;
+import entity.transactions.TransactionDetail;
 import entity.user.User;
 import services.hibernate.HibernateSessionFactory;
 import services.hibernate.Hibernator;
@@ -73,8 +75,17 @@ public class TaskUtil {
     public static void main(String[] args) {
         Hibernator hibernator = Hibernator.getInstance();
 
-        for (Task task : hibernator.query(Task.class, null)){
-            checkParenthood(task, task.getOwner());
+        for (Transaction transaction : hibernator.query(Transaction.class, null)){
+            TransactionDetail detail = new TransactionDetail();
+
+            detail.setTransaction(transaction);
+            detail.setCategory(transaction.getCategory());
+            detail.setAccount(transaction.getBudget());
+            detail.setSum(transaction.getSum());
+            detail.setRate(transaction.getRate());
+            detail.setCurrency(transaction.getCurrency());
+
+            hibernator.save(detail);
         }
         HibernateSessionFactory.shutdown();
     }

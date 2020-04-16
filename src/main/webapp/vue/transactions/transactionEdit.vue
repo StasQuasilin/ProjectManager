@@ -21,6 +21,9 @@ var edit = new Vue({
             budget:{
                 id:-1
             },
+            transferTo:{
+                id:-1
+            },
             counterparty:{
                 id:-1,
                 name:''
@@ -48,6 +51,12 @@ var edit = new Vue({
             }
             if (!this.addCounterparty){
                 delete data.counterparty
+            }
+            if (data.type !== 'transfer'){
+                delete data.transferTo;
+            } else {
+                data.transferTo = data.transferTo.id;
+                delete data.category;
             }
             PostApi(this.api.save, data, function(a){
                 console.log(a);

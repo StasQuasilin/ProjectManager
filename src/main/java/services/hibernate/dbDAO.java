@@ -55,4 +55,5 @@ public interface dbDAO {
     UserSettings getUserSettings(User user);
     List<Counterparty> findCounterparty(User user, String key);
     Counterparty getCounterpartyByName(String name, User user);
+    List<Transaction> getLimitTransactionsByUser(User user, int limit);
 }

@@ -6,14 +6,13 @@ import entity.budget.Budget;
 import entity.budget.Counterparty;
 import entity.budget.Currency;
 import entity.user.User;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.Set;
 
 /**
  * Created by szpt_user045 on 26.02.2020.
@@ -25,6 +24,7 @@ public class Transaction extends JsonAble implements Keys {
     private Date date;
     private TransactionCategory category;
     private TransactionType type;
+    private Set<TransactionDetail> details;
     private Budget budget;
     private Counterparty counterparty;
     private float sum;
@@ -32,6 +32,7 @@ public class Transaction extends JsonAble implements Keys {
     private Currency currency;
     private String comment;
     private User owner;
+    private Transaction child;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,6 +50,14 @@ public class Transaction extends JsonAble implements Keys {
     }
     public void setType(TransactionType type) {
         this.type = type;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "transaction", cascade = CascadeType.ALL)
+    public Set<TransactionDetail> getDetails() {
+        return details;
+    }
+    public void setDetails(Set<TransactionDetail> details) {
+        this.details = details;
     }
 
     @Basic
@@ -137,26 +146,54 @@ public class Transaction extends JsonAble implements Keys {
         this.owner = owner;
     }
 
+    @OneToOne
+    @JoinColumn(name = "child")
+    public Transaction getChild() {
+        return child;
+    }
+    public void setChild(Transaction child) {
+        this.child = child;
+    }
+
     @Override
-    public JSONObject toJson() {
+    public JSONObject shortJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
         object.put(TYPE, type.toString());
         object.put(DATE, date.toString());
-        object.put(CATEGORY, category.toJson());
-        object.put(BUDGET, budget.toJson());
         object.put(SUM, sum);
         object.put(RATE, rate);
-        if (currency != null){
-            object.put(CURRENCY, currency.shortJson());
+        object.put(ACCOUNT, budget.toJson());
+        if (currency != null) {
+            object.put(CURRENCY, currency.toJson());
         }
+        return object;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = shortJson();
         if (comment != null) {
             object.put(COMMENT, comment);
         }
         if (counterparty != null){
             object.put(COUNTERPARTY, counterparty.toJson());
         }
+        if (details != null) {
+            object.put(DETAILS, details());
+        }
+        if (child != null){
+            object.put(CHILDREN, child.shortJson());
+        }
 
         return object;
+    }
+
+    private JSONArray details() {
+        JSONArray array = pool.getArray();
+        for (TransactionDetail detail : details){
+            array.add(detail.toJson());
+        }
+        return array;
     }
 }

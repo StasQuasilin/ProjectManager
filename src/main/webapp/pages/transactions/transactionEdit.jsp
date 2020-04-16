@@ -12,8 +12,6 @@
 <link rel="stylesheet" href="${context}/css/transactions/transactionEdit.css">
 <script src="${context}/vue/templates/findInput.vue"></script>
 <script src="${context}/vue/transactions/transactionEdit.vue"></script>
-
-
 <script>
     edit.api.save = '${save}';
     edit.api.findCategory = '${findCategory}';
@@ -186,34 +184,62 @@
                             </span>
                         </td>
                     </tr>
-
-
                 </table>
                 <div v-else-if="transaction.type === 'transfer'">
                     <table>
                         <tr>
                             <td>
-                                <fmt:message key="transfer.from"/>
+                                <label for="from">
+                                    <fmt:message key="transfer.from"/>
+                                </label>
                             </td>
                             <td>
-
+                                <select id="from" v-model="transaction.budget">
+                                    <option v-for="acc in budgets" :value="acc">
+                                        {{acc.title}}
+                                    </option>
+                                </select>
+                                -{{transaction.sum}}
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <fmt:message key="transfer.to"/>
+                                <label for="to">
+                                    <fmt:message key="transfer.to"/>
+                                </label>
                             </td>
                             <td>
-
+                                <select id="to" v-model="transaction.transferTo">
+                                    <option v-for="acc in budgets" :value="acc">
+                                        {{acc.title}}
+                                    </option>
+                                </select>
+                                +{{transaction.sum}}
                             </td>
                         </tr>
                         <tr>
                             <td>
-                                <fmt:message key="payment.edit.sum"/>
+                                <label for="transferSum">
+                                    <fmt:message key="payment.edit.sum"/>
+                                </label>
+                            </td>
+                            <td>
+                                <input id="transferSum" v-model="transaction.sum" autocomplete="off">
+                            </td>
+                        </tr>
+                        <tr v-if="transaction.budget.currency !== transaction.transferTo.currency">
+                            <td>
+                                RARE
                             </td>
                         </tr>
                         <tr>
-
+                            <td colspan="2" style="text-align: center">
+                                <span class="mini-button" v-if="!addNote" v-on:click="addNote = true">
+                                    <fmt:message key="transaction.note.add"/>
+                                </span>
+                                <textarea v-else onfocus="this.select()" class="comment-field"
+                                    v-model="transaction.comment"></textarea>
+                            </td>
                         </tr>
                     </table>
                 </div>
