@@ -9,7 +9,8 @@ var calendar = new Vue({
         date:new Date().toISOString().substring(0, 10),
         items:[],
         calendarItems:[],
-        time:0
+        time:0,
+        scale:1
     },
     mounted:function(){
         for (let i = 0; i < 24; i++){
@@ -24,6 +25,12 @@ var calendar = new Vue({
     computed:{
     },
     methods:{
+        Scale:function(event){
+            console.log(event);
+        },
+        contextMenu:function(e){
+            e.preventDefault();
+        },
         switchDay:function(val){
             var date = new Date(this.date);
             date.setDate(date.getDate() + val);
@@ -94,6 +101,12 @@ var calendar = new Vue({
                 }
             }
             // this.calendarItems = data.items;
+        },
+        dragStart:function(item){
+            if (item.empty || item.clicked){
+                window.event.preventDefault();
+            }
+            console.log(item);
         },
         drag:function(e){
             console.log('Drag end');

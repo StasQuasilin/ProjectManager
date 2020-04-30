@@ -65,18 +65,18 @@
         </td>
       </tr>
       <tr>
-        <td style="height: 100%">
+        <td style="height: 100%" v-on:contextmenu="contextMenu">
           <draggable :list="calendarItems" group="task" @add="add" :move="move" @end="drop" style="height: 100%; background-color: gray; overflow-y: scroll; overflow-x: hidden">
 <%--            <div style="height: 100%; background-color: gray; overflow-y: scroll; overflow-x: hidden">--%>
 <%--              <draggable :list="calendarItems" group="task" @add="add" @remove="remove">--%>
 <%--            <div v-for="index in 24" style="border: dotted 1pt; padding: 1pt; margin: 1pt">--%>
 <%--              <draggable :list="calendarBuffer[index - 1]" group="task" @add="drop(calendarBuffer[index - 1], index - 1)" @end="drop(calendarBuffer[index - 1], index - 1)">--%>
 
-                <div v-for="(item, index) in calendarItems" style="border: dotted 0.8pt" :class="{'moved' : item.move}">
-                  <span>
-                    {{item}}
+                <div v-for="(item, index) in calendarItems" v-on:dragstart="dragStart(item)" style="border: dotted 0.8pt" :class="{'moved' : item.move}">
+                  <span v-if="item.empty">
+                    {{index}}:00
                   </span>
-<%--                  <calendar-item v-else :item="item"></calendar-item>--%>
+                  <calendar-item v-else :item="item"></calendar-item>
                 </div>
 <%--              </draggable>--%>
 

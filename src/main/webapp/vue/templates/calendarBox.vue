@@ -20,6 +20,9 @@ var calendarBox = {
         mouseUp:function(){
             console.log('up');
             this.clicked = false;
+        },
+        resize:function(){
+
         }
     },
     template:'<div class="calendar-item" @dragstart="onDrag($event)">' +
@@ -41,13 +44,14 @@ var calendarBox = {
             '{{item.index}}:00' +
             ' - ' +
             '{{item.length}}' +
+            '{{clicked}}' +
         '</div>' +
-        '<div v-if="item.index" class="calendar-item-line">' +
+        '<div v-if="item.index" class="calendar-item-line" v-on:mousedown="clicked=true" v-on:mouseup="clicked=false">' +
         '</div>' +
-        '<div class="calendar-item-menu">' +
-            '<div class="calendar-item-menu-button calendar-item-menu-button-edit"></div>' +
-            '<div class="calendar-item-menu-button calendar-item-menu-button-add"></div>' +
-            '<div class="calendar-item-menu-button calendar-item-menu-button-remove"></div>' +
-        '</div>' +
+        // '<div class="calendar-item-menu">' +
+        //     '<div class="calendar-item-menu-button calendar-item-menu-button-edit"></div>' +
+        //     '<div class="calendar-item-menu-button calendar-item-menu-button-add"></div>' +
+        //     '<div class="calendar-item-menu-button calendar-item-menu-button-remove"></div>' +
+        // '</div>' +
     '</div>'
 };
