@@ -1,7 +1,7 @@
 package entity.project;
 
 import constants.Keys;
-import constants.Tables;
+import constants.TableNames;
 import entity.user.User;
 
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import javax.persistence.*;
  * Created by szpt_user045 on 17.02.2020.
  */
 @Entity
-@Table(name = Tables.PROJECT_MEMBERS)
+@Table(name = TableNames.PROJECT_MEMBERS)
 public class ProjectMember implements Keys {
     private int id;
     private Project project;

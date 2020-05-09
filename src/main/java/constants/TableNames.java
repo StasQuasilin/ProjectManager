@@ -3,7 +3,7 @@ package constants;
 /**
  * Created by szpt_user045 on 17.02.2020.
  */
-public interface Tables {
+public interface TableNames {
     String PROJECT_MEMBERS = "project_members";
     String PROJECTS = "projects";
     String TRANSACTIONS = "transactions";

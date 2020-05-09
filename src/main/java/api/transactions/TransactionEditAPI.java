@@ -4,7 +4,7 @@ import api.socket.UpdateUtil;
 import constants.API;
 import constants.Keys;
 import controllers.ServletAPI;
-import entity.budget.Budget;
+import entity.budget.Account;
 import entity.budget.Counterparty;
 import entity.budget.Currency;
 import entity.transactions.Transaction;
@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
  * Created by szpt_user045 on 26.02.2020.
@@ -29,6 +30,7 @@ import java.sql.Date;
 @WebServlet(API.TRANSACTION_EDIT)
 public class TransactionEditAPI extends ServletAPI {
 
+    private static final String TZ_REGEX = "[TZ]";
     private final UpdateUtil updateUtil = new UpdateUtil();
     private final CategoryUtil categoryUtil = new CategoryUtil();
     private final CounterpartyUtil counterpartyUtil = new CounterpartyUtil();
@@ -45,23 +47,24 @@ public class TransactionEditAPI extends ServletAPI {
                 transaction = new Transaction();
                 transaction.setOwner(user);
             }
-
-            Date prevDate;
-            Date date = Date.valueOf(String.valueOf(body.get(DATE)));
-            if (transaction.getDate() == null){
-                prevDate = date;
+            String s = String.valueOf(body.get(DATE)).replaceAll(TZ_REGEX, SPACE);
+            Timestamp timestamp = Timestamp.valueOf(s);
+            Date otherDate;
+            if (transaction.getDateTime() != null){
+                otherDate = transaction.getDate();
+                transaction.setDateTime(timestamp);
             } else {
-                prevDate = transaction.getDate();
-            }
-            transaction.setDate(date);
-
-            Budget prevBudget = null;
-            Budget budget = dao.getObjectById(Budget.class, body.get(BUDGET));
-            if (transaction.getBudget() != null && transaction.getBudget().getId() != budget.getId()){
-                prevBudget = transaction.getBudget();
+                transaction.setDateTime(timestamp);
+                otherDate = transaction.getDate();
             }
 
-            transaction.setBudget(budget);
+            Account account = dao.getObjectById(Account.class, body.get(ACCOUNT));
+            if (transaction.getAccount() != null && transaction.getAccount().getId() != account.getId()){
+                if (transaction.getId() > 0){
+                    budgetCalculator.removePointRoot(transaction.getId(), transaction.getAccount(), otherDate);
+                }
+            }
+            transaction.setAccount(account);
 
             if (body.containsKey(CATEGORY)) {
                 TransactionCategory category = categoryUtil.getCategory((JSONObject) body.get(CATEGORY), user);
@@ -71,11 +74,21 @@ public class TransactionEditAPI extends ServletAPI {
             TransactionType type = TransactionType.valueOf(String.valueOf(body.get(TYPE)));
             transaction.setType(type);
 
+            if (type == TransactionType.transfer){
+                Account secondary = dao.getObjectById(Account.class, body.get(SECONDARY));
+                if (transaction.getSecondary() != null && transaction.getSecondary().getId() != secondary.getId()){
+                    if (transaction.getId() > 0) {
+                        budgetCalculator.removePointRoot(transaction.getId(), transaction.getSecondary(), otherDate);
+                    }
+                }
+                transaction.setSecondary(secondary);
+            }
+
             float sum = Float.parseFloat(String.valueOf(body.get(SUM)));
             if (type == TransactionType.outcome || type == TransactionType.transfer){
                 sum *= -1;
             }
-            transaction.setSum(sum);
+            transaction.setAmount(sum);
 
             float rate = Float.parseFloat(String.valueOf(body.get(RATE)));
             transaction.setRate(rate);
@@ -97,32 +110,10 @@ public class TransactionEditAPI extends ServletAPI {
                 transaction.setComment(Keys.EMPTY);
             }
 
-            if (type == TransactionType.transfer){
-                Transaction child = transaction.getChild();
-                if (child == null){
-                    child = new Transaction();
-                    child.setOwner(user);
-                    transaction.setChild(child);
-                }
-                Budget transferTo = dao.getObjectById(Budget.class, body.get(TRANSFER_TO));
-                child.setType(type);
-                child.setDate(date);
-                child.setBudget(transferTo);
-                child.setSum(sum * -1);
-                child.setRate(rate);
-                child.setCurrency(dao.getObjectById(Currency.class, transferTo.getCurrency()));
-                dao.save(child);
-                budgetCalculator.calculate(transferTo, date);
-                transaction.setChild(child);
-            }
-
             dao.save(transaction);
             write(resp, SUCCESS);
             updateUtil.onSave(transaction);
-            budgetCalculator.calculate(budget, transaction.getDate());
-            if (prevBudget != null){
-                budgetCalculator.calculate(prevBudget, prevDate);
-            }
+            budgetCalculator.calculatePointRoot(transaction);
         }
     }
 }

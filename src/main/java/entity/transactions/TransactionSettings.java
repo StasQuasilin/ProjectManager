@@ -1,6 +1,6 @@
 package entity.transactions;
 
-import entity.budget.Budget;
+import entity.budget.Account;
 import entity.budget.Currency;
 import entity.user.User;
 
@@ -18,7 +18,7 @@ public class TransactionSettings {
     private Date finalDate;
     private TransactionRepeat repeat;
     private User owner;
-    private Budget budget;
+    private Account account;
     private TransactionCategory category;
     private float amount;
     private Currency currency;
@@ -70,11 +70,11 @@ public class TransactionSettings {
 
     @OneToOne
     @JoinColumn(name = "budget")
-    public Budget getBudget() {
-        return budget;
+    public Account getAccount() {
+        return account;
     }
-    public void setBudget(Budget budget) {
-        this.budget = budget;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @OneToOne

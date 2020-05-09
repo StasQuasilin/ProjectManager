@@ -1,7 +1,6 @@
 package utils;
 
 import api.socket.UpdateUtil;
-import entity.project.Project;
 import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.task.TaskStatistic;
@@ -79,11 +78,7 @@ public class TaskUtil {
             TransactionDetail detail = new TransactionDetail();
 
             detail.setTransaction(transaction);
-            detail.setCategory(transaction.getCategory());
-            detail.setAccount(transaction.getBudget());
-            detail.setSum(transaction.getSum());
-            detail.setRate(transaction.getRate());
-            detail.setCurrency(transaction.getCurrency());
+            detail.setSum(transaction.getAmount());
 
             hibernator.save(detail);
         }

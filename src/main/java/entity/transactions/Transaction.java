@@ -1,8 +1,8 @@
 package entity.transactions;
 
 import constants.Keys;
-import constants.Tables;
-import entity.budget.Budget;
+import constants.TableNames;
+import entity.budget.Account;
 import entity.budget.Counterparty;
 import entity.budget.Currency;
 import entity.user.User;
@@ -12,27 +12,30 @@ import utils.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Set;
 
 /**
  * Created by szpt_user045 on 26.02.2020.
  */
 @Entity
-@Table(name = Tables.TRANSACTIONS)
+@Table(name = TableNames.TRANSACTIONS)
 public class Transaction extends JsonAble implements Keys {
     private int id;
-    private Date date;
+    private Timestamp dateTime;
     private TransactionCategory category;
     private TransactionType type;
     private Set<TransactionDetail> details;
-    private Budget budget;
+    private Account account;
+    private Account secondary;
     private Counterparty counterparty;
-    private float sum;
+    private float amount;
     private float rate = 1;
     private Currency currency;
     private String comment;
     private User owner;
-    private Transaction child;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,7 +55,8 @@ public class Transaction extends JsonAble implements Keys {
         this.type = type;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "transaction", cascade = CascadeType.ALL)
+//    @OneToMany(fetch = FetchType.EAGER, mappedBy = "transaction", cascade = CascadeType.ALL)
+    @Transient
     public Set<TransactionDetail> getDetails() {
         return details;
     }
@@ -62,11 +66,24 @@ public class Transaction extends JsonAble implements Keys {
 
     @Basic
     @Column(name = DATE)
-    public Date getDate() {
-        return date;
+    public Timestamp getDateTime() {
+        return dateTime;
     }
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateTime(Timestamp date) {
+        this.dateTime = date;
+    }
+    @Transient
+    public Date getDate(){
+        return Date.valueOf(dateTime.toLocalDateTime().toLocalDate());
+    }
+    public void setDate(Date date){
+        LocalTime time;
+        if (dateTime == null){
+            time = LocalTime.now();
+        } else {
+            time = dateTime.toLocalDateTime().toLocalTime();
+        }
+        dateTime = Timestamp.valueOf(LocalDateTime.of(date.toLocalDate(), time));
     }
 
     @OneToOne
@@ -88,35 +105,39 @@ public class Transaction extends JsonAble implements Keys {
     }
 
     @OneToOne
-    @JoinColumn(name = BUDGET)
-    public Budget getBudget() {
-        return budget;
+    @JoinColumn(name = "account")
+    public Account getAccount() {
+        return account;
     }
-    public void setBudget(Budget budget) {
-        this.budget = budget;
+    public void setAccount(Account account) {
+        this.account = account;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "secondary_account")
+    public Account getSecondary() {
+        return secondary;
+    }
+    public void setSecondary(Account secondary) {
+        this.secondary = secondary;
     }
 
     @Basic
-    @Column(name = SUM)
-    public float getSum() {
-        return sum;
+    @Column(name = "amount")
+    public float getAmount() {
+        return amount;
     }
-    public void setSum(float sum) {
-        this.sum = sum;
+    public void setAmount(float sum) {
+        this.amount = sum;
     }
 
     @Basic
-    @Column(name = RATE)
+    @Column(name = "rate")
     public float getRate() {
         return rate;
     }
     public void setRate(float rate) {
         this.rate = rate;
-    }
-
-    @Transient
-    public float getTotalSum(){
-        return sum * rate;
     }
 
     @OneToOne
@@ -146,26 +167,26 @@ public class Transaction extends JsonAble implements Keys {
         this.owner = owner;
     }
 
-    @OneToOne
-    @JoinColumn(name = "child")
-    public Transaction getChild() {
-        return child;
-    }
-    public void setChild(Transaction child) {
-        this.child = child;
-    }
+
 
     @Override
     public JSONObject shortJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
         object.put(TYPE, type.toString());
-        object.put(DATE, date.toString());
-        object.put(SUM, sum);
+        object.put(DATE, dateTime.toString());
+        object.put(SUM, amount);
         object.put(RATE, rate);
-        object.put(ACCOUNT, budget.toJson());
+        object.put(ACCOUNT, account.toJson());
+        if(secondary != null){
+            object.put(SECONDARY, secondary.toJson());
+        }
+        if (category != null) {
+            object.put(CATEGORY, category.toJson());
+        }
+
         if (currency != null) {
-            object.put(CURRENCY, currency.toJson());
+            object.put(CURRENCY, currency.shortJson());
         }
         return object;
     }
@@ -182,9 +203,6 @@ public class Transaction extends JsonAble implements Keys {
         if (details != null) {
             object.put(DETAILS, details());
         }
-        if (child != null){
-            object.put(CHILDREN, child.shortJson());
-        }
 
         return object;
     }
@@ -195,5 +213,10 @@ public class Transaction extends JsonAble implements Keys {
             array.add(detail.toJson());
         }
         return array;
+    }
+
+    @Transient
+    public float getTotalSum() {
+        return amount * rate;
     }
 }

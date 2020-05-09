@@ -2,7 +2,7 @@ package api.socket;
 
 import api.socket.handlers.ISocketHandler;
 import constants.Keys;
-import entity.budget.Budget;
+import entity.budget.Account;
 import entity.transactions.Transaction;
 import entity.calendar.CalendarItem;
 import entity.project.Project;
@@ -37,16 +37,16 @@ public class UpdateUtil implements Keys {
         JSONArray array = pool.getArray();
         array.add(transaction.toJson());
         object.put(UPDATE, array);
-        handler.send(transaction.getBudget().getOwner(), object);
+        handler.send(transaction.getAccount().getOwner(), object);
     }
 
-    public void onSave(Budget budget) throws IOException {
+    public void onSave(Account account) throws IOException {
         ISocketHandler handler = subscribeMaster.getHandler(Subscribe.accounts);
         JSONObject object = pool.getObject();
         JSONArray array = pool.getArray();
-        array.add(budget.toJson());
+        array.add(account.toJson());
         object.put(UPDATE, array);
-        handler.send(budget.getOwner(), object);
+        handler.send(account.getOwner(), object);
     }
 
     public void onSave(Project project) throws IOException {

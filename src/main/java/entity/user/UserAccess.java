@@ -1,7 +1,7 @@
 package entity.user;
 
 import constants.Keys;
-import constants.Tables;
+import constants.TableNames;
 
 import javax.persistence.*;
 
@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by szpt_user045 on 22.02.2019.
  */
 @Entity
-@Table(name = Tables.USER_ASSES)
+@Table(name = TableNames.USER_ASSES)
 public class UserAccess implements Keys{
     private int id;
     private String email;

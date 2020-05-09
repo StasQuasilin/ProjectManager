@@ -115,8 +115,8 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
-    public List<Budget> getBudgetsByUser(User user) {
-        return hibernator.query(Budget.class, OWNER, user);
+    public List<Account> getBudgetsByUser(User user) {
+        return hibernator.query(Account.class, OWNER, user);
     }
 
     @Override
@@ -148,18 +148,18 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
-    public BudgetPoint getBudgetPoint(Budget budget, Date date, PointScale scale) {
+    public BudgetPoint getBudgetPoint(Account account, Date date, PointScale scale) {
         HashMap<String, Object> params = hibernator.getParams();
-        params.put(BUDGET, budget);
+        params.put(ACCOUNT, account);
         params.put(DATE, date);
         params.put(SCALE, scale);
         return hibernator.get(BudgetPoint.class, params);
     }
 
     @Override
-    public List<BudgetPoint> getBudgetPoints(Date from, Date to, Budget budget, PointScale scale) {
+    public List<BudgetPoint> getBudgetPoints(Date from, Date to, Account account, PointScale scale) {
         HashMap<String, Object> params = hibernator.getParams();
-        params.put(BUDGET, budget);
+        params.put(ACCOUNT, account);
         if (from != null && to != null) {
             params.put(DATE, new BETWEEN(from, to));
         }
@@ -168,9 +168,9 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
-    public List<Transaction> getTransactionsByBudget(Budget budget, Date date) {
+    public List<Transaction> getTransactionsByBudget(Account account, Date date) {
         HashMap<String, Object> params = hibernator.getParams();
-        params.put(BUDGET, budget);
+        params.put(BUDGET, account);
         params.put(DATE, date);
 
         return hibernator.query(Transaction.class, params);
@@ -226,6 +226,36 @@ public class HibernateDAO implements dbDAO, Keys {
     @Override
     public List<Transaction> getLimitTransactionsByUser(User user, int limit) {
         return hibernator.query(Transaction.class, "owner", user);
+    }
+
+    @Override
+    public PointRoot getPointRoot(int parentId, Account account) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put("parentId", parentId);
+        params.put("account", account);
+        return hibernator.get(PointRoot.class, params);
+    }
+
+    @Override
+    public boolean removePointRoot(int parentId, Account account, Date date) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put("parentId", parentId);
+        params.put("account", account);
+        params.put("date", date);
+        PointRoot pointRoot = hibernator.get(PointRoot.class, params);
+        if (pointRoot != null){
+            hibernator.delete(pointRoot);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<PointRoot> getPointRoots(Account account, Date date) {
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put(ACCOUNT, account);
+        params.put(DATE, date);
+        return hibernator.query(PointRoot.class, params);
     }
 
     @Override

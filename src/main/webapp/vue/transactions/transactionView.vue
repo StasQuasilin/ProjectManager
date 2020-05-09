@@ -1,7 +1,8 @@
 var transactionList = new Vue({
     el:'#transaction',
     components:{
-        'item-view':itemView
+        'payment-view':paymentView,
+        'transfer-view':transferView
     },
     mixins:[list],
     date:function(){
@@ -25,7 +26,8 @@ var transactionList = new Vue({
             for (let i in this.items){
                 if (this.items.hasOwnProperty(i)){
                     let item = this.items[i];
-                    if (item.date === date){
+                    let itemDate = new Date(item.date).toISOString().substring(0, 10);
+                    if (itemDate === date){
                         items.push(item);
                     }
                 }
@@ -37,7 +39,7 @@ var transactionList = new Vue({
             for (let i in this.items){
                 if (this.items.hasOwnProperty(i)){
                     let item = this.items[i];
-                    let date = item.date;
+                    let date = new Date(item.date).toISOString().substring(0, 10);
                     if (!dates.includes(date)){
                         dates.push(date);
                     }

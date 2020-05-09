@@ -18,7 +18,7 @@
         <mapping class="entity.user.Person"/>
         <mapping class="entity.project.Project"/>
         <mapping class="entity.project.ProjectMember"/>
-        <mapping class="entity.budget.Budget"/>
+        <mapping class="entity.budget.Account"/>
         <mapping class="entity.transactions.Transaction"/>
         <mapping class="entity.transactions.TransactionDetail"/>
         <mapping class="entity.transactions.TransactionCategory"/>
@@ -35,5 +35,6 @@
         <mapping class="entity.task.TaskStatistic"/>
         <mapping class="entity.task.TimeLog"/>
         <mapping class="entity.user.UserSettings"/>
+        <mapping class="entity.budget.PointRoot"/>
     </session-factory>
 </hibernate-configuration>

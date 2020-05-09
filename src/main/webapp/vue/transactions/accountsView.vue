@@ -7,7 +7,7 @@ var accounts = new Vue({
             for (let i in this.items){
                 if (this.items.hasOwnProperty(i)){
                     let item = this.items[i];
-                    let currency = item.currency;
+                    let currency = item.currency.id;
                     if (!total[currency]){
                         total[currency] = 0;
                     }

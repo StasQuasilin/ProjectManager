@@ -8,6 +8,10 @@
     font-weight: bold;
     font-size: 10pt;
 }
+.transaction-time{
+    font-size: 10pt;
+    color: gray;
+}
 .transaction-list-item{
     border: solid gray 1px;
     margin-top: 2px;

@@ -1,7 +1,7 @@
 package entity.project;
 
 import constants.Keys;
-import constants.Tables;
+import constants.TableNames;
 import entity.task.Task;
 import entity.user.User;
 import org.json.simple.JSONObject;
@@ -15,7 +15,7 @@ import java.time.LocalDate;
  * Created by quasilin on 24.02.2019.
  */
 @Entity
-@Table(name = Tables.PROJECTS)
+@Table(name = TableNames.PROJECTS)
 public class Project extends JsonAble implements Keys {
     private int id;
     private User owner;

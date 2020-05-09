@@ -1,6 +1,5 @@
 package entity.budget;
 
-import constants.Tables;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
@@ -10,7 +9,7 @@ import javax.persistence.*;
 import static constants.Keys.*;
 
 @Entity
-@Table(name = Tables.COUNTERPARTYES)
+@Table(name = "counterpartyes")
 public class Counterparty extends JsonAble {
     private int id;
     private User owner;

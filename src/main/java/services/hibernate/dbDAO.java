@@ -32,12 +32,12 @@ public interface dbDAO {
     List<Task> getTaskByUser(User user, TaskStatus status, Object parent, Object date);
     List<Task> getTaskByDate(User user, Date date);
     void save(Object o);
-    List<Budget> getBudgetsByUser(User user);
+    List<Account> getBudgetsByUser(User user);
     List<Transaction> getTransactionsByUser(User user, Date date);
     List<TransactionCategory> findTransactionCategory(String key, User user);
-    BudgetPoint getBudgetPoint(Budget budget, Date date, PointScale scale);
-    List<BudgetPoint> getBudgetPoints(Date from, Date to, Budget budget, PointScale scale);
-    List<Transaction> getTransactionsByBudget(Budget budget, Date date);
+    BudgetPoint getBudgetPoint(Account account, Date date, PointScale scale);
+    List<BudgetPoint> getBudgetPoints(Date from, Date to, Account account, PointScale scale);
+    List<Transaction> getTransactionsByBudget(Account account, Date date);
     List<Task> getTasksByParent(User user, Object parent, Object status);
     List<Task> getTaskByDoer(User user, TaskStatus progressing);
     void remove(Object o);
@@ -56,4 +56,7 @@ public interface dbDAO {
     List<Counterparty> findCounterparty(User user, String key);
     Counterparty getCounterpartyByName(String name, User user);
     List<Transaction> getLimitTransactionsByUser(User user, int limit);
+    PointRoot getPointRoot(int parentId, Account account);
+    List<PointRoot> getPointRoots(Account account, Date date);
+    boolean removePointRoot(int parentId, Account account, Date date);
 }

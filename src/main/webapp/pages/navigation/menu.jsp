@@ -6,7 +6,7 @@
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <html>
@@ -30,8 +30,8 @@
 <%--        <div class="menu-item">--%>
 <%--            <fmt:message key="menu.messages"/>--%>
 <%--        </div>--%>
-<%--        <div class="menu-item" onclick="loadPage('${settings}')">--%>
-<%--            <fmt:message key="menu.settings"/>--%>
-<%--        </div>--%>
+        <div class="menu-item" onclick="loadPage('${settings}')">
+            <fmt:message key="menu.settings"/>
+        </div>
     </div>
 </html>

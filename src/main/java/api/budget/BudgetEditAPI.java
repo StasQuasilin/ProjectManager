@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -37,47 +36,47 @@ public class BudgetEditAPI extends ServletAPI {
         if (body != null){
             System.out.println(body);
             User user = getUser(req);
-            Budget budget = dao.getObjectById(Budget.class, body.get(ID));
+            Account account = dao.getObjectById(Account.class, body.get(ID));
             boolean newBudget = false;
             boolean rename = false;
-            if (budget == null){
+            if (account == null){
                 newBudget = true;
-                budget = new Budget();
-                budget.setOwner(user);
-                budget.setCreate(Timestamp.valueOf(LocalDateTime.now()));
-                budget.setBudgetSize(BudgetSize.floated);
+                account = new Account();
+                account.setOwner(user);
+                account.setCreate(Timestamp.valueOf(LocalDateTime.now()));
+                account.setBudgetSize(BudgetSize.floated);
             }
 
             String title = String.valueOf(body.get(TITLE));
-            if (budget.getTitle() == null || !budget.getTitle().equals(title)){
-                budget.setTitle(title);
+            if (account.getTitle() == null || !account.getTitle().equals(title)){
+                account.setTitle(title);
                 rename = true;
             }
 
             float limit = Float.parseFloat(String.valueOf(body.get(LIMIT)));
-            budget.setLimit(limit);
+            account.setLimit(limit);
 
             BudgetType budgetType = BudgetType.valueOf(String.valueOf(body.get(TYPE)));
-            budget.setBudgetType(budgetType);
+            account.setBudgetType(budgetType);
 
-            budget.setCurrency(String.valueOf(body.get(CURRENCY)));
+            account.setCurrency(dao.getObjectById(Currency.class, body.get(CURRENCY)));
 
             write(resp, SUCCESS);
-            dao.save(budget);
-            updateUtil.onSave(budget);
+            dao.save(account);
+            updateUtil.onSave(account);
 
             float amount = Float.parseFloat(String.valueOf(body.get(AMOUNT)));
-            if (budget.getBudgetSum() != amount){
-                float d = amount - budget.getBudgetSum();
+            if (account.getBudgetSum() != amount){
+                float d = amount - account.getBudgetSum();
                 Transaction transaction = new Transaction();
-                transaction.setBudget(budget);
-                transaction.setSum(d);
-                Date date = Date.valueOf(LocalDate.now());
-                transaction.setDate(date);
+                transaction.setAccount(account);
+                transaction.setAmount(d);
+                Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+                transaction.setDateTime(timestamp);
 
                 transaction.setType(d > 0 ? TransactionType.income : TransactionType.outcome);
                 transaction.setOwner(user);
-                transaction.setCurrency(dao.getObjectById(Currency.class, budget.getCurrency()));
+                transaction.setCurrency(dao.getObjectById(Currency.class, account.getCurrency()));
                 UserSettings settings = UserSettingsUtil.getUserSettings(user);
 
                 if (newBudget){
@@ -88,7 +87,7 @@ public class BudgetEditAPI extends ServletAPI {
 
                 dao.save(transaction);
                 updateUtil.onSave(transaction);
-                budgetCalculator.calculate(budget, date);
+                budgetCalculator.calculatePointRoot(transaction);
 
             }
 

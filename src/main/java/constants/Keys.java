@@ -54,6 +54,7 @@ public interface Keys {
     String USER = "user";
     String ID = "id";
     String ACCOUNT = "account";
+    String SECONDARY = "secondary";
     String ACCOUNTS = "accounts";
     String CREATED = "created";
     String CURRENCY = "currency";

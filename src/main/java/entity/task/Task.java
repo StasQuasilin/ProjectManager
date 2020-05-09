@@ -1,7 +1,7 @@
 package entity.task;
 
 import constants.Keys;
-import entity.budget.Budget;
+import entity.budget.Account;
 import entity.project.iTask;
 import entity.user.User;
 import org.json.simple.JSONObject;
@@ -24,7 +24,7 @@ public class Task extends iTask implements Comparable<Task>, Keys {
     private Task parent;
     private String title;
     private float cost;
-    private Budget budget;
+    private Account account;
     private User owner;
     private User doer;
     private String description;
@@ -156,11 +156,11 @@ public class Task extends iTask implements Comparable<Task>, Keys {
 
     @OneToOne
     @JoinColumn(name = BUDGET)
-    public Budget getBudget() {
-        return budget;
+    public Account getAccount() {
+        return account;
     }
-    public void setBudget(Budget budget) {
-        this.budget = budget;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Override

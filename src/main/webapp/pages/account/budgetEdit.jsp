@@ -15,7 +15,7 @@
         data:{
             api:{},
             types:[],
-            budget:{
+            account:{
                 id:-1,
                 title:'',
                 type:-1,
@@ -27,7 +27,7 @@
         },
         methods:{
             save:function(){
-                PostApi(this.api.save, this.budget, function(a){
+                PostApi(this.api.save, this.account, function(a){
                     if (a.status === 'success'){
                         closeModal();
                     }
@@ -46,15 +46,15 @@
     edit.currency.push(${c.currency.toJson()})
     </c:forEach>
     <c:choose>
-    <c:when test="${not empty budget}">
-    edit.budget = ${budget.toJson()}
+    <c:when test="${not empty account}">
+    edit.account = ${account.toJson()}
     </c:when>
     <c:otherwise>
-    edit.budget.type = edit.types[0].id;
+    edit.account.type = edit.types[0].id;
     // edit.currency.sort(function (a, b) {
     //     return a.main - b.main;
     // })
-    edit.budget.currency = edit.currency[0].id;
+    edit.account.currency = edit.currency[0].id;
     </c:otherwise>
     </c:choose>
 
@@ -64,23 +64,23 @@
     <tr>
         <td colspan="2">
             <label for="name">
-                <fmt:message key="budget.name"/>
+                <fmt:message key="account.name"/>
             </label>
         </td>
     </tr>
     <tr>
         <td colspan="2">
-            <input id="name" v-model="budget.title" autocomplete="off">
+            <input id="name" v-model="account.title" autocomplete="off">
         </td>
     </tr>
     <tr>
         <td>
             <label for="type">
-                <fmt:message key="budget.type"/>
+                <fmt:message key="account.type"/>
             </label>
         </td>
         <td>
-            <select id="type" v-model="budget.type">
+            <select id="type" v-model="account.type">
                 <option v-for="t in types" :value="t.id">
                     {{t.name}}
                 </option>
@@ -90,11 +90,11 @@
     <tr>
         <td>
             <label for="sum">
-                <fmt:message key="budget.sum"/>
+                <fmt:message key="account.sum"/>
             </label>
         </td>
         <td>
-            <input id="sum" v-model="budget.amount " autocomplete="off">
+            <input id="sum" v-model="account.amount " autocomplete="off">
         </td>
     </tr>
     <tr>
@@ -104,21 +104,26 @@
             </label>
         </td>
         <td>
-            <select id="currency" v-model="budget.currency">
+            <select id="currency" v-model="account.currency">
                 <option v-for="c in currency" :value="c.id">
                     {{c.name}}
                 </option>
             </select>
         </td>
     </tr>
-    <tr>
+    <tr v-if="account.type === 'card' || account.type === 'credit'">
         <td>
             <label for="limit">
-                <fmt:message key="budget.limit"/>
+                <fmt:message key="account.limit"/>
             </label>
         </td>
         <td>
-            <input id="limit" v-model="budget.limit" autocomplete="off">
+            <input id="limit" v-model="account.limit" autocomplete="off">
+        </td>
+    </tr>
+    <tr v-else-if="account.type === 'deposit'">
+        <td colspan="2">
+            Deposit settings
         </td>
     </tr>
     <tr>

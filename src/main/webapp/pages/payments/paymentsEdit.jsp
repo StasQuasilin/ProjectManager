@@ -13,10 +13,10 @@ edit.types.push({
 });
 edit.payment.type='${type}';
 </c:forEach>
-<c:forEach items="${budgets}" var="budget">
+<c:forEach items="${budgets}" var="account">
 edit.budgets.push({
-  id:${budget.id},
-  name:'${budget.title}'
+  id:${account.id},
+  name:'${account.title}'
 });
 </c:forEach>
 </script>
@@ -67,14 +67,14 @@ edit.budgets.push({
     </tr>
     <tr>
       <td>
-        <label for="budget">
-          <fmt:message key="payment.edit.budget"/>
+        <label for="account">
+          <fmt:message key="payment.edit.account"/>
         </label>
       </td>
       <td>
-        <select id="budget" style="width: 100%">
-          <option v-for="budget in budgets" :value="budget.id">
-            {{budget.name}}
+        <select id="account" style="width: 100%">
+          <option v-for="account in budgets" :value="account.id">
+            {{account.name}}
           </option>
         </select>
       </td>

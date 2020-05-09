@@ -1,6 +1,6 @@
 package utils;
 
-import entity.budget.Budget;
+import entity.budget.Account;
 import entity.budget.BudgetArticle;
 import entity.budget.BudgetPoint;
 import services.hibernate.DateContainers.LT;
@@ -16,13 +16,13 @@ import java.time.LocalDate;
 public class BudgetPointUtil {
     private static final Hibernator hibernator = Hibernator.getInstance();
 
-    public static BudgetPoint getPoint(Budget budget, Timestamp timestamp){
+    public static BudgetPoint getPoint(Account account, Timestamp timestamp){
         LocalDate date = timestamp.toLocalDateTime().toLocalDate();
         Date targetDate = Date.valueOf(LocalDate.of(date.getYear(), date.getMonth(), 1));
         BudgetPoint point = hibernator.get(BudgetPoint.class, "date", targetDate);
         if (point == null) {
             point = new BudgetPoint();
-            point.setBudget(budget);
+            point.setAccount(account);
             point.setDate(targetDate);
 
             BudgetPoint prevPoint = hibernator.get(BudgetPoint.class, "date", new LT(targetDate));
@@ -33,7 +33,7 @@ public class BudgetPointUtil {
                 }
                 point.setQuantity(quantity);
             } else {
-                point.setQuantity(budget.getBudgetSum());
+                point.setQuantity(account.getBudgetSum());
             }
             hibernator.save(point);
         }

@@ -1,6 +1,5 @@
 package entity.transactions;
 
-import entity.budget.Budget;
 import entity.budget.Currency;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
@@ -14,11 +13,9 @@ import static constants.Keys.*;
 public class TransactionDetail extends JsonAble {
     private int id;
     private Transaction transaction;
-    private TransactionCategory category;
-    private Budget account;
+    private String title;
     private float sum;
-    private float rate = 1;
-    private Currency currency;
+    private String comment;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,22 +35,13 @@ public class TransactionDetail extends JsonAble {
         this.transaction = transaction;
     }
 
-    @OneToOne
-    @JoinColumn(name = "_category")
-    public TransactionCategory getCategory() {
-        return category;
+    @Basic
+    @Column(name = "title")
+    public String getTitle() {
+        return title;
     }
-    public void setCategory(TransactionCategory title) {
-        this.category = title;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "account")
-    public Budget getAccount() {
-        return account;
-    }
-    public void setAccount(Budget account) {
-        this.account = account;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Basic
@@ -66,32 +54,21 @@ public class TransactionDetail extends JsonAble {
     }
 
     @Basic
-    @Column(name = "rate")
-    public float getRate() {
-        return rate;
+    @Column(name = "comment")
+    public String getComment() {
+        return comment;
     }
-    public void setRate(float rate) {
-        this.rate = rate;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "currency")
-    public Currency getCurrency() {
-        return currency;
-    }
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
-        object.put(CATEGORY, category.toJson());
-        object.put(ACCOUNT, account.toJson());
+        object.put(TITLE, title);
         object.put(SUM, sum);
-        object.put(RATE, rate);
-        object.put(CURRENCY, currency.toJson());
+        object.put(COMMENT, comment);
         return object;
     }
 }

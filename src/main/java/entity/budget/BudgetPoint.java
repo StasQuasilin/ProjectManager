@@ -1,7 +1,7 @@
 package entity.budget;
 
 import constants.Keys;
-import constants.Tables;
+import constants.TableNames;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -10,10 +10,10 @@ import java.sql.Date;
  * Created by szpt_user045 on 27.05.2019.
  */
 @Entity
-@Table(name = Tables.BUDGET_POINTS)
+@Table(name = TableNames.BUDGET_POINTS)
 public class BudgetPoint implements Keys {
     private long id;
-    private Budget budget;
+    private Account account;
     private PointScale scale;
     private Date date;
     private float quantity;
@@ -29,11 +29,11 @@ public class BudgetPoint implements Keys {
 
     @OneToOne
     @JoinColumn(name = BUDGET)
-    public Budget getBudget() {
-        return budget;
+    public Account getAccount() {
+        return account;
     }
-    public void setBudget(Budget budget) {
-        this.budget = budget;
+    public void setAccount(Account account) {
+        this.account = account;
     }
 
     @Enumerated(EnumType.STRING)

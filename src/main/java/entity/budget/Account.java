@@ -12,8 +12,8 @@ import java.sql.Timestamp;
  * Created by szpt_user045 on 25.02.2019.
  */
 @Entity
-@Table(name = "budgets")
-public class Budget extends JsonAble implements Keys {
+@Table(name = "accounts")
+public class Account extends JsonAble implements Keys {
 
     private int id;
     private String title;
@@ -21,7 +21,7 @@ public class Budget extends JsonAble implements Keys {
     private BudgetType budgetType;
     private float budgetSum;
     private float limit;
-    private String currency;
+    private Currency currency;
     private User owner;
     private Timestamp create;
     private boolean isPublic;
@@ -80,12 +80,12 @@ public class Budget extends JsonAble implements Keys {
         this.limit = limit;
     }
 
-    @Basic
-    @Column(name = CURRENCY)
-    public String getCurrency() {
+    @OneToOne
+    @JoinColumn(name = CURRENCY)
+    public Currency getCurrency() {
         return currency;
     }
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 
@@ -124,7 +124,7 @@ public class Budget extends JsonAble implements Keys {
         object.put(LIMIT, limit);
         object.put(AMOUNT, budgetSum);
         object.put(TYPE, budgetType.toString());
-        object.put(CURRENCY, currency);
+        object.put(CURRENCY, currency.shortJson());
 
         return object;
     }

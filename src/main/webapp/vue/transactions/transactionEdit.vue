@@ -10,7 +10,7 @@ var edit = new Vue({
         currencyList:[],
         transaction:{
             type:'',
-            date:new Date().toISOString().substring(0, 10),
+            date:new Date().toISOString(),
             sum:0,
             rate:1,
             currency:'',
@@ -18,25 +18,32 @@ var edit = new Vue({
                 id:-1,
                 name:''
             },
-            budget:{
+            account:{
                 id:-1
             },
-            transferTo:{
+            secondary:{
                 id:-1
             },
             counterparty:{
                 id:-1,
                 name:''
             },
+            details:[],
             comment:''
         },
         locale:'uk',
         props:{},
         counterpartProps:{},
         addCounterparty:false,
-        addNote:false
+        addNote:false,
+        addDetails:false,
+        showDetails:false
     },
     methods:{
+        closeDetails:function(){
+            this.addDetails = false;
+            this.transaction.details = [];
+        },
         setCategory:function(category){
             this.transaction.category = category;
         },
@@ -45,7 +52,8 @@ var edit = new Vue({
         },
         save:function(){
             let data = Object.assign({}, this.transaction);
-            data.budget = data.budget.id;
+
+            data.account = data.account.id;
             if (!data.id){
                 data.id = -1;
             }
@@ -55,9 +63,11 @@ var edit = new Vue({
             if (data.type !== 'transfer'){
                 delete data.transferTo;
             } else {
-                data.transferTo = data.transferTo.id;
+                data.secondary = data.secondary.id;
                 delete data.category;
+                delete data.details;
             }
+            console.log(data);
             PostApi(this.api.save, data, function(a){
                 console.log(a);
                 if (a.status === 'success'){

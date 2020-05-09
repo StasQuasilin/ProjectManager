@@ -19,7 +19,8 @@
         </button>
     </div>
     <link rel="stylesheet" href="${context}/css/transactions/transactions.css">
-    <script src="${context}/vue/templates/transactionItem.vue"></script>
+    <script src="${context}/vue/templates/paymentItem.vue"></script>
+    <script src="${context}/vue/templates/transferItem.vue"></script>
     <script src="${context}/vue/templates/list.vue"></script>
     <script src="${context}/vue/transactions/fastTransactions.vue"></script>
     <script src="${context}/vue/transactions/transactionView.vue"></script>
@@ -59,12 +60,10 @@
                         </span>
                         <div style="padding-left: 8pt">
                             <div class="spacer" >
-                                <template v-for="t in getItemsByDate(date)">
-                                    <item-view v-if="t.type=== 'income' || t.type === 'outcome'" v-on:click="edit(t)" :item="t" :edit="edit"></item-view>
-                                    <div v-else-if="t.children">
-                                        {{t.account.title}} --> {{t.children.account.title}} {{t.sum}} {{t.currency.id}}
-                                    </div>
-                                </template>
+                                <div v-for="t in getItemsByDate(date)" v-on:click="edit(t)">
+                                    <payment-view v-if="t.type=== 'income' || t.type === 'outcome'" :item="t" :edit="edit"></payment-view>
+                                    <transfer-view v-if="t.type === 'transfer'" :item="t">{{t}}</transfer-view>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -79,7 +78,7 @@
         </tr>
         <tr>
             <td rowspan="2" style="vertical-align: top">
-                <jsp:include page="../budget/buyList.jsp"/>
+                <jsp:include page="../account/buyList.jsp"/>
             </td>
         </tr>
         <tr>

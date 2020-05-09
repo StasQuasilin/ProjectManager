@@ -21,8 +21,8 @@
         name:'<fmt:message key="transaction.${type}"/>'
     });
     </c:forEach>
-    <c:forEach items="${accounts}" var="budget">
-    edit.budgets.push(${budget.toJson()});
+    <c:forEach items="${accounts}" var="account">
+    edit.budgets.push(${account.toJson()});
     </c:forEach>
     <c:choose>
     <c:when test="${not empty transaction}">
@@ -42,7 +42,7 @@
     </c:when>
     <c:otherwise>
     edit.transaction.type = edit.types[0].id;
-    edit.transaction.budget = edit.budgets[0];
+    edit.transaction.account = edit.budgets[0];
     </c:otherwise>
     </c:choose>
     <c:forEach items="${currency}" var="c">
@@ -69,7 +69,7 @@
     <table id="editor">
         <tr>
             <td rowspan="2">
-                <span>
+                <div>
                     <v-date-picker
                             :no-title="true"
                             class="date-picker"
@@ -77,7 +77,7 @@
                             :first-day-of-week="1"
                             v-model="transaction.date">
                     </v-date-picker>
-                </span>
+                </div>
             </td>
             <td style="vertical-align: top">
                 <div>
@@ -90,6 +90,7 @@
                         </button>
                     </template>
                 </div>
+<%--                TRANSACTIONS--%>
                 <table v-if="transaction.type === 'income' || transaction.type === 'outcome'">
                     <tr>
                         <td>
@@ -114,13 +115,37 @@
                             </div>
                         </td>
                     </tr>
-                    <tr v-if="transaction.currency !== transaction.budget.currency">
+                    <tr>
+                        <td v-if="!addDetails" colspan="2" style="text-align: center">
+                            <span class="mini-button" v-on:click="addDetails = true">
+<%--                                <fmt:message key="transaction.details.add"/>--%>
+                                Add details
+                            </span>
+                        </td>
+                        <td v-else>
+                            <div>
+                                <span>
+<%--                                <fmt:message key="transaction.details"/>--%>
+                                    Details
+                                </span>
+                                <span class="mini-button" v-on:click="closeDetails()">
+                                    &times;
+                                </span>
+                            </div>
+                            <div>
+                                <div v-for="detail in transaction.details">
+                                    {{detail}}
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr v-if="transaction.currency !== transaction.account.currency.id">
                         <td colspan="2">
                             <label for="rate">
                                 <fmt:message key="currency.rate"/>
                             </label>
                             <input id="rate" v-model="transaction.rate" autocomplete="off" style="width: 7em">
-                            {{(transaction.sum * transaction.rate).toLocaleString()}} {{transaction.budget.currency}}
+                            {{(transaction.sum * transaction.rate).toLocaleString()}} {{transaction.account.currency.id}}
                         </td>
                     </tr>
                     <tr>
@@ -135,14 +160,14 @@
                     </tr>
                     <tr>
                         <td>
-                            <label for="budget">
-                                <fmt:message key="payment.edit.budget"/>
+                            <label for="account">
+                                <fmt:message key="payment.edit.account"/>
                             </label>
                         </td>
                         <td>
-                            <select id="budget" v-model="transaction.budget" style="width: 100%">
-                                <option v-for="budget in budgets" :value="budget">
-                                    {{budget.title}} ( {{budget.amount.toLocaleString()}} {{budget.currency}} )
+                            <select id="account" v-model="transaction.account" style="width: 100%">
+                                <option v-for="account in budgets" :value="account">
+                                    {{account.title}} ( {{account.amount.toLocaleString()}} {{account.currency.id}} )
                                 </option>
                             </select>
                         </td>
@@ -185,64 +210,69 @@
                         </td>
                     </tr>
                 </table>
-                <div v-else-if="transaction.type === 'transfer'">
-                    <table>
-                        <tr>
-                            <td>
-                                <label for="from">
-                                    <fmt:message key="transfer.from"/>
-                                </label>
-                            </td>
-                            <td>
-                                <select id="from" v-model="transaction.budget">
-                                    <option v-for="acc in budgets" :value="acc">
-                                        {{acc.title}}
-                                    </option>
-                                </select>
-                                -{{transaction.sum}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="to">
-                                    <fmt:message key="transfer.to"/>
-                                </label>
-                            </td>
-                            <td>
-                                <select id="to" v-model="transaction.transferTo">
-                                    <option v-for="acc in budgets" :value="acc">
-                                        {{acc.title}}
-                                    </option>
-                                </select>
-                                +{{transaction.sum}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <label for="transferSum">
-                                    <fmt:message key="payment.edit.sum"/>
-                                </label>
-                            </td>
-                            <td>
-                                <input id="transferSum" v-model="transaction.sum" autocomplete="off">
-                            </td>
-                        </tr>
-                        <tr v-if="transaction.budget.currency !== transaction.transferTo.currency">
-                            <td>
-                                RARE
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align: center">
-                                <span class="mini-button" v-if="!addNote" v-on:click="addNote = true">
-                                    <fmt:message key="transaction.note.add"/>
-                                </span>
-                                <textarea v-else onfocus="this.select()" class="comment-field"
-                                    v-model="transaction.comment"></textarea>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+<%--                TRANSFERS--%>
+                <table v-else-if="transaction.type === 'transfer'">
+                    <tr>
+                        <td>
+                            <label for="from">
+                                <fmt:message key="transfer.from"/>
+                            </label>
+                        </td>
+                        <td>
+                            <select id="from" v-model="transaction.secondary">
+                                <option v-for="acc in budgets" :value="acc">
+                                    {{acc.title}} {{acc.currency.sign}}
+                                </option>
+                            </select>
+                            -{{transaction.sum}}
+                        </td>
+                    </tr>
+<%--                    <tr v-if="transaction.account.currency.id !== transaction.transferTo.currency.id">--%>
+<%--                        <td>--%>
+<%--                            <label for="rate">--%>
+<%--                                <fmt:message key="currency.rate"/>--%>
+<%--                            </label>--%>
+<%--                        </td>--%>
+<%--                        <td>--%>
+<%--                            <input id="rate" v-model="transaction.rate" autocomplete="off">--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
+                    <tr>
+                        <td>
+                            <label for="to">
+                                <fmt:message key="transfer.to"/>
+                            </label>
+                        </td>
+                        <td>
+                            <select id="to" v-model="transaction.account">
+                                <option v-for="acc in budgets" :value="acc">
+                                    {{acc.title}} {{acc.currency.sign}}
+                                </option>
+                            </select>
+                            +{{transaction.sum}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="transferSum">
+                                <fmt:message key="payment.edit.sum"/>
+                            </label>
+                        </td>
+                        <td>
+                            <input id="transferSum" v-model="transaction.sum" autocomplete="off" onfocus="this.select()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center">
+                            <span class="mini-button" v-if="!addNote" v-on:click="addNote = true">
+                                <fmt:message key="transaction.note.add"/>
+                            </span>
+                            <textarea v-else onfocus="this.select()" class="comment-field"
+                                v-model="transaction.comment"></textarea>
+                        </td>
+                    </tr>
+                </table>
+<%--                DEBT--%>
                 <div v-else>
                     DEBT
                 </div>

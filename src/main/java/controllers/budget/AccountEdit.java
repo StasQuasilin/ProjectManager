@@ -3,7 +3,7 @@ package controllers.budget;
 import constants.API;
 import constants.Branches;
 import controllers.IModal;
-import entity.budget.Budget;
+import entity.budget.Account;
 import entity.budget.BudgetSize;
 import entity.budget.BudgetType;
 import org.json.simple.JSONObject;
@@ -18,16 +18,16 @@ import java.io.IOException;
  * Created by szpt_user045 on 27.02.2020.
  */
 @WebServlet(Branches.ACCOUNT_EDIT)
-public class BudgetEdit extends IModal {
+public class AccountEdit extends IModal {
     private static final String _TITLE = "title.budget.edit";
-    private static final String _CONTENT = "/pages/budget/budgetEdit.jsp";
+    private static final String _CONTENT = "/pages/account/budgetEdit.jsp";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);
         if (body != null){
-            Budget budget = dao.getObjectById(Budget.class, body.get(ID));
-            req.setAttribute(BUDGET, budget);
+            Account account = dao.getObjectById(Account.class, body.get(ID));
+            req.setAttribute(BUDGET, account);
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);

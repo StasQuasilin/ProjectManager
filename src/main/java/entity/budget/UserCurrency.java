@@ -1,6 +1,6 @@
 package entity.budget;
 
-import constants.Tables;
+import constants.TableNames;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 import static constants.Keys.*;
 
 @Entity
-@Table(name = Tables.USER_CURRENCY)
+@Table(name = TableNames.USER_CURRENCY)
 public class UserCurrency extends JsonAble {
     private int id;
     private User user;

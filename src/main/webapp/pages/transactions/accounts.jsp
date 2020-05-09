@@ -36,10 +36,13 @@
                 <div style="height: 100%; overflow-y: scroll">
                     <div v-for="item in items" v-on:click="edit(item)" style="width: 100%; border-bottom: dotted gray 1px">
                         <span>
+                            {{item.type}}
+                        </span>
+                        <span>
                             {{item.title}}:
                         </span>
                         <span style="float: right">
-                            {{(item.limit+item.amount).toLocaleString()}} {{item.currency}}
+                            {{(item.limit+item.amount).toLocaleString()}} {{item.currency.sign}}
                         </span>
                     </div>
                 </div>

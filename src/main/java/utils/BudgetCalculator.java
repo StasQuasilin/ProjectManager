@@ -1,8 +1,9 @@
 package utils;
 
 import api.socket.UpdateUtil;
-import entity.budget.Budget;
+import entity.budget.Account;
 import entity.budget.BudgetPoint;
+import entity.budget.PointRoot;
 import entity.budget.PointScale;
 import entity.transactions.Transaction;
 import services.hibernate.dbDAO;
@@ -20,35 +21,59 @@ public class BudgetCalculator {
     dbDAO dao = dbDAOService.getDao();
     private final UpdateUtil updateUtil = new UpdateUtil();
 
-    public void calculate(Budget budget, Date date) {
-        BudgetPoint budgetPoint = dao.getBudgetPoint(budget, date, PointScale.day);
+    public void calculatePointRoot(int parentId, Date date, Account account, float amount){
+        PointRoot pointRoot = dao.getPointRoot(parentId, account);
+        if (pointRoot == null){
+            pointRoot = new PointRoot();
+            pointRoot.setParentId(parentId);
+        }
+
+        Date otherDate = null;
+        if(pointRoot.getDate() != null && !pointRoot.getDate().equals(date)){
+            otherDate = pointRoot.getDate();
+        }
+        pointRoot.setDate(date);
+
+        pointRoot.setAccount(account);
+
+        pointRoot.setAmount(amount);
+        dao.save(pointRoot);
+
+        calculate(account, date);
+        if (otherDate != null){
+            calculate(account, otherDate);
+        }
+    }
+
+    private void calculate(Account account, Date date) {
+        BudgetPoint budgetPoint = dao.getBudgetPoint(account, date, PointScale.day);
         if (budgetPoint == null){
             budgetPoint = new BudgetPoint();
             budgetPoint.setDate(date);
-            budgetPoint.setBudget(budget);
+            budgetPoint.setAccount(account);
             budgetPoint.setScale(PointScale.day);
         }
         float amount = 0;
-        for (Transaction t : dao.getTransactionsByBudget(budget, date)){
-            amount += t.getTotalSum();
+        for (PointRoot root : dao.getPointRoots(account, date)){
+            amount += root.getAmount();
         }
         budgetPoint.setQuantity(amount);
         dao.save(budgetPoint);
 
-        calculatePointByPoint(date, budget, PointScale.week);
-        calculateBudget(budget);
+        calculatePointByPoint(date, account, PointScale.week);
+        calculateBudget(account);
     }
 
-    public void calculateBudget(Budget budget) {
+    public void calculateBudget(Account account) {
         float amount = 0;
-        for (BudgetPoint point : dao.getBudgetPoints(null, null, budget,PointScale.year)){
+        for (BudgetPoint point : dao.getBudgetPoints(null, null, account,PointScale.year)){
             amount += point.getQuantity();
         }
-        if (budget.getBudgetSum() != amount) {
-            budget.setBudgetSum(amount);
-            dao.save(budget);
+        if (account.getBudgetSum() != amount) {
+            account.setBudgetSum(amount);
+            dao.save(account);
             try {
-                updateUtil.onSave(budget);
+                updateUtil.onSave(account);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -56,27 +81,27 @@ public class BudgetCalculator {
 
     }
 
-    private void calculatePointByPoint(Date date, Budget budget, PointScale scale) {
+    private void calculatePointByPoint(Date date, Account account, PointScale scale) {
         LocalDate localDate = date.toLocalDate();
         LocalDate beginDate = getBeginDate(localDate, scale);
         LocalDate endDate = getEndDate(localDate, scale);
 
-        BudgetPoint budgetPoint = dao.getBudgetPoint(budget, Date.valueOf(beginDate), scale);
+        BudgetPoint budgetPoint = dao.getBudgetPoint(account, Date.valueOf(beginDate), scale);
         if (budgetPoint == null){
             budgetPoint = new BudgetPoint();
             budgetPoint.setDate(Date.valueOf(beginDate));
-            budgetPoint.setBudget(budget);
+            budgetPoint.setAccount(account);
             budgetPoint.setScale(scale);
         }
         float amount = 0;
-        for (BudgetPoint point : dao.getBudgetPoints(Date.valueOf(beginDate), Date.valueOf(endDate), budget, prevScale(scale))){
+        for (BudgetPoint point : dao.getBudgetPoints(Date.valueOf(beginDate), Date.valueOf(endDate), account, prevScale(scale))){
             amount += point.getQuantity();
         }
         budgetPoint.setQuantity(amount);
         dao.save(budgetPoint);
         PointScale next = nextScale(scale);
         if (next != scale){
-            calculatePointByPoint(date, budget, next);
+            calculatePointByPoint(date, account, next);
         }
     }
 
@@ -150,6 +175,21 @@ public class BudgetCalculator {
                 return PointScale.year;
             default:
                 return scale;
+        }
+    }
+
+    public void calculatePointRoot(Transaction t) {
+        if(t.getAccount() != null) {
+            calculatePointRoot(t.getId(), t.getDate(), t.getAccount(), t.getTotalSum());
+        }
+        if (t.getSecondary() != null){
+            calculatePointRoot(t.getId(), t.getDate(), t.getSecondary(), t.getTotalSum() * -1);
+        }
+    }
+
+    public void removePointRoot(int parentId, Account account, Date date) {
+        if (dao.removePointRoot(parentId, account, date)){
+            calculate(account, date);
         }
     }
 }

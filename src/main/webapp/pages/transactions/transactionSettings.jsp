@@ -19,8 +19,8 @@
         title:'<fmt:message key="${repeat}.name"/>'
     });
     </c:forEach>
-    <c:forEach items="${budgets}" var="budget">
-    edit.budgets.push(${budget.toJson()});
+    <c:forEach items="${budgets}" var="account">
+    edit.budgets.push(${account.toJson()});
     </c:forEach>
     <c:forEach items="${currency}" var="c">
     edit.currency.push(${c.toJson()});
@@ -56,12 +56,12 @@
         </tr>
         <tr>
             <td>
-                <fmt:message key="payment.edit.budget"/>
+                <fmt:message key="payment.edit.account"/>
             </td>
             <td>
                 <select>
-                    <option v-for="budget in budgets" :value="budget.id">
-                        {{budget.title}}
+                    <option v-for="account in budgets" :value="account.id">
+                        {{account.title}}
                     </option>
                 </select>
             </td>

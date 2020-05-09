@@ -1,7 +1,7 @@
 package entity.transactions;
 
 import constants.Keys;
-import constants.Tables;
+import constants.TableNames;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
@@ -12,7 +12,7 @@ import javax.persistence.*;
  * Created by szpt_user045 on 26.02.2020.
  */
 @Entity
-@Table(name = Tables.TRANSACTION_CATEGORY)
+@Table(name = TableNames.TRANSACTION_CATEGORY)
 public class TransactionCategory extends JsonAble implements Keys {
     private int id;
     private String name;
