@@ -1,0 +1,32 @@
+.transaction-list{
+    padding: 2pt;
+    height: 100%;
+    max-height: 100%;
+    overflow-y: scroll
+}
+.transaction-date{
+    font-weight: bold;
+    font-size: 10pt;
+}
+.transaction-time{
+    font-size: 10pt;
+    color: gray;
+}
+.transaction-list-item{
+    border: solid gray 1px;
+    margin-top: 2px;
+    padding: 2px;
+}
+.transaction-list-item .account{
+    font-size: 10pt;
+    color: #616161;
+}
+.transaction-list .spacer{
+    border-left: solid gray 1px;
+    padding-left: 8px;
+}
+.transaction-list .transaction-comment{
+    font-style: italic;
+    color: gray;
+    font-size: 10pt;
+}

@@ -1,0 +1,72 @@
+.calendar{
+    border-collapse: collapse;
+    border: none;
+}
+.calendar-item-container{
+    padding: 0 2pt;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+}
+.calendar-item{
+    border: solid #8f8f8f 2pt;
+    border-radius: 4pt;
+    background-color: rgb(189, 219, 162);
+    margin: 2pt 0;
+    padding: 2pt;
+    position: relative;
+    overflow: hidden;
+}
+.calendar-item-path{
+    font-size: 8pt;
+}
+.calendar-item-title{
+    font-size: 14pt;
+    font-weight: bold;
+}
+.calendar-item-menu{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    visibility: hidden;
+    background: linear-gradient(0.25turn, transparent, white);
+    padding-right: 4pt;
+}
+.calendar-item-menu-button{
+    display: inline-block;
+    background-repeat: no-repeat;
+    width: 25px;
+    height: 25px;
+    border-radius: 0 0 16pt 16pt;
+}
+.calendar-item-menu-button:hover{
+    box-shadow: 0 0 4px 2px gray;
+    background-color: white;
+}
+.calendar-item-menu-button-edit{
+    background: url('../img/buttons/edit.svg');
+    background-size: cover;
+}
+.calendar-item-menu-button-add{
+    background: url('../img/buttons/add.png');
+    background-size: cover;
+}
+.calendar-item-menu-button-remove{
+    background: url('../img/buttons/close.svg');
+    background-size: cover;
+}
+.calendar-item:hover .calendar-item-menu{
+    visibility: visible;
+}
+.calendar-time{
+    padding: 10pt 6pt;
+    border: dashed white 1pt;
+    margin: 2pt;
+}
+.calendar-time-current{
+    font-weight: bold;
+}
+.calendar-item-line{
+    width: 100%; border-bottom: dashed black 1pt; cursor: ns-resize;
+}

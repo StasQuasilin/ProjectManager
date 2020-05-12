@@ -1,0 +1,31 @@
+tag{
+    border: dotted gray 1pt;
+    border-radius: 4pt;
+    padding: 0 2pt;
+    margin: 2pt;
+    color: gray;
+    font-size: 9pt;
+}
+tag:hover{
+    box-shadow: 0 0 2pt 0 gray;
+}
+.budget-sum{
+    width: 100pt;
+    font-size: 24pt;
+    font-weight: bold;
+    text-align: right;
+}
+.budget-currency{
+    width: 45pt;
+}
+.budget-sum .arrows{
+    background-color: transparent;
+}
+.project-description-label {
+    font-size: 9pt;
+    color: gray;
+}
+.date-input {
+    width: 8em;
+    text-align: right;
+}
