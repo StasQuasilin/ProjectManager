@@ -17,7 +17,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -56,8 +55,8 @@ public class BudgetEditAPI extends ServletAPI {
             float limit = Float.parseFloat(String.valueOf(body.get(LIMIT)));
             account.setLimit(limit);
 
-            BudgetType budgetType = BudgetType.valueOf(String.valueOf(body.get(TYPE)));
-            account.setBudgetType(budgetType);
+            AccountType accountType = AccountType.valueOf(String.valueOf(body.get(TYPE)));
+            account.setAccountType(accountType);
 
             account.setCurrency(dao.getObjectById(Currency.class, body.get(CURRENCY)));
 

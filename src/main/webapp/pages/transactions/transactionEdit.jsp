@@ -79,7 +79,7 @@
                     </v-date-picker>
                 </div>
             </td>
-            <td style="vertical-align: top">
+            <td style="vertical-align: top; width: 314px">
                 <div>
                     <template v-for="t in types">
                         <b v-if="t.id == transaction.type">

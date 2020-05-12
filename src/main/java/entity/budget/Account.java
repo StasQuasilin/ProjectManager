@@ -18,7 +18,7 @@ public class Account extends JsonAble implements Keys {
     private int id;
     private String title;
     private BudgetSize budgetSize;
-    private BudgetType budgetType;
+    private AccountType accountType;
     private float budgetSum;
     private float limit;
     private Currency currency;
@@ -55,11 +55,11 @@ public class Account extends JsonAble implements Keys {
 
     @Enumerated(EnumType.STRING)
     @Column(name = TYPE)
-    public BudgetType getBudgetType() {
-        return budgetType;
+    public AccountType getAccountType() {
+        return accountType;
     }
-    public void setBudgetType(BudgetType budgetType) {
-        this.budgetType = budgetType;
+    public void setAccountType(AccountType accountType) {
+        this.accountType = accountType;
     }
 
     @Basic
@@ -123,7 +123,7 @@ public class Account extends JsonAble implements Keys {
         object.put(TITLE, title);
         object.put(LIMIT, limit);
         object.put(AMOUNT, budgetSum);
-        object.put(TYPE, budgetType.toString());
+        object.put(TYPE, accountType.toString());
         object.put(CURRENCY, currency.shortJson());
 
         return object;

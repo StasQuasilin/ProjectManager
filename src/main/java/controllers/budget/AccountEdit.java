@@ -5,7 +5,7 @@ import constants.Branches;
 import controllers.IModal;
 import entity.budget.Account;
 import entity.budget.BudgetSize;
-import entity.budget.BudgetType;
+import entity.budget.AccountType;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;
@@ -31,7 +31,7 @@ public class AccountEdit extends IModal {
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(PAGE_CONTENT, _CONTENT);
-        req.setAttribute(TYPES, BudgetType.values());
+        req.setAttribute(TYPES, AccountType.values());
         req.setAttribute(CURRENCY, dao.getUserCurrency(getUser(req)));
         req.setAttribute(SIZES, BudgetSize.values());
         req.setAttribute(SAVE, API.BUDGET_EDIT);
