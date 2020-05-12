@@ -25,6 +25,7 @@ public class API {
     public static final String TIMER_START = API + "/timer/start";
     public static final String TIMER_STOP = API + "/timer/stop";
     public static final String FIND_COUNTERPARTY = API + "/find/counterparty";
+    public static final String BUY_LIST_EDIT = API + "/buy/list/edit";
 
 
     public class INFO {

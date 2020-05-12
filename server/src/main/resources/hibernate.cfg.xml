@@ -36,5 +36,8 @@
         <mapping class="entity.task.TimeLog"/>
         <mapping class="entity.user.UserSettings"/>
         <mapping class="entity.budget.PointRoot"/>
+        <mapping class="entity.transactions.buy.list.BuyList"/>
+        <mapping class="entity.transactions.buy.list.BuyListItem"/>
+        <mapping class="entity.transactions.buy.list.BuyListMember"/>
     </session-factory>
 </hibernate-configuration>

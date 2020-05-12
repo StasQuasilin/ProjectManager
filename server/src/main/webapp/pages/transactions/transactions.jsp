@@ -25,6 +25,7 @@
     <script src="${context}/vue/transactions/fastTransactions.vue"></script>
     <script src="${context}/vue/transactions/transactionView.vue"></script>
     <script src="${context}/vue/transactions/accountsView.vue"></script>
+    <script src="${context}/vue/transactions/buyList.vue"></script>
     <script>
         transactionList.api.edit = '${edit}';
         transactionList.sort = function(){

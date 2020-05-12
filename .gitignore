@@ -25,3 +25,5 @@ server/.idea/*
 androidApp/.idea/*
 server/target/
 server/target/*
+
+server/target/classes/log4j.properties
