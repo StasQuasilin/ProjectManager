@@ -34,8 +34,6 @@ public class ParentActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityHashMap = new HashMap<>();
-        activityHashMap.put(R.id.nav_deals, new DealsActivity());
-        activityHashMap.put(R.id.nav_transport, new TransportActivity());
 
         WorkManagerUtil.stopWorker(getApplicationContext());
 
@@ -44,7 +42,7 @@ public class ParentActivity extends AppCompatActivity
         setContentView(R.layout.navigation_view);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        setView(R.id.nav_deals);
+        setView(R.layout.activity_transactions);
     }
 
     void setView(int id){
@@ -81,7 +79,7 @@ public class ParentActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = findViewById(R.id.draw_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
+        if (drawer != null && drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
@@ -107,6 +105,5 @@ public class ParentActivity extends AppCompatActivity
         Toast.makeText(getApplicationContext(), "Application stop", Toast.LENGTH_SHORT).show();
         WorkManagerUtil.runWorker(getApplicationContext());
         super.onStop();
-        
     }
 }

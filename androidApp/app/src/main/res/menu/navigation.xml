@@ -6,6 +6,6 @@
         android:orderInCategory="100"
         android:title="@string/deals"
         android:icon="@drawable/ic_launcher_foreground"
-        android:showAsAction="always"/>
+        app:showAsAction="always" />
 
 </menu>

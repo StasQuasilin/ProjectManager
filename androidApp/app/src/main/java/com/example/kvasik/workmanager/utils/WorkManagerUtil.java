@@ -2,6 +2,7 @@ package com.example.kvasik.workmanager.utils;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.kvasik.workmanager.BackgroundWorker;
 
@@ -27,7 +28,8 @@ public class WorkManagerUtil {
     }
 
     public static void stopWorker(final Context context) {
-        Log.i("WorkManagerUtil", "Stop Worker" + BackgroundWorker.TAG);
+        Toast.makeText(context, "Stop worker", Toast.LENGTH_SHORT).show();
+        Log.i("WorkManagerUtil", "Stop Worker " + BackgroundWorker.TAG);
         WorkManager.getInstance(context).cancelAllWorkByTag(BackgroundWorker.TAG);
     }
 }
