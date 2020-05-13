@@ -52,4 +52,9 @@ public class Person extends JsonAble implements Keys {
         object.put(FORENAME, forename);
         return object;
     }
+
+    @Transient
+    public String getValue() {
+        return forename + SPACE + surname;
+    }
 }

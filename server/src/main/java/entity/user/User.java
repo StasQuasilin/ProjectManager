@@ -70,4 +70,9 @@ public class User extends JsonAble implements Keys {
         object.put(PERSON, person.toJson());
         return object;
     }
+
+    @Override
+    public String toString() {
+        return person.getValue();
+    }
 }

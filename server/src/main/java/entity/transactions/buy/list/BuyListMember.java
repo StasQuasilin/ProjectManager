@@ -20,7 +20,7 @@ public class BuyListMember {
         this.id = id;
     }
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "list")
     public BuyList getList() {
         return list;
