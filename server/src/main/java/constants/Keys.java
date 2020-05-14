@@ -13,6 +13,7 @@ public interface Keys {
     String TREE = "tree";
     String CALENDAR = "calendar";
     String MEMBER = "member";
+    String MEMBERS = "members";
     String STATUS = "status";
     String DATE = "date";
     String TIMESTAMP = "timestamp";
@@ -20,6 +21,7 @@ public interface Keys {
     String PARENT = "parent";
     String PARENTS = "parents";
     String TITLE = "title";
+    String PRICE = "price";
     String TIME = "time";
     String PATH = "path";
     String AMOUNT = "amount";
@@ -53,6 +55,7 @@ public interface Keys {
     String TOKEN = "token";
     String USER = "user";
     String ID = "id";
+    String LIST = "list";
     String ACCOUNT = "account";
     String SECONDARY = "secondary";
     String ACCOUNTS = "accounts";
@@ -72,6 +75,8 @@ public interface Keys {
     String FIND_COUNTERPARTY = "findCounterparty";
     String EDIT = "edit";
     String ACCOUNT_EDIT = "accountEdit";
+    String BUY_LIST_EDIT = "buyListEdit";
+    String BUY_LIST_ITEM_EDIT = "buyListItemEdit";
     String REMOVE= "remove";
     String THEME = "theme";
     String SAVE = "save";

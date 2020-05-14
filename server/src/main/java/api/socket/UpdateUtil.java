@@ -7,8 +7,11 @@ import entity.transactions.Transaction;
 import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.task.Task;
+import entity.transactions.buy.list.BuyList;
+import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import utils.JsonAble;
 import utils.JsonPool;
 
 import java.io.IOException;
@@ -85,5 +88,20 @@ public class UpdateUtil implements Keys {
         array.add(item.toJson());
         object.put(UPDATE, array);
         handler.send(item.getTask().getOwner(), object);
+    }
+
+    public void onSave(BuyList buyList) throws IOException {
+        ISocketHandler handler = subscribeMaster.getHandler(Subscribe.buyList);
+        send(handler, buyList, buyList.getOwner());
+    }
+
+    private void send(ISocketHandler handler, JsonAble jsonAble, User user) throws IOException {
+        if (handler != null && user != null) {
+            JSONObject object = pool.getObject();
+            JSONArray array = pool.getArray();
+            array.add(jsonAble.toJson());
+            object.put(UPDATE, array);
+            handler.send(user, object);
+        }
     }
 }

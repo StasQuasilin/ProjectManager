@@ -1,12 +1,15 @@
 package entity.transactions.buy.list;
 
 import entity.user.User;
+import org.json.simple.JSONObject;
+import utils.JsonAble;
+import static constants.Keys.*;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "buy_list_member")
-public class BuyListMember {
+public class BuyListMember extends JsonAble {
     private int id;
     private BuyList list;
     private User member;
@@ -20,7 +23,7 @@ public class BuyListMember {
         this.id = id;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "list")
     public BuyList getList() {
         return list;
@@ -29,12 +32,20 @@ public class BuyListMember {
         this.list = list;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "member")
     public User getMember() {
         return member;
     }
     public void setMember(User member) {
         this.member = member;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = pool.getObject();
+        object.put(ID, id);
+        object.put(MEMBER, member.toJson());
+        return object;
     }
 }

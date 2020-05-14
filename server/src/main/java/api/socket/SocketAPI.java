@@ -9,6 +9,7 @@ import org.json.simple.parser.ParseException;
 import services.hibernate.dbDAO;
 import services.hibernate.dbDAOService;
 import utils.JsonParser;
+import utils.Util;
 
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
@@ -41,9 +42,12 @@ public class SocketAPI extends JsonParser implements Keys{
                 switch (action){
                     case SUBSCRIBE:
                         if (json.containsKey(SUBSCRIBER)){
-                            Subscribe subscribe = Subscribe.valueOf(String.valueOf(json.get(SUBSCRIBER)));
-                            User user = dao.getObjectById(User.class, json.get(USER));
-                            subscribeMaster.subscribe(subscribe, user, session);
+                            String s = String.valueOf(json.get(SUBSCRIBER));
+                            if (!Util.empty(s)) {
+                                Subscribe subscribe = Subscribe.valueOf(s);
+                                User user = dao.getObjectById(User.class, json.get(USER));
+                                subscribeMaster.subscribe(subscribe, user, session);
+                            }
                         }
                         break;
                     case UNSUBSCRIBE:

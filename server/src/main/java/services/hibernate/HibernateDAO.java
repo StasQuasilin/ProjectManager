@@ -12,6 +12,8 @@ import entity.task.TaskStatistic;
 import entity.task.TimeLog;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
+import entity.transactions.buy.list.BuyList;
+import entity.transactions.buy.list.BuyListMember;
 import entity.user.User;
 import entity.user.UserAccess;
 import entity.user.UserSettings;
@@ -248,6 +250,15 @@ public class HibernateDAO implements dbDAO, Keys {
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<BuyList> getBuyListByUser(User user) {
+        List<BuyList> list = hibernator.query(BuyList.class, OWNER, user);
+        for (BuyListMember member : hibernator.query(BuyListMember.class, MEMBER, user)){
+            list.add(member.getList());
+        }
+        return list;
     }
 
     @Override

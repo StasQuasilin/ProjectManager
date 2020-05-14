@@ -1,6 +1,7 @@
-package controllers.budget;
+package controllers.transactions;
 
 import api.socket.Subscribe;
+import constants.API;
 import constants.Branches;
 import controllers.IPage;
 
@@ -30,6 +31,8 @@ public class TransactionsList extends IPage {
         req.setAttribute(PLAN, Branches.TRANSACTION_SETTINGS);
         req.setAttribute(REMOVE, Branches.TRANSACTION_REMOVE);
         req.setAttribute(ACCOUNT_EDIT, Branches.ACCOUNT_EDIT);
+        req.setAttribute(BUY_LIST_EDIT, API.BUY_LIST_EDIT);
+        req.setAttribute(BUY_LIST_ITEM_EDIT, API.BUY_LIST_ITEM_EDIT);
         req.setAttribute(TRANSACTIONS, Subscribe.transactions);
         req.setAttribute(FAST_TRANSACTIONS, Subscribe.fast);
         req.setAttribute(ACCOUNTS, Subscribe.accounts);

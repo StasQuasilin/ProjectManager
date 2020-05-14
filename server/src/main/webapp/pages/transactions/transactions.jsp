@@ -42,13 +42,20 @@
                 return a.title.localeCompare(b.title);
             })
         }
-        accounts.api.edit = '${accountEdit}'
+        accounts.api.edit = '${accountEdit}';
+        buyList.api.edit = '${buyListEdit}';
+
         subscriber.subscribe('${transactions}', transactionList.handle);
         subscriber.unSubscribers.push('${transactions}');
+
         subscriber.subscribe('${fastTransactions}', fastTransactions.handle);
         subscriber.unSubscribers.push('${fastTransactions}');
+
         subscriber.subscribe('${accounts}', accounts.handle);
         subscriber.unSubscribers.push('${accounts}');
+
+        subscriber.subscribe('${buy}', buyList.handle);
+        subscriber.unSubscribers.push('${buy}');
 
     </script>
     <table id="pageView" style="width: 100%; height: 100%; border-collapse: collapse" border="1">
@@ -73,12 +80,12 @@
             <td rowspan="2" style="width: 25%; vertical-align: top">
                 <jsp:include page="fastTransactions.jsp" flush="true"/>
             </td>
-            <td style="vertical-align: top">
+            <td style="vertical-align: top; height: 30%">
                 <jsp:include page="accounts.jsp"/>
             </td>
         </tr>
         <tr>
-            <td rowspan="2" style="vertical-align: top">
+            <td rowspan="2" style="vertical-align: top; height: 70%; max-height: 70%">
                 <jsp:include page="../account/buyList.jsp"/>
             </td>
         </tr>
