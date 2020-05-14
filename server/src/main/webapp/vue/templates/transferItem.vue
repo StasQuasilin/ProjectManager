@@ -24,4 +24,4 @@ var transferView = {
                 'No account' +
             '</span>' +
         '</div>'
-}
+};
