@@ -3,7 +3,7 @@ package controllers.settings;
 import constants.API;
 import constants.Branches;
 import controllers.IModal;
-import entity.budget.Currency;
+import entity.accounts.Currency;
 import entity.user.User;
 
 import javax.servlet.ServletException;

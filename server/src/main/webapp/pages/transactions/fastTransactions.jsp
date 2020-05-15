@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="${context}/css/transactions/fastTransactions.css">
     <table id="fast" style="width: 100%; height: 100%;">
         <tr>
-            <td style="text-align: center">
+            <td class="transaction-title">
                 <span>
                     <fmt:message key="title.fast.transactions"/>
                 </span>

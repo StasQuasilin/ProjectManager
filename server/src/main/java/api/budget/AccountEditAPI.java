@@ -3,7 +3,7 @@ package api.budget;
 import api.socket.UpdateUtil;
 import constants.API;
 import controllers.ServletAPI;
-import entity.budget.*;
+import entity.accounts.*;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionType;
 import entity.user.User;
@@ -17,6 +17,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
  * Created by szpt_user045 on 27.02.2020.
  */
 @WebServlet(API.BUDGET_EDIT)
-public class BudgetEditAPI extends ServletAPI {
+public class AccountEditAPI extends ServletAPI {
 
     private final UpdateUtil updateUtil = new UpdateUtil();
     private final BudgetCalculator budgetCalculator = new BudgetCalculator();
@@ -36,10 +37,10 @@ public class BudgetEditAPI extends ServletAPI {
             System.out.println(body);
             User user = getUser(req);
             Account account = dao.getObjectById(Account.class, body.get(ID));
-            boolean newBudget = false;
+            boolean newAccount = false;
             boolean rename = false;
             if (account == null){
-                newBudget = true;
+                newAccount = true;
                 account = new Account();
                 account.setOwner(user);
                 account.setCreate(Timestamp.valueOf(LocalDateTime.now()));
@@ -75,10 +76,10 @@ public class BudgetEditAPI extends ServletAPI {
 
                 transaction.setType(d > 0 ? TransactionType.income : TransactionType.outcome);
                 transaction.setOwner(user);
-                transaction.setCurrency(dao.getObjectById(Currency.class, account.getCurrency()));
+                transaction.setCurrency(account.getCurrency());
                 UserSettings settings = UserSettingsUtil.getUserSettings(user);
 
-                if (newBudget){
+                if (newAccount){
                     transaction.setCategory(settings.getOpenCategory());
                 } else {
                     transaction.setCategory(settings.getCorrectionCategory());
@@ -90,6 +91,32 @@ public class BudgetEditAPI extends ServletAPI {
 
             }
 
+            DepositSettings settings = dao.getDepositSettingsByAccount(account);
+            if (account.getAccountType() == AccountType.deposit){
+                if (settings == null){
+                    settings = new DepositSettings();
+                    settings.setAccount(account);
+                }
+                JSONObject o = (JSONObject) body.get(SETTINGS);
+                Date open = Date.valueOf(String.valueOf(o.get(OPEN)));
+                settings.setOpen(open);
+                Date close = Date.valueOf(String.valueOf(o.get(CLOSE)));
+                settings.setClose(close);
+                float bid = Float.parseFloat(String.valueOf(o.get(BID)));
+                settings.setBid(bid);
+                int payment = Integer.parseInt(String.valueOf(o.get(PAYMENT)));
+                settings.setPaymentPeriod(payment);
+                int paymentAccountId = Integer.parseInt(String.valueOf(o.get(ACCOUNT)));
+                if (paymentAccountId == 0){
+                    settings.setPaymentAccount(account);
+                } else {
+                    Account paymentAccount = dao.getObjectById(Account.class, paymentAccountId);
+                    settings.setPaymentAccount(paymentAccount);
+                }
+                dao.save(settings);
+            } else if (settings != null){
+                dao.remove(settings);
+            }
         }
     }
 }

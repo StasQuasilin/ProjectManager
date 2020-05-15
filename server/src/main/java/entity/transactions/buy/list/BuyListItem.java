@@ -1,10 +1,14 @@
 package entity.transactions.buy.list;
 
+import org.json.simple.JSONObject;
+import utils.JsonAble;
+
 import javax.persistence.*;
+import static constants.Keys.*;
 
 @Entity
 @Table(name = "buy_list_items")
-public class BuyListItem {
+public class BuyListItem extends JsonAble {
     private int id;
     private BuyList buyList;
     private String title;
@@ -44,5 +48,14 @@ public class BuyListItem {
     }
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = pool.getObject();
+        object.put(ID, id);
+        object.put(TITLE, title);
+        object.put(PRICE, price);
+        return object;
     }
 }

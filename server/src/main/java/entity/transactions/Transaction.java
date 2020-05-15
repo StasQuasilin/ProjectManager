@@ -2,9 +2,9 @@ package entity.transactions;
 
 import constants.Keys;
 import constants.TableNames;
-import entity.budget.Account;
-import entity.budget.Counterparty;
-import entity.budget.Currency;
+import entity.accounts.Account;
+import entity.accounts.Counterparty;
+import entity.accounts.Currency;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

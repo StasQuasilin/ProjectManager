@@ -56,7 +56,7 @@
             edit.setCategory(item);
         },
         field:'name'
-    }
+    };
     edit.counterpartyProps = {
         find:'${findCounterparty}',
         onPut:function(counterparty){

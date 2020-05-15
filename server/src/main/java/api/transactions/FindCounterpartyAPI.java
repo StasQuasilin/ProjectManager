@@ -3,7 +3,7 @@ package api.transactions;
 import constants.API;
 import constants.Keys;
 import controllers.ServletAPI;
-import entity.budget.Counterparty;
+import entity.accounts.Counterparty;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -14,7 +14,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 @WebServlet(API.FIND_COUNTERPARTY)
 public class FindCounterpartyAPI extends ServletAPI {

@@ -1,4 +1,4 @@
-package entity.budget;
+package entity.accounts;
 
 import javax.persistence.*;
 import java.sql.Timestamp;

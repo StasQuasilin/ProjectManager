@@ -2,7 +2,7 @@ package api.settings;
 
 import constants.API;
 import controllers.ServletAPI;
-import entity.budget.UserCurrency;
+import entity.accounts.UserCurrency;
 import org.json.simple.JSONObject;
 
 import javax.servlet.ServletException;

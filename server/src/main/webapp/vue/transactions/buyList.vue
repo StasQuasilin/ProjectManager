@@ -10,11 +10,20 @@ var buyList = new Vue({
     },
     methods:{
         editList:function (key) {
-
-            this.editableItem = 0;
-            this.items.unshift({
-                id:-1
-            })
+            if (key){
+                this.editableItem = key;
+                let item = this.items[key];
+                this.editableName = item.title;
+            } else {
+                this.editableItem = 0;
+                this.items.unshift({
+                    id:-1
+                })
+            }
+            const self = this;
+            setTimeout(function () {
+                // self.$refs.listName.select;
+            }, 50)
         },
         saveList:function(){
             if (this.editableName){
@@ -28,8 +37,17 @@ var buyList = new Vue({
                 })
             }
         },
+        addElement:function(item){
+            let add = true;
+            if (item.add){
+                add = !item.add;
+            }
+            Vue.set(item, 'add', add);
+        },
         cancelListEdit:function(){
-            this.items.splice(this.editableItem, 1);
+            if (this.editableItem === 0) {
+                this.items.splice(this.editableItem, 1);
+            }
             this.editableItem = -1;
             this.editableName = '';
         },

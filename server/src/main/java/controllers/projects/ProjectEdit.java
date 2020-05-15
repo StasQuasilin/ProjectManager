@@ -3,7 +3,7 @@ package controllers.projects;
 import constants.API;
 import constants.Branches;
 import controllers.IModal;
-import entity.budget.BudgetSize;
+import entity.accounts.BudgetSize;
 import entity.project.Project;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;

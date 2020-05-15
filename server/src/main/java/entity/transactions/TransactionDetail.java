@@ -1,6 +1,5 @@
 package entity.transactions;
 
-import entity.budget.Currency;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
 

@@ -11,11 +11,11 @@ var transferView = {
                 'No secondary' +
             '</span>' +
             '<span>' +
-                ' &#129042; ' +
+                ' &#10230; ' +
             '</span>' +
                 '{{(item.sum * -1).toLocaleString()}} {{item.currency.id}}' +
             '<span>' +
-                ' &#129042; ' +
+                ' &#10230; ' +
             '</span>' +
             '<span v-if="item.account">' +
                 '{{item.account.title}}' +

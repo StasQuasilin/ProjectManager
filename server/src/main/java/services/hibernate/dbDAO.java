@@ -1,7 +1,7 @@
 package services.hibernate;
 
 import entity.RegistrationConfirm;
-import entity.budget.*;
+import entity.accounts.*;
 import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.task.Task;
@@ -33,7 +33,7 @@ public interface dbDAO {
     List<Task> getTaskByUser(User user, TaskStatus status, Object parent, Object date);
     List<Task> getTaskByDate(User user, Date date);
     void save(Object o);
-    List<Account> getBudgetsByUser(User user);
+    List<Account> getAccountsByUser(User user);
     List<Transaction> getTransactionsByUser(User user, Date date);
     List<TransactionCategory> findTransactionCategory(String key, User user);
     BudgetPoint getBudgetPoint(Account account, Date date, PointScale scale);
@@ -61,4 +61,5 @@ public interface dbDAO {
     List<PointRoot> getPointRoots(Account account, Date date);
     boolean removePointRoot(int parentId, Account account, Date date);
     List<BuyList> getBuyListByUser(User user);
+    DepositSettings getDepositSettingsByAccount(Account account);
 }

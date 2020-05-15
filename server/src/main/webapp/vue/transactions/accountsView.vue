@@ -17,4 +17,4 @@ var accounts = new Vue({
             return total;
         }
     }
-})
+});

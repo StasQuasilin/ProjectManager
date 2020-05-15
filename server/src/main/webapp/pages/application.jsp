@@ -20,11 +20,12 @@
     <script src="${context}/js/subscriber.js"></script>
     <link rel="stylesheet" href="${context}/css/Application.css">
     <link rel="stylesheet" href="${context}/css/date-picker.css">
-
+    <link rel="shortcut icon" type="image/x-icon" href="${context}/img/icon.svg"/>
     <script src="${context}/js/Application.js"></script>
     <script src="${context}/js/core.js"></script>
     <script src="${context}/vue/templates/progressBar.vue"></script>
-    <title>PM</title>
+<%--    <title><fmt:message key="application.title"/></title>--%>
+    <title>Targeton</title>
     <script>
         Vue.component('progress-bar', bar);
         const context = '${context}';

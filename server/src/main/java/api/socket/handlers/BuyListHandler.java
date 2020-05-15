@@ -1,7 +1,6 @@
 package api.socket.handlers;
 
 import api.socket.Subscribe;
-import entity.budget.Account;
 import entity.transactions.buy.list.BuyList;
 import entity.user.User;
 import org.json.simple.JSONArray;

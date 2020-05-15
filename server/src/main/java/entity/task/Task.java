@@ -1,7 +1,7 @@
 package entity.task;
 
 import constants.Keys;
-import entity.budget.Account;
+import entity.accounts.Account;
 import entity.project.iTask;
 import entity.user.User;
 import org.json.simple.JSONObject;

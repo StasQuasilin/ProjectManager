@@ -1,7 +1,7 @@
 package api.socket.handlers;
 
 import api.socket.Subscribe;
-import entity.budget.Account;
+import entity.accounts.Account;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -21,7 +21,7 @@ public class BudjetHandlet extends ISocketHandler {
     public void onSubscribe(User user, Session session) throws IOException {
         JSONArray array = pool.getArray();
 
-        for (Account account : dao.getBudgetsByUser(user)){
+        for (Account account : dao.getAccountsByUser(user)){
             array.add(account.toJson());
         }
         JSONObject object = pool.getObject();

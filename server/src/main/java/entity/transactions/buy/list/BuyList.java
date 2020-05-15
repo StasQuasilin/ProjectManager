@@ -1,14 +1,18 @@
 package entity.transactions.buy.list;
 
 import entity.user.User;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import utils.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
+import static constants.Keys.*;
 
 @Entity
 @Table(name = "buy_list")
-public class BuyList {
+public class BuyList extends JsonAble {
     private int id;
     private String title;
     private Date date;
@@ -76,5 +80,36 @@ public class BuyList {
     }
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = pool.getObject();
+        object.put(ID, id);
+        object.put(TITLE, title);
+        object.put(ITEMS, items());
+        object.put(MEMBERS, members());
+        object.put(OWNER, owner.toJson());
+        return object;
+    }
+
+    private JSONArray members() {
+        JSONArray array = pool.getArray();
+        if (members != null) {
+            for (BuyListMember member : members) {
+                array.add(member.getMember().toJson());
+            }
+        }
+        return array;
+    }
+
+    private JSONArray items() {
+        JSONArray array = pool.getArray();
+        if (items != null) {
+            for (BuyListItem item : items) {
+                array.add(item.toJson());
+            }
+        }
+        return array;
     }
 }

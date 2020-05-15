@@ -1,8 +1,8 @@
 package utils;
 
-import entity.budget.Account;
-import entity.budget.BudgetArticle;
-import entity.budget.BudgetPoint;
+import entity.accounts.Account;
+import entity.accounts.BudgetArticle;
+import entity.accounts.BudgetPoint;
 import services.hibernate.DateContainers.LT;
 import services.hibernate.Hibernator;
 

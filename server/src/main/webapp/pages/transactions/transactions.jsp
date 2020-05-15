@@ -36,12 +36,12 @@
                 }
                 return sort;
             })
-        }
+        };
         accounts.sort = function(){
             accounts.items.sort(function (a, b) {
                 return a.title.localeCompare(b.title);
             })
-        }
+        };
         accounts.api.edit = '${accountEdit}';
         buyList.api.edit = '${buyListEdit}';
 
@@ -80,12 +80,12 @@
             <td rowspan="2" style="width: 25%; vertical-align: top">
                 <jsp:include page="fastTransactions.jsp" flush="true"/>
             </td>
-            <td style="vertical-align: top; height: 30%">
+            <td style="vertical-align: top; height: 40%">
                 <jsp:include page="accounts.jsp"/>
             </td>
         </tr>
         <tr>
-            <td rowspan="2" style="vertical-align: top; height: 70%; max-height: 70%">
+            <td rowspan="2" style="vertical-align: top; height: 60%;">
                 <jsp:include page="../account/buyList.jsp"/>
             </td>
         </tr>

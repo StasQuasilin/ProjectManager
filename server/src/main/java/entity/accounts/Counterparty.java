@@ -1,4 +1,4 @@
-package entity.budget;
+package entity.accounts;
 
 import entity.user.User;
 import org.json.simple.JSONObject;

@@ -25,8 +25,10 @@ public class BuyListEditAPI extends ServletAPI {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);
         if (body != null){
+            System.out.println(body);
             BuyList buyList = dao.getObjectById(BuyList.class, body.get(ID));
             User user = getUser(req);
+
             if(buyList == null){
                 buyList = new BuyList();
                 buyList.setOwner(user);

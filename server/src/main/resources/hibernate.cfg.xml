@@ -18,26 +18,27 @@
         <mapping class="entity.user.Person"/>
         <mapping class="entity.project.Project"/>
         <mapping class="entity.project.ProjectMember"/>
-        <mapping class="entity.budget.Account"/>
+        <mapping class="entity.accounts.Account"/>
         <mapping class="entity.transactions.Transaction"/>
         <mapping class="entity.transactions.TransactionDetail"/>
         <mapping class="entity.transactions.TransactionCategory"/>
         <mapping class="entity.transactions.TransactionSettings"/>
-        <mapping class="entity.budget.BudgetPoint"/>
-        <mapping class="entity.budget.BudgetArticle"/>
+        <mapping class="entity.accounts.BudgetPoint"/>
+        <mapping class="entity.accounts.BudgetArticle"/>
         <mapping class="entity.task.Task"/>
-        <mapping class="entity.budget.Counterparty"/>
-        <mapping class="entity.budget.Currency"/>
-        <mapping class="entity.budget.UserCurrency"/>
+        <mapping class="entity.accounts.Counterparty"/>
+        <mapping class="entity.accounts.Currency"/>
+        <mapping class="entity.accounts.UserCurrency"/>
         <mapping class="entity.TreeItem"/>
         <mapping class="entity.calendar.CalendarItem"/>
         <mapping class="entity.ActionTime"/>
         <mapping class="entity.task.TaskStatistic"/>
         <mapping class="entity.task.TimeLog"/>
         <mapping class="entity.user.UserSettings"/>
-        <mapping class="entity.budget.PointRoot"/>
+        <mapping class="entity.accounts.PointRoot"/>
         <mapping class="entity.transactions.buy.list.BuyList"/>
         <mapping class="entity.transactions.buy.list.BuyListItem"/>
         <mapping class="entity.transactions.buy.list.BuyListMember"/>
+        <mapping class="entity.accounts.DepositSettings"/>
     </session-factory>
 </hibernate-configuration>

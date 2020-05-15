@@ -1,4 +1,4 @@
-package entity.budget;
+package entity.accounts;
 
 import constants.Keys;
 import entity.user.User;
@@ -114,6 +114,23 @@ public class Account extends JsonAble implements Keys {
     }
     public void setPublic(boolean aPublic) {
         isPublic = aPublic;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.getClass() == getClass() && obj.hashCode() == hashCode();
+    }
+
+    @Override
+    public JSONObject editorJson() {
+        JSONObject jsonObject = toJson();
+        jsonObject.put(CURRENCY, currency.getId());
+        return jsonObject;
     }
 
     @Override

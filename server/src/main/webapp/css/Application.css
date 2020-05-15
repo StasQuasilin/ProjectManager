@@ -24,6 +24,18 @@ body{
 ::-webkit-scrollbar-thumb:hover {
     background: #f4b400;
 }
+select{
+    width: 100%;
+}
+.edit{
+    font-size: 10pt;
+}
+.edit input[type="number"]{
+    width: 10em;
+}
+.edit td{
+    padding: 4px 0;
+}
 .custom-data-list{
     position: absolute;
     background-color: white;

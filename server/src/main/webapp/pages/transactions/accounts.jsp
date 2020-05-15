@@ -13,7 +13,7 @@
 <html>
     <table id="accounts" style="height: 100%; width: 100%">
         <tr>
-            <td style="text-align: center">
+            <td class="transaction-title">
                 <fmt:message key="accounts.title"/>
                 <span class="add-button mini-button" v-on:click="edit">
                     + <fmt:message key="button.add"/>
@@ -34,10 +34,10 @@
         <tr>
             <td style="height: 100%">
                 <div style="height: 100%; overflow-y: scroll">
-                    <div v-for="item in items" v-on:click="edit(item)" style="width: 100%; border-bottom: dotted gray 1px">
-                        <span>
-                            {{item.type}}
-                        </span>
+                    <div v-for="item in items" v-on:click="edit(item)" style="padding: 4px 0; width: 100%; border-bottom: dotted gray 1px">
+<%--                        <span>--%>
+<%--                            {{item.type}}--%>
+<%--                        </span>--%>
                         <span>
                             {{item.title}}:
                         </span>

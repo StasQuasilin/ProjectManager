@@ -7,6 +7,7 @@ import org.json.simple.JSONObject;
  */
 public abstract class JsonAble {
     public JsonPool pool = JsonPool.getPool();
+    public JSONObject editorJson() {return toJson();}
     public JSONObject shortJson(){
         return toJson();
     }

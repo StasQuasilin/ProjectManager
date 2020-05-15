@@ -1,10 +1,10 @@
 package utils;
 
 import api.socket.UpdateUtil;
-import entity.budget.Account;
-import entity.budget.BudgetPoint;
-import entity.budget.PointRoot;
-import entity.budget.PointScale;
+import entity.accounts.Account;
+import entity.accounts.BudgetPoint;
+import entity.accounts.PointRoot;
+import entity.accounts.PointScale;
 import entity.transactions.Transaction;
 import services.hibernate.dbDAO;
 import services.hibernate.dbDAOService;

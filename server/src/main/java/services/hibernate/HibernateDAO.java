@@ -2,7 +2,7 @@ package services.hibernate;
 
 import constants.Keys;
 import entity.RegistrationConfirm;
-import entity.budget.*;
+import entity.accounts.*;
 import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.project.ProjectMember;
@@ -117,7 +117,7 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
-    public List<Account> getBudgetsByUser(User user) {
+    public List<Account> getAccountsByUser(User user) {
         return hibernator.query(Account.class, OWNER, user);
     }
 
@@ -259,6 +259,11 @@ public class HibernateDAO implements dbDAO, Keys {
             list.add(member.getList());
         }
         return list;
+    }
+
+    @Override
+    public DepositSettings getDepositSettingsByAccount(Account account) {
+        return hibernator.get(DepositSettings.class, ACCOUNT, account);
     }
 
     @Override

@@ -1,3 +1,8 @@
+.date-picker-holder{
+	background-color: aliceblue;
+	border: solid 1px;
+	padding: 4px;
+}
 .date-picker .v-btn--flat,.date-picker .v-date-picker-header__value{
 	display: inline-block;
 }

@@ -1,4 +1,4 @@
-package entity.budget;
+package entity.accounts;
 
 import constants.Keys;
 import constants.TableNames;

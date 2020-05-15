@@ -118,6 +118,10 @@ public interface Keys {
     String MAIN = "main";
     String SETTING = "setting";
     String SETTINGS = "settings";
+    String OPEN = "open";
+    String CLOSE = "close";
+    String BID = "bid";
+    String PAYMENT = "payment";
     String REPEATS = "repeats";
     String CURRENCY_SETTINGS = "currencySettings";
     String CURRENCY_EDIT = "currencyEdit";

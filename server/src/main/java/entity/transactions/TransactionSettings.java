@@ -1,7 +1,7 @@
 package entity.transactions;
 
-import entity.budget.Account;
-import entity.budget.Currency;
+import entity.accounts.Account;
+import entity.accounts.Currency;
 import entity.user.User;
 
 import javax.persistence.*;

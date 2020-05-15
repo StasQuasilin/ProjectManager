@@ -1,7 +1,6 @@
 package utils;
 
-import entity.budget.Counterparty;
-import entity.transactions.TransactionCategory;
+import entity.accounts.Counterparty;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import services.hibernate.dbDAO;

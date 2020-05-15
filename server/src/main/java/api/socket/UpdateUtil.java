@@ -2,7 +2,7 @@ package api.socket;
 
 import api.socket.handlers.ISocketHandler;
 import constants.Keys;
-import entity.budget.Account;
+import entity.accounts.Account;
 import entity.transactions.Transaction;
 import entity.calendar.CalendarItem;
 import entity.project.Project;
