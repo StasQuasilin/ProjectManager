@@ -6,18 +6,30 @@
 <html>
     <table id="buyList" style="width: 100%; height: 100%">
         <tr>
+<<<<<<< HEAD
             <td class="transaction-title">
                 <span>
                     <fmt:message key="buy.list.title"/>
                 </span>
                 <span class="mini-button" v-on:click="editList()" v-if="editableItem === -1">
+=======
+            <td style="text-align: center">
+                <span>
+                    <fmt:message key="buy.list.title"/>
+                </span>
+                <span class="mini-button" v-on:click="editList" v-if="editableItem === -1">
+>>>>>>> 52c5a1d19c9129afc96e83fc384e8c2354a91ca9
                     + <fmt:message key="button.add"/>
                 </span>
             </td>
         </tr>
         <tr>
             <td style="height: 100%; width: 100%; ">
+<<<<<<< HEAD
                 <div style="overflow-y: scroll; height: 100%">
+=======
+                <div style="border: solid 1pt; overflow-y: scroll; height: 100%">
+>>>>>>> 52c5a1d19c9129afc96e83fc384e8c2354a91ca9
                     <div v-for="(item, key) in items">
                         <div v-if="key === editableItem">
                             <div class="small-title">
@@ -27,7 +39,11 @@
                                 <label for="title">
                                     <fmt:message key="buy.list.name"/>
                                 </label>
+<<<<<<< HEAD
                                 <input ref="listName" id="title" v-model="editableName" onfocus="this.select()" autocomplete="off">
+=======
+                                <input id="title" v-model="editableName" onfocus="this.select()" autocomplete="off">
+>>>>>>> 52c5a1d19c9129afc96e83fc384e8c2354a91ca9
                             </div>
                             <div style="width: 100%; text-align: center">
                                 <span class="mini-button" v-on:click="cancelListEdit()">
@@ -38,13 +54,18 @@
                                 </span>
                             </div>
                         </div>
+<<<<<<< HEAD
                         <div v-else>
+=======
+                        <div v-else v-on:click="openItem(item)">
+>>>>>>> 52c5a1d19c9129afc96e83fc384e8c2354a91ca9
                             <span v-if="item.open">
                                 -
                             </span>
                             <span v-else>
                                 +
                             </span>
+<<<<<<< HEAD
                             <span v-on:click="openItem(item)">
                                 {{item.title}}
                             </span>
@@ -63,6 +84,14 @@
                                 </div>
                                 <div style="width: 100%; text-align: center">
                                     <span class="mini-button" v-on:click="addElement(item)">
+=======
+                            <span>
+                                {{item.title}}
+                            </span>
+                            <div v-if="item.open">
+                                <div style="width: 100%; text-align: center">
+                                    <span class="mini-button">
+>>>>>>> 52c5a1d19c9129afc96e83fc384e8c2354a91ca9
                                         <fmt:message key="add.item"/>
                                     </span>
                                 </div>

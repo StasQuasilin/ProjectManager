@@ -41,7 +41,11 @@
             accounts.items.sort(function (a, b) {
                 return a.title.localeCompare(b.title);
             })
+<<<<<<< HEAD
         };
+=======
+        }
+>>>>>>> 52c5a1d19c9129afc96e83fc384e8c2354a91ca9
         accounts.api.edit = '${accountEdit}';
         buyList.api.edit = '${buyListEdit}';
 
@@ -80,12 +84,20 @@
             <td rowspan="2" style="width: 25%; vertical-align: top">
                 <jsp:include page="fastTransactions.jsp" flush="true"/>
             </td>
+<<<<<<< HEAD
             <td style="vertical-align: top; height: 40%">
+=======
+            <td style="vertical-align: top; height: 30%">
+>>>>>>> 52c5a1d19c9129afc96e83fc384e8c2354a91ca9
                 <jsp:include page="accounts.jsp"/>
             </td>
         </tr>
         <tr>
+<<<<<<< HEAD
             <td rowspan="2" style="vertical-align: top; height: 60%;">
+=======
+            <td rowspan="2" style="vertical-align: top; height: 70%; max-height: 70%">
+>>>>>>> 52c5a1d19c9129afc96e83fc384e8c2354a91ca9
                 <jsp:include page="../account/buyList.jsp"/>
             </td>
         </tr>

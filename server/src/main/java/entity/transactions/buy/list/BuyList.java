@@ -8,6 +8,7 @@ import utils.JsonAble;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.Set;
+
 import static constants.Keys.*;
 
 @Entity
@@ -112,4 +113,6 @@ public class BuyList extends JsonAble {
         }
         return array;
     }
+
+
 }

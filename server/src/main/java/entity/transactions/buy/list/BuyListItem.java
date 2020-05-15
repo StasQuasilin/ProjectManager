@@ -2,9 +2,8 @@ package entity.transactions.buy.list;
 
 import org.json.simple.JSONObject;
 import utils.JsonAble;
-
-import javax.persistence.*;
 import static constants.Keys.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "buy_list_items")
