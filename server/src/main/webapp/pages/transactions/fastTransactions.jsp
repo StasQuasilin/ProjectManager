@@ -24,10 +24,13 @@
         </tr>
         <tr>
             <td style="height: 100%">
-                <div class="fast-container">
+                <div class="fast-container" v-if="items.length > 0">
                     <div v-for="item in items">
                         {{item}}
                     </div>
+                </div>
+                <div v-else>
+                    <fmt:message key="fast.transactions.tips"/>
                 </div>
             </td>
         </tr>
