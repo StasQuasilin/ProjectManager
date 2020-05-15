@@ -2,12 +2,10 @@ package api.transactions.buy.list;
 
 import api.socket.UpdateUtil;
 import constants.API;
-import constants.Keys;
 import controllers.ServletAPI;
 import entity.transactions.buy.list.BuyList;
-import entity.user.User;
+import entity.transactions.buy.list.BuyListItem;
 import org.json.simple.JSONObject;
-import services.answers.SuccessAnswer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,9 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
-@WebServlet(API.BUY_LIST_EDIT)
-public class BuyListEditAPI extends ServletAPI {
+@WebServlet(API.BUY_LIST_ITEM_EDIT)
+public class BuyListItemEditAPI extends ServletAPI {
 
     private final UpdateUtil updateUtil = new UpdateUtil();
 
@@ -25,19 +22,24 @@ public class BuyListEditAPI extends ServletAPI {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);
         if (body != null){
-            BuyList buyList = dao.getObjectById(BuyList.class, body.get(ID));
-            User user = getUser(req);
-            if(buyList == null){
-                buyList = new BuyList();
-                buyList.setOwner(user);
+            BuyListItem item =dao.getObjectById(BuyListItem.class, body.get(ID));
+            if (item == null){
+                item = new BuyListItem();
             }
+            BuyList list = dao.getObjectById(BuyList.class, body.get(LIST));
+            item.setBuyList(list);
 
             String title = String.valueOf(body.get(TITLE));
-            buyList.setTitle(title);
+            item.setTitle(title);
 
-            dao.save(buyList);
+            float price = Float.parseFloat(String.valueOf(body.get(PRICE)));
+            item.setPrice(price);
+
+            dao.save(item);
             write(resp, SUCCESS);
-            updateUtil.onSave(buyList);
+
+            updateUtil.onSave(list);
+
         }
     }
 }

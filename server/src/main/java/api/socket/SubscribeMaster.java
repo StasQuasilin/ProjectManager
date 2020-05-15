@@ -28,6 +28,7 @@ public class SubscribeMaster {
         addHandler(new TransactionHadler(Subscribe.transactions));
         addHandler(new TreeHandler(Subscribe.tree));
         addHandler(new KanbanHandler(Subscribe.kanban));
+        addHandler(new BuyListHandler(Subscribe.buyList));
     }
 
     private void addHandler(ISocketHandler handler){

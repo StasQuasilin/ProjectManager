@@ -4,17 +4,61 @@
 <fmt:setLocale value="${language}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-    <div id="buyList" style="height: 100%">
-        <div style="width: 100%; text-align: center">
-            <span>
-                <fmt:message key="buy.list.title"/>
-            </span>
-            <span class="mini-button" v-on:click="edit()">
-                + <fmt:message key="button.add"/>
-            </span>
-        </div>
-        <div style="height: 100%; width: 100%; border: solid 1pt">
-            Lolo
-        </div>
-    </div>
+    <table id="buyList" style="width: 100%; height: 100%">
+        <tr>
+            <td style="text-align: center">
+                <span>
+                    <fmt:message key="buy.list.title"/>
+                </span>
+                <span class="mini-button" v-on:click="editList" v-if="editableItem === -1">
+                    + <fmt:message key="button.add"/>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td style="height: 100%; width: 100%; ">
+                <div style="border: solid 1pt; overflow-y: scroll; height: 100%">
+                    <div v-for="(item, key) in items">
+                        <div v-if="key === editableItem">
+                            <div class="small-title">
+                                <fmt:message key="buy.list.create"/>
+                            </div>
+                            <div>
+                                <label for="title">
+                                    <fmt:message key="buy.list.name"/>
+                                </label>
+                                <input id="title" v-model="editableName" onfocus="this.select()" autocomplete="off">
+                            </div>
+                            <div style="width: 100%; text-align: center">
+                                <span class="mini-button" v-on:click="cancelListEdit()">
+                                    <fmt:message key="buttons.cancel"/>
+                                </span>
+                                <span class="mini-button" v-on:click="saveList()">
+                                    <fmt:message key="buttons.save"/>
+                                </span>
+                            </div>
+                        </div>
+                        <div v-else v-on:click="openItem(item)">
+                            <span v-if="item.open">
+                                -
+                            </span>
+                            <span v-else>
+                                +
+                            </span>
+                            <span>
+                                {{item.title}}
+                            </span>
+                            <div v-if="item.open">
+                                <div style="width: 100%; text-align: center">
+                                    <span class="mini-button">
+                                        <fmt:message key="add.item"/>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
 </html>

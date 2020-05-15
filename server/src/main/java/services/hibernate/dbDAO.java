@@ -10,6 +10,7 @@ import entity.task.TaskStatistic;
 import entity.task.TimeLog;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
+import entity.transactions.buy.list.BuyList;
 import entity.user.User;
 import entity.user.UserAccess;
 import entity.user.UserSettings;
@@ -59,4 +60,5 @@ public interface dbDAO {
     PointRoot getPointRoot(int parentId, Account account);
     List<PointRoot> getPointRoots(Account account, Date date);
     boolean removePointRoot(int parentId, Account account, Date date);
+    List<BuyList> getBuyListByUser(User user);
 }
