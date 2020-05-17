@@ -109,7 +109,7 @@
                             <span class="sign" v-else>
                                 -
                             </span>
-                                <input id="sum" type="number" v-model.number="transaction.sum" onfocus="this.select()" style="border: none; background: transparent; outline: none">
+                                <input id="sum" v-model.number="transaction.sum" onfocus="this.select()" style="border: none; background: transparent; outline: none">
                                 <select v-model="transaction.currency" style="width: 55px">
                                     <option v-for="c in currencyList" :value="c.id">
                                         {{c.id}}

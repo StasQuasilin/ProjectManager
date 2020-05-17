@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**
@@ -71,8 +72,8 @@ public class AccountEditAPI extends ServletAPI {
                 Transaction transaction = new Transaction();
                 transaction.setAccount(account);
                 transaction.setAmount(d);
-                Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-                transaction.setDateTime(timestamp);
+                Date date = Date.valueOf(LocalDate.now());
+                transaction.setDate(date);
 
                 transaction.setType(d > 0 ? TransactionType.income : TransactionType.outcome);
                 transaction.setOwner(user);

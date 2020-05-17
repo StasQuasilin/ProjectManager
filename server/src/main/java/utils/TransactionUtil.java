@@ -9,11 +9,11 @@ import entity.transactions.TransactionCategory;
 import entity.transactions.TransactionType;
 import entity.user.User;
 import org.json.simple.JSONObject;
-import services.hibernate.HibernateDAO;
 import services.hibernate.dbDAO;
 import services.hibernate.dbDAOService;
 
-import java.sql.Timestamp;
+import java.sql.Date;
+
 import static constants.Keys.*;
 
 public class TransactionUtil {
@@ -27,8 +27,8 @@ public class TransactionUtil {
 
         if (body.containsKey(DATE)) {
             String s = String.valueOf(body.get(DATE)).replaceAll(TZ_REGEX, SPACE);
-            Timestamp timestamp = Timestamp.valueOf(s);
-            transaction.setDateTime(timestamp);
+            Date date = Date.valueOf(s);
+            transaction.setDate(date);
         }
 
         Account account = dao.getObjectById(Account.class, body.get(ACCOUNT));

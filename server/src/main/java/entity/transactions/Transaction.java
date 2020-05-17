@@ -24,7 +24,7 @@ import java.util.Set;
 @Table(name = TableNames.TRANSACTIONS)
 public class Transaction extends JsonAble implements Keys {
     private int id;
-    private Timestamp dateTime;
+    private Date date;
     private TransactionCategory category;
     private TransactionType type;
     private Set<TransactionDetail> details;
@@ -66,24 +66,11 @@ public class Transaction extends JsonAble implements Keys {
 
     @Basic
     @Column(name = DATE)
-    public Timestamp getDateTime() {
-        return dateTime;
+    public Date getDate() {
+        return date;
     }
-    public void setDateTime(Timestamp date) {
-        this.dateTime = date;
-    }
-    @Transient
-    public Date getDate(){
-        return Date.valueOf(dateTime.toLocalDateTime().toLocalDate());
-    }
-    public void setDate(Date date){
-        LocalTime time;
-        if (dateTime == null){
-            time = LocalTime.now();
-        } else {
-            time = dateTime.toLocalDateTime().toLocalTime();
-        }
-        dateTime = Timestamp.valueOf(LocalDateTime.of(date.toLocalDate(), time));
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @OneToOne
@@ -174,7 +161,7 @@ public class Transaction extends JsonAble implements Keys {
         JSONObject object = pool.getObject();
         object.put(ID, id);
         object.put(TYPE, type.toString());
-        object.put(DATE, dateTime.toString());
+        object.put(DATE, date.toString());
         object.put(SUM, amount);
         object.put(RATE, rate);
         object.put(ACCOUNT, account.toJson());

@@ -14,7 +14,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @WebServlet(API.INSERT_BY_FAST)
@@ -31,7 +33,7 @@ public class InsertFastTransactionAPI extends ServletAPI {
             FastTransaction fast = dao.getObjectById(FastTransaction.class, body.get(ID));
             if(fast != null){
                 Transaction transaction = transactionUtil.copy(fast.getTransaction());;
-                transaction.setDateTime(Timestamp.valueOf(LocalDateTime.now()));
+                transaction.setDate(Date.valueOf(LocalDate.now()));
                 transaction.setOwner(fast.getOwner());
                 write(resp, SUCCESS);
                 dao.save(transaction);
