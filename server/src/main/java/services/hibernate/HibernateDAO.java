@@ -14,6 +14,7 @@ import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
 import entity.transactions.buy.list.BuyList;
 import entity.transactions.buy.list.BuyListMember;
+import entity.transactions.fast.transaction.FastTransaction;
 import entity.user.User;
 import entity.user.UserAccess;
 import entity.user.UserSettings;
@@ -259,6 +260,11 @@ public class HibernateDAO implements dbDAO, Keys {
             list.add(member.getList());
         }
         return list;
+    }
+
+    @Override
+    public List<FastTransaction> getFastTransactionsByUser(User user) {
+        return hibernator.query(FastTransaction.class, OWNER, user);
     }
 
     @Override

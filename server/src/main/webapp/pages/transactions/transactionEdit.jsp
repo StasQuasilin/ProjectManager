@@ -64,11 +64,14 @@
         },
         field:'name'
     }
+    <c:if test="${not empty dateSelect}">
+    edit.selectDate = ${dateSelect};
+    </c:if>
 </script>
 <html>
     <table id="editor">
         <tr>
-            <td rowspan="2">
+            <td rowspan="2" v-if="selectDate">
                 <div>
                     <v-date-picker
                             :no-title="true"
@@ -106,8 +109,8 @@
                             <span class="sign" v-else>
                                 -
                             </span>
-                                <input id="sum" v-model="transaction.sum" onfocus="this.select()" style="border: none; background: transparent; outline: none">
-                                <select v-model="transaction.currency">
+                                <input id="sum" type="number" v-model.number="transaction.sum" onfocus="this.select()" style="border: none; background: transparent; outline: none">
+                                <select v-model="transaction.currency" style="width: 55px">
                                     <option v-for="c in currencyList" :value="c.id">
                                         {{c.id}}
                                     </option>

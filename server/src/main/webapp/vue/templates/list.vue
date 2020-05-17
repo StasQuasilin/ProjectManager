@@ -20,7 +20,6 @@ var list = {
             }
         },
         handle:function (data) {
-            console.log(data);
             for (let u in data.update){
                 if (data.update.hasOwnProperty(u)){
                     let update = data.update[u];
@@ -32,6 +31,10 @@ var list = {
                     let remove = data.remove[r];
                     this.remove(remove);
                 }
+            }
+            this.sortItems();
+            if (this.limit > 0){
+                this.clean();
             }
         },
         update:function(item){
@@ -48,11 +51,8 @@ var list = {
             }
             if (!have){
                 this.items.push(item);
-                if (this.limit > 0){
-                    this.clean();
-                }
+
             }
-            this.sort();
         },
         clean:function(){
             let count = this.items.length - this.limit;
@@ -69,8 +69,12 @@ var list = {
                 }
             }
         },
-        sort:function(){
-
+        sortItems:function(){
+            this.items.sort(this.sort);
+        },
+        sort:function () {
+            return true;
         }
+
     }
 }

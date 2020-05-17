@@ -24,11 +24,12 @@ public class SubscribeMaster {
         addHandler(new MessageHandler(Subscribe.messages));
         addHandler(new ProjectHandler(Subscribe.projects));
         addHandler(new CalendarHandler(Subscribe.calendar));
-        addHandler(new BudjetHandlet(Subscribe.accounts));
+        addHandler(new AccountHandlet(Subscribe.accounts));
         addHandler(new TransactionHadler(Subscribe.transactions));
         addHandler(new TreeHandler(Subscribe.tree));
         addHandler(new KanbanHandler(Subscribe.kanban));
         addHandler(new BuyListHandler(Subscribe.buyList));
+        addHandler(new FastHandler(Subscribe.fast));
     }
 
     private void addHandler(ISocketHandler handler){

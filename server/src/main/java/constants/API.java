@@ -27,6 +27,8 @@ public class API {
     public static final String FIND_COUNTERPARTY = API + "/find/counterparty";
     public static final String BUY_LIST_EDIT = API + "/buy/list/edit";
     public static final String BUY_LIST_ITEM_EDIT = API + "/buy/list/item/edit";
+    public static final String FAST_EDIT = API + "/fast/transaction/edit";
+    public static final String INSERT_BY_FAST = API + "/insert/fast";
 
 
     public class INFO {

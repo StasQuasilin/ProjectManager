@@ -8,6 +8,7 @@ var edit = new Vue({
         types:[],
         budgets:[],
         currencyList:[],
+        selectDate:true,
         transaction:{
             type:'',
             date:new Date().toISOString(),
@@ -61,7 +62,7 @@ var edit = new Vue({
                 delete data.counterparty
             }
             if (data.type !== 'transfer'){
-                delete data.transferTo;
+                delete data.secondary;
             } else {
                 data.secondary = data.secondary.id;
                 delete data.category;

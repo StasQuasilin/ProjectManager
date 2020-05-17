@@ -25,8 +25,16 @@
         <tr>
             <td style="height: 100%">
                 <div class="fast-container" v-if="items.length > 0">
-                    <div v-for="item in items">
-                        {{item}}
+                    <div v-for="item in items" v-on:click="insert(item)" class="fast-item">
+                        <div>
+                            {{item.category.name}}: {{item.sum}} {{item.currency.id}}
+                            <span  v-if="item.counterparty">
+                                ( {{item.counterparty.name}} )
+                            </span>
+                        </div>
+                        <div>
+                            {{item.account.title}} ( {{item.counter.toLocaleString()}} )
+                        </div>
                     </div>
                 </div>
                 <div v-else>

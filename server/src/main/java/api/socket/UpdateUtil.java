@@ -8,6 +8,7 @@ import entity.calendar.CalendarItem;
 import entity.project.Project;
 import entity.task.Task;
 import entity.transactions.buy.list.BuyList;
+import entity.transactions.fast.transaction.FastTransaction;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -103,5 +104,10 @@ public class UpdateUtil implements Keys {
             object.put(UPDATE, array);
             handler.send(user, object);
         }
+    }
+
+    public void onSave(FastTransaction fast) throws IOException {
+        ISocketHandler handler = subscribeMaster.getHandler(Subscribe.fast);
+        send(handler, fast, fast.getOwner());
     }
 }

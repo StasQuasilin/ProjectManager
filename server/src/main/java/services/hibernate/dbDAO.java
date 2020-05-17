@@ -11,6 +11,7 @@ import entity.task.TimeLog;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
 import entity.transactions.buy.list.BuyList;
+import entity.transactions.fast.transaction.FastTransaction;
 import entity.user.User;
 import entity.user.UserAccess;
 import entity.user.UserSettings;
@@ -62,4 +63,5 @@ public interface dbDAO {
     boolean removePointRoot(int parentId, Account account, Date date);
     List<BuyList> getBuyListByUser(User user);
     DepositSettings getDepositSettingsByAccount(Account account);
+    List<FastTransaction> getFastTransactionsByUser(User user);
 }

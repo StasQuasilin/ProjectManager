@@ -49,6 +49,9 @@ var transactionList = new Vue({
                 return new Date(b) -  new Date(a);
             })
             return dates;
+        },
+        sort:function (a, b) {
+            return new Date(a.date) - new Date(b.date);
         }
     }
 })

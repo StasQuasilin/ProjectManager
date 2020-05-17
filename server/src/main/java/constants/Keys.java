@@ -75,11 +75,14 @@ public interface Keys {
     String FIND_COUNTERPARTY = "findCounterparty";
     String EDIT = "edit";
     String ACCOUNT_EDIT = "accountEdit";
+    String FAST_EDIT = "fastEdit";
+    String INSERT_BY_FAST = "insertByFast";
     String BUY_LIST_EDIT = "buyListEdit";
     String BUY_LIST_ITEM_EDIT = "buyListItemEdit";
     String REMOVE= "remove";
     String THEME = "theme";
     String SAVE = "save";
+    String DATE_SELECT = "dateSelect";
     String SUBSCRIBES = "subscribes";
     String FILTER = "filter";
     String SUBSCRIBER = "subscriber";
@@ -111,6 +114,7 @@ public interface Keys {
     String GET_ITEMS = "getItems";
     String IS_GROUP = "isGroup";
     String COUNTERPARTY = "counterparty";
+    String COUNTER = "counter";
     String REMOVE_TASK = "removeTask";
     String CHILDREN = "children";
     String SIGN = "sign";

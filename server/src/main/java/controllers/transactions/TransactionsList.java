@@ -31,6 +31,8 @@ public class TransactionsList extends IPage {
         req.setAttribute(PLAN, Branches.TRANSACTION_SETTINGS);
         req.setAttribute(REMOVE, Branches.TRANSACTION_REMOVE);
         req.setAttribute(ACCOUNT_EDIT, Branches.ACCOUNT_EDIT);
+        req.setAttribute(FAST_EDIT, Branches.FAST_EDIT);
+        req.setAttribute(INSERT_BY_FAST, API.INSERT_BY_FAST);
         req.setAttribute(BUY_LIST_EDIT, API.BUY_LIST_EDIT);
         req.setAttribute(BUY_LIST_ITEM_EDIT, API.BUY_LIST_ITEM_EDIT);
         req.setAttribute(TRANSACTIONS, Subscribe.transactions);

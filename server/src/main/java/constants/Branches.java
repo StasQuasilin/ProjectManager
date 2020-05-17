@@ -36,4 +36,5 @@ public interface Branches {
     String TASK_REMOVE = "/task/remove.j";
     String KANBAN_SHOW = "/kanban/show.j";
     String BUY_LIST_EDIT = "/buy/list/edit.j";
+    String FAST_EDIT = "/fast/transaction/edit.j";
 }

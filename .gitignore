@@ -27,3 +27,4 @@ server/target/
 server/target/*
 
 server/target/classes/log4j.properties
+server/ProjectManager.iml
