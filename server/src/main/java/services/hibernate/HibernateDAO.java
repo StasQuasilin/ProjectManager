@@ -20,8 +20,10 @@ import entity.user.UserAccess;
 import entity.user.UserSettings;
 import services.State;
 import services.hibernate.DateContainers.BETWEEN;
+import services.hibernate.DateContainers.LE;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -228,7 +230,10 @@ public class HibernateDAO implements dbDAO, Keys {
 
     @Override
     public List<Transaction> getLimitTransactionsByUser(User user, int limit) {
-        return hibernator.query(Transaction.class, "owner", user);
+        HashMap<String, Object> params = hibernator.getParams();
+        params.put(OWNER, user);
+        params.put(DATE, new LE(Date.valueOf(LocalDate.now().plusYears(1))));
+        return hibernator.query(Transaction.class, params, limit);
     }
 
     @Override

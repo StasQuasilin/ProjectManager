@@ -11,7 +11,7 @@ var edit = new Vue({
         selectDate:true,
         transaction:{
             type:'',
-            date:new Date().toISOString(),
+            date:new Date().toISOString().substring(0,10),
             sum:0,
             rate:1,
             currency:'',

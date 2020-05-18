@@ -74,7 +74,7 @@ public class TaskUtil {
     public static void main(String[] args) {
         Hibernator hibernator = Hibernator.getInstance();
 
-        for (Transaction transaction : hibernator.query(Transaction.class, null)){
+        for (Transaction transaction : hibernator.query(Transaction.class, null, -1)){
             TransactionDetail detail = new TransactionDetail();
 
             detail.setTransaction(transaction);

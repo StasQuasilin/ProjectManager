@@ -63,7 +63,7 @@
             edit.setCounterparty(counterparty);
         },
         field:'name'
-    }
+    };
     <c:if test="${not empty dateSelect}">
     edit.selectDate = ${dateSelect};
     </c:if>
@@ -109,7 +109,8 @@
                             <span class="sign" v-else>
                                 -
                             </span>
-                                <input id="sum" v-model.number="transaction.sum" onfocus="this.select()" style="border: none; background: transparent; outline: none">
+                                <input id="sum" v-model.number="transaction.sum" autocomplete="off"
+                                       onfocus="this.select()" style="border: none; background: transparent; outline: none">
                                 <select v-model="transaction.currency" style="width: 55px">
                                     <option v-for="c in currencyList" :value="c.id">
                                         {{c.id}}

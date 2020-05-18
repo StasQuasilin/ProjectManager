@@ -9,21 +9,30 @@ var edit = new Vue({
             title:'',
             begin:new Date().toISOString().substring(0, 10),
             end:new Date().toISOString().substring(0, 10),
-            type:'project'
-
+            type:'project',
+            cost:0
         },
-        useEndDate:false,
-        budgets:[],
-        budgetTypes:[]
+        withPeriod:true,
+        withCost:false,
+        useEndDate:true,
+        years:{},
+        months:{}
     },
     computed:{
         projectLength:function(){
-            return '--';
+            let res = {};
+            let a = new Date(this.project.begin);
+            let b = new Date(this.project.end);
+
+            res.years = b.getFullYear() - a.getFullYear();
+            res.month = (res.years * 12 + b.getMonth() - a.getMonth()) % 12;
+
+            return res;
         }
     },
     methods:{
         addMonth:function(count){
-            var end = new Date(this.project.end);
+            let end = new Date(this.project.end);
             end.setMonth(end.getMonth() + count);
             this.project.end = end.toISOString().substring(0, 10);
         },

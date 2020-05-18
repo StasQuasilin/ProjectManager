@@ -29,7 +29,7 @@ public class Task extends iTask implements Comparable<Task>, Keys {
     private User doer;
     private String description;
     private int children;
-    TaskStatistic statistic;
+    private TaskStatistic statistic;
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "task", cascade = CascadeType.ALL)
     public TaskStatistic getStatistic() {

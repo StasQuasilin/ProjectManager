@@ -28,15 +28,13 @@ public class ProjectEdit extends IModal {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JSONObject body = parseBody(req);
+        req.setAttribute(TITLE, _CREATE_TITLE);
         if (body != null) {
             if (body.containsKey(ID)){
                 req.setAttribute(PROJECT, dao.getObjectById(Project.class, body.get(ID)));
                 req.setAttribute(TITLE, _EDIT_TITLE);
-            } else {
-                req.setAttribute(TITLE, _CREATE_TITLE);
             }
         }
-
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(SAVE, API.PROJECT.SAVE);
         req.setAttribute(BUDGET_TYPES, BudgetSize.values());

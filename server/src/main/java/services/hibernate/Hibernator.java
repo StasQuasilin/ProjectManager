@@ -2,6 +2,7 @@ package services.hibernate;
 
 import constants.Keys;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import services.hibernate.DateContainers.*;
 import services.State;
 
@@ -60,7 +61,7 @@ public class Hibernator {
 
     public <T>List<T> LimitQuery(Class<T> tClass, HashMap<String, Object> parameters, int limit) {
         Session session = HibernateSessionFactory.getSession();
-        CriteriaQuery<T> query = getCriteriaQuery(session, tClass, parameters);
+        CriteriaQuery<T> query = getCriteriaQuery(session, tClass, parameters, limit);
 
         List<T> resultList = session.createQuery(query)
                 .setMaxResults(limit)
@@ -71,7 +72,7 @@ public class Hibernator {
         return resultList;
     }
 
-    private <T> CriteriaQuery<T> getCriteriaQuery(Session session, Class<T> tClass, HashMap<String, Object> parameters) {
+    private <T> CriteriaQuery<T> getCriteriaQuery(Session session, Class<T> tClass, HashMap<String, Object> parameters, int limit) {
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<T> query = criteriaBuilder.createQuery(tClass);
         Root<T> from = query.from(tClass);
@@ -127,6 +128,7 @@ public class Hibernator {
                 } else {
                     predicates[i] = criteriaBuilder.equal(objectPath, value);
                 }
+
                 i++;
             }
             query.where(predicates);
@@ -141,23 +143,31 @@ public class Hibernator {
             pool.add(parameters);
         }
     }
-
-
     public <T>List<T> query(Class<T> tClass, HashMap<String, Object> params){
+        return query(tClass, params, -1);
+    }
+    public <T>List<T> query(Class<T> tClass, HashMap<String, Object> params, int limit){
         Session session = HibernateSessionFactory.getSession();
-        CriteriaQuery<T> query = getCriteriaQuery(session, tClass, params);
-        List<T> resultList = session.createQuery(query).getResultList();
+        CriteriaQuery<T> query = getCriteriaQuery(session, tClass, params, limit);
+
+        Query<T> q = session.createQuery(query);
+        if (limit > 0) {
+            q.setMaxResults(limit);
+        }
+        List<T> resultList = q.getResultList();
 
         HibernateSessionFactory.putSession(session);
 
         return resultList;
     }
     HashMap<String, Object> params = new HashMap<>();
-
     public <T> List<T> query(Class<T> tClass, String key, Object value) {
+        return query(tClass, key, value, -1);
+    }
+    public <T> List<T> query(Class<T> tClass, String key, Object value, int limit) {
         params.clear();
         params.put(key, value);
-        return query(tClass, params);
+        return query(tClass, params, limit);
     }
 
     public <T>T get(Class<T> tClass, String key, Object value){
@@ -168,7 +178,7 @@ public class Hibernator {
 
     public <T> T get(Class<T> tClass, HashMap<String, Object> parameters) {
 
-        List<T> query = query(tClass, parameters);
+        List<T> query = query(tClass, parameters, -1);
         if (query == null || query.isEmpty()) {
             return null;
         } else {
@@ -180,7 +190,7 @@ public class Hibernator {
     public <T> void Clear(Class<T> tClass) {
         Session session = HibernateSessionFactory.getSession();
 
-        List<T> query = query(tClass, null);
+        List<T> query = query(tClass, null, -1);
 
         query.forEach(session::delete);
 
