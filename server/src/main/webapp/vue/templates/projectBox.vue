@@ -26,7 +26,7 @@ var itemView = {
             return now - begin;
         }
     },
-    template:'<div style="border: solid black 1pt">' +
+    template:'<div style="border: solid black 1pt" v-on:click="onEdit()">' +
         '<div class="project-box-title">' +
             '<div style="padding: 0 8pt">' +
                 '<span>&nbsp;{{project.title}}</span>' +
@@ -41,12 +41,12 @@ var itemView = {
             '</div>' +
 
         '</div>' +
-        '<div v-on:click="onEdit()">' +
-            '<div class="date-container">' +
+        '<div>' +
+            '<div class="date-container" v-if="project.begin">' +
                 '{{props.titles.dateBegin}} ' +
                 '{{new Date(project.begin).toLocaleDateString()}}' +
             '</div>' +
-            '<div class="date-container">' +
+            '<div class="date-container" v-if="project.end">' +
                 '{{props.titles.dateComplete}} ' +
                 '{{new Date(project.end).toLocaleDateString()}}' +
             '</div>' +
@@ -73,7 +73,7 @@ var itemView = {
             '</span>' +
         '</div>' +
         '<progress-bar v-if="project.statistic" :total="project.statistic.active + project.statistic.progressing + project.statistic.done" :value="project.statistic.done"></progress-bar>' +
-        '<progress-bar :total="projectLength()" :value="timeProgress()"></progress-bar>' +
+        '<progress-bar :total="projectLength()" :color="\'orange\'" :value="timeProgress()"></progress-bar>' +
         '<div style="padding: 8px 0"></div>' +
     '</div>'
 };

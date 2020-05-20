@@ -41,6 +41,13 @@ var edit = new Vue({
         showDetails:false
     },
     methods:{
+        remove:function(){
+            PostApi(this.api.remove, {id: this.transaction.id}, function (ans) {
+                if (ans.status === 'success'){
+                    closeModal();
+                }
+            })
+        },
         closeDetails:function(){
             this.addDetails = false;
             this.transaction.details = [];

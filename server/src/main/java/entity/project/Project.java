@@ -101,8 +101,12 @@ public class Project extends JsonAble implements Keys {
     public JSONObject toJson() {
         JSONObject object = task.toJson();
         object.put(ID, id);
-        object.put(BEGIN, beginDate.toString());
-        object.put(END, completeDate.toString());
+        if (beginDate != null) {
+            object.put(BEGIN, beginDate.toString());
+        }
+        if (completeDate != null) {
+            object.put(END, completeDate.toString());
+        }
         object.put(DESCRIPTION, description);
         return object;
     }

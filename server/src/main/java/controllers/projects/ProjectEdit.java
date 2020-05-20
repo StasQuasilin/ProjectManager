@@ -3,7 +3,6 @@ package controllers.projects;
 import constants.API;
 import constants.Branches;
 import controllers.IModal;
-import entity.accounts.BudgetSize;
 import entity.project.Project;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONObject;
@@ -37,7 +36,6 @@ public class ProjectEdit extends IModal {
         }
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(SAVE, API.PROJECT.SAVE);
-        req.setAttribute(BUDGET_TYPES, BudgetSize.values());
         show(req, resp);
     }
 }

@@ -2,6 +2,7 @@ package api.tree;
 
 import constants.API;
 import entity.task.Task;
+import entity.transactions.TransactionCategory;
 import services.LanguageBase;
 import services.hibernate.Hibernator;
 import utils.PostUtil;
@@ -30,7 +31,9 @@ public class NewTaskAPI extends HttpServlet {
         if (body.containsKey(PARENT)){
             String language = req.getSession().getAttribute("language").toString();
             Task parent = hibernator.get(Task.class, "id", Integer.parseInt(body.get(PARENT)));
-            Task task = new Task(LANGUAGE_BASE.get(language, "new.task"));
+            Task task = new Task();
+            task.setCategory(new TransactionCategory());
+            task.getCategory().setName(LANGUAGE_BASE.get(language, "new.task"));
             task.setParent(parent);
             hibernator.save(task);
         }

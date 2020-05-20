@@ -17,7 +17,14 @@ edit.years[3] = '<fmt:message key="many.years"/>';
 edit.months[1] = '<fmt:message key="1.month"/>';
 edit.months[2] = '<fmt:message key="2.months"/>';
 edit.months[3] = '<fmt:message key="many.months"/>';
-edit.addMonth(1);
+if (edit.project.begin && edit.project.end){
+  edit.addMonth(1);
+} else if (edit.project.begin){
+  edit.useEndDate = false;
+} else {
+  edit.withPeriod = false;
+}
+
 </script>
   <div id="editor" class="edit">
     <table>

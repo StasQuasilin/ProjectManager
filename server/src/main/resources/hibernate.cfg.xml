@@ -23,7 +23,7 @@
         <mapping class="entity.transactions.TransactionDetail"/>
         <mapping class="entity.transactions.TransactionCategory"/>
         <mapping class="entity.transactions.TransactionSettings"/>
-        <mapping class="entity.accounts.BudgetPoint"/>
+        <mapping class="entity.accounts.AccountPoint"/>
         <mapping class="entity.accounts.BudgetArticle"/>
         <mapping class="entity.task.Task"/>
         <mapping class="entity.accounts.Counterparty"/>

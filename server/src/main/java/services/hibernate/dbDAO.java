@@ -37,8 +37,8 @@ public interface dbDAO {
     List<Account> getAccountsByUser(User user);
     List<Transaction> getTransactionsByUser(User user, Date date);
     List<TransactionCategory> findTransactionCategory(String key, User user);
-    BudgetPoint getBudgetPoint(Account account, Date date, PointScale scale);
-    List<BudgetPoint> getBudgetPoints(Date from, Date to, Account account, PointScale scale);
+    AccountPoint getAccountPoint(int accountId, Date date, PointScale scale);
+    List<AccountPoint> getAccountPoints(Date from, Date to, int account, PointScale scale);
     List<Transaction> getTransactionsByBudget(Account account, Date date);
     List<Task> getTasksByParent(User user, Object parent, Object status);
     List<Task> getTaskByDoer(User user, TaskStatus progressing);
@@ -58,9 +58,9 @@ public interface dbDAO {
     List<Counterparty> findCounterparty(User user, String key);
     Counterparty getCounterpartyByName(String name, User user);
     List<Transaction> getLimitTransactionsByUser(User user, int limit);
-    PointRoot getPointRoot(int parentId, Account account);
-    List<PointRoot> getPointRoots(Account account, Date date);
-    boolean removePointRoot(int parentId, Account account, Date date);
+    PointRoot getPointRoot(int parentId, int accountId);
+    List<PointRoot> getPointRoots(int accountId, Date date);
+    boolean removePointRoot(int parentId, int account, Date date);
     List<BuyList> getBuyListByUser(User user);
     DepositSettings getDepositSettingsByAccount(Account account);
     List<FastTransaction> getFastTransactionsByUser(User user);

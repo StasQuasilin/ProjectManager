@@ -2,7 +2,9 @@ package entity.transactions;
 
 import constants.Keys;
 import constants.TableNames;
+import entity.task.Task;
 import entity.user.User;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
 
@@ -13,9 +15,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name = TableNames.TRANSACTION_CATEGORY)
-public class TransactionCategory extends JsonAble implements Keys {
+public class TransactionCategory extends JsonAble implements Keys, Comparable<TransactionCategory> {
     private int id;
     private String name;
+    private TransactionCategory parent;
     private User owner;
 
     @Id
@@ -37,6 +40,15 @@ public class TransactionCategory extends JsonAble implements Keys {
     }
 
     @OneToOne
+    @JoinColumn(name = PARENT)
+    public TransactionCategory getParent() {
+        return parent;
+    }
+    public void setParent(TransactionCategory parent) {
+        this.parent = parent;
+    }
+
+    @OneToOne
     @JoinColumn(name = OWNER)
     public User getOwner() {
         return owner;
@@ -46,10 +58,31 @@ public class TransactionCategory extends JsonAble implements Keys {
     }
 
     @Override
-    public JSONObject toJson() {
+    public JSONObject shortJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
         object.put(NAME, name);
         return object;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject object = shortJson();
+        object.put(PATH, buildPath());
+        return object;
+    }
+
+    private JSONArray buildPath() {
+        JSONArray path = pool.getArray();
+        if (parent != null){
+            path.add(parent.shortJson());
+            path.addAll(parent.buildPath());
+        }
+        return path;
+    }
+
+    @Override
+    public int compareTo(TransactionCategory transactionCategory) {
+        return transactionCategory.name.compareTo(name);
     }
 }

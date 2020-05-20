@@ -38,10 +38,17 @@ var edit = new Vue({
         },
         save:function(){
             console.log(this.project);
-            if (!this.project.id){
-                this.project.id = -1;
+            let data = Object.assign({}, this.project);
+            if (!data.id){
+                data.id = -1;
             }
-            PostApi(this.api.save, this.project, function(a){
+            if (!this.withPeriod){
+                delete data.begin;
+                delete data.end;
+            } else if (!this.useEndDate){
+                delete data.end;
+            }
+            PostApi(this.api.save, data, function(a){
                 if (a.status === 'success'){
                     closeModal();
                 }

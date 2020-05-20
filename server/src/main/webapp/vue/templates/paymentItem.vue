@@ -19,10 +19,22 @@ var paymentView = {
 
     },
     template:'<div v-if="item" class="transaction-list-item" v-on:click="edit(item)">' +
-        '<div class="transaction-time">{{new Date(item.date).toLocaleTimeString().substring(0, 5)}}</div>' +
-
         '<div>' +
-            '{{item}}' +
+            '<span v-if="item.category">' +
+                '{{item.category.name}}: ' +
+            '</span>' +
+            '<span v-else>' +
+                'Without category: ' +
+            '</span>' +
+            '<span>' +
+                '{{item.sum.toLocaleString()}} ' +
+            '</span>' +
+            '<span v-if="item.currency">' +
+                '{{item.currency.sign}}' +
+            '</span>' +
+        '</div>' +
+        '<div>' +
+            '{{item.account.title}}' +
         '</div>' +
     '</div>'
 };

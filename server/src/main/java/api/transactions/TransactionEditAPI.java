@@ -2,19 +2,16 @@ package api.transactions;
 
 import api.socket.UpdateUtil;
 import constants.API;
-import constants.Keys;
 import controllers.ServletAPI;
 import entity.accounts.Account;
-import entity.accounts.Counterparty;
-import entity.accounts.Currency;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
 import entity.transactions.TransactionType;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.BudgetCalculator;
-import utils.CategoryUtil;
-import utils.CounterpartyUtil;
+import utils.Calculator;
+import utils.CategoryCalculator;
 import utils.TransactionUtil;
 
 import javax.servlet.ServletException;
@@ -23,7 +20,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.sql.Timestamp;
 
 /**
  * Created by szpt_user045 on 26.02.2020.
@@ -33,10 +29,9 @@ public class TransactionEditAPI extends ServletAPI {
 
 
     private final UpdateUtil updateUtil = new UpdateUtil();
-
-
     private final BudgetCalculator budgetCalculator = new BudgetCalculator();
     private final TransactionUtil transactionUtil = new TransactionUtil();
+    private final CategoryCalculator categoryCalculator = new CategoryCalculator();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -47,45 +42,49 @@ public class TransactionEditAPI extends ServletAPI {
             Transaction transaction = dao.getObjectById(Transaction.class, body.get(ID));
             User user = getUser(req);
 
-            if (transaction == null){
-                transaction = new Transaction();
-                transaction.setOwner(user);
-            }
-
             Date otherDate = null;
             Account otherAccount = null;
             Account otherSecondary = null;
+            TransactionCategory otherCategory = null;
 
-            if (transaction.getId() > 0){
+            if (transaction == null){
+                transaction = new Transaction();
+                transaction.setOwner(user);
+            } else {
                 otherDate = transaction.getDate();
                 otherAccount = transaction.getAccount();
                 otherSecondary = transaction.getSecondary();
+                otherCategory = transaction.getCategory();
             }
-
             transactionUtil.filTransaction(transaction, body, user);
 
+            dao.save(transaction);
+            write(resp, SUCCESS);
+            updateUtil.onSave(transaction);
+
+            if (otherDate == null){
+                otherDate = transaction.getDate();
+            }
+
             if (otherAccount != null && !transaction.getAccount().equals(otherAccount)){
-                if (otherDate == null){
-                    otherDate = transaction.getDate();
-                }
-                budgetCalculator.removePointRoot(transaction.getId(), otherAccount, otherDate);
+                budgetCalculator.removePointRoot(transaction.getId(), otherAccount.getId(), otherDate);
             }
 
             TransactionType type = transaction.getType();
 
             if (type == TransactionType.transfer){
-                if (otherDate == null){
-                    otherDate = transaction.getDate();
-                }
                 if (otherSecondary != null && !transaction.getSecondary().equals(otherAccount)){
-                    budgetCalculator.removePointRoot(transaction.getId(), otherSecondary, otherDate);
+                    budgetCalculator.removePointRoot(transaction.getId(), otherSecondary.getId(), otherDate);
                 }
             }
 
-            dao.save(transaction);
-            write(resp, SUCCESS);
-            updateUtil.onSave(transaction);
             budgetCalculator.calculatePointRoot(transaction);
+
+            if (otherCategory != null && !transaction.getCategory().equals(otherCategory)){
+                categoryCalculator.removePointRoot(transaction.getId(), otherCategory.getId(), otherDate);
+
+            }
+            categoryCalculator.calculate(transaction);
         }
     }
 }

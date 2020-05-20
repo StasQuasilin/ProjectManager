@@ -3,6 +3,7 @@ package api.transactions;
 import constants.API;
 import constants.Keys;
 import controllers.ServletAPI;
+import entity.task.Task;
 import entity.transactions.TransactionCategory;
 import entity.user.User;
 import org.json.simple.JSONArray;
@@ -31,7 +32,6 @@ public class FindTransactionCategoryAPI extends ServletAPI implements Keys {
             for (TransactionCategory category : dao.findTransactionCategory(key, user)){
                 array.add(category.toJson());
             }
-
             JSONObject json = new SuccessAnswer(RESULT, array).toJson();
             write(resp, json.toJSONString());
             pool.put(json);

@@ -11,9 +11,9 @@ import java.sql.Date;
  */
 @Entity
 @Table(name = TableNames.BUDGET_POINTS)
-public class BudgetPoint implements Keys {
+public class AccountPoint implements Keys {
     private long id;
-    private Account account;
+    private int account;
     private PointScale scale;
     private Date date;
     private float quantity;
@@ -27,12 +27,12 @@ public class BudgetPoint implements Keys {
         this.id = id;
     }
 
-    @OneToOne
-    @JoinColumn(name = BUDGET)
-    public Account getAccount() {
+    @Basic
+    @Column(name = BUDGET)
+    public int getAccount() {
         return account;
     }
-    public void setAccount(Account account) {
+    public void setAccount(int account) {
         this.account = account;
     }
 

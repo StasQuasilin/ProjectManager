@@ -39,6 +39,7 @@ public class TransactionEdit extends IModal {
         req.setAttribute(FIND_PERSON, API.FIND_PERSON);
         req.setAttribute(FIND_COUNTERPARTY, API.FIND_COUNTERPARTY);
         req.setAttribute(SAVE, API.TRANSACTION_EDIT);
+        req.setAttribute(REMOVE, API.TRANSACTION_REMOVE);
         show(req, resp);
     }
 }

@@ -3,6 +3,7 @@ package entity.task;
 import constants.Keys;
 import entity.accounts.Account;
 import entity.project.iTask;
+import entity.transactions.TransactionCategory;
 import entity.user.User;
 import org.json.simple.JSONObject;
 
@@ -21,8 +22,7 @@ public class Task extends iTask implements Comparable<Task>, Keys {
     private Timestamp timestamp;
     private TaskStatus status;
     private TaskType type;
-    private Task parent;
-    private String title;
+    private TransactionCategory category;
     private float cost;
     private Account account;
     private User owner;
@@ -37,12 +37,6 @@ public class Task extends iTask implements Comparable<Task>, Keys {
     }
     public void setStatistic(TaskStatistic statistic) {
         this.statistic = statistic;
-    }
-
-    public Task() {}
-    public Task(String title) {
-        status = TaskStatus.active;
-        this.title = title;
     }
 
     @Id
@@ -91,22 +85,12 @@ public class Task extends iTask implements Comparable<Task>, Keys {
     }
 
     @OneToOne
-    @JoinColumn(name = PARENT)
-    public Task getParent() {
-        return parent;
+    @JoinColumn(name = "category")
+    public TransactionCategory getCategory() {
+        return category;
     }
-    public void setParent(Task parent) {
-        this.parent = parent;
-        super.setParent(parent);
-    }
-
-    @Basic
-    @Column(name = TITLE)
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCategory(TransactionCategory category) {
+        this.category = category;
     }
 
     @Basic
@@ -165,14 +149,14 @@ public class Task extends iTask implements Comparable<Task>, Keys {
 
     @Override
     public int compareTo(Task o) {
-        return o.getTitle().compareTo(title);
+        return o.getCategory().compareTo(getCategory());
     }
 
     @Override
     public JSONObject shortJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
-        object.put(TITLE, title);
+        object.put(TITLE, category.getName());
         return object;
     }
 
@@ -188,10 +172,6 @@ public class Task extends iTask implements Comparable<Task>, Keys {
         }
         object.put(STATUS, status.toString());
 
-        if (parent != null) {
-            object.put(PARENT, parent.getId());
-        }
-        object.put(PATH, buildPath());
         object.put(DESCRIPTION, description);
         object.put(IS_GROUP, children > 0);
         object.put(CHILDREN, children);
@@ -212,7 +192,7 @@ public class Task extends iTask implements Comparable<Task>, Keys {
 
     @Transient
     public boolean isTop(){
-        return parent == null;
+        return category.getParent() == null;
     }
 
     @Transient

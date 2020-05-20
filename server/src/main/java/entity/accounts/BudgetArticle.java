@@ -10,7 +10,7 @@ import java.sql.Timestamp;
 @Table(name = "budget_articles")
 public class BudgetArticle {
     private long id;
-    private BudgetPoint point;
+    private AccountPoint point;
     private Timestamp time;
     private float quantity;
     private String description;
@@ -26,10 +26,10 @@ public class BudgetArticle {
 
     @OneToOne
     @JoinColumn(name = "point")
-    public BudgetPoint getPoint() {
+    public AccountPoint getPoint() {
         return point;
     }
-    public void setPoint(BudgetPoint point) {
+    public void setPoint(AccountPoint point) {
         this.point = point;
     }
 

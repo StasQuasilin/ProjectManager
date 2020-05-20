@@ -3,7 +3,6 @@ var transferView = {
         item: Object
     },
     template:'<div class="transaction-list-item">' +
-        '<div class="transaction-time">{{new Date(item.date).toLocaleTimeString().substring(0, 5)}}</div>' +
             '<span v-if="item.secondary">' +
                 '{{item.secondary.title}}' +
             '</span>' +

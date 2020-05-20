@@ -44,8 +44,8 @@
         };
         accounts.api.edit = '${accountEdit}';
         buyList.api.edit = '${buyListEdit}';
-        fastTransactions.api.edit = '${fastEdit}'
-        fastTransactions.api.insertFast = '${insertByFast}'
+        fastTransactions.api.edit = '${fastEdit}';
+        fastTransactions.api.insertFast = '${insertByFast}';
 
         subscriber.subscribe('${transactions}', transactionList.handle);
         subscriber.unSubscribers.push('${transactions}');

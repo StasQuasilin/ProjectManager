@@ -4,7 +4,6 @@ import constants.API;
 import constants.Branches;
 import controllers.IModal;
 import entity.accounts.Account;
-import entity.accounts.BudgetSize;
 import entity.accounts.AccountType;
 import org.json.simple.JSONObject;
 
@@ -41,7 +40,6 @@ public class AccountEdit extends IModal {
         req.setAttribute(PAGE_CONTENT, _CONTENT);
         req.setAttribute(TYPES, AccountType.values());
         req.setAttribute(CURRENCY, dao.getUserCurrency(getUser(req)));
-        req.setAttribute(SIZES, BudgetSize.values());
         req.setAttribute(SAVE, API.BUDGET_EDIT);
         List<Account> accounts = dao.getAccountsByUser(getUser(req));
         if (account != null){

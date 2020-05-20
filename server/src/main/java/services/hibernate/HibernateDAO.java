@@ -153,23 +153,23 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
-    public BudgetPoint getBudgetPoint(Account account, Date date, PointScale scale) {
+    public AccountPoint getAccountPoint(int accountId, Date date, PointScale scale) {
         HashMap<String, Object> params = hibernator.getParams();
-        params.put(ACCOUNT, account);
+        params.put(ACCOUNT, accountId);
         params.put(DATE, date);
         params.put(SCALE, scale);
-        return hibernator.get(BudgetPoint.class, params);
+        return hibernator.get(AccountPoint.class, params);
     }
 
     @Override
-    public List<BudgetPoint> getBudgetPoints(Date from, Date to, Account account, PointScale scale) {
+    public List<AccountPoint> getAccountPoints(Date from, Date to, int account, PointScale scale) {
         HashMap<String, Object> params = hibernator.getParams();
         params.put(ACCOUNT, account);
         if (from != null && to != null) {
             params.put(DATE, new BETWEEN(from, to));
         }
         params.put(SCALE, scale);
-        return hibernator.query(BudgetPoint.class, params);
+        return hibernator.query(AccountPoint.class, params);
     }
 
     @Override
@@ -237,18 +237,18 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
-    public PointRoot getPointRoot(int parentId, Account account) {
+    public PointRoot getPointRoot(int parentId, int accountId) {
         HashMap<String, Object> params = hibernator.getParams();
         params.put("parentId", parentId);
-        params.put("account", account);
+        params.put("accountId", accountId);
         return hibernator.get(PointRoot.class, params);
     }
 
     @Override
-    public boolean removePointRoot(int parentId, Account account, Date date) {
+    public boolean removePointRoot(int parentId, int account, Date date) {
         HashMap<String, Object> params = hibernator.getParams();
         params.put("parentId", parentId);
-        params.put("account", account);
+        params.put("accountId", account);
         params.put("date", date);
         PointRoot pointRoot = hibernator.get(PointRoot.class, params);
         if (pointRoot != null){
@@ -278,9 +278,9 @@ public class HibernateDAO implements dbDAO, Keys {
     }
 
     @Override
-    public List<PointRoot> getPointRoots(Account account, Date date) {
+    public List<PointRoot> getPointRoots(int accountId, Date date) {
         HashMap<String, Object> params = hibernator.getParams();
-        params.put(ACCOUNT, account);
+        params.put(ACCOUNT_ID, accountId);
         params.put(DATE, date);
         return hibernator.query(PointRoot.class, params);
     }

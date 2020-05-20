@@ -7,6 +7,7 @@ import entity.project.Project;
 import entity.project.ProjectType;
 import entity.task.Task;
 import entity.task.TaskStatus;
+import entity.transactions.TransactionCategory;
 import entity.user.User;
 import org.json.simple.JSONObject;
 
@@ -38,6 +39,7 @@ public class ProjectEditAPI extends ServletAPI {
                 project.setOwner(user);
                 Task task = new Task();
                 task.setStatus(TaskStatus.root);
+                task.setCategory(new TransactionCategory());
                 task.setOwner(user);
                 project.setTask(task);
                 ProjectType type = ProjectType.valueOf(String.valueOf(body.get(TYPE)));
@@ -45,17 +47,26 @@ public class ProjectEditAPI extends ServletAPI {
             }
 
             String title = String.valueOf(body.get(TITLE));
-            project.getTask().setTitle(title);
+            project.getTask().getCategory().setName(title);
 
-            Date begin = Date.valueOf(String.valueOf(body.get(BEGIN)));
-            if (project.getBeginDate() == null || !project.getBeginDate().equals(begin)){
-                project.setBeginDate(begin);
+            if (body.containsKey(BEGIN)) {
+                Date begin = Date.valueOf(String.valueOf(body.get(BEGIN)));
+                if (project.getBeginDate() == null || !project.getBeginDate().equals(begin)) {
+                    project.setBeginDate(begin);
+                }
+            } else if (project.getBeginDate() != null){
+                project.setBeginDate(null);
             }
 
-            Date complete = Date.valueOf(String.valueOf(body.get(END)));
-            if (project.getCompleteDate() == null || !project.getCompleteDate().equals(complete)){
-                project.setCompleteDate(complete);
+            if (body.containsKey(END)) {
+                Date complete = Date.valueOf(String.valueOf(body.get(END)));
+                if (project.getCompleteDate() == null || !project.getCompleteDate().equals(complete)) {
+                    project.setCompleteDate(complete);
+                }
+            } else if (project.getCompleteDate() != null){
+                project.setCompleteDate(null);
             }
+            dao.save(project.getTask().getCategory());
             dao.save(project.getTask());
             dao.save(project);
 

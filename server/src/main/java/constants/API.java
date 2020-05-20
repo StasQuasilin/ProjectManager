@@ -29,6 +29,7 @@ public class API {
     public static final String BUY_LIST_ITEM_EDIT = API + "/buy/list/item/edit";
     public static final String FAST_EDIT = API + "/fast/transaction/edit";
     public static final String INSERT_BY_FAST = API + "/insert/fast";
+    public static final String TRANSACTION_REMOVE = API + "/transaction/remove";
 
 
     public class INFO {

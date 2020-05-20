@@ -51,7 +51,6 @@ var list = {
             }
             if (!have){
                 this.items.push(item);
-
             }
         },
         clean:function(){

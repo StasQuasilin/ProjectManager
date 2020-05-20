@@ -17,7 +17,6 @@ public class Account extends JsonAble implements Keys {
 
     private int id;
     private String title;
-    private BudgetSize budgetSize;
     private AccountType accountType;
     private float budgetSum;
     private float limit;
@@ -42,15 +41,6 @@ public class Account extends JsonAble implements Keys {
     }
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = SIZE)
-    public BudgetSize getBudgetSize() {
-        return budgetSize;
-    }
-    public void setBudgetSize(BudgetSize budgetSize) {
-        this.budgetSize = budgetSize;
     }
 
     @Enumerated(EnumType.STRING)

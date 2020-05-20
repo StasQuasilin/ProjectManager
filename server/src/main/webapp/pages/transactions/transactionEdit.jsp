@@ -14,6 +14,7 @@
 <script src="${context}/vue/transactions/transactionEdit.vue"></script>
 <script>
     edit.api.save = '${save}';
+    edit.api.remove = '${remove}';
     edit.api.findCategory = '${findCategory}';
     <c:forEach items="${types}" var="type">
     edit.types.push({
@@ -223,24 +224,14 @@
                             </label>
                         </td>
                         <td>
-                            <select id="from" v-model="transaction.secondary">
+                            <select id="from" v-model="transaction.account">
                                 <option v-for="acc in budgets" :value="acc">
-                                    {{acc.title}} {{acc.currency.sign}}
+                                    {{acc.title}} ( {{acc.amount.toLocaleString()}} {{acc.currency.sign}} )
                                 </option>
                             </select>
                             -{{transaction.sum}}
                         </td>
                     </tr>
-<%--                    <tr v-if="transaction.account.currency.id !== transaction.transferTo.currency.id">--%>
-<%--                        <td>--%>
-<%--                            <label for="rate">--%>
-<%--                                <fmt:message key="currency.rate"/>--%>
-<%--                            </label>--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                            <input id="rate" v-model="transaction.rate" autocomplete="off">--%>
-<%--                        </td>--%>
-<%--                    </tr>--%>
                     <tr>
                         <td>
                             <label for="to">
@@ -248,9 +239,9 @@
                             </label>
                         </td>
                         <td>
-                            <select id="to" v-model="transaction.account">
+                            <select id="to" v-model="transaction.secondary">
                                 <option v-for="acc in budgets" :value="acc">
-                                    {{acc.title}} {{acc.currency.sign}}
+                                    {{acc.title}} ( {{acc.amount.toLocaleString()}} {{acc.currency.sign}} )
                                 </option>
                             </select>
                             +{{transaction.sum}}
@@ -268,6 +259,7 @@
                     </tr>
                     <tr>
                         <td colspan="2" style="text-align: center">
+
                             <span class="mini-button" v-if="!addNote" v-on:click="addNote = true">
                                 <fmt:message key="transaction.note.add"/>
                             </span>
@@ -284,6 +276,9 @@
         </tr>
         <tr>
             <td style="text-align: center">
+                <span v-if="transaction.id > 0" v-on:click="remove" class="mini-button">
+                    <fmt:message key="button.remove"/>
+                </span>
                 <button onclick="closeModal()">
                     <fmt:message key="buttons.cancel"/>
                 </button>

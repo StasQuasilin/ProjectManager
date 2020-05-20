@@ -45,7 +45,6 @@ public class AccountEditAPI extends ServletAPI {
                 account = new Account();
                 account.setOwner(user);
                 account.setCreate(Timestamp.valueOf(LocalDateTime.now()));
-                account.setBudgetSize(BudgetSize.floated);
             }
 
             String title = String.valueOf(body.get(TITLE));

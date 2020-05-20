@@ -93,21 +93,26 @@ public class UpdateUtil implements Keys {
 
     public void onSave(BuyList buyList) throws IOException {
         ISocketHandler handler = subscribeMaster.getHandler(Subscribe.buyList);
-        send(handler, buyList, buyList.getOwner());
+        send(handler, buyList, buyList.getOwner(), UPDATE);
     }
 
-    private void send(ISocketHandler handler, JsonAble jsonAble, User user) throws IOException {
+    private void send(ISocketHandler handler, JsonAble jsonAble, User user, String action) throws IOException {
         if (handler != null && user != null) {
             JSONObject object = pool.getObject();
             JSONArray array = pool.getArray();
             array.add(jsonAble.toJson());
-            object.put(UPDATE, array);
+            object.put(action, array);
             handler.send(user, object);
         }
     }
 
     public void onSave(FastTransaction fast) throws IOException {
         ISocketHandler handler = subscribeMaster.getHandler(Subscribe.fast);
-        send(handler, fast, fast.getOwner());
+        send(handler, fast, fast.getOwner(), UPDATE);
+    }
+
+    public void onRemove(Transaction transaction) throws IOException {
+        ISocketHandler handler = subscribeMaster.getHandler(Subscribe.transactions);
+        send(handler, transaction, transaction.getOwner(), REMOVE);
     }
 }

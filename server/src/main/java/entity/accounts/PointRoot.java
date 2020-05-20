@@ -9,7 +9,7 @@ public class PointRoot {
     private int id;
     private int parentId;
     private Date date;
-    private Account account;
+    private int accountId;
     private float amount;
 
     @Id
@@ -39,13 +39,13 @@ public class PointRoot {
         this.date = date;
     }
 
-    @OneToOne
-    @JoinColumn(name = "account")
-    public Account getAccount() {
-        return account;
+    @Basic
+    @Column(name = "account")
+    public int getAccountId() {
+        return accountId;
     }
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccountId(int account) {
+        this.accountId = account;
     }
 
     @Basic

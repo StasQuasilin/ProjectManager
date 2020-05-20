@@ -7,6 +7,7 @@ import entity.calendar.CalendarItem;
 import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.task.TaskType;
+import entity.transactions.TransactionCategory;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import services.answers.SuccessAnswer;
@@ -46,11 +47,12 @@ public class CalendarItemEditAPI extends ServletAPI {
                 task.setOwner(user);
                 task.setStatus(TaskStatus.progressing);
                 task.setType(TaskType.once);
+                task.setCategory(new TransactionCategory());
                 calendarItem.setTask(task);
             }
 
             String title = String.valueOf(body.get(TITLE));
-            task.setTitle(title);
+            task.getCategory().setName(title);
 
             Task parent = null;
             if (body.containsKey(PARENT)) {
@@ -58,14 +60,17 @@ public class CalendarItemEditAPI extends ServletAPI {
                 parent = dao.getObjectById(Task.class, p.get(ID));
                 if(parent == null){
                     parent = new Task();
-                    parent.setTitle(String.valueOf(p.get(TITLE)));
+                    parent.setCategory(new TransactionCategory());
+                    parent.getCategory().setName(String.valueOf(p.get(TITLE)));
                     parent.setOwner(user);
                     parent.setStatus(TaskStatus.active);
+                    dao.save(parent.getCategory());
                     dao.save(parent);
                 }
                 task.setParent(parent);
             }
 
+            dao.save(task.getCategory());
             dao.save(task);
 
             Timestamp date = Timestamp.valueOf(String.valueOf(body.get(DATE)));
