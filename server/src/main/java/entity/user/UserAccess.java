@@ -14,7 +14,7 @@ public class UserAccess implements Keys{
     private int id;
     private String email;
     private String password;
-    private User user;
+    private entity.user.User user;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,11 +45,10 @@ public class UserAccess implements Keys{
 
     @OneToOne
     @JoinColumn(name = USER)
-    public User getUser() {
+    public entity.user.User getUser() {
         return user;
     }
-
-    public void setUser(User user) {
+    public void setUser(entity.user.User user) {
         this.user = user;
     }
 }

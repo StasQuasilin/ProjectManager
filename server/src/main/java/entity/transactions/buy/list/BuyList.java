@@ -1,5 +1,6 @@
 package entity.transactions.buy.list;
 
+import entity.project.Project;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -20,6 +21,7 @@ public class BuyList extends JsonAble {
     private String description;
     private Set<BuyListItem> items;
     private Set<BuyListMember> members;
+    private Project project;
     private User owner;
 
     @Id
@@ -72,6 +74,15 @@ public class BuyList extends JsonAble {
     }
     public void setMembers(Set<BuyListMember> members) {
         this.members = members;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "project")
+    public Project getProject() {
+        return project;
+    }
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     @OneToOne

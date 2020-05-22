@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -22,7 +23,6 @@ public class LoginFilter implements Filter {
     private static final String TOKEN = "token";
 
     private static final Logger log = Logger.getLogger(LoginFilter.class);
-//    private static final Hibernator hibernator = Hibernator.getHibernator();
     private static final HashMap<String, UserAccess> activeUsers = new HashMap<>();
 
     public void init(FilterConfig filterConfig) {
@@ -31,7 +31,6 @@ public class LoginFilter implements Filter {
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-
         String token = (String) request.getSession().getAttribute(TOKEN);
         if (token != null && activeUsers.containsKey(token)){
             request.getSession().setAttribute(TOKEN, addUser(activeUsers.remove(token)));
@@ -40,7 +39,6 @@ public class LoginFilter implements Filter {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.sendRedirect(request.getContextPath() + Branches.LOGIN);
         }
-
     }
 
     public static String addUser(UserAccess userAccess){

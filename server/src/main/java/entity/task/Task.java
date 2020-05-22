@@ -16,7 +16,7 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tasks")
-public class Task extends iTask implements Comparable<Task>, Keys {
+public class Task extends Category implements Comparable<Task>, Keys {
     private int id;
     private Date date;
     private Timestamp timestamp;

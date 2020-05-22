@@ -34,6 +34,7 @@
     </script>
 </head>
 <body>
+    <div id="locker" class="modal-layer">Ololok</div>
     <div id="coverlet" class="coverlet"></div>
     <div id="modal" class="modal-layer"></div>
     <table border="1" style="height: 100%; width: 100%; border-collapse: collapse">

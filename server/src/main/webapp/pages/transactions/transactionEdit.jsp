@@ -56,7 +56,7 @@
         onPut:function(item){
             edit.setCategory(item);
         },
-        field:'name'
+        field:'path/name'
     };
     edit.counterpartyProps = {
         find:'${findCounterparty}',

@@ -20,6 +20,7 @@ public class TransactionCategory extends JsonAble implements Keys, Comparable<Tr
     private String name;
     private TransactionCategory parent;
     private User owner;
+    private boolean active;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +56,16 @@ public class TransactionCategory extends JsonAble implements Keys, Comparable<Tr
     }
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Basic
+    @Column(name = "_active")
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
     }
 
     @Override

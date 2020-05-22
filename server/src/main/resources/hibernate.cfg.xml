@@ -41,5 +41,6 @@
         <mapping class="entity.transactions.buy.list.BuyListMember"/>
         <mapping class="entity.accounts.DepositSettings"/>
         <mapping class="entity.transactions.fast.transaction.FastTransaction"/>
+        <mapping class="entity.task.Category"/>
     </session-factory>
 </hibernate-configuration>

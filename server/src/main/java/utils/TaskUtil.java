@@ -14,8 +14,13 @@ import services.hibernate.Hibernator;
 import services.hibernate.dbDAO;
 import services.hibernate.dbDAOService;
 
+import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class TaskUtil {
 
@@ -68,14 +73,29 @@ public class TaskUtil {
         }
         if (!parent.isTop()){
             System.out.println("\t...Have parent");
-            checkParenthood(parent.getParent(), user);
+//            checkParenthood(parent.getParent(), user);
         }
     }
 
     public static void main(String[] args) {
-        Hibernator hibernator = Hibernator.getInstance();
+        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+        long time = timestamp.getTime();
+        
+        System.out.println(Long.highestOneBit(time));
+        System.out.println(Arrays.toString(timestamp.toString().getBytes()));
+        System.out.println();
+        System.out.println();
+        UUID uuid1 = UUID.randomUUID();
+        System.out.println(uuid1.getLeastSignificantBits());
+        System.out.println(uuid1.getMostSignificantBits());
 
-        for (Task task : hibernator.query(Task.class, null)){
+
+
+//        System.out.println();
+
+//        Hibernator hibernator = Hibernator.getInstance();
+
+//        for (Task task : hibernator.query(Task.class, null)){
 //            if (task.getCategory() == null) {
 //                TransactionCategory category = new TransactionCategory();
 //                category.setName(task.getTitle());
@@ -84,14 +104,14 @@ public class TaskUtil {
 //                task.setCategory(category);
 //                hibernator.save(task);
 //            }
-            Task parent = task.getParent();
-            if (parent != null){
-                TransactionCategory category = task.getCategory();
-                category.setParent(parent.getCategory());
-                hibernator.save(category);
-            }
-        }
-        HibernateSessionFactory.shutdown();
+//            Task parent = task.getParent();
+//            if (parent != null){
+//                TransactionCategory category = task.getCategory();
+//                category.setParent(parent.getCategory());
+//                hibernator.save(category);
+//            }
+//        }
+//        HibernateSessionFactory.shutdown();
     }
 
     public static void checkSpellTime(Task task) {

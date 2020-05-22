@@ -26,10 +26,10 @@ public class TaskRemoveAPI extends ServletAPI {
             dao.remove(task);
             write(resp, SUCCESS);
             updateUtil.onRemove(task);
-            Task parent = task.getParent();
-            if (parent != null){
-                TaskUtil.checkParenthood(parent, getUser(req));
-            }
+//            Task parent = task.getParent();
+//            if (parent != null){
+//                TaskUtil.checkParenthood(parent, getUser(req));
+//            }
         }
     }
 }

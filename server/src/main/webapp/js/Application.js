@@ -1,3 +1,4 @@
+let locker;
 let coverlet;
 let modal;
 let title;
@@ -5,11 +6,13 @@ let content;
 let filterHolder;
 
 $(document).ready(function(){
+    locker = document.getElementById('locker');
     coverlet = document.getElementById('coverlet');
     modal = document.getElementById('modal');
     title = document.getElementById('title');
     content = document.getElementById('content');
     filterHolder = document.getElementById('filterHolder');
+    locker.style.display='none';
     coverlet.style.display='none';
     modal.style.display = 'none';
 });
@@ -59,4 +62,10 @@ function loadModal(url, parameters){
 function closeModal(){
     modal.innerHTML = '';
     modal.style.display='none';
+}
+function lock() {
+    locker.style.display = 'block';
+}
+function unlock() {
+    locker.style.display = 'none';
 }

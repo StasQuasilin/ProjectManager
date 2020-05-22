@@ -11,15 +11,16 @@ var findInput = {
             input:'',
             items:[],
             timer:-1,
-            timeout:500
+            timeout:500,
+            matcher:/\w/,
+            notFound:false
         }
     },
     methods:{
         find:function(){
-            clearTimeout(this.timer);
-
-            let input = this.getInput();
-            if (input) {
+            this.clear();
+            let input = this.getInput().toString();
+            if (input.match(this.matcher)) {
                 const self = this;
                 let findReq = function () {
                     self.findReq();
@@ -33,6 +34,9 @@ var findInput = {
             let input = this.getInput();
             PostApi(this.props.find, {key:input}, function (ans) {
                 self.items = ans.result;
+                if (self.items.length === 0){
+                    self.notFound = true;
+                }
             })
         },
         getInput:function(){
@@ -47,14 +51,24 @@ var findInput = {
             if (this.props.onPut){
                 this.props.onPut(item);
             }
-            this.items = []
+            this.clear()
+        },
+        clear:function(){
+            this.input = '';
+            this.items = [];
+            this.notFound = false;
+            clearTimeout(this.timeout);
         }
     },
     template:'<div style="display: inline-block; position: relative">' +
-            '<input v-model="object[props.field]" v-on:keyup="find()">' +
-            '<div class="custom-data-list" v-if="items.length > 0">' +
+            '' +
+            '<input v-model="object[props.field]" v-on:keyup.escape="clear()" v-on:keyup="find()">' +
+            '<div class="custom-data-list">' +
                 '<div class="custom-data-list-item" v-for="item in items" v-on:click="put(item)">' +
                     '{{item.name}}' +
+                '</div>' +
+                '<div v-if="notFound" class="custom-data-list-item">' +
+                    'Not found' +
                 '</div>' +
             '</div>' +
         '</div>'

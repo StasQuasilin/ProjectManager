@@ -8,6 +8,11 @@ const subscriber = {
         this.socket = new WebSocket(protocol + server + address);
         this.socket.onclose = function(cause){
             console.log(cause);
+            lock();
+            const self = this;
+            setTimeout(function () {
+                console.log(self.subscribers);
+            }, 3000)
         };
         const self = this;
         this.socket.onmessage = function(env){
@@ -56,7 +61,7 @@ const subscriber = {
             const self = this;
             let waitFunc = function(){
                 self.send(msg)
-            }
+            };
             setTimeout(waitFunc, this.waitTimeout)
         }
     },
