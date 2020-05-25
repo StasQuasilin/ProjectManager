@@ -31,8 +31,7 @@ public class EditTaskAPI extends ServletAPI {
             User user = getUser(req);
             Task task = dao.getObjectById(Task.class, body.get(ID));
             if (task == null){
-                task = new Task();
-                task.setCategory(new TransactionCategory());
+                task = Task.newTask(null);
                 task.setStatus(TaskStatus.active);
                 task.setOwner(user);
             }

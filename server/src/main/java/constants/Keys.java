@@ -18,6 +18,7 @@ public interface Keys {
     String DATE = "date";
     String TIMESTAMP = "timestamp";
     String COST = "cost";
+    String CATEGORY_PARENT = "category/parent";
     String PARENT = "parent";
     String PARENTS = "parents";
     String TITLE = "title";

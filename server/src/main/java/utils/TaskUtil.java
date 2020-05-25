@@ -1,14 +1,13 @@
 package utils;
 
 import api.socket.UpdateUtil;
-import entity.task.Task;
-import entity.task.TaskStatus;
-import entity.task.TaskStatistic;
-import entity.task.TimeLog;
+import entity.project.Project;
+import entity.task.*;
 import entity.transactions.Transaction;
 import entity.transactions.TransactionCategory;
 import entity.transactions.TransactionDetail;
 import entity.user.User;
+import org.hibernate.type.TimeType;
 import services.hibernate.HibernateSessionFactory;
 import services.hibernate.Hibernator;
 import services.hibernate.dbDAO;
@@ -62,15 +61,15 @@ public class TaskUtil {
         dao.save(statistic);
 
         int size = tasks.size();
-        if (parent.getChildren() != size){
-            parent.setChildren(size);
-            if (size > 0){
-                parent.setStatus(TaskStatus.folder);
-            } else {
-                parent.setStatus(TaskStatus.active);
-            }
-            dao.save(parent);
-        }
+//        if (parent.getChildren() != size){
+//            parent.setChildren(size);
+//            if (size > 0){
+//                parent.setStatus(TaskStatus.folder);
+//            } else {
+//                parent.setStatus(TaskStatus.active);
+//            }
+//            dao.save(parent);
+//        }
         if (!parent.isTop()){
             System.out.println("\t...Have parent");
 //            checkParenthood(parent.getParent(), user);
@@ -78,23 +77,17 @@ public class TaskUtil {
     }
 
     public static void main(String[] args) {
-        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-        long time = timestamp.getTime();
-        
-        System.out.println(Long.highestOneBit(time));
-        System.out.println(Arrays.toString(timestamp.toString().getBytes()));
-        System.out.println();
-        System.out.println();
-        UUID uuid1 = UUID.randomUUID();
-        System.out.println(uuid1.getLeastSignificantBits());
-        System.out.println(uuid1.getMostSignificantBits());
 
+        Hibernator hibernator = Hibernator.getInstance();
+        dbDAO dao = dbDAOService.getDao();
 
-
-//        System.out.println();
-
-//        Hibernator hibernator = Hibernator.getInstance();
-
+        for (Project project : hibernator.query(Project.class, null)){
+            System.out.println(project.getTitle());
+            for (Task task : dao.getTaskByUserAndParent(project.getOwner(), project.getTask().getCategory())){
+                System.out.print("\t - " + task.getParent().getName() + "-");
+                System.out.println(task.getTitle());
+            }
+        }
 //        for (Task task : hibernator.query(Task.class, null)){
 //            if (task.getCategory() == null) {
 //                TransactionCategory category = new TransactionCategory();
@@ -111,7 +104,7 @@ public class TaskUtil {
 //                hibernator.save(category);
 //            }
 //        }
-//        HibernateSessionFactory.shutdown();
+        HibernateSessionFactory.shutdown();
     }
 
     public static void checkSpellTime(Task task) {

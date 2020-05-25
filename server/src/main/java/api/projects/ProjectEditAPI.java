@@ -37,9 +37,8 @@ public class ProjectEditAPI extends ServletAPI {
             if (project == null){
                 project = new Project();
                 project.setOwner(user);
-                Task task = new Task();
+                Task task = Task.newTask(null);
                 task.setStatus(TaskStatus.root);
-                task.setCategory(new TransactionCategory());
                 task.setOwner(user);
                 project.setTask(task);
                 ProjectType type = ProjectType.valueOf(String.valueOf(body.get(TYPE)));
@@ -47,7 +46,7 @@ public class ProjectEditAPI extends ServletAPI {
             }
 
             String title = String.valueOf(body.get(TITLE));
-            project.getTask().getCategory().setName(title);
+            project.setName(title);
 
             if (body.containsKey(BEGIN)) {
                 Date begin = Date.valueOf(String.valueOf(body.get(BEGIN)));

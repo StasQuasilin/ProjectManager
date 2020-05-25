@@ -1,5 +1,6 @@
 package entity.transactions.buy.list;
 
+import entity.transactions.TransactionCategory;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
 import static constants.Keys.*;
@@ -12,6 +13,7 @@ public class BuyListItem extends JsonAble {
     private BuyList buyList;
     private String title;
     private float price;
+    private TransactionCategory category;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,6 +49,15 @@ public class BuyListItem extends JsonAble {
     }
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "category")
+    public TransactionCategory getCategory() {
+        return category;
+    }
+    public void setCategory(TransactionCategory category) {
+        this.category = category;
     }
 
     @Override

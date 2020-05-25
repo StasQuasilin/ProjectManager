@@ -30,8 +30,6 @@ public class TaskTimeEditAPI extends ServletAPI {
             int length = Integer.parseInt(String.valueOf(body.get(LENGTH)));
             LocalDate now = LocalDate.now();
             Timestamp time = Timestamp.valueOf(LocalDateTime.of(now, LocalTime.of(index, 0)));
-            task.setDate(Date.valueOf(now));
-            task.setTimestamp(time);
             dao.save(task);
             write(resp, SUCCESS);
         }

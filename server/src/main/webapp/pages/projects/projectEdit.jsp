@@ -195,7 +195,10 @@ if (edit.project.begin && edit.project.end){
           </label>
         </td>
         <td>
-          <input id="cost" v-model.number="project.cost" style="width: 100px">
+          <input id="cost" v-model.number="project.cost" style="width: 90px">
+          <span class="mini-button" v-on:click="withCost = false">
+            &times;
+          </span>
         </td>
       </tr>
       <tr>

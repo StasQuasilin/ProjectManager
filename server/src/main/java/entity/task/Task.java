@@ -6,6 +6,7 @@ import entity.project.iTask;
 import entity.transactions.TransactionCategory;
 import entity.user.User;
 import org.json.simple.JSONObject;
+import utils.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -16,20 +17,17 @@ import java.sql.Timestamp;
  */
 @Entity
 @Table(name = "tasks")
-public class Task extends Category implements Comparable<Task>, Keys {
+public class Task extends JsonAble implements Comparable<Task>, Keys {
     private int id;
-    private Date date;
-    private Timestamp timestamp;
+    private TransactionCategory category;
     private TaskStatus status;
     private TaskType type;
-    private TransactionCategory category;
-    private float cost;
-    private Account account;
     private User owner;
     private User doer;
     private String description;
-    private int children;
     private TaskStatistic statistic;
+
+    public Task() {}
 
     @OneToOne(fetch = FetchType.EAGER, mappedBy = "task", cascade = CascadeType.ALL)
     public TaskStatistic getStatistic() {
@@ -48,24 +46,6 @@ public class Task extends Category implements Comparable<Task>, Keys {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = DATE)
-    public Date getDate() {
-        return date;
-    }
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    @Basic
-    @Column(name = TIMESTAMP)
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-    public void setTimestamp(Timestamp date) {
-        this.timestamp = date;
-    }
-
     @Enumerated(EnumType.STRING)
     @Column(name = STATUS)
     public TaskStatus getStatus() {
@@ -76,7 +56,7 @@ public class Task extends Category implements Comparable<Task>, Keys {
     }
 
     @Enumerated(EnumType.STRING)
-    @Column(name = TYPE)
+    @Column(name = "type")
     public TaskType getType() {
         return type;
     }
@@ -91,15 +71,6 @@ public class Task extends Category implements Comparable<Task>, Keys {
     }
     public void setCategory(TransactionCategory category) {
         this.category = category;
-    }
-
-    @Basic
-    @Column(name = COST)
-    public float getCost() {
-        return cost;
-    }
-    public void setCost(float cost) {
-        this.cost = cost;
     }
 
     @OneToOne
@@ -129,24 +100,6 @@ public class Task extends Category implements Comparable<Task>, Keys {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = CHILDREN)
-    public int getChildren() {
-        return children;
-    }
-    public void setChildren(int children) {
-        this.children = children;
-    }
-
-    @OneToOne
-    @JoinColumn(name = BUDGET)
-    public Account getAccount() {
-        return account;
-    }
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
     @Override
     public int compareTo(Task o) {
         return o.getCategory().compareTo(getCategory());
@@ -156,39 +109,30 @@ public class Task extends Category implements Comparable<Task>, Keys {
     public JSONObject shortJson() {
         JSONObject object = pool.getObject();
         object.put(ID, id);
-        object.put(TITLE, category.getName());
+        if (category != null) {
+            object.put(TITLE, category.getName());
+        }
         return object;
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject object = shortJson();
-
-        if (date != null){
-            object.put(DATE, date.toString());
-        }
-        if (timestamp != null) {
-            object.put(TIMESTAMP, timestamp.toString());
-        }
         object.put(STATUS, status.toString());
-
         object.put(DESCRIPTION, description);
-        object.put(IS_GROUP, children > 0);
-        object.put(CHILDREN, children);
         if (doer != null){
             object.put(DOER, doer.toJson());
         }
-        object.put(COAST, cost);
         if (statistic != null){
             object.put(STATISTIC, statistic.toJson());
         }
         return object;
     }
 
-    @Transient
-    public boolean isGroup() {
-        return children > 0;
-    }
+//    @Transient
+//    public boolean isGroup() {
+//        return children > 0;
+//    }
 
     @Transient
     public boolean isTop(){
@@ -208,5 +152,33 @@ public class Task extends Category implements Comparable<Task>, Keys {
             }
         }
         return 0;
+    }
+
+    public void setParent(Task parent) {
+
+    }
+
+    @Transient
+    public TransactionCategory getParent() {
+        return category.getParent();
+    }
+
+    public static Task newTask(String title){
+        Task task = new Task();
+        TransactionCategory category = new TransactionCategory();
+        if (title != null) {
+            category.setName(title);
+        }
+        task.setCategory(category);
+        return task;
+    }
+
+    public void setName(String title) {
+        category.setName(title);
+    }
+
+    @Transient
+    public String getTitle() {
+        return category.getName();
     }
 }

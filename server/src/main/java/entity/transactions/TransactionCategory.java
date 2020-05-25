@@ -10,12 +10,14 @@ import utils.JsonAble;
 
 import javax.persistence.*;
 
+import static constants.Keys.*;
+
 /**
  * Created by szpt_user045 on 26.02.2020.
  */
 @Entity
 @Table(name = TableNames.TRANSACTION_CATEGORY)
-public class TransactionCategory extends JsonAble implements Keys, Comparable<TransactionCategory> {
+public class TransactionCategory extends JsonAble implements Comparable<TransactionCategory> {
     private int id;
     private String name;
     private TransactionCategory parent;
@@ -63,7 +65,6 @@ public class TransactionCategory extends JsonAble implements Keys, Comparable<Tr
     public boolean isActive() {
         return active;
     }
-
     public void setActive(boolean active) {
         this.active = active;
     }

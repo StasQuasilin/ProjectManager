@@ -2,7 +2,6 @@ package entity.task;
 
 import entity.user.User;
 import org.json.simple.JSONObject;
-import utils.JsonAble;
 
 import javax.persistence.*;
 

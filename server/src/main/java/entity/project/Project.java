@@ -3,7 +3,9 @@ package entity.project;
 import constants.Keys;
 import constants.TableNames;
 import entity.task.Task;
+import entity.transactions.buy.list.BuyList;
 import entity.user.User;
+import org.hibernate.annotations.Cascade;
 import org.json.simple.JSONObject;
 import utils.JsonAble;
 
@@ -24,6 +26,7 @@ public class Project extends JsonAble implements Keys {
     private String description;
     private Task task;
     private ProjectType type;
+    private BuyList buyList;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -88,6 +91,13 @@ public class Project extends JsonAble implements Keys {
         this.type = type;
     }
 
+    @OneToOne(fetch = FetchType.EAGER, mappedBy="project", cascade = CascadeType.ALL)
+    public BuyList getBuyList() {
+        return buyList;
+    }
+    public void setBuyList(BuyList buyList) {
+        this.buyList = buyList;
+    }
 
     @Transient
     public float getTimeProgress() {
@@ -109,5 +119,14 @@ public class Project extends JsonAble implements Keys {
         }
         object.put(DESCRIPTION, description);
         return object;
+    }
+
+    public void setName(String title) {
+        task.setName(title);
+    }
+
+    @Transient
+    public String getTitle() {
+        return task.getTitle();
     }
 }
