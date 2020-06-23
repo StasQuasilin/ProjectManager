@@ -1,0 +1,19 @@
+.body-wrapper {
+}
+.navigation-menu{
+
+}
+.navigation-menu div{
+    padding: 4px 2px;
+    border-bottom: solid gray 4px;
+}
+.navigation-menu div:hover{
+    background-color: #c9c9c9;
+    border-bottom: solid orange 4px;
+}
+.modal-layer{
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0.82);
+    width: 100%;
+    height: 100%;
+}

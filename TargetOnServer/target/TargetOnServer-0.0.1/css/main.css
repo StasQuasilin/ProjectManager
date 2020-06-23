@@ -1,0 +1,8 @@
+* {
+    user-select: none;
+    font-family: 'Segoe UI', 'Roboto', arial, sans-serif;
+    background-color: #f0fff8;
+}
+body{
+    margin: 0;
+}
