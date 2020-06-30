@@ -17,10 +17,17 @@ function loadPage(url, params) {
         PostReq(url, params, function (content) {
             $(contentHolder).empty();
             $(contentHolder).html(content);
+            $(titleHolder).html(GetChildElemById(contentHolder, 'title'));
+            $(titleHolder).append(GetChildElemById(contentHolder, 'titleContent'));
         })
     }
 }
-
+function loadModal(url, parameters){
+    PostReq(url, parameters, function (answer) {
+        $(modal).html(answer);
+        modal.style.display = 'block';
+    })
+}
 function hideModalLayer() {
     modal.style.display = 'none';
 }

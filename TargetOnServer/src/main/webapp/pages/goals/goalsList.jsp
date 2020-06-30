@@ -10,10 +10,12 @@
     <script>
         subscriber.subscribe('${subscribe}', goalList.handler)
     </script>
+    <jsp:include page="goalHeader.jsp"></jsp:include>
     <body>
         <div id="goalList">
-            {{test}}
+            <div v-for="goal in items">
+                {{goal}}
+            </div>
         </div>
-        GOALS
     </body>
 </html>

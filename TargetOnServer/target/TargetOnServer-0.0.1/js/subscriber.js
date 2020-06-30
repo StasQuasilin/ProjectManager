@@ -18,15 +18,19 @@ let subscriber = {
         this.socket.onopen = function(){
             console.log('OPEN!!')
         }
+
+        const self = this;
         this.socket.onmessage = function (env) {
             let json = JSON.parse(env.data);
-            console.log(json);
             let subscribe = json.subscribe;
             let data = json.data;
-            console.log(subscriber.subscribes);
-            let handler = this.subscribes[subscribe];
-            if (handler){
-                handler(data);
+            if (self.subscribes) {
+                let handler = self.subscribes[subscribe];
+                if (handler) {
+                    handler(data);
+                }
+            } else {
+                console.log('Subscribers is ' + typeof self.subscribes);
             }
         }
         this.socket.onclose = function () {

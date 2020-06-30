@@ -7,8 +7,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-import static constants.Keys.ASTERISK;
-import static constants.Keys.CONTEXT;
+import static constants.Keys.*;
 
 @WebFilter(value = {ASTERISK})
 public class ContextFilter implements Filter {
@@ -21,6 +20,7 @@ public class ContextFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         request.setAttribute(CONTEXT, request.getContextPath());
+        request.setAttribute(LOCALE, "uk");
         filterChain.doFilter(request, servletResponse);
     }
 

@@ -2,6 +2,7 @@ package constants;
 
 public interface Keys {
     String CONTEXT = "context";
+    String LOCALE = "locale";
     String CONTENT = "content";
     String ACTION = "action";
     String ID= "id";
@@ -32,4 +33,5 @@ public interface Keys {
     String DATA = "data";
     String ADD = "add";
     String USER = "user";
+    String EDIT = "edit";
 }

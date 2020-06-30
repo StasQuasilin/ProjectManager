@@ -10,4 +10,5 @@ public interface UrlLinks {
     String TREE = "/tree" + SUFFIX;
     String CALENDAR = "/calendar" + SUFFIX;
     String FINANCES = "/finances" + SUFFIX;
+    String GOAL_EDIT = "/goal/edit" + SUFFIX;
 }

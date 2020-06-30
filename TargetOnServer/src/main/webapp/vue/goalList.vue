@@ -1,9 +1,12 @@
 goalList = new Vue({
     el:'#goalList',
-    mixin:[list],
+    mixins:[list],
     data:function(){
         return {
             test:'TEST'
         }
+    },
+    methods:{
+
     }
 })
