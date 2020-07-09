@@ -1,3 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:bundle basename="messages"/>
+<fmt:setLocale value="${locale}"/>
 <%--
   Created by IntelliJ IDEA.
   User: Kvasik
@@ -9,13 +13,15 @@
     <div class="modal-window">
         <div class="modal-title">
             &nbsp;
-            <span class="close-modal-button ">
+            <c:if test="${not empty title}">
+                <fmt:message key="${title}"/>
+            </c:if>
+            <span class="close-modal-button text-button" onclick="closeModal()">
                 &times;
             </span>
         </div>
         <div class="modal-content">
-            MODAL WINDOW!!!!
+            <jsp:include page="${content}"/>
         </div>
-
     </div>
 </div>

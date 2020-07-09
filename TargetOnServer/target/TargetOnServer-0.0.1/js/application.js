@@ -3,13 +3,14 @@ let contentHolder;
 let modal;
 let coverlet;
 let currentPage;
+let modals = [];
 
 $(document).ready(function () {
     titleHolder = document.getElementById('titleHolder');
     contentHolder = document.getElementById('contentHolder');
     modal = document.getElementById('modalLayer');
     hideModalLayer();
-})
+});
 
 function loadPage(url, params) {
     if (url && currentPage !== url) {
@@ -30,4 +31,7 @@ function loadModal(url, parameters){
 }
 function hideModalLayer() {
     modal.style.display = 'none';
+}
+function closeModal(){
+    hideModalLayer();
 }

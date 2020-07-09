@@ -13,7 +13,7 @@ import static constants.Keys.*;
 public class ContextFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) {
-        Hibernator.getInstance();
+//        Hibernator.getInstance();
     }
 
     @Override

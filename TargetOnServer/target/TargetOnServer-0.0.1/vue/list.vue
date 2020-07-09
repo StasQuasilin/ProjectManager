@@ -1,16 +1,30 @@
 let list = {
     data:function () {
         return {
+            api:{},
             items: {}
         }
     },
     methods:{
+        edit:function(id){
+            if (this.api.edit){
+                let data = {};
+                if (id){
+                    data.id = id;
+                }
+                loadModal(this.api.edit, data)
+            }
+        },
         handler:function(items){
-            console.log(items);
-            for (let a in items.add){
-                if (items.add.hasOwnProperty(a)){
-                    let item = items.add[a];
-                    this.update(item);
+            if(items) {
+                for (let a in items.add) {
+                    if (items.add.hasOwnProperty(a)) {
+                        let item = items.add[a];
+                        this.update(item);
+                    }
+                }
+                if (items.update){
+                    this.update(items.update);
                 }
             }
         },
@@ -19,7 +33,12 @@ let list = {
             Vue.set(this.items, item.id, item);
         },
         getItems:function () {
-            return Object.values(this.items);
+            let values = Object.values(this.items);
+            values.sort(this.sort);
+            return values;
+        },
+        sort:function(){
+            return false;
         }
     }
-}
+};

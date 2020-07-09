@@ -1,12 +1,16 @@
 package entity.finance;
 
 import entity.user.User;
+import org.json.simple.JSONObject;
+import utils.json.JsonAble;
 
 import javax.persistence.*;
 
+import static constants.Keys.*;
+
 @Entity
 @Table(name = "accounts")
-public class Account {
+public class Account extends JsonAble{
     private int id;
     private AccountType type;
     private String title;
@@ -87,5 +91,17 @@ public class Account {
     }
     public void setOwner(User owner) {
         this.owner = owner;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = getJsonObject();
+        jsonObject.put(ID, id);
+        jsonObject.put(TITLE, title);
+        jsonObject.put(TYPE, type.toString());
+        jsonObject.put(SUM, sum);
+        jsonObject.put(CURRENCY, currency);
+        jsonObject.put(LIMIT, limit);
+        return jsonObject;
     }
 }

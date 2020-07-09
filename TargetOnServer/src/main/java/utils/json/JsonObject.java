@@ -22,4 +22,22 @@ public class JsonObject {
     public String toString() {
         return json.toJSONString();
     }
+
+    public Object get(String key) {
+        return json.get(key);
+    }
+
+    public float getFloat(String name) {
+        if (containKey(name)){
+            return Float.parseFloat(String.valueOf(json.get(name)));
+        }
+        return 0;
+    }
+
+    public int getInt(String name) {
+        if (containKey(name)){
+            return Integer.parseInt(String.valueOf(json.get(name)));
+        }
+        return 0;
+    }
 }

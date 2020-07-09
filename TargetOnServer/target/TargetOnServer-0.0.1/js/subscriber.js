@@ -3,10 +3,11 @@ let subscriber = {
     subscribes:{},
     subscribe:function(subscriber, handler){
         let data = {
-            'action':SUBSCRIBE,
+            'action':'subscribe',
             'subscribe':subscriber,
             'user':user
-        }
+        };
+        console.log(data);
         this.socket.send(JSON.stringify(data));
         this.subscribes[subscriber] = handler;
     },
@@ -17,7 +18,7 @@ let subscriber = {
         this.socket = new WebSocket('ws://' + window.location.host + context + SUBSCRIBE_API);
         this.socket.onopen = function(){
             console.log('OPEN!!')
-        }
+        };
 
         const self = this;
         this.socket.onmessage = function (env) {

@@ -12,6 +12,7 @@
     margin: auto;
     top: 50%;
     bottom: 50%;
+    height: fit-content;
 }
 .modal-title{
     background-color: darkgoldenrod;

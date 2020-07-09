@@ -5,6 +5,7 @@ public enum Subscribe {
     tree,
     calendar,
     finance,
+    accounts,
     team,
     messages
 }
