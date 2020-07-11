@@ -94,10 +94,16 @@ public class Account extends JsonAble{
     }
 
     @Override
-    public JSONObject toJson() {
+    public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
         jsonObject.put(TITLE, title);
+        return jsonObject;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = shortJson();
         jsonObject.put(TYPE, type.toString());
         jsonObject.put(SUM, sum);
         jsonObject.put(CURRENCY, currency);

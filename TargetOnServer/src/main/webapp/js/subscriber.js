@@ -2,14 +2,15 @@ let subscriber = {
     socket : null,
     subscribes:{},
     subscribe:function(subscriber, handler){
-        let data = {
-            'action':'subscribe',
-            'subscribe':subscriber,
-            'user':user
-        };
-        console.log(data);
-        this.socket.send(JSON.stringify(data));
-        this.subscribes[subscriber] = handler;
+        if (this.socket.isOpen) {
+            let data = {
+                'action': 'subscribe',
+                'subscribe': subscriber,
+                'user': user
+            };
+            this.socket.send(JSON.stringify(data));
+            this.subscribes[subscriber] = handler;
+        }
     },
     send:function(message){
         this.socket.send(message);
@@ -33,9 +34,9 @@ let subscriber = {
             } else {
                 console.log('Subscribers is ' + typeof self.subscribes);
             }
-        }
+        };
         this.socket.onclose = function () {
 
         }
     }
-}
+};

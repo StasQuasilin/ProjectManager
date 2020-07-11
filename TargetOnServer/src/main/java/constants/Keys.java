@@ -6,11 +6,13 @@ public interface Keys {
     String CONTENT = "content";
     String ACTION = "action";
     String ID= "id";
+    String DATE = "date";
     String NAME = "name";
     String UID = "uid";
     String SUBSCRIBE = "subscribe";
     String SLASH = "/";
     String ASTERISK = "*";
+    String GOAL = "goal";
     String GOALS = "goals";
     String TREE = "tree";
     String CALENDAR = "calendar";
@@ -37,6 +39,7 @@ public interface Keys {
     String EDIT = "edit";
     String SAVE = "save";
     String TRANSACTION_EDIT = "transactionEdit";
+    String TRANSACTION = "transaction";
     String FAST_TRANSACTION_EDIT = "fastTransactionEdit";
     String ACCOUNT_EDIT = "accountEdit";
     String BUY_LIST_EDIT = "buyListEdit";
@@ -46,9 +49,14 @@ public interface Keys {
     String LIMIT = "limit";
     String ACCOUNT = "account";
     String ACCOUNTS = "accounts";
+    String ACCOUNT_FROM = "accountFrom";
+    String ACCOUNT_TO = "accountTo";
+    String COUNTERPARTY = "counterparty";
     String CURRENCY = "currency";
+    String RATE = "rate";
     String FIND_CATEGORY = "findCategory";
     String FIND_COUNTERPARTY = "findCounterparty";
+    String TRANSACTION_SUBSCRIBE = "transactionSubscribe";
     String ACCOUNT_SUBSCRIBE = "accountSubscribe";
     String SUM = "sum";
 }

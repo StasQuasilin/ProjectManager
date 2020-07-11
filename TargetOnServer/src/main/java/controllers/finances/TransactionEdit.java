@@ -3,11 +3,14 @@ package controllers.finances;
 import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
+import entity.finance.Transaction;
 import entity.finance.TransactionType;
 import entity.user.User;
 import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.currency.CurrencyDAO;
+import utils.db.dao.finance.transactions.TransactionDAO;
+import utils.json.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,9 +31,16 @@ public class TransactionEdit extends ModalWindow {
 
     private final AccountDAO accountDAO = daoService.getAccountDAO();
     private final CurrencyDAO currencyDAO = daoService.getCurrencyDAO();
+    private final TransactionDAO transactionDAO = daoService.getTransactionDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JsonObject body = parseBody(req);
+        if (body != null){
+            System.out.println(body);
+            Transaction transaction = transactionDAO.getTransaction(body.get(ID));
+            req.setAttribute(TRANSACTION, transaction);
+        }
         req.setAttribute(SAVE, ApiLinks.TRANSACTION_SAVE);
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);

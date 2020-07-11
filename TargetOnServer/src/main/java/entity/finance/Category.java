@@ -63,10 +63,18 @@ public class Category extends JsonAble {
     }
 
     @Override
-    public JSONObject toJson() {
+    public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
         jsonObject.put(TITLE, title);
+        return jsonObject;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject jsonObject = shortJson();
+
+
         if (parent != null){
             jsonObject.put(PARENT, parent.toJson());
         }

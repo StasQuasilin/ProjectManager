@@ -14,6 +14,7 @@
 <script>
   transactionEdit.api.findCategory = '${findCategory}';
   transactionEdit.api.findCounterparty = '${findCounterparty}';
+  transactionEdit.api.save = '${save}';
   <c:forEach items="${types}" var="type">
   transactionEdit.types.push({
     id:'${type}',
@@ -26,8 +27,17 @@
   <c:forEach items="${accounts}" var="account">
   transactionEdit.accounts.push(${account.toJson()});
   </c:forEach>
+  <c:choose>
+  <c:when test="${not empty transaction}">
+  transactionEdit.transaction = ${transaction.toJson()}
+  </c:when>
+  <c:otherwise>
   transactionEdit.transaction.type = transactionEdit.types[0].id;
   transactionEdit.transaction.accountFrom = transactionEdit.accounts[0];
+  transactionEdit.transaction.currency = transactionEdit.currency[0];
+  </c:otherwise>
+  </c:choose>
+
 </script>
 <table id="transactionEdit">
   <tr>
@@ -54,7 +64,7 @@ ${locale}
               </label>
             </td>
             <td>
-              <input id="category">
+              <input id="category" v-model="transaction.category.title" autocomplete="off">
             </td>
           </tr>
           <tr>
@@ -64,9 +74,9 @@ ${locale}
               </label>
             </td>
             <td>
-              <select id="accountFrom" v-model="transaction.accountFrom">
-                <option v-for="account in accounts" :value="account">
-                  {{account.title}}
+              <select id="accountFrom" v-model="transaction.accountFrom.id">
+                <option v-for="account in accounts" :value="account.id">
+                  {{account.title}} ( {{account.sum}} {{account.currency}} )
                 </option>
               </select>
             </td>
@@ -78,7 +88,7 @@ ${locale}
               </label>
             </td>
             <td>
-              <input id="sum" v-model.number="transaction.sum" style="width: 90px;"
+              <input id="sum" v-model.number="transaction.amount" style="width: 90px;"
                      autocomplete="off" onfocus="this.select()">
               <select v-model="transaction.currency">
                 <option v-for="c in currency" :value="c">
@@ -87,7 +97,16 @@ ${locale}
               </select>
             </td>
           </tr>
-
+          <tr v-if="transaction.accountFrom.currency !== transaction.currency">
+            <td>
+              <label for="rate">
+                <fmt:message key="transaction.rate"/>
+              </label>
+            </td>
+            <td>
+              <input id="rate" v-model="transaction.rate" autocomplete="off" onfocus="this.select()">
+            </td>
+          </tr>
         </table>
         <template v-if="transaction.type === 'payment'">
 
@@ -103,10 +122,10 @@ ${locale}
   </tr>
   <tr>
     <td colspan="2" style="text-align: center">
-      <button v-on:click="closeModal()">
+      <button onclick="closeModal()">
         <fmt:message key="button.cancel"/>
       </button>
-      <button>
+      <button v-on:click="save()">
         <fmt:message key="button.save"/>
       </button>
     </td>

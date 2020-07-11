@@ -8,7 +8,8 @@ transactionEdit = new Vue({
         transaction:{
             id:-1,
             type:null,
-            date:new Date().toISOString(),
+            date:new Date().toISOString().substring(0, 10),
+            category:{},
             accountFrom:null,
             accountTo:null,
             counterparty:null,
@@ -16,6 +17,15 @@ transactionEdit = new Vue({
             currency:null,
             rate:1,
             comment:''
+        }
+    },
+    methods:{
+        save:function(){
+            PostApi(this.api.save, this.transaction, function(a){
+                if (a.status === 'success'){
+                    closeModal();
+                }
+            })
         }
     }
 });

@@ -14,6 +14,7 @@
   fastTransactions.api.edit = '${fastTransactionEdit}';
   accounts.api.edit = '${accountEdit}';
   buyList.api.edit = '${buyListEdit}';
+  subscriber.subscribe('${transactionSubscribe}', transactionsList.handler);
   subscriber.subscribe('${accountSubscribe}', accounts.handler);
 </script>
 <table class="full-size" border="1">

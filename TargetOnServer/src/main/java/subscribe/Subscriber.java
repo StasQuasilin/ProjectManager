@@ -5,6 +5,7 @@ import org.json.simple.JSONObject;
 import subscribe.handlers.AccountHandler;
 import subscribe.handlers.GoalHandler;
 import subscribe.handlers.SubscribeHandler;
+import subscribe.handlers.TransactionHandler;
 import utils.UpdateAction;
 import utils.json.JsonAble;
 
@@ -28,6 +29,7 @@ public final class Subscriber {
     private final HashMap<Subscribe, SubscribeHandler> handlers = new HashMap<>();
     {
         addHandler(new GoalHandler());
+        addHandler(new TransactionHandler());
         addHandler(new AccountHandler());
     }
 

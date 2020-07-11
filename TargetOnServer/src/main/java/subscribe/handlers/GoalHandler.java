@@ -4,12 +4,13 @@ import entity.goal.Goal;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import subscribe.Subscribe;
+import utils.db.dao.daoService;
 import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.goal.GoalDAOImpl;
 
 public class GoalHandler extends SubscribeHandler{
 
-    private final GoalDAO goalDAO = new GoalDAOImpl();
+    private final GoalDAO goalDAO = daoService.getGoalDAO();
 
     public GoalHandler() {
         super(Subscribe.goal);

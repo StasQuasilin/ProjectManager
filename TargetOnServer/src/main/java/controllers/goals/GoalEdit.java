@@ -3,6 +3,9 @@ package controllers.goals;
 import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
+import utils.db.dao.daoService;
+import utils.db.dao.goal.GoalDAO;
+import utils.json.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,9 +18,14 @@ import static constants.Keys.*;
 public class GoalEdit extends ModalWindow {
 
     private static final String _CONTENT = "/pages/goals/goalEdit.jsp";
+    private final GoalDAO goalDAO = daoService.getGoalDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JsonObject body = parseBody(req);
+        if (body != null){
+            req.setAttribute(GOAL, goalDAO.getGoal(body.get(ID)));
+        }
         req.setAttribute(CONTENT, _CONTENT);
         req.setAttribute(SAVE, ApiLinks.GOAL_SAVE);
         show(req, resp);

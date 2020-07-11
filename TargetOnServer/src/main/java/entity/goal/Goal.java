@@ -1,6 +1,7 @@
 package entity.goal;
 
-import entity.task.Task;
+import entity.finance.Category;
+import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
 
@@ -13,7 +14,7 @@ import static constants.Keys.*;
 @Table(name = "goals")
 public class Goal extends JsonAble {
     private int id;
-    private Task task;
+    private Category category;
     private Date begin;
     private Date end;
 
@@ -26,13 +27,11 @@ public class Goal extends JsonAble {
         this.id = id;
     }
 
-    @OneToOne
-    @JoinColumn(name = "task")
-    public Task getTask() {
-        return task;
+    public Category getCategory() {
+        return category;
     }
-    public void setTask(Task task) {
-        this.task = task;
+    public void setCategory(Category task) {
+        this.category = task;
     }
 
     @Basic
@@ -55,7 +54,7 @@ public class Goal extends JsonAble {
 
     @Override
     public JSONObject toJson() {
-        JSONObject jsonObject = task.toJson();
+        JSONObject jsonObject = category.toJson();
         jsonObject.put(ID, id);
         if (begin != null){
             jsonObject.put(BEGIN, begin.toString());
@@ -68,5 +67,8 @@ public class Goal extends JsonAble {
         return jsonObject;
     }
 
-
+    @Transient
+    public User getOwner() {
+        return category.getOwner();
+    }
 }

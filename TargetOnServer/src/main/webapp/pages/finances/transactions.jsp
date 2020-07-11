@@ -3,7 +3,7 @@
 <fmt:setLocale value="${locale}"/>
 
 <script>
-    transactionsList.items[1] = (1);
+
 </script>
 <table id="transactions" class="full-size">
     <tr>
@@ -17,8 +17,14 @@
     <tr>
         <td class="full-size">
             <div class="full-size item-container">
-                <div v-for="item in getItems()">
+                <div v-for="item in getItems()" v-on:click="edit(item.id)">
                     {{item}}
+                    <%--<div>--%>
+                        <%--{{new Date(item).toLocaleDateString()}} {{item.type}}--%>
+                    <%--</div>--%>
+                    <%--<div>--%>
+                        <%--{{item.title}}--%>
+                    <%--</div>--%>
                 </div>
             </div>
         </td>
