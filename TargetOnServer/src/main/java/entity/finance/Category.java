@@ -18,7 +18,7 @@ public class Category extends JsonAble {
     private User owner;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     public int getId() {
         return id;
     }
@@ -73,13 +73,10 @@ public class Category extends JsonAble {
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = shortJson();
-
-
         if (parent != null){
             jsonObject.put(PARENT, parent.toJson());
         }
         jsonObject.put(OWNER, owner.toJson());
-
         return jsonObject;
     }
 }

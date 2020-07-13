@@ -45,7 +45,9 @@ public final class Subscriber {
     final HashMap<User, ArrayList<Session>> sessionMap = new HashMap<>();
 
     public void subscribe(User user, Subscribe subscribe, Session session){
+        System.out.println("User '" + user.toString() + " subscribe on " + subscribe.toString());
         SubscribeHandler handler = handlers.get(subscribe);
+
         if (handler != null) {
             handler.onSubscribe(user, session);
             if (!subscribes.containsKey(user)){
@@ -72,26 +74,28 @@ public final class Subscriber {
 
     public void send(Subscribe subscribe, UpdateAction action, JsonAble jsonAble, User user) {
         ArrayList<Subscribe> subscribes = this.subscribes.get(user);
-        for (Subscribe sub : subscribes){
-            if (sub == subscribe){
-                JSONObject json = new JSONObject();
-                json.put(action.toString(), jsonAble.toJson());
+        if (subscribes != null) {
+            for (Subscribe sub : subscribes) {
+                if (sub == subscribe) {
+                    JSONObject json = new JSONObject();
+                    json.put(action.toString(), jsonAble.toJson());
 
-                JSONObject object = new JSONObject();
-                object.put(SUBSCRIBE, subscribe.toString());
-                object.put(DATA, json);
+                    JSONObject object = new JSONObject();
+                    object.put(SUBSCRIBE, subscribe.toString());
+                    object.put(DATA, json);
 
-                String s = object.toJSONString();
-                ArrayList<Session> sessions = sessionMap.get(user);
-                for (Session session : sessions){
-                    try {
-                        if (session.isOpen()){
-                            session.getBasicRemote().sendText(s);
-                        } else {
-                            System.out.println("Session '" + session.getId() +"' is Close");
+                    String s = object.toJSONString();
+                    ArrayList<Session> sessions = sessionMap.get(user);
+                    for (Session session : sessions) {
+                        try {
+                            if (session.isOpen()) {
+                                session.getBasicRemote().sendText(s);
+                            } else {
+                                System.out.println("Session '" + session.getId() + "' is Close");
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 }
             }

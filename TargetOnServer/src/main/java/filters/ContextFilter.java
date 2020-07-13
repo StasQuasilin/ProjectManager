@@ -1,5 +1,6 @@
 package filters;
 
+import entity.user.User;
 import utils.db.hibernate.Hibernator;
 
 import javax.servlet.*;
@@ -11,9 +12,13 @@ import static constants.Keys.*;
 
 @WebFilter(value = {ASTERISK})
 public class ContextFilter implements Filter {
+
+    private User user;
+
     @Override
     public void init(FilterConfig filterConfig) {
-//        Hibernator.getInstance();
+        Hibernator instance = Hibernator.getInstance();
+        user = instance.get(User.class, ID, 1);
     }
 
     @Override
@@ -21,6 +26,7 @@ public class ContextFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         request.setAttribute(CONTEXT, request.getContextPath());
         request.setAttribute(LOCALE, "uk");
+        request.getSession().setAttribute(USER, user);
         filterChain.doFilter(request, servletResponse);
     }
 

@@ -2,7 +2,7 @@ let subscriber = {
     socket : null,
     subscribes:{},
     subscribe:function(subscriber, handler){
-        if (this.socket.isOpen) {
+        if (this.socket.readyState === WebSocket.OPEN) {
             let data = {
                 'action': 'subscribe',
                 'subscribe': subscriber,
@@ -10,6 +10,10 @@ let subscriber = {
             };
             this.socket.send(JSON.stringify(data));
             this.subscribes[subscriber] = handler;
+        } else {
+            console.log('Connecting:' + WebSocket.CONNECTING);
+            console.log('Open: ' + WebSocket.OPEN);
+            console.error('Socket status: \'' + this.socket.readyState);
         }
     },
     send:function(message){
@@ -36,7 +40,7 @@ let subscriber = {
             }
         };
         this.socket.onclose = function () {
-
+            console.log('Socket is close')
         }
     }
 };

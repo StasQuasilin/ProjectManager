@@ -49,4 +49,9 @@ public class User extends JsonAble {
         jsonObject.put(FORENAME, forename);
         return jsonObject;
     }
+
+    @Override
+    public String toString() {
+        return id + COLON + SPACE + surname + SPACE + forename;
+    }
 }

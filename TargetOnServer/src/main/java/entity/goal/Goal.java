@@ -27,15 +27,17 @@ public class Goal extends JsonAble {
         this.id = id;
     }
 
+    @OneToOne
+    @JoinColumn(name = "category")
     public Category getCategory() {
         return category;
     }
-    public void setCategory(Category task) {
-        this.category = task;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Basic
-    @Column(name = "begin")
+    @Column(name = "_begin")
     public Date getBegin() {
         return begin;
     }
@@ -44,7 +46,7 @@ public class Goal extends JsonAble {
     }
 
     @Basic
-    @Column(name = "end")
+    @Column(name = "_end")
     public Date getEnd() {
         return end;
     }
@@ -54,7 +56,7 @@ public class Goal extends JsonAble {
 
     @Override
     public JSONObject toJson() {
-        JSONObject jsonObject = category.toJson();
+        JSONObject jsonObject = category.shortJson();
         jsonObject.put(ID, id);
         if (begin != null){
             jsonObject.put(BEGIN, begin.toString());
@@ -62,7 +64,6 @@ public class Goal extends JsonAble {
         if (end != null){
             jsonObject.put(END, end.toString());
         }
-
 
         return jsonObject;
     }

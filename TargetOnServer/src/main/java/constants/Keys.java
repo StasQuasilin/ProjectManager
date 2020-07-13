@@ -25,6 +25,8 @@ public interface Keys {
     String OWNER = "owner";
     String MEMBER = "member";
     String TITLE = "title";
+    String DATE_BEGIN = "dateBegin";
+    String DATE_END = "dateEnd";
     String PARENT = "parent";
     String SURNAME = "surname";
     String FORENAME = "forename";
@@ -59,4 +61,6 @@ public interface Keys {
     String TRANSACTION_SUBSCRIBE = "transactionSubscribe";
     String ACCOUNT_SUBSCRIBE = "accountSubscribe";
     String SUM = "sum";
+    String COLON = ":";
+    String SPACE = " ";
 }

@@ -28,7 +28,7 @@ public class EndPoint {
         JsonObject parse = parser.parse(message);
         if (parse != null){
             if (parse.containKey(USER)) {
-                String id = parse.getString(USER);
+                Object id = parse.get(USER);
                 User user = userDAO.getUserById(id);
 
                 if (!sessions.containsKey(session)) {

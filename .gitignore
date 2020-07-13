@@ -30,3 +30,6 @@ server/target/classes/log4j.properties
 server/ProjectManager.iml
 server/out/
 server/out/*
+TargetOnServer/target/
+TargetOnServer/target/*
+TargetOnServer/.idea/workspace.xml
