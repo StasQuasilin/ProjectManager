@@ -1,7 +1,10 @@
 package controllers.tree;
 
+import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.Page;
+import subscribe.Subscribe;
+import utils.json.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +24,14 @@ public class TreePage extends Page {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        JsonObject body = parseBody(req);
+        if (body != null){
+            System.out.println(body);
+        }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
+        req.setAttribute(GET_TASK, ApiLinks.GET_TASK);
+        req.setAttribute(SUBSCRIBE, Subscribe.tree);
         show(req, resp);
     }
 }

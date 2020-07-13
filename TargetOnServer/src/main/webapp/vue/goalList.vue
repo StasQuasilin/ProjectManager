@@ -7,6 +7,8 @@ goalList = new Vue({
         }
     },
     methods:{
-
+        openTree:function(itemId){
+            loadPage(this.api.tree, {item:itemId});
+        }
     }
 })

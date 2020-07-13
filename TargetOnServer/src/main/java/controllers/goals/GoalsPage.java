@@ -22,6 +22,7 @@ public class GoalsPage extends Page {
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, PAGE);
         req.setAttribute(EDIT, UrlLinks.GOAL_EDIT);
+        req.setAttribute(TREE, UrlLinks.TREE);
         req.setAttribute(SUBSCRIBE, Subscribe.goal);
         show(req, resp);
     }

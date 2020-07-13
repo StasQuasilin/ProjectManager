@@ -10,4 +10,5 @@ public interface ApiLinks {
     String ACCOUNT_EDIT = API + "/account/edit";
     String FIND_TRANSACTION_CATEGORY = API + "/find/transaction/category";
     String FIND_COUNTERPARTY = API + "/find/counterparty";
+    String GET_TASK = API + "/get/task";
 }

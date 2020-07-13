@@ -23,16 +23,19 @@ public abstract class SubscribeHandler {
     }
 
     public void onSubscribe(User user, Session session){
-        JSONObject data = new JSONObject();
-        data.put(ADD, getItems(user));
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put(SUBSCRIBE, subscribe.toString());
-        jsonObject.put(DATA, data);
+        Object items = getItems(user);
+        if (items != null) {
+            JSONObject data = new JSONObject();
+            data.put(ADD, items);
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put(SUBSCRIBE, subscribe.toString());
+            jsonObject.put(DATA, data);
 
-        try {
-            session.getBasicRemote().sendText(jsonObject.toJSONString());
-        } catch (IOException e) {
-            e.printStackTrace();
+            try {
+                session.getBasicRemote().sendText(jsonObject.toJSONString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
     abstract Object getItems(User user);

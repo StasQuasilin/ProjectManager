@@ -2,10 +2,7 @@ package subscribe;
 
 import entity.user.User;
 import org.json.simple.JSONObject;
-import subscribe.handlers.AccountHandler;
-import subscribe.handlers.GoalHandler;
-import subscribe.handlers.SubscribeHandler;
-import subscribe.handlers.TransactionHandler;
+import subscribe.handlers.*;
 import utils.UpdateAction;
 import utils.json.JsonAble;
 
@@ -29,6 +26,7 @@ public final class Subscriber {
     private final HashMap<Subscribe, SubscribeHandler> handlers = new HashMap<>();
     {
         addHandler(new GoalHandler());
+        addHandler(new TreeHandler());
         addHandler(new TransactionHandler());
         addHandler(new AccountHandler());
     }

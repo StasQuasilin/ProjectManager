@@ -9,13 +9,20 @@
     <link rel="stylesheet" href="${context}/css/goals.css"/>
     <script src="${context}/vue/goalList.vue"></script>
     <script>
+        goalList.api.tree = '${tree}';
         subscriber.subscribe('${subscribe}', goalList.handler)
     </script>
     <jsp:include page="goalHeader.jsp"/>
     <body>
         <div id="goalList" class="goal-page">
             <div v-for="goal in getItems()" class="goal-item">
-                {{goal}}
+                <div v-on:click="openTree(goal.category.id)">
+                    TREEEEEE
+                </div>
+                <div>
+                    {{goal}}
+                </div>
+
             </div>
         </div>
     </body>

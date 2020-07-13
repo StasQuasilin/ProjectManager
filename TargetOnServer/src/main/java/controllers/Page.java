@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public abstract class Page extends HttpServlet {
+public abstract class Page extends Servlet {
     private static final String SHELL = "/pages/contentShell.jsp";
 
     public void show(HttpServletRequest req, HttpServletResponse response) throws ServletException, IOException {

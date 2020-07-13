@@ -63,4 +63,5 @@ public interface Keys {
     String SUM = "sum";
     String COLON = ":";
     String SPACE = " ";
+    String GET_TASK = "getTask";
 }
