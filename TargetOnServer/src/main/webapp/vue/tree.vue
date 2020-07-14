@@ -4,24 +4,65 @@ tree = new Vue({
     data:function(){
         return {
             currentItem:-1,
-            root:null,
+            root:-1,
             item:null,
-            children:[]
+            children:[],
+            goals:[],
+            tree:{},
+            props:{
+                onOpen:function (item) {
+                    tree.getChildren(item.id);
+                }
+            }
         }
     },
     methods:{
         handler:function(data){
             let update = data.update;
+            let found = false;
             for (let i in this.children){
                 if (this.children.hasOwnProperty(i)){
                     let item = this.children[i];
                     if (item.id === update.id){
                         this.children.splice(i, 1, update);
+                        found = true;
                         break;
                     }
                 }
             }
-            console.log(data);
+            if (!found){
+                this.children.push(update);
+            }
+            if (update.parent == null){
+                this.goals.push(update);
+            } else {
+                this.updateTree(this.tree, update)
+            }
+        },
+        updateTree(parent, item){
+            if (parent.id === item.parent.id){
+                let found = false;
+                for (let i in parent.children){
+                    if (parent.children.hasOwnProperty(i)){
+                        let child = parent.children[i];
+                        if (child.id === item.id){
+                            parent.children.splice(i, 1, item);
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found){
+                    parent.children.push(item);
+                }
+
+            } else {
+                for (let i in parent.children){
+                    if (parent.children.hasOwnProperty(i)){
+                        this.updateTree(parent.children[i], item);
+                    }
+                }
+            }
         },
         newTask:function(){
             let params = {};
@@ -35,6 +76,23 @@ tree = new Vue({
             PostApi(this.api.getChildren, {parent: itemId}, function (a) {
                 self.item = a.item;
                 self.children = a.children;
+                let root = self.root;
+                self.root = a.root;
+                if (root !== self.root){
+                    self.buildTree();
+                }
+
+            })
+        },
+        changeRoot:function(){
+            this.getChildren(this.root);
+            this.buildTree();
+        },
+        buildTree:function(){
+            const self = this;
+            PostApi(this.api.treeBuilder, {id:this.root}, function (a) {
+                console.log(a);
+                self.tree = a;
             })
         },
         childrenByStatus:function(status){
@@ -50,8 +108,17 @@ tree = new Vue({
             let path = [];
             if (this.item){
                 path.push(this.item.title);
+                this.buildPath(path, this.item);
+
             }
             return path;
+        },
+        buildPath:function (path, item) {
+            let parent = item.parent;
+            if (parent){
+                path.unshift(parent.title);
+                this.buildPath(path, parent);
+            }
         }
     }
 });

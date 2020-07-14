@@ -1,5 +1,6 @@
 package controllers.calendar;
 
+import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.Page;
 
@@ -16,6 +17,7 @@ import static constants.Keys.*;
  */
 @WebServlet(UrlLinks.CALENDAR)
 public class CalendarPage extends Page {
+
     private static final String _CONTENT = "/pages/calendar/calendarPage.jsp";
     private static final String _TITLE = "title.calendar";
 
@@ -23,6 +25,8 @@ public class CalendarPage extends Page {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
+        req.setAttribute(GET_CALENDAR, ApiLinks.GET_CALENDAR);
+        req.setAttribute(EDIT, UrlLinks.CALENDAR_EDIT);
         show(req, resp);
     }
 }

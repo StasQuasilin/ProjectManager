@@ -25,8 +25,9 @@
     <script src="${context}/js/application.js"></script>
     <script src="${context}/js/utils.js"></script>
     <script src="${context}/vue/list.vue"></script>
-
+    <script src="${context}/vue/templates/tree/treeView.vue"></script>
     <script>
+        Vue.component('tree-view', treeView);
         SUBSCRIBE_API = '${subscribe}'
         user = 1;
         if (typeof context === 'undefined'){

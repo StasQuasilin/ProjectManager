@@ -12,4 +12,6 @@ public interface ApiLinks {
     String FIND_COUNTERPARTY = API + "/find/counterparty";
     String GET_TASK = API + "/get/task";
     String TASK_EDIT = API + "/task/edit";
+    String TREE_BUILDER = API + "/tree/builder";
+    String GET_CALENDAR = API + "/get/calendar";
 }

@@ -4,19 +4,19 @@
   Date: 06.07.2020
   Time: 14:24
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<script src="${context}/vue/calendarPage.vue"></script>
 <table class="full-size" border="1">
   <tr>
-    <td rowspan="2" style="width: 50%">
-1
+    <td style="width: 25%">
+        Today tasks
     </td>
-    <td>
-2
+    <td style="width: 50%">
+        Calendar
     </td>
-  </tr>
-  <tr>
-    <td class="full-size">
-3
+    <td style="width: 25%">
+      Active tasks
     </td>
+
   </tr>
 </table>

@@ -76,8 +76,10 @@ public class Task extends JsonAble {
 
     @Override
     public JSONObject toJson() {
-        JSONObject jsonObject = category.toJson();
+        JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
+        jsonObject.put(CATEGORY, category.getId());
+        jsonObject.put(TITLE, category.getTitle());
         jsonObject.put(UID, uid);
         jsonObject.put(STATUS, status.toString());
         if (doer != null){

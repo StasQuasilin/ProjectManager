@@ -1,6 +1,7 @@
 package utils.db.dao.category;
 
 import entity.finance.Category;
+import entity.task.TaskStatistic;
 import entity.user.User;
 import utils.db.hibernate.Hibernator;
 
@@ -25,5 +26,15 @@ public class CategoryDAOImpl extends CategoryDAO {
     @Override
     void save(Category category) {
         hibernator.save(category);
+    }
+
+    @Override
+    public List<Category> getChildren(Category parent) {
+        return hibernator.query(Category.class, PARENT, parent);
+    }
+
+    @Override
+    public TaskStatistic getStatistic(Category category) {
+        return null;
     }
 }

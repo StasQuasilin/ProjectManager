@@ -1,6 +1,7 @@
 package utils.db.dao.category;
 
 import entity.finance.Category;
+import entity.task.TaskStatistic;
 import entity.user.User;
 
 import java.util.List;
@@ -15,4 +16,13 @@ public abstract class CategoryDAO {
         save(category);
     }
     abstract void save(Category category);
+    public abstract List<Category> getChildren(Category parent);
+    public abstract TaskStatistic getStatistic(Category category);
+    public void updateStatistic(Category category) {
+        TaskStatistic statistic = getStatistic(category);
+        if (statistic == null){
+            statistic = new TaskStatistic();
+        }
+
+    }
 }
