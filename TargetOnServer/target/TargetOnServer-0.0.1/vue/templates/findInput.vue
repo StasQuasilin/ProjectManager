@@ -1,3 +1,0 @@
-findInput = {
-  props:{}
-};
