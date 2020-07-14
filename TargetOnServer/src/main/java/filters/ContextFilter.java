@@ -1,6 +1,7 @@
 package filters;
 
 import entity.user.User;
+import utils.db.hibernate.HibernateSessionFactory;
 import utils.db.hibernate.Hibernator;
 
 import javax.servlet.*;
@@ -32,6 +33,6 @@ public class ContextFilter implements Filter {
 
     @Override
     public void destroy() {
-
+        HibernateSessionFactory.shutdown();
     }
 }

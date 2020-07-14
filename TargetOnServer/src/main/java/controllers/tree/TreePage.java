@@ -27,9 +27,13 @@ public class TreePage extends Page {
         JsonObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
+            if (body.containKey(ITEM)){
+                req.setAttribute(ITEM, body.get(ITEM));
+            }
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
+        req.setAttribute(EDIT, UrlLinks.TASK_EDIT);
         req.setAttribute(GET_TASK, ApiLinks.GET_TASK);
         req.setAttribute(SUBSCRIBE, Subscribe.tree);
         show(req, resp);

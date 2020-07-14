@@ -1,6 +1,7 @@
 package constants;
 
 public interface Keys {
+    String ENCODING = "UTF-8";
     String CONTEXT = "context";
     String LOCALE = "locale";
     String CONTENT = "content";
@@ -25,6 +26,8 @@ public interface Keys {
     String OWNER = "owner";
     String MEMBER = "member";
     String TITLE = "title";
+    String ITEM = "item";
+    String CHILDREN = "children";
     String DATE_BEGIN = "dateBegin";
     String DATE_END = "dateEnd";
     String PARENT = "parent";

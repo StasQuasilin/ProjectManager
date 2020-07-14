@@ -15,12 +15,13 @@ import static constants.Keys.*;
 
 public class GoalDAOImpl implements GoalDAO{
 
+
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
 
     @Override
     public List<Goal> getGoals(User user) {
-
+        System.out.println("get goals for " + user);
         HashMap<String, Object> params = new HashMap<>();
         params.put(TASK_OWNER, user);
 

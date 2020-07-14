@@ -39,23 +39,27 @@ public final class Subscriber {
         return instance;
     }
 
-    final HashMap<User, ArrayList<Subscribe>> subscribes = new HashMap<>();
+    final HashMap<User, ArrayList<Subscribe>> subscribesMap = new HashMap<>();
     final HashMap<User, ArrayList<Session>> sessionMap = new HashMap<>();
 
     public void subscribe(User user, Subscribe subscribe, Session session){
-        System.out.println("User '" + user.toString() + " subscribe on " + subscribe.toString());
+        if (user != null){
+            System.out.println("User '" + user + "' subscribe on " + subscribe.toString());
+        }
         SubscribeHandler handler = handlers.get(subscribe);
 
         if (handler != null) {
             handler.onSubscribe(user, session);
-            if (!subscribes.containsKey(user)){
-                subscribes.put(user, new ArrayList<>());
+            if (!subscribesMap.containsKey(user)){
+                subscribesMap.put(user, new ArrayList<>());
             }
-            subscribes.get(user).add(subscribe);
+            subscribesMap.get(user).add(subscribe);
             if (!sessionMap.containsKey(user)) {
                 sessionMap.put(user, new ArrayList<>());
             }
             sessionMap.get(user).add(session);
+        } else {
+            System.out.println("No handlers for " + subscribe);
         }
     }
 
@@ -64,39 +68,48 @@ public final class Subscriber {
             ArrayList<Session> sessionList = this.sessionMap.get(user);
             sessionList.remove(session);
             if (sessionList.size() == 0){
-                subscribes.remove(user);
+                subscribesMap.remove(user);
                 sessionMap.remove(user);
             }
         }
     }
 
     public void send(Subscribe subscribe, UpdateAction action, JsonAble jsonAble, User user) {
-        ArrayList<Subscribe> subscribes = this.subscribes.get(user);
+        ArrayList<Subscribe> subscribes = subscribesMap.get(user);
         if (subscribes != null) {
+            JSONObject json = new JSONObject();
+            json.put(action.toString(), jsonAble.toJson());
+
+            JSONObject object = new JSONObject();
+            object.put(SUBSCRIBE, subscribe.toString());
+            object.put(DATA, json);
+
+            final String s = object.toJSONString();
+
             for (Subscribe sub : subscribes) {
                 if (sub == subscribe) {
-                    JSONObject json = new JSONObject();
-                    json.put(action.toString(), jsonAble.toJson());
-
-                    JSONObject object = new JSONObject();
-                    object.put(SUBSCRIBE, subscribe.toString());
-                    object.put(DATA, json);
-
-                    String s = object.toJSONString();
                     ArrayList<Session> sessions = sessionMap.get(user);
+                    ArrayList<Session> remove = new ArrayList<>();
                     for (Session session : sessions) {
                         try {
                             if (session.isOpen()) {
                                 session.getBasicRemote().sendText(s);
                             } else {
                                 System.out.println("Session '" + session.getId() + "' is Close");
+                                remove.add(session);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
+                    for (Session session : remove){
+                        sessions.remove(session);
+                    }
+                    remove.clear();
                 }
             }
+        } else {
+            System.out.println("No subscribes " + subscribe + " for " + user);
         }
     }
 }

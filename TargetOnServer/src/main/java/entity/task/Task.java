@@ -88,4 +88,14 @@ public class Task extends JsonAble {
         }
         return jsonObject;
     }
+
+    @Transient
+    public User getOwner() {
+        return category.getOwner();
+    }
+
+    @Transient
+    public String getTitle() {
+        return category.getTitle();
+    }
 }

@@ -8,8 +8,6 @@ import utils.db.dao.tree.TaskDAO;
 
 public class TreeHandler extends SubscribeHandler{
 
-    private final TaskDAO taskDAO = daoService.getTaskDAO();
-
     public TreeHandler() {
         super(Subscribe.tree);
     }

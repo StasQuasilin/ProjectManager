@@ -25,6 +25,7 @@ public class GaolDAOPlug implements GoalDAO {
     static int count = 0;
     private static Goal createGoal() {
         Category category = new Category();
+        category.setId(count);
         category.setTitle("Goal #" + ++count);
         Goal goal = new Goal();
         goal.setCategory(category);
