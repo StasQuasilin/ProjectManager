@@ -1,4 +1,4 @@
-package utils.db.dao;
+package utils.db.dao.category;
 
 import entity.finance.Category;
 import entity.user.User;
@@ -10,10 +10,8 @@ import java.util.List;
  */
 public abstract class CategoryDAO {
     abstract List<Category> findCategory(String name, User user);
-    abstract Category getCategory(Object id);
+    public abstract Category getCategory(Object id);
     public void saveCategory(Category category){
-
-
         save(category);
     }
     abstract void save(Category category);

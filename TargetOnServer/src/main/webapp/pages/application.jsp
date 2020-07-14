@@ -46,7 +46,13 @@
                 </td>
                 <td id="titleHolder" class="title-holder"></td>
                 <td style="width: 20%">
-                    User data
+                    <c:set var="personalRoom"><fmt:message key="personal.room"/></c:set>
+                    <span class="text-button" title="${personalRoom}">
+                        ${user.surname} ${user.forename}
+                    </span>
+                    <span class="text-button">
+                        <fmt:message key="logout"/>
+                    </span>
                 </td>
             </tr>
             <tr>

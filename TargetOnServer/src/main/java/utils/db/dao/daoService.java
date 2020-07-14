@@ -1,5 +1,8 @@
 package utils.db.dao;
 
+import utils.db.dao.category.CategoryDAO;
+import utils.db.dao.category.CategoryDAOImpl;
+import utils.db.dao.category.CategoryDAOPlug;
 import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.finance.accounts.AccountDAOPlug;
 import utils.db.dao.finance.currency.CurrencyDAO;
@@ -11,6 +14,7 @@ import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.goal.GoalDAOImpl;
 import utils.db.dao.tree.TaskDAO;
 import utils.db.dao.tree.TaskDAOImpl;
+import utils.db.dao.tree.TaskDAOPlug;
 
 /**
  * Created by DELL on 07.07.2020.
@@ -21,6 +25,7 @@ public class daoService {
     private static final TransactionDAO transactionDAO = new TransactionDAOPlug();
     private static final GoalDAO        goalDAO = new GoalDAOImpl();
     private static final TaskDAO        taskDAO = new TaskDAOImpl();
+    private static final CategoryDAO    categoryDAO = new CategoryDAOImpl();
 
     public static AccountDAO getAccountDAO() {
         return accountDao;
@@ -40,5 +45,9 @@ public class daoService {
 
     public static TaskDAO getTaskDAO() {
         return taskDAO;
+    }
+
+    public static CategoryDAO getCategoryDAO() {
+        return categoryDAO;
     }
 }

@@ -51,6 +51,16 @@ public class User extends JsonAble {
     }
 
     @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return getClass() == obj.getClass() && hashCode() == obj.hashCode();
+    }
+
+    @Override
     public String toString() {
         return id + COLON + SPACE + surname + SPACE + forename;
     }

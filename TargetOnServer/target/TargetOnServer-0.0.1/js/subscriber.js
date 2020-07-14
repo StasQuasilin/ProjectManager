@@ -2,14 +2,19 @@ let subscriber = {
     socket : null,
     subscribes:{},
     subscribe:function(subscriber, handler){
-        let data = {
-            'action':'subscribe',
-            'subscribe':subscriber,
-            'user':user
-        };
-        console.log(data);
-        this.socket.send(JSON.stringify(data));
-        this.subscribes[subscriber] = handler;
+        if (this.socket.readyState === WebSocket.OPEN) {
+            let data = {
+                'action': 'subscribe',
+                'subscribe': subscriber,
+                'user': user
+            };
+            this.socket.send(JSON.stringify(data));
+            this.subscribes[subscriber] = handler;
+        } else {
+            console.log('Connecting:' + WebSocket.CONNECTING);
+            console.log('Open: ' + WebSocket.OPEN);
+            console.error('Socket status: \'' + this.socket.readyState);
+        }
     },
     send:function(message){
         this.socket.send(message);
@@ -33,9 +38,9 @@ let subscriber = {
             } else {
                 console.log('Subscribers is ' + typeof self.subscribes);
             }
-        }
+        };
         this.socket.onclose = function () {
-
+            console.log('Socket is close')
         }
     }
-}
+};

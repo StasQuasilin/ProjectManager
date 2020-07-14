@@ -6,9 +6,9 @@ let list = {
         }
     },
     methods:{
-        edit:function(id){
+        edit:function(id, params){
             if (this.api.edit){
-                let data = {};
+                let data = Object.assign({}, params);
                 if (id){
                     data.id = id;
                 }
@@ -16,7 +16,6 @@ let list = {
             }
         },
         handler:function(items){
-            console.log(items);
             if(items) {
                 for (let a in items.add) {
                     if (items.add.hasOwnProperty(a)) {

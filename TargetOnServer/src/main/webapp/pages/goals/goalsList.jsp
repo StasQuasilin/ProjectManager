@@ -16,7 +16,7 @@
     <body>
         <div id="goalList" class="goal-page">
             <div v-for="goal in getItems()" class="goal-item">
-                <div v-on:click="openTree(goal.category.id)">
+                <div v-on:click="openTree(goal.id)" class="text-button">
                     TREEEEEE
                 </div>
                 <div>

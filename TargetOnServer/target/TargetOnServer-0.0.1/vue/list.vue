@@ -6,9 +6,9 @@ let list = {
         }
     },
     methods:{
-        edit:function(id){
+        edit:function(id, params){
             if (this.api.edit){
-                let data = {};
+                let data = Object.assign({}, params);
                 if (id){
                     data.id = id;
                 }

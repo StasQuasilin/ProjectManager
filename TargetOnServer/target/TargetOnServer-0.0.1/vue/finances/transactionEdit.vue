@@ -21,7 +21,11 @@ transactionEdit = new Vue({
     },
     methods:{
         save:function(){
-            PostApi(this.api.save, this.transaction, function(a){
+            let transaction = Object.assign({}, this.transaction);
+            if (transaction.accountFrom){
+                transaction.accountFrom = transaction.accountFrom.id;
+            }
+            PostApi(this.api.save, transaction, function(a){
                 if (a.status === 'success'){
                     closeModal();
                 }
