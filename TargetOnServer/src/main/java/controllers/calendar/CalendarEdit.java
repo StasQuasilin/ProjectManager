@@ -2,8 +2,8 @@ package controllers.calendar;
 
 import constants.ApiLinks;
 import constants.UrlLinks;
-import controllers.Page;
-import subscribe.Subscribe;
+import controllers.ModalWindow;
+import utils.json.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,22 +13,20 @@ import java.io.IOException;
 
 import static constants.Keys.*;
 
-/**
- * Created by DELL on 06.07.2020.
- */
-@WebServlet(UrlLinks.CALENDAR)
-public class CalendarPage extends Page {
-
-    private static final String _CONTENT = "/pages/calendar/calendarPage.jsp";
-    private static final String _TITLE = "title.calendar";
+@WebServlet(UrlLinks.CALENDAR_EDIT)
+public class CalendarEdit extends ModalWindow {
+    private static final String _TITLE = "title.calendar.edit";
+    private static final String _CONTENT = "/pages/calendar/calendarEdit.jsp";
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        final JsonObject body = parseBody(req);
+        if (body != null){
+            System.out.println(body);
+        }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
-        req.setAttribute(GET_CALENDAR, ApiLinks.GET_CALENDAR);
-        req.setAttribute(EDIT, UrlLinks.CALENDAR_EDIT);
-        req.setAttribute(SUBSCRIBE, Subscribe.calendar);
+        req.setAttribute(SAVE, ApiLinks.CALENDAR_EDIT);
         show(req, resp);
     }
 }

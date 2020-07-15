@@ -6,5 +6,6 @@ public enum TaskStatus {
     progressing,
     done,
     pause,
-    cancel
+    cancel,
+    impossible
 }

@@ -30,7 +30,7 @@ public class GetTaskAPI extends API {
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
@@ -39,6 +39,7 @@ public class GetTaskAPI extends API {
             JSONObject jsonObject = new JSONObject();
             if (category != null){
                 jsonObject.put(ITEM, category.toJson());
+                jsonObject.put(ROOT, getRoot(category).getId());
                 final List<Task> children = taskDAO.getTasksByParent(category);
                 JSONArray array = new JSONArray();
                 for (Task task : children){
@@ -49,5 +50,12 @@ public class GetTaskAPI extends API {
             }
             write(resp, jsonObject);
         }
+    }
+
+    private Category getRoot(Category category) {
+        while (category.getParent() != null){
+            category = category.getParent();
+        }
+        return category;
     }
 }

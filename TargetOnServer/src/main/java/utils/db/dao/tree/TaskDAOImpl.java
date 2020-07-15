@@ -2,6 +2,7 @@ package utils.db.dao.tree;
 
 import entity.finance.Category;
 import entity.task.Task;
+import entity.task.TaskStatus;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -9,7 +10,8 @@ import utils.db.hibernate.Hibernator;
 
 import java.util.HashMap;
 import java.util.List;
-import static constants.Keys.ID;
+
+import static constants.Keys.*;
 
 public class TaskDAOImpl implements TaskDAO {
 
@@ -38,5 +40,13 @@ public class TaskDAOImpl implements TaskDAO {
         hibernator.save(task.getCategory());
         hibernator.save(task);
         updater.update(Subscribe.tree, task, task.getOwner());
+    }
+
+    @Override
+    public List<Task> getTaskByStatus(User user, TaskStatus status) {
+        HashMap<String,Object> param = new HashMap<>();
+        param.put(TASK_OWNER, user);
+        param.put(STATUS, status);
+        return hibernator.query(Task.class, param);
     }
 }

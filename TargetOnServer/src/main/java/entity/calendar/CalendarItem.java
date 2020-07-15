@@ -1,5 +1,6 @@
 package entity.calendar;
 
+import entity.finance.Category;
 import entity.task.Task;
 
 import javax.persistence.*;
@@ -12,7 +13,9 @@ public class CalendarItem {
     private int id;
     private Date date;
     private Time time;
-    private Task task;
+    private long length;
+    private Category category;
+    private Repeat repeat = Repeat.none;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,7 +27,7 @@ public class CalendarItem {
     }
 
     @Basic
-    @Column(name = "date")
+    @Column(name = "_date")
     public Date getDate() {
         return date;
     }
@@ -33,7 +36,7 @@ public class CalendarItem {
     }
 
     @Basic
-    @Column(name = "time")
+    @Column(name = "_time")
     public Time getTime() {
         return time;
     }
@@ -41,12 +44,30 @@ public class CalendarItem {
         this.time = time;
     }
 
-    @OneToOne
-    @JoinColumn(name = "task")
-    public Task getTask() {
-        return task;
+    @Basic
+    @Column(name = "_length")
+    public long getLength() {
+        return length;
     }
-    public void setTask(Task task) {
-        this.task = task;
+    public void setLength(long length) {
+        this.length = length;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "_category")
+    public Category getCategory() {
+        return category;
+    }
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "repeat")
+    public Repeat getRepeat() {
+        return repeat;
+    }
+    public void setRepeat(Repeat repeat) {
+        this.repeat = repeat;
     }
 }

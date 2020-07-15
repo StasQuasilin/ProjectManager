@@ -1,5 +1,7 @@
 package utils.db.dao;
 
+import utils.db.dao.calendar.CalendarDAO;
+import utils.db.dao.calendar.CalendarDAOImpl;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.category.CategoryDAOImpl;
 import utils.db.dao.category.CategoryDAOPlug;
@@ -26,6 +28,7 @@ public class daoService {
     private static final GoalDAO        goalDAO = new GoalDAOImpl();
     private static final TaskDAO        taskDAO = new TaskDAOImpl();
     private static final CategoryDAO    categoryDAO = new CategoryDAOImpl();
+    private static final CalendarDAO    calendarDAO = new CalendarDAOImpl();
 
     public static AccountDAO getAccountDAO() {
         return accountDao;
@@ -49,5 +52,9 @@ public class daoService {
 
     public static CategoryDAO getCategoryDAO() {
         return categoryDAO;
+    }
+
+    public static CalendarDAO getCalendarDAO() {
+        return calendarDAO;
     }
 }

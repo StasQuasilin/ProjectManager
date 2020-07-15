@@ -55,19 +55,36 @@
             </span>
         </td>
     </tr>
-    <tr v-else>
-        <td>
-            <fmt:message key="task.date"/>
-        </td>
-        <td>
+    <template v-else>
+        <tr>
+            <td>
+                <fmt:message key="task.date"/>
+            </td>
+            <td>
             <span class="text-button">
                 {{new Date(task.date).toLocaleDateString()}}
             </span>
-            <span class="text-button" v-on:click="useDate = false">
+                <span class="text-button" v-on:click="useDate = false">
                 &times;
             </span>
-        </td>
-    </tr>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <fmt:message key="task.not.done.action"/>
+            </td>
+            <td>
+                <div>
+                    <input type="radio">
+                    <fmt:message key="task.next.day"/>
+                </div>
+                <div>
+                    <input type="radio">
+                    <fmt:message key="task.status.paused.set"/>
+                </div>
+            </td>
+        </tr>
+    </template>
     <tr>
         <td colspan="2" style="text-align: center">
             <button onclick="closeModal()">

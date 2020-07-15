@@ -57,6 +57,8 @@ public class EditTaskAPI extends API {
 
             write(resp, SUCCESS_ANSWER);
             taskDAO.saveTask(task);
+
+            categoryDAO.updateStatistic(task.getCategory());
         }
     }
 }

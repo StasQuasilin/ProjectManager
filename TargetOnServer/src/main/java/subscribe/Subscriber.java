@@ -27,6 +27,7 @@ public final class Subscriber {
     {
         addHandler(new GoalHandler());
         addHandler(new TreeHandler());
+        addHandler(new CalendarHandler());
         addHandler(new TransactionHandler());
         addHandler(new AccountHandler());
     }

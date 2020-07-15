@@ -2,6 +2,8 @@ package utils.json;
 
 import org.json.simple.JSONObject;
 
+import java.sql.Timestamp;
+
 public class JsonObject {
 
     final JSONObject json;
@@ -37,6 +39,27 @@ public class JsonObject {
     public int getInt(String name) {
         if (containKey(name)){
             return Integer.parseInt(String.valueOf(json.get(name)));
+        }
+        return 0;
+    }
+
+    public Timestamp getTimestamp(String date) {
+        if (containKey(date)){
+            return Timestamp.valueOf(getString(date));
+        }
+        return null;
+    }
+
+    public boolean getBoolean(String name) {
+        if (containKey(name)){
+            return (boolean) json.get(name);
+        }
+        return false;
+    }
+
+    public long getLong(String name) {
+        if (containKey(name)){
+            return (long) json.get(name);
         }
         return 0;
     }

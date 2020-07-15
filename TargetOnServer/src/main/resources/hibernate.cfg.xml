@@ -25,7 +25,7 @@
 <!--        <mapping class="entity.task.TimeLog"/>-->
         <mapping class="entity.goal.Goal"/>
         <mapping class="entity.goal.GoalMember"/>
-<!--        <mapping class="entity.calendar.CalendarItem"/>-->
+        <mapping class="entity.calendar.CalendarItem"/>
 <!--        <mapping class="entity.finance.Account"/>-->
 <!--        <mapping class="entity.finance.AccountPoint"/>-->
 

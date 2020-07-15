@@ -8,7 +8,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<fmt:bundle basename="messages"/>
+<fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <html>
 <head>
@@ -25,9 +25,10 @@
     <script src="${context}/js/application.js"></script>
     <script src="${context}/js/utils.js"></script>
     <script src="${context}/vue/list.vue"></script>
-
+    <script src="${context}/vue/templates/tree/treeView.vue"></script>
     <script>
-        SUBSCRIBE_API = '${subscribe}'
+        Vue.component('tree-view', treeView);
+        SUBSCRIBE_API = '${subscribe}';
         user = 1;
         if (typeof context === 'undefined'){
             context = '${context}'
@@ -45,13 +46,13 @@
                     <jsp:include page="navigation/navigationMenu.jsp"/>
                 </td>
                 <td id="titleHolder" class="title-holder"></td>
-                <td style="width: 20%">
+                <td style="width: 30%; text-align: right">
                     <c:set var="personalRoom"><fmt:message key="personal.room"/></c:set>
                     <span class="text-button" title="${personalRoom}">
                         ${user.surname} ${user.forename}
                     </span>
                     <span class="text-button">
-                        <fmt:message key="logout"/>
+                        ( <fmt:message key="logout"/> )
                     </span>
                 </td>
             </tr>

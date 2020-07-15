@@ -2,6 +2,7 @@ package utils.db.dao.tree;
 
 import entity.finance.Category;
 import entity.task.Task;
+import entity.task.TaskStatus;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -30,5 +31,10 @@ public class TaskDAOPlug implements TaskDAO {
     @Override
     public void saveTask(Task task) {
         updater.update(Subscribe.tree, task, task.getOwner());
+    }
+
+    @Override
+    public List<Task> getTaskByStatus(User user, TaskStatus active) {
+        return null;
     }
 }

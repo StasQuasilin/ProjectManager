@@ -27,6 +27,7 @@ public interface Keys {
     String MEMBER = "member";
     String TITLE = "title";
     String ITEM = "item";
+    String ROOT = "root";
     String CHILDREN = "children";
     String DATE_BEGIN = "dateBegin";
     String DATE_END = "dateEnd";
@@ -67,4 +68,10 @@ public interface Keys {
     String COLON = ":";
     String SPACE = " ";
     String GET_TASK = "getTask";
+    String TREE_BUILDER = "treeBuilder";
+    String GET_CALENDAR = "getCalendar";
+    String REPEAT = "repeat";
+    String USE_DATE = "useDate";
+    String USE_TIME = "useTime";
+    String LENGTH = "length";
 }
