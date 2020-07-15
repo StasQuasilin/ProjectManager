@@ -16,7 +16,8 @@ calendarEdit = new Vue({
     methods:{
         save:function(){
             let item = Object.assign({}, this.calendarItem);
-            item.date = item.date.toISOString().replace('T',' ').replace('Z', '');
+            let d = item.date;
+            item.date =  d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':00';
             PostApi(this.api.save, item, function(a){
                 if (a.status === 'success'){
                     closeModal();

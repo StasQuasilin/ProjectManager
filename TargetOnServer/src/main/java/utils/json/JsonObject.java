@@ -2,6 +2,7 @@ package utils.json;
 
 import org.json.simple.JSONObject;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class JsonObject {
@@ -62,5 +63,12 @@ public class JsonObject {
             return (long) json.get(name);
         }
         return 0;
+    }
+
+    public Date getDate(String key) {
+        if (containKey(key)){
+            return Date.valueOf(getString(key));
+        }
+        return null;
     }
 }

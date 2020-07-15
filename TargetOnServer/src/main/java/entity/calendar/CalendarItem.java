@@ -2,14 +2,17 @@ package entity.calendar;
 
 import entity.finance.Category;
 import entity.task.Task;
+import org.json.simple.JSONObject;
+import utils.json.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import static constants.Keys.*;
 
 @Entity
 @Table(name = "calendar_item")
-public class CalendarItem {
+public class CalendarItem extends JsonAble {
     private int id;
     private Date date;
     private Time time;
@@ -69,5 +72,22 @@ public class CalendarItem {
     }
     public void setRepeat(Repeat repeat) {
         this.repeat = repeat;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        final JSONObject json = category.toJson();
+        json.put(ID, id);
+        json.put(CATEGORY, category.getId());
+        if (date != null){
+            json.put(DATE, date.toString());
+        }
+        if (time != null){
+            json.put(TIME, time.toString());
+            json.put(LENGTH, length);
+        }
+        json.put(REPEAT, repeat.toString());
+
+        return json;
     }
 }

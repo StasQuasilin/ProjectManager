@@ -8,6 +8,7 @@ public interface Keys {
     String ACTION = "action";
     String ID= "id";
     String DATE = "date";
+    String TIME = "time";
     String NAME = "name";
     String UID = "uid";
     String SUBSCRIBE = "subscribe";
@@ -27,6 +28,7 @@ public interface Keys {
     String MEMBER = "member";
     String TITLE = "title";
     String ITEM = "item";
+    String ITEMS = "items";
     String ROOT = "root";
     String CHILDREN = "children";
     String DATE_BEGIN = "dateBegin";
@@ -74,4 +76,6 @@ public interface Keys {
     String USE_DATE = "useDate";
     String USE_TIME = "useTime";
     String LENGTH = "length";
+    String COUNT = "count";
+    String PRICE = "price";
 }

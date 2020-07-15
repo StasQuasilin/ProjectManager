@@ -7,6 +7,8 @@ import utils.db.dao.category.CategoryDAOImpl;
 import utils.db.dao.category.CategoryDAOPlug;
 import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.finance.accounts.AccountDAOPlug;
+import utils.db.dao.finance.buy.BuyListDAO;
+import utils.db.dao.finance.buy.BuyListDAOImpl;
 import utils.db.dao.finance.currency.CurrencyDAO;
 import utils.db.dao.finance.currency.CurrencyDAOPlug;
 import utils.db.dao.finance.transactions.TransactionDAO;
@@ -29,6 +31,7 @@ public class daoService {
     private static final TaskDAO        taskDAO = new TaskDAOImpl();
     private static final CategoryDAO    categoryDAO = new CategoryDAOImpl();
     private static final CalendarDAO    calendarDAO = new CalendarDAOImpl();
+    private static final BuyListDAO     buyListDAO = new BuyListDAOImpl();
 
     public static AccountDAO getAccountDAO() {
         return accountDao;
@@ -56,5 +59,9 @@ public class daoService {
 
     public static CalendarDAO getCalendarDAO() {
         return calendarDAO;
+    }
+
+    public static BuyListDAO getBuyListDAO() {
+        return buyListDAO;
     }
 }

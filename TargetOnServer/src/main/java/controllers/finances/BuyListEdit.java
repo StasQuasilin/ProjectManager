@@ -17,12 +17,14 @@ import static constants.Keys.*;
  */
 @WebServlet(UrlLinks.BUY_LIST_EDIT)
 public class BuyListEdit extends ModalWindow {
-    private static final String _CONTENT = "/pages/finances/buyListEdit.jsp";
+    private static final String _CONTENT = "/pages/finances/buyList/buyListEdit.jsp";
+    private static final String _TITLE = "title.buy.list.edit";
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
-        req.setAttribute(SAVE, ApiLinks.BUY_LIST_SAVE);
+        req.setAttribute(SAVE, ApiLinks.BUY_LIST_EDIT);
         show(req, resp);
     }
 }

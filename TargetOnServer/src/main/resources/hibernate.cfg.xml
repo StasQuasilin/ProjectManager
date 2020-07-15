@@ -28,6 +28,8 @@
         <mapping class="entity.calendar.CalendarItem"/>
 <!--        <mapping class="entity.finance.Account"/>-->
 <!--        <mapping class="entity.finance.AccountPoint"/>-->
+        <mapping class="entity.finance.buy.BuyList"/>
+        <mapping class="entity.finance.buy.BuyListItem"/>
 
 
     </session-factory>

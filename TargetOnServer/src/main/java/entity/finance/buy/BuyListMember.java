@@ -1,4 +1,4 @@
-package entity.finance;
+package entity.finance.buy;
 
 import entity.user.User;
 

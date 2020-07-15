@@ -26,7 +26,7 @@
       <jsp:include page="fastTransactions.jsp"/>
     </td>
     <td rowspan="2" style="width: 30%;">
-      <jsp:include page="buyList.jsp"/>
+      <jsp:include page="buyList/buyList.jsp"/>
     </td>
   </tr>
   <tr>

@@ -14,6 +14,7 @@
 <script>
   calendar.api.edit = '${edit}';
   calendar.api.getCalendar = '${getCalendar}';
+  calendar.getCalendar();
   subscriber.subscribe('${subscribe}', calendar.handler);
 </script>
 <table id="calendar" class="full-size" border="1">
@@ -60,10 +61,23 @@
   </tr>
   <tr>
     <td style="width: 25%">
-
+      <div class="item-container">
+        <div v-for="item in getOtherItems()">
+          <span v-if="item.date">
+            {{item.date}}
+          </span>
+          <span>
+          {{item.title}}
+        </span>
+        </div>
+      </div>
     </td>
     <td style="width: 50%">
-
+      <div class="item-container">
+        <div v-for="item in getCalendarItems()">
+          {{item.time}} {{item.title}}
+        </div>
+      </div>
     </td>
     <td style="width: 25%; height: 100%">
       <div class="item-container">

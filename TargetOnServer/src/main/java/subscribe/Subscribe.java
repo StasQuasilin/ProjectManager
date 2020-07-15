@@ -8,5 +8,6 @@ public enum Subscribe {
     transactions,
     accounts,
     team,
-     messages
+    messages,
+    buy
 }
