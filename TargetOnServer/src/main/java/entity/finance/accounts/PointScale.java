@@ -1,4 +1,4 @@
-package entity.finance;
+package entity.finance.accounts;
 
 public enum PointScale {
     //DON'T TOUCH THIS

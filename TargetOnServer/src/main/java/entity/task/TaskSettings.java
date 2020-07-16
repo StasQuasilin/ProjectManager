@@ -1,6 +1,6 @@
 package entity.task;
 
-import entity.finance.PointScale;
+import entity.finance.accounts.PointScale;
 
 import javax.persistence.*;
 import java.sql.Date;

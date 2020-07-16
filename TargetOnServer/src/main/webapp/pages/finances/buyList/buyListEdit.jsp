@@ -5,12 +5,16 @@
   Time: 09:03
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script src="${context}/vue/buyListEdit.vue"></script>
 <script>
     buyListEdit.api.save = '${save}';
+    <c:if test="${not empty list}">
+    buyListEdit.list = ${list.toJson()}
+    </c:if>
 </script>
 <table id="buyListEdit" class="full-size">
   <tr>
@@ -28,12 +32,12 @@
     <tr>
         <td style="font-size: 10pt">
             <fmt:message key="buy.list"/>
-            <span v-if="!editItem" class="text-button" v-on:click="editItem = true">
+            <span v-if="!edit" class="text-button" v-on:click="editItem()">
                 <fmt:message key="buy.list.add"/>
             </span>
         </td>
     </tr>
-    <tr v-if="editItem" >
+    <tr v-if="edit" >
         <td>
             <div style="border: solid gray 1px; font-size: 10pt">
                 <div>
@@ -61,7 +65,7 @@
                     </div>
                 </div>
                 <div style="text-align: center">
-                    <span class="text-button" v-on:click="editItem = false">
+                    <span class="text-button" v-on:click="edit = false">
                         <fmt:message key="button.cancel"/>
                     </span>
                     <span class="text-button" v-on:click="addItem()">
@@ -78,12 +82,14 @@
                     <span class="text-button" v-on:click="removeItem(idx)">
                         &times;
                     </span>
-                    <template>
-                        {{item.title}}
-                    </template>
-                    <template v-if="item.count > 0 && item.price > 0">
-                        {{item.count.toLocaleString()}} &times; {{item.price.toLocaleString()}}
-                    </template>
+                    <span v-on:click="editItem(idx)">
+                        <template>
+                            {{item.title}}
+                        </template>
+                        <template v-if="item.count > 0 && item.price > 0">
+                            {{item.count.toLocaleString()}} &times; {{item.price.toLocaleString()}}
+                        </template>
+                    </span>
                 </div>
             </div>
         </td>

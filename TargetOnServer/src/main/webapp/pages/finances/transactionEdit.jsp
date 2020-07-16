@@ -4,15 +4,16 @@
   Date: 06.07.2020
   Time: 23:04
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <link rel="stylesheet" href="${context}/css/transactionEdit.css">
+<script src="${context}/vue/templates/inputWithSearch.vue"></script>
 <script src="${context}/vue/finances/transactionEdit.vue"></script>
 <script>
-  transactionEdit.api.findCategory = '${findCategory}';
+  transactionEdit.props.findCategory = '${findCategory}';
   transactionEdit.api.findCounterparty = '${findCounterparty}';
   transactionEdit.api.save = '${save}';
   <c:forEach items="${types}" var="type">
@@ -42,7 +43,7 @@
 <table id="transactionEdit">
   <tr>
     <td>
-${locale}
+      Календурік
     </td>
     <td>
       <div>
@@ -57,14 +58,12 @@ ${locale}
       </div>
       <div>
         <table class="full-size">
-          <tr v-if="transaction.type ==='payment'">
+          <tr v-if="transaction.type ==='spending' || transaction.type === 'income'">
             <td>
-              <label for="category">
-                <fmt:message key="transaction.category"/>
-              </label>
+              <fmt:message key="transaction.category"/>
             </td>
             <td>
-              <input id="category" v-model="transaction.category.title" autocomplete="off">
+              <input-search :object="transaction.category" :props="props"></input-search>
             </td>
           </tr>
           <tr>
@@ -88,35 +87,36 @@ ${locale}
               </label>
             </td>
             <td>
-              <input id="sum" v-model.number="transaction.amount" style="width: 90px;"
+              <span v-if="transaction.type === 'spending'">
+                -
+              </span>
+              <span v-else-if="transaction.type === 'income'">
+                +
+              </span>
+              <input id="sum" v-model="transaction.amount" v-on:keyup="checkField('amount')" style="width: 90px;"
                      autocomplete="off" onfocus="this.select()">
               <select v-model="transaction.currency">
                 <option v-for="c in currency" :value="c">
                   {{c}}
                 </option>
               </select>
+              <span v-if="transaction.rate !== 1">
+                &times; {{transaction.rate}} =
+                {{(transaction.amount * transaction.rate).toLocaleString()}}
+                {{transaction.accountFrom.currency}}
+              </span>
             </td>
           </tr>
           <tr v-if="transaction.accountFrom.currency !== transaction.currency">
-            <td>
+            <td colspan="2">
               <label for="rate">
                 <fmt:message key="transaction.rate"/>
               </label>
-            </td>
-            <td>
-              <input id="rate" v-model="transaction.rate" autocomplete="off" onfocus="this.select()">
+              <input id="rate" v-model="transaction.rate" v-on:keyup="checkField('rate')"
+                     autocomplete="off" onfocus="this.select()" style="width: 75pt">
             </td>
           </tr>
         </table>
-        <template v-if="transaction.type === 'payment'">
-
-        </template>
-        <template v-else-if="transaction.type === 'transfer'">
-          TRANSFER
-        </template>
-        <template v-else>
-          DEBT
-        </template>
       </div>
     </td>
   </tr>

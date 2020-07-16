@@ -25,6 +25,7 @@ public interface Keys {
     String TASK_OWNER = CATEGORY + SLASH + "owner";
     String GOAL_OWNER = TASK + SLASH + TASK_OWNER;
     String OWNER = "owner";
+    String _OWNER = "_owner";
     String MEMBER = "member";
     String TITLE = "title";
     String ITEM = "item";
@@ -66,6 +67,7 @@ public interface Keys {
     String FIND_COUNTERPARTY = "findCounterparty";
     String TRANSACTION_SUBSCRIBE = "transactionSubscribe";
     String ACCOUNT_SUBSCRIBE = "accountSubscribe";
+    String BUY_LIST_SUBSCRIBE = "buyListSubscribe";
     String SUM = "sum";
     String COLON = ":";
     String SPACE = " ";
@@ -78,4 +80,9 @@ public interface Keys {
     String LENGTH = "length";
     String COUNT = "count";
     String PRICE = "price";
+    String DONE = "done";
+    String LIST = "list";
+    String SCALE = "scale";
+    String KEY = "key";
+    String HIDDEN = "hidden";
 }

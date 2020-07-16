@@ -3,8 +3,8 @@ package controllers.finances;
 import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
-import entity.finance.Account;
-import entity.finance.AccountType;
+import entity.finance.accounts.Account;
+import entity.finance.accounts.AccountType;
 import entity.user.User;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.accounts.AccountDAO;
@@ -26,6 +26,7 @@ import static constants.Keys.*;
 public class AccountEdit extends ModalWindow {
 
     private static final String _CONTENT = "/pages/finances/accountEdit.jsp";
+    private static final String _TITLE = "title.account.edit";
 
     private final AccountDAO accountDAO = daoService.getAccountDAO();
     private final CurrencyDAO currencyDAO = daoService.getCurrencyDAO();
@@ -43,6 +44,7 @@ public class AccountEdit extends ModalWindow {
             }
             req.setAttribute(ACCOUNT, account);
         }
+        req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
         req.setAttribute(TYPES, AccountType.values());
         User user = getUser(req);

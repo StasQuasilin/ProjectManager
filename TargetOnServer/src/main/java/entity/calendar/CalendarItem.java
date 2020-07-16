@@ -1,7 +1,6 @@
 package entity.calendar;
 
-import entity.finance.Category;
-import entity.task.Task;
+import entity.finance.transactions.Category;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
 

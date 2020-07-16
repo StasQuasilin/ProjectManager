@@ -18,7 +18,12 @@
         <td class="full-size">
             <div class="full-size item-container">
                 <div v-for="item in getItems()" v-on:click="edit(item.id)">
-                    {{item}}
+                    <div>
+                        {{item.date}}/ {{item.category.title}}: {{item.amount}} {{item.currency}}
+                    </div>
+                    <div>
+                        {{item.accountFrom.title}}
+                    </div>
                     <%--<div>--%>
                         <%--{{new Date(item).toLocaleDateString()}} {{item.type}}--%>
                     <%--</div>--%>

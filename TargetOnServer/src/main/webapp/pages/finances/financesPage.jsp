@@ -4,7 +4,7 @@
   Date: 06.07.2020
   Time: 14:27
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <script src="${context}/vue/finances/transactionsList.vue"></script>
 <script src="${context}/vue/finances/fastTransactions.vue"></script>
 <script src="${context}/vue/finances/accounts.vue"></script>
@@ -16,6 +16,7 @@
   buyList.api.edit = '${buyListEdit}';
   subscriber.subscribe('${transactionSubscribe}', transactionsList.handler);
   subscriber.subscribe('${accountSubscribe}', accounts.handler);
+  subscriber.subscribe('${buyListSubscribe}', buyList.handler);
 </script>
 <table class="full-size" border="1">
   <tr>

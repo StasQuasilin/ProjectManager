@@ -20,3 +20,21 @@ input{
     overflow-y: scroll;
     height: 100%;
 }
+.custom-data-list{
+    width: 100%;
+    background-color: whitesmoke;
+    position: absolute;
+    padding-bottom: 8px;
+    border: solid gray 1px;
+    border-top: none;
+    max-height: 200px;
+    overflow-y: scroll;
+}
+.custom-data-list-item{
+    border-bottom: dashed gray 1px;
+    padding: 4px;
+    font-size: 10pt;
+}
+.custom-data-list-item:hover{
+    background-color: #d0d0d0;
+}

@@ -2,11 +2,10 @@ package controllers.api.tree;
 
 import constants.ApiLinks;
 import controllers.api.API;
-import entity.finance.Category;
+import entity.finance.transactions.Category;
 import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.user.User;
-import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;

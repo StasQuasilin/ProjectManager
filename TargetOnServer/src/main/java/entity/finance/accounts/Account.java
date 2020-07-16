@@ -1,4 +1,4 @@
-package entity.finance;
+package entity.finance.accounts;
 
 import entity.user.User;
 import org.json.simple.JSONObject;
@@ -17,7 +17,6 @@ public class Account extends JsonAble{
     private float sum;
     private String currency;
     private int limit;
-    private boolean visible;
     private User owner;
 
     @Id
@@ -31,7 +30,7 @@ public class Account extends JsonAble{
 
     @Basic
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "type")
+    @Column(name = "_type")
     public AccountType getType() {
         return type;
     }
@@ -67,7 +66,7 @@ public class Account extends JsonAble{
     }
 
     @Basic
-    @Column(name = "limit")
+    @Column(name = "_limit")
     public int getLimit() {
         return limit;
     }
@@ -75,17 +74,8 @@ public class Account extends JsonAble{
         this.limit = limit;
     }
 
-    @Basic
-    @Column(name = "visible")
-    public boolean isVisible() {
-        return visible;
-    }
-    public void setVisible(boolean visible) {
-        this.visible = visible;
-    }
-
     @OneToOne
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = "_owner")
     public User getOwner() {
         return owner;
     }
@@ -109,5 +99,15 @@ public class Account extends JsonAble{
         jsonObject.put(CURRENCY, currency);
         jsonObject.put(LIMIT, limit);
         return jsonObject;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return getClass().equals(obj.getClass()) && hashCode() == obj.hashCode();
     }
 }

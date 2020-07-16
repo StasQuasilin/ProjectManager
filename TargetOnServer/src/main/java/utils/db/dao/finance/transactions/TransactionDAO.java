@@ -1,6 +1,6 @@
 package utils.db.dao.finance.transactions;
 
-import entity.finance.Transaction;
+import entity.finance.transactions.Transaction;
 import entity.user.User;
 
 import java.util.List;

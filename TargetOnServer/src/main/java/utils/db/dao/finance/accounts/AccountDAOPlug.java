@@ -1,16 +1,14 @@
 package utils.db.dao.finance.accounts;
 
-import entity.finance.Account;
-import entity.finance.AccountType;
+import entity.finance.accounts.Account;
+import entity.finance.accounts.AccountType;
 import entity.user.User;
 import subscribe.Subscribe;
-import utils.UpdateAction;
 import utils.Updater;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by DELL on 07.07.2020.

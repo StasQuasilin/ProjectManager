@@ -2,10 +2,9 @@ package controllers.api.goal;
 
 import controllers.api.API;
 import constants.ApiLinks;
-import entity.finance.Category;
+import entity.finance.transactions.Category;
 import entity.goal.Goal;
 import entity.user.User;
-import utils.Updater;
 import utils.db.dao.daoService;
 import utils.db.dao.goal.GoalDAO;
 import utils.json.JsonObject;

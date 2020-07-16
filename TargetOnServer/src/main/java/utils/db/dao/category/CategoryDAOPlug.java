@@ -1,11 +1,8 @@
 package utils.db.dao.category;
 
-import entity.finance.Category;
-import entity.goal.Goal;
+import entity.finance.transactions.Category;
 import entity.task.TaskStatistic;
 import entity.user.User;
-import utils.db.dao.daoService;
-import utils.db.dao.goal.GoalDAO;
 
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +19,7 @@ public class CategoryDAOPlug extends CategoryDAO {
     }
 
     @Override
-    List<Category> findCategory(String name, User user) {
+    public List<Category> findCategory(String name, User user) {
         return null;
     }
 

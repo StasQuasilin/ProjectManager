@@ -30,6 +30,7 @@ public class FinancePage extends Page {
         req.setAttribute(BUY_LIST_EDIT, UrlLinks.BUY_LIST_EDIT);
         req.setAttribute(TRANSACTION_SUBSCRIBE, Subscribe.transactions);
         req.setAttribute(ACCOUNT_SUBSCRIBE, Subscribe.accounts);
+        req.setAttribute(BUY_LIST_SUBSCRIBE, Subscribe.buy);
         show(req, resp);
     }
 }

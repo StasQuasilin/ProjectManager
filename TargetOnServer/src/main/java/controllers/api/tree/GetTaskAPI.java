@@ -2,8 +2,7 @@ package controllers.api.tree;
 
 import constants.ApiLinks;
 import controllers.api.API;
-import entity.finance.Category;
-import entity.goal.Goal;
+import entity.finance.transactions.Category;
 import entity.task.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -13,7 +12,6 @@ import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

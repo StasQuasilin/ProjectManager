@@ -1,5 +1,8 @@
 transactionEdit = new Vue({
     el:'#transactionEdit',
+    components:{
+        'input-search':inputSearch
+    },
     data:{
         api:{},
         types:[],
@@ -17,6 +20,12 @@ transactionEdit = new Vue({
             currency:null,
             rate:1,
             comment:''
+        },
+        props:{
+            put:function(category){
+                console.log('Put category : ' + category.title);
+                transactionEdit.transaction.category = category;
+            }
         }
     },
     methods:{
@@ -30,6 +39,25 @@ transactionEdit = new Vue({
                     closeModal();
                 }
             })
+        },
+        parseFloat:function(val){
+            return parseFloat(val.replaceAll(',', '.'));
+        },
+        checkField:function(name){
+            let value = this.transaction[name];
+            let cont = true;
+            if (typeof value === "string") {
+                let last = value.substring(value.length - 1);
+                cont = last !== '.' && last !==',';
+            }
+            if (cont){
+                let num = parseFloat(value);
+                if (isNaN(num)){
+                    num = 0;
+                }
+                this.transaction[name] = num;
+            }
+
         }
     }
 });

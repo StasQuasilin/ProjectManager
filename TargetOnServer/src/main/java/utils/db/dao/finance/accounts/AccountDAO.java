@@ -1,6 +1,6 @@
 package utils.db.dao.finance.accounts;
 
-import entity.finance.Account;
+import entity.finance.accounts.Account;
 import entity.user.User;
 
 import java.util.List;

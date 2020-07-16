@@ -30,6 +30,7 @@ public final class Subscriber {
         addHandler(new CalendarHandler());
         addHandler(new TransactionHandler());
         addHandler(new AccountHandler());
+        addHandler(new BuyListHandler());
     }
 
     private void addHandler(SubscribeHandler handler) {

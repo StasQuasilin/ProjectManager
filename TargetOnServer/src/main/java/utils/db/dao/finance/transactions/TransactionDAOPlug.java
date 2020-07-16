@@ -1,9 +1,9 @@
 package utils.db.dao.finance.transactions;
 
-import entity.finance.Account;
-import entity.finance.Category;
-import entity.finance.Transaction;
-import entity.finance.TransactionType;
+import entity.finance.accounts.Account;
+import entity.finance.transactions.Category;
+import entity.finance.transactions.Transaction;
+import entity.finance.transactions.TransactionType;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -37,9 +37,9 @@ public class TransactionDAOPlug implements TransactionDAO {
         Transaction transaction = new Transaction();
 
         transaction.setDate(date);
-        transaction.setAccount1(account);
+        transaction.setAccountFrom(account);
         transaction.setCategory(category);
-        transaction.setTransactionType(TransactionType.payment);
+        transaction.setTransactionType(TransactionType.spending);
         transaction.setAmount(1000);
         transaction.setCurrency("UAH");
         return transaction;

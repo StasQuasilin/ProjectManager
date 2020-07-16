@@ -1,6 +1,6 @@
 package subscribe.handlers;
 
-import entity.finance.Account;
+import entity.finance.accounts.Account;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import subscribe.Subscribe;

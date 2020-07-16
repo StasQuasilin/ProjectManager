@@ -1,12 +1,14 @@
-package entity.finance;
+package entity.finance.transactions;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
-@Table(name = "account_points")
-public class AccountPoint {
+@Table(name = "transaction_points")
+public class TransactionPoint {
     private int id;
-    private PointScale scale;
+    private Date date;
+    private int transaction;
     private int account;
     private float amount;
     private float rate;
@@ -22,13 +24,21 @@ public class AccountPoint {
     }
 
     @Basic
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "scale")
-    public PointScale getScale() {
-        return scale;
+    @Column(name = "_date")
+    public Date getDate() {
+        return date;
     }
-    public void setScale(PointScale scale) {
-        this.scale = scale;
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    @Basic
+    @Column(name = "_transaction")
+    public int getTransaction() {
+        return transaction;
+    }
+    public void setTransaction(int transactionId) {
+        this.transaction = transactionId;
     }
 
     @Basic
@@ -36,8 +46,8 @@ public class AccountPoint {
     public int getAccount() {
         return account;
     }
-    public void setAccount(int account) {
-        this.account = account;
+    public void setAccount(int accountId) {
+        this.account = accountId;
     }
 
     @Basic

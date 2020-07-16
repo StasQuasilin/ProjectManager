@@ -1,8 +1,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="messages"/>
+<fmt:setLocale value="${locale}"/>
 <table id="accountsList" class="full-size">
     <tr>
         <td>
-            <fmt:message key="title.account"/>
+            <fmt:message key="title.accounts"/>
             <button v-on:click="edit()">
                 <fmt:message key="button.add"/>
             </button>
