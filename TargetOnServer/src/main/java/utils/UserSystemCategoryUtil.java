@@ -1,7 +1,7 @@
 package utils;
 
 import entity.UserSystemCategory;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.user.User;
 import utils.db.hibernate.Hibernator;
 

@@ -2,7 +2,7 @@ package controllers.api.tree;
 
 import constants.ApiLinks;
 import controllers.api.API;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.task.Task;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;

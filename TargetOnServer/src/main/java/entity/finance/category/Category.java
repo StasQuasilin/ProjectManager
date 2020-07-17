@@ -1,4 +1,4 @@
-package entity.finance.transactions;
+package entity.finance.category;
 
 import entity.user.User;
 import org.json.simple.JSONObject;

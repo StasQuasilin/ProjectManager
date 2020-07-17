@@ -2,7 +2,7 @@ package controllers.api.finance.category;
 
 import constants.ApiLinks;
 import controllers.api.API;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import utils.db.dao.category.CategoryDAO;

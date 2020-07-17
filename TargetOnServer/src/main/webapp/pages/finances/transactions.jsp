@@ -12,8 +12,18 @@
             <button v-on:click="edit()">
                 <fmt:message key="button.add"/>
             </button>
+            <span class="text-button" style="float: right; color: gray" v-on:click="useFilter = !useFilter">
+                <fmt:message key="filter"/>
+            </span>
         </td>
     </tr>
+    <template v-if="useFilter">
+        <tr>
+            <td colspan="2">
+                Filter be here!
+            </td>
+        </tr>
+    </template>
     <tr>
         <td class="full-size">
             <div class="full-size item-container">

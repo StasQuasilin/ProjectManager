@@ -1,6 +1,6 @@
 package utils.db.dao.tree;
 
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.user.User;

@@ -2,10 +2,9 @@ package utils.finances;
 
 import entity.UserSystemCategory;
 import entity.finance.accounts.Account;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionType;
-import entity.user.User;
 import utils.UserSystemCategoryUtil;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.transactions.TransactionDAO;

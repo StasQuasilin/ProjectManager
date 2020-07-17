@@ -6,6 +6,8 @@
   Date: 06.07.2020
   Time: 14:10
 --%>
+<fmt:setBundle basename="messages"/>
+<fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <link rel="stylesheet" href="${context}/css/tree.css">
 <script src="${context}/vue/pathBuilder.vue"></script>
@@ -34,7 +36,7 @@
           </template>
       </td>
         <td style="min-width: 20%">
-            <select v-model="root" v-if="root" v-on:change="changeRoot()">
+            <select v-model="root" v-if="root" v-on:change="changeRoot()" style="width: 100%">
                 <option v-for="goal in goals" :value="goal.id">
                     {{goal.title}}
                 </option>
@@ -43,20 +45,22 @@
     </tr>
     <tr>
       <td style="width: 60%; height: 100%">
-          <div class="task-container">
-              <span class="task-container-title">
+          <div class="task-container item-container">
+              <div class="task-container-title">
+                  <span>
                   <fmt:message key="task.active"/>
-              </span>
-              <button v-on:click="newTask()">
-                  <fmt:message key="task.add"/>
-              </button>
+                    </span>
+                  <button v-on:click="newTask()">
+                      <fmt:message key="task.add"/>
+                  </button>
+              </div>
               <div v-for="item in childrenByStatus('active')" v-on:click="edit(item.id)">
                   {{item.id}}. {{item.title}}
               </div>
           </div>
       </td>
         <td style="width: 20%">
-            <div class="full-size">
+            <div class="item-container">
                 <tree-view :item="tree" :props="props"></tree-view>
             </div>
         </td>

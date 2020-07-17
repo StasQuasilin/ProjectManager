@@ -1,7 +1,7 @@
 package entity.finance;
 
 import entity.finance.accounts.Account;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 
 public class CategoryAccount {
     private int id;

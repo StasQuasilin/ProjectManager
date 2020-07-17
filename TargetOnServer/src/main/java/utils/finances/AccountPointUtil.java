@@ -3,8 +3,6 @@ package utils.finances;
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountPoint;
 import entity.finance.accounts.PointScale;
-import entity.finance.transactions.TransactionPoint;
-import utils.Updater;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.hibernate.DateContainers.BETWEEN;
@@ -22,28 +20,7 @@ public class AccountPointUtil {
     private final Hibernator hibernator = Hibernator.getInstance();
     private final AccountDAO accountDAO = daoService.getAccountDAO();
 
-    public void calculate(int accountId, Date date) {
-        final HashMap<String, Object> param = new HashMap<>();
-        param.put(ACCOUNT, accountId);
-        param.put(DATE, date);
-        float plus = 0;
-        float minus = 0;
-        for (TransactionPoint p : hibernator.query(TransactionPoint.class, param)){
-            final float amount = p.getAmount();
-            if (amount > 0){
-                plus += amount;
-            } else {
-                minus += amount;
-            }
-        }
-        AccountPoint point = getPoint(accountId, date, PointScale.day);
-        point.setPlus(plus);
-        point.setMinus(minus);
-        hibernator.save(point);
-        pointByPoint(accountId, date, PointScale.week);
-    }
-
-    private void pointByPoint(int accountId, Date date, PointScale scale) {
+    public void pointByPoint(int accountId, Date date, PointScale scale) {
         final LocalDate localDate = date.toLocalDate();
         final LocalDate beginDate = getBeginDate(localDate, scale);
         final LocalDate endDate = getEndDate(localDate, scale);
@@ -76,7 +53,7 @@ public class AccountPointUtil {
         return hibernator.query(AccountPoint.class, param);
     }
 
-    private AccountPoint getPoint(int account, Date date, PointScale scale){
+    public AccountPoint getPoint(int account, Date date, PointScale scale){
         final HashMap<String, Object> param = new HashMap<>();
         param.put(ACCOUNT, account);
         param.put(DATE, date);
@@ -165,14 +142,18 @@ public class AccountPointUtil {
     }
 
     public void updateAccount(Account account) {
-        final HashMap<String, Object> param = new HashMap<>();
-        param.put(ACCOUNT, account.getId());
-        param.put(SCALE, PointScale.year);
         float amount = 0;
-        for (AccountPoint point : hibernator.query(AccountPoint.class, param)){
+        for (AccountPoint point : getPoints(account.getId())){
             amount += point.getPlus() + point.getMinus();
         }
         account.setSum(amount);
         accountDAO.saveAccount(account);
+    }
+
+    public List<AccountPoint> getPoints(int account){
+        final HashMap<String, Object> param = new HashMap<>();
+        param.put(ACCOUNT, account);
+        param.put(SCALE, PointScale.year);
+        return hibernator.query(AccountPoint.class, param);
     }
 }

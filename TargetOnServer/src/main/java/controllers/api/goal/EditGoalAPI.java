@@ -2,7 +2,7 @@ package controllers.api.goal;
 
 import controllers.api.API;
 import constants.ApiLinks;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.goal.Goal;
 import entity.user.User;
 import utils.db.dao.daoService;

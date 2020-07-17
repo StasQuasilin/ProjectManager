@@ -1,6 +1,6 @@
 package utils;
 
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.user.User;
 import utils.db.hibernate.Hibernator;
 import utils.json.JsonObject;

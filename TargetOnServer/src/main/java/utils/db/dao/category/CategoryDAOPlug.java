@@ -1,6 +1,6 @@
 package utils.db.dao.category;
 
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.task.TaskStatistic;
 import entity.user.User;
 

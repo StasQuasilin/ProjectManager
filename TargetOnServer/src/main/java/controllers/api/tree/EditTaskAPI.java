@@ -2,10 +2,11 @@ package controllers.api.tree;
 
 import constants.ApiLinks;
 import controllers.api.API;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.user.User;
+import utils.CategoryUtil;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
@@ -56,8 +57,6 @@ public class EditTaskAPI extends API {
 
             write(resp, SUCCESS_ANSWER);
             taskDAO.saveTask(task);
-
-            categoryDAO.updateStatistic(task.getCategory());
         }
     }
 }

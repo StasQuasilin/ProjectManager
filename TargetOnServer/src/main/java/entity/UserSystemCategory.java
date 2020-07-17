@@ -1,6 +1,6 @@
 package entity;
 
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.user.User;
 
 import javax.persistence.*;

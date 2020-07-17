@@ -4,7 +4,7 @@ import constants.ApiLinks;
 import controllers.api.API;
 import entity.calendar.CalendarItem;
 import entity.calendar.Repeat;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.user.User;
 import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.daoService;

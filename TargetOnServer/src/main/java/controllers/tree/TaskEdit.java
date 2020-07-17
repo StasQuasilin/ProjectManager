@@ -3,7 +3,7 @@ package controllers.tree;
 import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.task.Task;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;

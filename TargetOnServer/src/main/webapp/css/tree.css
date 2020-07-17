@@ -2,5 +2,16 @@
     width: 100%;
 }
 .task-container{
+
+}
+.task-container-title{
     border-top: solid green 4px;
+    border-bottom: solid green 4px;
+    background-image: linear-gradient(to right, green, transparent);
+    padding: 4px;
+}
+.task-container-title span{
+    background-color: transparent;
+    font-weight: bold;
+    font-size: 14pt;
 }

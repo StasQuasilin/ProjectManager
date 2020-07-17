@@ -3,7 +3,7 @@ package controllers.api.finance.transactions;
 import constants.ApiLinks;
 import controllers.api.API;
 import entity.finance.accounts.Account;
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionType;
 import utils.CategoryUtil;
@@ -42,6 +42,7 @@ public class EditTransactionAPI extends API {
             TransactionType type = TransactionType.valueOf(body.getString(TYPE));
             transaction.setTransactionType(type);
 
+            Date prevDate = transaction.getDate();
             Date date = Date.valueOf(body.getString(DATE));
             transaction.setDate(date);
 
@@ -78,10 +79,13 @@ public class EditTransactionAPI extends API {
 
             transactionDAO.saveTransaction(transaction);
             write(resp, SUCCESS_ANSWER);
-            if (prevAccountFrom != null && prevAccountFrom.equals(transaction.getAccountFrom())){
+            if (!prevDate.equals(transaction.getDate())){
+                transactionUtil.updateCategory(transaction.getCategory(), transaction.getDate());
+            }
+            if (prevAccountFrom != null && !prevAccountFrom.equals(transaction.getAccountFrom())){
                 transactionUtil.removePoint(transaction, prevAccountFrom);
             }
-            if (prevAccountTo != null && prevAccountTo.equals(transaction.getAccountTo())){
+            if (prevAccountTo != null && !prevAccountTo.equals(transaction.getAccountTo())){
                 transactionUtil.removePoint(transaction, prevAccountTo);
             }
         }

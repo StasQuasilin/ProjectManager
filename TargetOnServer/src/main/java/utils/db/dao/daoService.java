@@ -30,8 +30,8 @@ public class daoService {
     private static final CurrencyDAO    currencyDAO = new CurrencyDAOPlug();
     private static final TransactionDAO transactionDAO = new TransactionDAOImpl();
     private static final GoalDAO        goalDAO = new GoalDAOImpl();
-    private static final TaskDAO        taskDAO = new TaskDAOImpl();
     private static final CategoryDAO    categoryDAO = new CategoryDAOImpl();
+    private static final TaskDAO        taskDAO = new TaskDAOImpl();
     private static final CalendarDAO    calendarDAO = new CalendarDAOImpl();
     private static final BuyListDAO     buyListDAO = new BuyListDAOImpl();
 

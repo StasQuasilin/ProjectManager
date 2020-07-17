@@ -1,6 +1,6 @@
 package utils.db.dao.goal;
 
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.goal.Goal;
 import entity.user.User;
 import subscribe.Subscribe;

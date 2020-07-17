@@ -2,6 +2,7 @@ package entity.finance.transactions;
 
 import entity.finance.Counterparty;
 import entity.finance.accounts.Account;
+import entity.finance.category.Category;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;

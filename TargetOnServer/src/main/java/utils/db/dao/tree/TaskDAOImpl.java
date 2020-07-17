@@ -1,12 +1,14 @@
 package utils.db.dao.tree;
 
-import entity.finance.transactions.Category;
+import entity.finance.category.Category;
 import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.user.User;
 import subscribe.Subscribe;
+import utils.CategoryUtil;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
+import utils.finances.CategoryStatisticUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,6 +19,7 @@ public class TaskDAOImpl implements TaskDAO {
 
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
+    private final CategoryStatisticUtil statisticUtil = new CategoryStatisticUtil();
 
     @Override
     public List<Task> getTasksByParent(Category parent) {
@@ -37,9 +40,11 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public void saveTask(Task task) {
-        hibernator.save(task.getCategory());
+        final Category category = task.getCategory();
+        hibernator.save(category);
         hibernator.save(task);
         updater.update(Subscribe.tree, task, task.getOwner());
+        statisticUtil.updateStatistic(category);
     }
 
     @Override
