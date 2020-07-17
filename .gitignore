@@ -21,15 +21,9 @@ target/*
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-server/.idea/*
 TargetOnServer/.idea/*
-server/target/
-server/target/*
-
-server/target/classes/log4j.properties
-server/ProjectManager.iml
-server/out/
-server/out/*
+server/
+server/*
 TargetOnServer/target/
 TargetOnServer/target/*
 TargetOnServer/.idea/
