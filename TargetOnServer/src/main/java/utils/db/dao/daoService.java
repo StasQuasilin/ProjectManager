@@ -26,14 +26,19 @@ import utils.db.dao.tree.TaskDAOPlug;
  * Created by DELL on 07.07.2020.
  */
 public class daoService {
-    private static final AccountDAO     accountDao = new AccountDAOImpl();
+    private static final AccountDAO     accountDao;
     private static final CurrencyDAO    currencyDAO = new CurrencyDAOPlug();
     private static final TransactionDAO transactionDAO = new TransactionDAOImpl();
     private static final GoalDAO        goalDAO = new GoalDAOImpl();
-    private static final CategoryDAO    categoryDAO = new CategoryDAOImpl();
-    private static final TaskDAO        taskDAO = new TaskDAOImpl();
+    private static final CategoryDAO    categoryDAO;
+    private static final TaskDAO        taskDAO;
     private static final CalendarDAO    calendarDAO = new CalendarDAOImpl();
     private static final BuyListDAO     buyListDAO = new BuyListDAOImpl();
+    static {
+        accountDao = new AccountDAOImpl();
+        categoryDAO = new CategoryDAOImpl();
+        taskDAO = new TaskDAOImpl();
+    }
 
     public static AccountDAO getAccountDAO() {
         return accountDao;

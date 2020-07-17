@@ -79,7 +79,7 @@ public class EditTransactionAPI extends API {
 
             transactionDAO.saveTransaction(transaction);
             write(resp, SUCCESS_ANSWER);
-            if (!prevDate.equals(transaction.getDate())){
+            if (prevDate != null && !prevDate.equals(transaction.getDate())){
                 transactionUtil.updateCategory(transaction.getCategory(), transaction.getDate());
             }
             if (prevAccountFrom != null && !prevAccountFrom.equals(transaction.getAccountFrom())){

@@ -15,6 +15,10 @@ public class CategoryStatisticUtil {
     private final Hibernator hibernator = Hibernator.getInstance();
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
     private final TaskDAO taskDAO = daoService.getTaskDAO();
+    private static final CategoryStatisticUtil instance = new CategoryStatisticUtil();
+    public static CategoryStatisticUtil getInstance() {
+        return instance;
+    }
 
     public TaskStatistic getStatistic(Category category){
         return getStatistic(category, true);
