@@ -6,6 +6,8 @@ import utils.json.JsonAble;
 
 import javax.persistence.*;
 
+import java.util.Objects;
+
 import static constants.Keys.*;
 
 @Entity
@@ -78,5 +80,15 @@ public class Category extends JsonAble {
         }
         jsonObject.put(OWNER, owner.toJson());
         return jsonObject;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return getClass().equals(obj.getClass()) && hashCode() == obj.hashCode();
     }
 }

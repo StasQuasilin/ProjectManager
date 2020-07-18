@@ -14,7 +14,6 @@ public class CategoryStatisticUtil {
 
     private final Hibernator hibernator = Hibernator.getInstance();
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
-    private final TaskDAO taskDAO = daoService.getTaskDAO();
     private static final CategoryStatisticUtil instance = new CategoryStatisticUtil();
     public static CategoryStatisticUtil getInstance() {
         return instance;
@@ -38,7 +37,6 @@ public class CategoryStatisticUtil {
         if (parent != null){
             final TaskStatistic statistic = getStatistic(parent);
             statistic.clean();
-            System.out.println(categoryDAO);
 
             for (Category child : categoryDAO.getChildren(parent)) {
                 final TaskStatistic childrenStat = getStatistic(child, false);
@@ -50,11 +48,14 @@ public class CategoryStatisticUtil {
         }
     }
 
-    public void updateChildren(Category category){
+    public void updateChildren(Category category, TaskDAO taskDAO){
         final Category parent = category.getParent();
         if (parent != null){
-            final TaskStatistic statistic = getStatistic(category);
-            statistic.clean();
+            final TaskStatistic statistic = getStatistic(parent);
+            statistic.setActiveChildren(0);
+            statistic.setProgressingChildren(0);
+            statistic.setDoneChildren(0);
+
             for (Task task : taskDAO.getTasksByParent(parent)){
                 statistic.add(task.getStatus());
             }

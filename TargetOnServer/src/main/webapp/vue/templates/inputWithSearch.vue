@@ -7,27 +7,25 @@ inputSearch = {
         return{
             items:[],
             timer:-1,
-            input:''
+            oldObject:{}
         }
     },
     mounted:function(){
-        this.updateInput();
+        this.oldObject = this.object;
     },
     methods:{
-        updateInput:function(){
-            this.input = this.object.title;
-        },
         putValue:function(item){
             if (this.props.put){
                 this.props.put(item);
+                this.items = [];
             }
-            this.clear();
         },
         find:function(){
             if (event.keyCode !== 27 ) {
                 clearTimeout(this.timer);
-                let input = this.input;
+                let input = this.object.title;
                 if (input && input.length >= 3) {
+                    this.object.id = -1;
                     const self = this;
                     this.timer = setTimeout(function () {
                         PostApi(self.props.findCategory, {key: input}, function (a) {
@@ -38,18 +36,12 @@ inputSearch = {
             }
         },
         clear:function () {
+            this.object = this.oldObject;
             this.items = [];
-            console.log('Clear!');
-            console.log(this.object);
-            const self = this;
-            setTimeout(function () {
-                self.updateInput();
-            }, 0);
-
         }
     },
     template: '<div style="position: relative" v-on:blur="clear">' +
-            '<input v-model="input"  v-on:keyup.esc.prevent="clear()" v-on:keyup="find()" onfocus="this.select()">' +
+            '<input v-model="object.title"  v-on:keyup.esc.prevent="clear()" v-on:keyup="find()" onfocus="this.select()">' +
             '<div class="custom-data-list" v-if="items.length > 0">' +
                 '<div class="custom-data-list-item" v-for="item in items" v-on:click="putValue(item)">' +
                     '{{item}}' +

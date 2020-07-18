@@ -112,4 +112,10 @@ public class TransactionUtil {
         calculateAccountDay(account, transaction.getDate());
         accountPointUtil.updateAccount(account);
     }
+
+    public void removePoint(Category category, Date date) {
+        AccountPoint point = accountPointUtil.getPoint(category.getId(), date, PointScale.day);
+        hibernator.remove(point);
+        accountPointUtil.pointByPoint(category.getId(), date, PointScale.week);
+    }
 }

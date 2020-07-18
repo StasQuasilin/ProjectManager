@@ -40,7 +40,7 @@ public class BuyList extends JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = "_owner")
     public User getOwner() {
         return owner;
     }
