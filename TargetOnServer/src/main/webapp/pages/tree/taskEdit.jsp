@@ -85,6 +85,7 @@
             </td>
         </tr>
     </template>
+
     <tr>
         <td colspan="2" style="text-align: center">
             <button onclick="closeModal()">

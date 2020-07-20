@@ -1,6 +1,8 @@
 package entity.calendar;
 
 import entity.finance.category.Category;
+import entity.task.Task;
+import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
 
@@ -17,6 +19,7 @@ public class CalendarItem extends JsonAble {
     private Time time;
     private long length;
     private Category category;
+    private ExecutionStatus status;
     private Repeat repeat = Repeat.none;
 
     @Id
@@ -55,6 +58,15 @@ public class CalendarItem extends JsonAble {
         this.length = length;
     }
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "repeat")
+    public Repeat getRepeat() {
+        return repeat;
+    }
+    public void setRepeat(Repeat repeat) {
+        this.repeat = repeat;
+    }
+
     @OneToOne
     @JoinColumn(name = "_category")
     public Category getCategory() {
@@ -65,12 +77,12 @@ public class CalendarItem extends JsonAble {
     }
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "repeat")
-    public Repeat getRepeat() {
-        return repeat;
+    @Column(name = "_status")
+    public ExecutionStatus getStatus() {
+        return status;
     }
-    public void setRepeat(Repeat repeat) {
-        this.repeat = repeat;
+    public void setStatus(ExecutionStatus status) {
+        this.status = status;
     }
 
     @Override
@@ -88,5 +100,10 @@ public class CalendarItem extends JsonAble {
         json.put(REPEAT, repeat.toString());
 
         return json;
+    }
+
+    @Transient
+    public User getOwner() {
+        return category.getOwner();
     }
 }

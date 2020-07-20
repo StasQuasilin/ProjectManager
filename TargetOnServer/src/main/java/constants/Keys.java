@@ -19,6 +19,7 @@ public interface Keys {
     String TREE = "tree";
     String CALENDAR = "calendar";
     String FINANCES = "finances";
+    String PERSONAL = "personal";
     String YEAR = "year";
     String CATEGORY = "category";
     String TASK = "task";
@@ -42,6 +43,8 @@ public interface Keys {
     String RESULT = "result";
     String BEGIN = "begin";
     String END = "end";
+    String STATISTIC = "statistic";
+    String BUDGET = "budget";
     String DATA = "data";
     String ADD = "add";
     String USER = "user";
@@ -85,4 +88,9 @@ public interface Keys {
     String SCALE = "scale";
     String KEY = "key";
     String HIDDEN = "hidden";
+    String PLUS = "plus";
+    String MINUS = "minus";
+    String SPEND = "spend";
+    String ACTIVE = "active";
+    String PROGRESSING = "progressing";
 }

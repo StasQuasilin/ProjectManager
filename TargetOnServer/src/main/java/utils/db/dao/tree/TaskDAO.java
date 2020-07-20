@@ -13,4 +13,5 @@ public interface TaskDAO {
     Task getTask(Object id);
     void saveTask(Task task);
     List<Task> getTaskByStatus(User user, TaskStatus active);
+    Task getTaskByCategory(Category category);
 }

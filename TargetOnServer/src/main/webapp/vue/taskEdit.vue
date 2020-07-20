@@ -3,6 +3,7 @@ taskEdit = new Vue({
     data:{
         api:{},
         useDate:false,
+        addToBuyList:false,
         task:{
             id:-1,
             parent:{},

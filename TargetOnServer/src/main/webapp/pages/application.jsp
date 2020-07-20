@@ -35,7 +35,6 @@
         }
         subscriber.connect();
     </script>
-
 </head>
 <body>
     <div id="modalLayer" class="modal-layer"></div>
@@ -48,7 +47,7 @@
                 <td id="titleHolder" class="title-holder"></td>
                 <td style="width: 30%; text-align: right">
                     <c:set var="personalRoom"><fmt:message key="personal.room"/></c:set>
-                    <span class="text-button" title="${personalRoom}">
+                    <span class="text-button" title="${personalRoom}" onclick="loadModal('${personal}')">
                         ${user.surname} ${user.forename}
                     </span>
                     <span class="text-button">

@@ -46,7 +46,7 @@
     <tr>
       <td style="width: 60%; height: 100%">
           <div class="task-container item-container">
-              <div class="task-container-title">
+              <div class="task-container-title task-container-title-active">
                   <span>
                   <fmt:message key="task.active"/>
                     </span>
@@ -55,6 +55,22 @@
                   </button>
               </div>
               <div v-for="item in childrenByStatus('active')" v-on:click="edit(item.id)">
+                  {{item.id}}. {{item.title}}
+              </div>
+              <div class="task-container-title task-container-title-progressing">
+                  <span>
+                  <fmt:message key="task.progressing"/>
+                </span>
+              </div>
+              <div v-for="item in childrenByStatus('progressing')" v-on:click="edit(item.id)">
+                  {{item.id}}. {{item.title}}
+              </div>
+              <div class="task-container-title task-container-title-done">
+                  <span>
+                  <fmt:message key="task.done"/>
+                </span>
+              </div>
+              <div v-for="item in childrenByStatus('done')" v-on:click="edit(item.id)">
                   {{item.id}}. {{item.title}}
               </div>
           </div>

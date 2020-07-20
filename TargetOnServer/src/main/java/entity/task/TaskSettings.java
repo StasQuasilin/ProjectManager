@@ -1,6 +1,7 @@
 package entity.task;
 
 import entity.finance.accounts.PointScale;
+import entity.finance.category.Category;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -9,13 +10,14 @@ import java.sql.Date;
 @Table(name = "task_settings")
 public class TaskSettings {
     private int id;
-    private String taskUid;
+    private Category category;
     private PointScale repeatEach;
     private Date nextRepeat;
     private int repeatCount;
     private Task activeAfterDone;
     private boolean doneIfChildren;
     private TaskType type;
+    private OnFailure onFailure;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,13 +28,13 @@ public class TaskSettings {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "task_uid")
-    public String getTaskUid() {
-        return taskUid;
+    @OneToOne
+    @JoinColumn(name = "_category")
+    public Category getCategory() {
+        return category;
     }
-    public void setTaskUid(String taskUid) {
-        this.taskUid = taskUid;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     @Basic
@@ -64,7 +66,7 @@ public class TaskSettings {
     }
 
     @OneToOne
-    @JoinColumn(name = "active_after_done")
+    @JoinColumn(name = "active_after")
     public Task getActiveAfterDone() {
         return activeAfterDone;
     }
@@ -73,7 +75,7 @@ public class TaskSettings {
     }
 
     @Basic
-    @Column(name = "done_if_children")
+    @Column(name = "done_if_children_complete")
     public boolean isDoneIfChildren() {
         return doneIfChildren;
     }
@@ -83,11 +85,20 @@ public class TaskSettings {
 
     @Basic
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "type")
+    @Column(name = "_type")
     public TaskType getType() {
         return type;
     }
     public void setType(TaskType type) {
         this.type = type;
+    }
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "on_failure")
+    public OnFailure getOnFailure() {
+        return onFailure;
+    }
+    public void setOnFailure(OnFailure onFailure) {
+        this.onFailure = onFailure;
     }
 }

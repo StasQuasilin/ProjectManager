@@ -19,7 +19,6 @@ public class TaskDAOImpl implements TaskDAO {
 
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
-    private final CategoryStatisticUtil statisticUtil = CategoryStatisticUtil.getInstance();
 
     @Override
     public List<Task> getTasksByParent(Category parent) {
@@ -44,7 +43,6 @@ public class TaskDAOImpl implements TaskDAO {
         hibernator.save(category);
         hibernator.save(task);
         updater.update(Subscribe.tree, task, task.getOwner());
-
     }
 
     @Override

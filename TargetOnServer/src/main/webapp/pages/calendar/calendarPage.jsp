@@ -62,13 +62,15 @@
   <tr>
     <td style="width: 25%">
       <div class="item-container">
-        <div v-for="item in getOtherItems()">
-          <span v-if="item.date">
-            {{item.date}}
-          </span>
-          <span>
-          {{item.title}}
-        </span>
+        <div v-for="item in getOtherItems()" v-on:click="edit(item.id)">
+          <div>
+            <span v-if="item.date">
+              {{item.date}}
+            </span>
+            <span>
+              {{item.title}}
+            </span>
+          </div>
         </div>
       </div>
     </td>

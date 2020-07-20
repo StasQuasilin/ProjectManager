@@ -20,9 +20,11 @@
                     TREEEEEE
                 </div>
                 <div>
-                    {{goal}}
+                    {{goal.title}}
                 </div>
-
+                <div>
+                    {{goal.statistic}}
+                </div>
             </div>
         </div>
     </body>

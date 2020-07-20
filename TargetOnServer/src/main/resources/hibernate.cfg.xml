@@ -20,7 +20,7 @@
 <!--        <mapping class="entity.user.UserCurrency"/>-->
         <mapping class="entity.finance.category.Category"/>
         <mapping class="entity.task.Task"/>
-<!--        <mapping class="entity.task.TaskSettings"/>-->
+        <mapping class="entity.task.TaskSettings"/>
         <mapping class="entity.task.TaskStatistic"/>
 <!--        <mapping class="entity.task.TimeLog"/>-->
         <mapping class="entity.goal.Goal"/>

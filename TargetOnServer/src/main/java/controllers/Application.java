@@ -23,6 +23,7 @@ public class Application extends HttpServlet {
         req.setAttribute(TREE, UrlLinks.TREE);
         req.setAttribute(CALENDAR, UrlLinks.CALENDAR);
         req.setAttribute(FINANCES, UrlLinks.FINANCES);
+        req.setAttribute(PERSONAL, UrlLinks.PERSONAL);
         req.setAttribute(SUBSCRIBE, ApiLinks.SUBSCRIBE);
         req.setAttribute(YEAR, LocalDate.now().getYear());
         req.getRequestDispatcher(PAGE).forward(req, resp);

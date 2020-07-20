@@ -1,12 +1,16 @@
 package entity.task;
 
 import entity.finance.category.Category;
+import org.json.simple.JSONObject;
+import utils.json.JsonAble;
 
 import javax.persistence.*;
 
+import static constants.Keys.*;
+
 @Entity
 @Table(name = "task_statistic")
-public class TaskStatistic {
+public class TaskStatistic extends JsonAble {
     private int id;
     private Category category;
     private float plus;
@@ -113,7 +117,7 @@ public class TaskStatistic {
         }
     }
 
-    public void add(TaskStatus status) {
+    public void add(TaskStatus status, TaskStatistic statistic) {
         if(status == TaskStatus.active){
             activeChildren++;
         } else if (status == TaskStatus.progressing){
@@ -121,5 +125,22 @@ public class TaskStatistic {
         } else if (status == TaskStatus.done){
             doneChildren++;
         }
+        if (statistic != null) {
+            activeChildren += statistic.getActiveChildren();
+            progressingChildren += statistic.getProgressingChildren();
+            doneChildren += statistic.getDoneChildren();
+        }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        final JSONObject jsonObject = getJsonObject();
+        jsonObject.put(PLUS, plus);
+        jsonObject.put(MINUS, minus);
+        jsonObject.put(SPEND, spendTime);
+        jsonObject.put(ACTIVE, activeChildren);
+        jsonObject.put(PROGRESSING, progressingChildren);
+        jsonObject.put(DONE, doneChildren);
+        return jsonObject;
     }
 }

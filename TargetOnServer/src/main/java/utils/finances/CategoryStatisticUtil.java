@@ -48,19 +48,32 @@ public class CategoryStatisticUtil {
         }
     }
 
-    public void updateChildren(Category category, TaskDAO taskDAO){
+    public TaskStatistic updateChildren(Category category, TaskDAO taskDAO){
         final Category parent = category.getParent();
         if (parent != null){
+            System.out.println("Calculate statistic for '" + parent.getTitle() + "'" );
             final TaskStatistic statistic = getStatistic(parent);
             statistic.setActiveChildren(0);
             statistic.setProgressingChildren(0);
             statistic.setDoneChildren(0);
 
             for (Task task : taskDAO.getTasksByParent(parent)){
-                statistic.add(task.getStatus());
+                final Category children = task.getCategory();
+                System.out.println("\t-" + children.getTitle());
+                TaskStatistic childrenStat = getStatistic(children, false);
+//                if (childrenStat == null){
+//                    childrenStat = updateChildren(children, taskDAO);
+//                }
+                System.out.println("\t\tStatus: " + task.getStatus());
+                if(childrenStat != null) {
+                    System.out.println("\t\tActive: " + childrenStat.getActiveChildren());
+                }
+                statistic.add(task.getStatus(), childrenStat);
             }
             hibernator.save(statistic);
             updateStatistic(parent);
+            return statistic;
         }
+        return null;
     }
 }

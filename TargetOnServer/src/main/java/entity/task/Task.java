@@ -38,7 +38,7 @@ public class Task extends JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = "category")
+    @JoinColumn(name = "_category")
     public Category getCategory() {
         return category;
     }

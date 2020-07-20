@@ -5,10 +5,22 @@
 
 }
 .task-container-title{
+    padding: 4px;
+}
+.task-container-title-active{
+    border-top: solid cornflowerblue 4px;
+    border-bottom: solid cornflowerblue 4px;
+    background-image: linear-gradient(to right, cornflowerblue, transparent);
+}
+.task-container-title-progressing{
+    border-top: solid coral 4px;
+    border-bottom: solid coral 4px;
+    background-image: linear-gradient(to right, coral, transparent);
+}
+.task-container-title-done{
     border-top: solid green 4px;
     border-bottom: solid green 4px;
     background-image: linear-gradient(to right, green, transparent);
-    padding: 4px;
 }
 .task-container-title span{
     background-color: transparent;
