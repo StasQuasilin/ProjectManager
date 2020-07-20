@@ -37,4 +37,9 @@ public class TaskDAOPlug implements TaskDAO {
     public List<Task> getTaskByStatus(User user, TaskStatus active) {
         return null;
     }
+
+    @Override
+    public Task getTaskByCategory(Category category) {
+        return null;
+    }
 }

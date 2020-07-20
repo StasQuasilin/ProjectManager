@@ -52,4 +52,9 @@ public class TaskDAOImpl implements TaskDAO {
         param.put(STATUS, status);
         return hibernator.query(Task.class, param);
     }
+
+    @Override
+    public Task getTaskByCategory(Category category) {
+        return hibernator.get(Task.class, CATEGORY, category);
+    }
 }
