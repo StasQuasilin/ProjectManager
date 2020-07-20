@@ -104,12 +104,12 @@ public class TaskStatistic {
 
     public void add(TaskStatistic childrenStat) {
         if (childrenStat != null){
-            plus = childrenStat.getPlus();
-            minus = childrenStat.getMinus();
-            spendTime = childrenStat.getSpendTime();
-            activeChildren = childrenStat.getActiveChildren();
-            progressingChildren = childrenStat.getProgressingChildren();
-            doneChildren = childrenStat.getDoneChildren();
+            plus += childrenStat.getPlus();
+            minus += childrenStat.getMinus();
+            spendTime += childrenStat.getSpendTime();
+            activeChildren += childrenStat.getActiveChildren();
+            progressingChildren += childrenStat.getProgressingChildren();
+            doneChildren += childrenStat.getDoneChildren();
         }
     }
 
@@ -121,6 +121,5 @@ public class TaskStatistic {
         } else if (status == TaskStatus.done){
             doneChildren++;
         }
-
     }
 }

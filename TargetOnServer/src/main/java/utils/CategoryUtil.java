@@ -16,7 +16,8 @@ public class CategoryUtil {
         if (category == null){
             category = new Category();
             category.setOwner(owner);
-            category.setTitle(data.getString(TITLE));
+            String string = data.getString(TITLE);
+            category.setTitle(string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase());
             hibernator.save(category);
         }
         return category;

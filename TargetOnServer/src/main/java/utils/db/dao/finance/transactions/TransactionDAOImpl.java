@@ -16,7 +16,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
-    private final TransactionUtil transactionUtil = new TransactionUtil();
+
 
     @Override
     public List<Transaction> getUserTransactions(User user) {
@@ -33,6 +33,6 @@ public class TransactionDAOImpl implements TransactionDAO {
         hibernator.save(transaction.getCategory());
         hibernator.save(transaction);
         updater.update(Subscribe.transactions, transaction, transaction.getOwner());
-        transactionUtil.updateAccounts(transaction);
+
     }
 }

@@ -12,6 +12,7 @@ import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.finance.transactions.TransactionDAO;
 import utils.finances.TransactionUtil;
 import utils.json.JsonObject;
+import utils.savers.TransactionSaver;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -25,6 +26,7 @@ import static constants.Keys.*;
 public class EditTransactionAPI extends API {
 
     private final AccountDAO accountDAO = daoService.getAccountDAO();
+    private final TransactionSaver transactionSaver = new TransactionSaver();
     private final TransactionDAO transactionDAO = daoService.getTransactionDAO();
     private final CategoryUtil categoryUtil = new CategoryUtil();
     private final TransactionUtil transactionUtil = new TransactionUtil();
@@ -71,14 +73,15 @@ public class EditTransactionAPI extends API {
             float rate = body.getFloat(RATE);
             transaction.setRate(rate);
 
-            Category category = transaction.getCategory();
-            if (category == null){
-                category = categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), getUser(req));
-                transaction.setCategory(category);
-            }
+            Category prevCategory = transaction.getCategory();
+            transaction.setCategory(categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), getUser(req)));
 
-            transactionDAO.saveTransaction(transaction);
+            transactionSaver.save(transaction);
             write(resp, SUCCESS_ANSWER);
+
+            if (prevCategory != null && !prevCategory.equals(transaction.getCategory())){
+                transactionUtil.removePoint(prevCategory, transaction.getDate());
+            }
             if (prevDate != null && !prevDate.equals(transaction.getDate())){
                 transactionUtil.updateCategory(transaction.getCategory(), transaction.getDate());
             }
