@@ -21,6 +21,7 @@ import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import static constants.Keys.*;
@@ -33,7 +34,7 @@ public class EditCalendarItemAPI extends API {
     private final CategoryUtil categoryUtil = new CategoryUtil();
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         final JsonObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
@@ -49,23 +50,27 @@ public class EditCalendarItemAPI extends API {
 
             if (useDate){
                 Timestamp timestamp = body.getTimestamp(DATE);
-                final LocalDate localDate = timestamp.toLocalDateTime().toLocalDate();
+                final LocalDateTime localDateTime = timestamp.toLocalDateTime();
+                final LocalDate localDate = localDateTime.toLocalDate();
                 item.setDate(Date.valueOf(localDate));
                 boolean useTime = body.getBoolean(USE_TIME);
                 if (useTime){
-                    final LocalTime localTime = timestamp.toLocalDateTime().toLocalTime();
+                    final LocalTime localTime = localDateTime.toLocalTime();
                     item.setTime(Time.valueOf(localTime));
+                    long length = body.getLong(LENGTH);
+                    final LocalDateTime endDateTime = localDateTime.plusMinutes(length);
+                    item.setEndDate(Date.valueOf(endDateTime.toLocalDate()));
+                    item.setEndTime(Time.valueOf(endDateTime.toLocalTime()));
                 } else {
                     item.setTime(null);
                 }
-                long length = body.getLong(LENGTH);
 
             }  else {
                 item.setDate(null);
                 item.setTime(null);
+                item.setEndDate(null);
+                item.setEndTime(null);
             }
-
-
 
             Repeat repeat = Repeat.valueOf(body.getString(REPEAT));
             item.setRepeat(repeat);

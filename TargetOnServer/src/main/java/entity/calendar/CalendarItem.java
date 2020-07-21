@@ -103,12 +103,19 @@ public class CalendarItem extends JsonAble {
         json.put(ID, id);
         json.put(CATEGORY, category.toJson());
         if (date != null){
-            json.put(DATE, date.toString());
 
-        }
-        if (time != null){
-            json.put(TIME, time.toString());
-            json.put(LENGTH, length());
+            json.put(DATE, date.toString());
+            json.put(USE_DATE, true);
+            if (time != null){
+                json.put(TIME, time.toString());
+                json.put(LENGTH, length());
+                json.put(USE_TIME, true);
+            } else {
+                json.put(USE_TIME, false);
+            }
+        } else {
+            json.put(USE_DATE, false);
+            json.put(USE_TIME, false);
         }
 
         json.put(REPEAT, repeat.toString());
@@ -117,10 +124,10 @@ public class CalendarItem extends JsonAble {
     }
 
     private long length() {
-        if (date != null && endDate != null){
+        if (date != null && time != null && endDate != null && endTime != null){
             LocalDateTime from = LocalDateTime.of(date.toLocalDate(), time.toLocalTime());
             LocalDateTime to = LocalDateTime.of(endDate.toLocalDate(), endTime.toLocalTime());
-            return Math.twoDatesDifference(from, to);
+            return Math.twoDatesDifference(from, to) / 1000 / 60;
         }
         return 0;
     }

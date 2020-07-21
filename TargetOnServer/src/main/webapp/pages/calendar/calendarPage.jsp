@@ -14,7 +14,7 @@
 <script>
   calendar.api.edit = '${edit}';
   calendar.api.getCalendar = '${getCalendar}';
-  calendar.getCalendar();
+  // calendar.getCalendarData();
   subscriber.subscribe('${taskSubscribe}', calendar.handler);
   subscriber.subscribe('${subscribe}', calendar.calendarHandler);
 </script>
@@ -61,9 +61,11 @@
     </td>
     <td style="width: 50%">
       <div class="item-container">
-        <div v-for="item in getCalendarItems()" v-on:click="edit(item.id)">
-          {{item.time}} {{item.title}}
-        </div>
+        <template v-for="(tem, key) in buildCalendar()">
+          <div style="border: dashed gray 1pt; margin-bottom: 2px;">
+            {{key}}: {{tem}}
+          </div>
+        </template>
       </div>
     </td>
     <td style="width: 25%; height: 100%">
