@@ -3,6 +3,9 @@ package controllers.calendar;
 import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
+import entity.calendar.CalendarItem;
+import utils.db.dao.calendar.CalendarDAO;
+import utils.db.dao.daoService;
 import utils.json.JsonObject;
 
 import javax.servlet.ServletException;
@@ -17,16 +20,21 @@ import static constants.Keys.*;
 public class CalendarEdit extends ModalWindow {
     private static final String _TITLE = "title.calendar.edit";
     private static final String _CONTENT = "/pages/calendar/calendarEdit.jsp";
+    private final CalendarDAO calendarDAO = daoService.getCalendarDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
+            final CalendarItem item = calendarDAO.getCalendarItem(body.get(ID));
+            req.setAttribute(ITEM, item);
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
         req.setAttribute(SAVE, ApiLinks.CALENDAR_EDIT);
+        req.setAttribute(FIND_CATEGORY, ApiLinks.FIND_CATEGORY);
+
         show(req, resp);
     }
 }

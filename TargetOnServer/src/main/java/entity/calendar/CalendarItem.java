@@ -1,14 +1,16 @@
 package entity.calendar;
 
 import entity.finance.category.Category;
-import entity.task.Task;
 import entity.user.User;
 import org.json.simple.JSONObject;
+import utils.Math;
 import utils.json.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDateTime;
+
 import static constants.Keys.*;
 
 @Entity
@@ -17,7 +19,8 @@ public class CalendarItem extends JsonAble {
     private int id;
     private Date date;
     private Time time;
-    private long length;
+    private Date endDate;
+    private Time endTime;
     private Category category;
     private ExecutionStatus status;
     private Repeat repeat = Repeat.none;
@@ -32,7 +35,7 @@ public class CalendarItem extends JsonAble {
     }
 
     @Basic
-    @Column(name = "_date")
+    @Column(name = "_date_begin")
     public Date getDate() {
         return date;
     }
@@ -41,7 +44,7 @@ public class CalendarItem extends JsonAble {
     }
 
     @Basic
-    @Column(name = "_time")
+    @Column(name = "_time_begin")
     public Time getTime() {
         return time;
     }
@@ -50,12 +53,21 @@ public class CalendarItem extends JsonAble {
     }
 
     @Basic
-    @Column(name = "_length")
-    public long getLength() {
-        return length;
+    @Column(name = "_date_end")
+    public Date getEndDate() {
+        return endDate;
     }
-    public void setLength(long length) {
-        this.length = length;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    @Basic
+    @Column(name = "_time_end")
+    public Time getEndTime() {
+        return endTime;
+    }
+    public void setEndTime(Time endTime) {
+        this.endTime = endTime;
     }
 
     @Enumerated(EnumType.ORDINAL)
@@ -89,17 +101,28 @@ public class CalendarItem extends JsonAble {
     public JSONObject toJson() {
         final JSONObject json = category.toJson();
         json.put(ID, id);
-        json.put(CATEGORY, category.getId());
+        json.put(CATEGORY, category.toJson());
         if (date != null){
             json.put(DATE, date.toString());
+
         }
         if (time != null){
             json.put(TIME, time.toString());
-            json.put(LENGTH, length);
+            json.put(LENGTH, length());
         }
+
         json.put(REPEAT, repeat.toString());
 
         return json;
+    }
+
+    private long length() {
+        if (date != null && endDate != null){
+            LocalDateTime from = LocalDateTime.of(date.toLocalDate(), time.toLocalTime());
+            LocalDateTime to = LocalDateTime.of(endDate.toLocalDate(), endTime.toLocalTime());
+            return Math.twoDatesDifference(from, to);
+        }
+        return 0;
     }
 
     @Transient

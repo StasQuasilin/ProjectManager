@@ -12,6 +12,7 @@ public interface Keys {
     String NAME = "name";
     String UID = "uid";
     String SUBSCRIBE = "subscribe";
+    String TASK_SUBSCRIBE = "taskSubscribe";
     String SLASH = "/";
     String ASTERISK = "*";
     String GOAL = "goal";

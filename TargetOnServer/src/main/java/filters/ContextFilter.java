@@ -1,6 +1,7 @@
 package filters;
 
 import entity.user.User;
+import utils.CalendarReplaceUtil;
 import utils.db.hibernate.HibernateSessionFactory;
 import utils.db.hibernate.Hibernator;
 
@@ -20,6 +21,7 @@ public class ContextFilter implements Filter {
     public void init(FilterConfig filterConfig) {
         Hibernator instance = Hibernator.getInstance();
         user = instance.get(User.class, ID, 1);
+        CalendarReplaceUtil.init();
     }
 
     @Override
@@ -34,5 +36,6 @@ public class ContextFilter implements Filter {
     @Override
     public void destroy() {
         HibernateSessionFactory.shutdown();
+        CalendarReplaceUtil.shutdown();
     }
 }

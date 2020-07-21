@@ -22,6 +22,7 @@ inputSearch = {
         },
         find:function(){
             if (event.keyCode !== 27 ) {
+                this.items = [];
                 clearTimeout(this.timer);
                 let input = this.object.title;
                 if (input && input.length >= 3) {

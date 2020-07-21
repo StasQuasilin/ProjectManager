@@ -5,24 +5,35 @@
   Time: 10:23
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script src="${context}/vue/templates/inputWithSearch.vue"></script>
 <script src="${context}/vue/calendarEdit.vue"></script>
 <script>
     calendarEdit.api.save = '${save}';
+    calendarEdit.props.findCategory = '${findCategory}';
+    <c:if test="${not empty item}">
+    calendarEdit.calendarItem = ${item.toJson()};
+    if (calendarEdit.calendarItem.date){
+        calendarEdit.useDate = true;
+        if (calendarEdit.calendarItem.time){
+            calendarEdit.useTime = true;
+        }
+    }
+    </c:if>
+
 </script>
 <table id="calendarEdit">
     <tr>
         <td colspan="2">
-            <label for="title">
-                <fmt:message key="calendar.title"/>
-            </label>
+            <fmt:message key="calendar.title"/>
         </td>
     </tr>
     <tr>
         <td colspan="2">
-            <input id="title" v-model="calendarItem.title" autocomplete="off" onfocus="this.select()">
+            <input-search :object="calendarItem.category" :props="props"></input-search>
         </td>
     </tr>
     <tr v-if="!calendarItem.useDate">

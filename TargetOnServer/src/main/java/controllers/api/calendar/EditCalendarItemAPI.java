@@ -6,9 +6,11 @@ import entity.calendar.CalendarItem;
 import entity.calendar.Repeat;
 import entity.finance.category.Category;
 import entity.user.User;
+import utils.CategoryUtil;
 import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.daoService;
 import utils.json.JsonObject;
+import utils.savers.CalendarSaver;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +29,8 @@ import static constants.Keys.*;
 public class EditCalendarItemAPI extends API {
 
     private final CalendarDAO calendarDAO = daoService.getCalendarDAO();
+    private final CalendarSaver calendarSaver = new CalendarSaver();
+    private final CategoryUtil categoryUtil = new CategoryUtil();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -39,16 +43,8 @@ public class EditCalendarItemAPI extends API {
             }
 
             final User user = getUser(req);
-            Category category = item.getCategory();
-            if (category == null){
-                category = new Category();
-                category.setOwner(user);
-                item.setCategory(category);
-            }
-
-            final String title = body.getString(TITLE);
-            category.setTitle(title);
-
+            item.setCategory(categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), user));
+            
             boolean useDate = body.getBoolean(USE_DATE);
 
             if (useDate){
@@ -62,18 +58,19 @@ public class EditCalendarItemAPI extends API {
                 } else {
                     item.setTime(null);
                 }
+                long length = body.getLong(LENGTH);
+
             }  else {
                 item.setDate(null);
                 item.setTime(null);
             }
 
-            long length = body.getLong(LENGTH);
-            item.setLength(length);
+
 
             Repeat repeat = Repeat.valueOf(body.getString(REPEAT));
             item.setRepeat(repeat);
 
-            calendarDAO.saveCalendarItem(item);
+            calendarSaver.save(item);
         }
         write(resp, SUCCESS_ANSWER);
     }

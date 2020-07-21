@@ -49,7 +49,7 @@ public class TransactionEdit extends ModalWindow {
         req.setAttribute(ACCOUNTS, accountDAO.getUserAccounts(user));
         req.setAttribute(CURRENCY, currencyDAO.getUserCurrency(user));
         req.setAttribute(FIND_COUNTERPARTY, ApiLinks.FIND_COUNTERPARTY);
-        req.setAttribute(FIND_CATEGORY, ApiLinks.FIND_TRANSACTION_CATEGORY);
+        req.setAttribute(FIND_CATEGORY, ApiLinks.FIND_CATEGORY);
         show(req, resp);
     }
 

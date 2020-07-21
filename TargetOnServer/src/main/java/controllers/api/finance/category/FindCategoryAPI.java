@@ -17,7 +17,7 @@ import java.io.IOException;
 
 import static constants.Keys.KEY;
 
-@WebServlet(ApiLinks.FIND_TRANSACTION_CATEGORY)
+@WebServlet(ApiLinks.FIND_CATEGORY)
 public class FindCategoryAPI extends API {
 
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();

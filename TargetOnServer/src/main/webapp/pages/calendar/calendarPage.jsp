@@ -15,7 +15,8 @@
   calendar.api.edit = '${edit}';
   calendar.api.getCalendar = '${getCalendar}';
   calendar.getCalendar();
-  subscriber.subscribe('${subscribe}', calendar.handler);
+  subscriber.subscribe('${taskSubscribe}', calendar.handler);
+  subscriber.subscribe('${subscribe}', calendar.calendarHandler);
 </script>
 <table id="calendar" class="full-size" border="1">
   <tr>
@@ -26,34 +27,18 @@
       </span>
     </td>
     <td style="text-align: center">
-      <span class="text-button" v:on:click="switchDate(-1)">
-        <
+      <span class="text-button" v-on:click="switchDate(-1)">
+        &#9664;
       </span>
-      <span v-if="scale === 'day'">
-        Day
+      <span class="text-button">
         {{new Date(date).toLocaleDateString()}}
       </span>
-      <span v-else-if="scale === 'week'">
-        Week
-        {{getWeekNumber(new Date(date))}}
+      <span class="text-button" v-if="new Date(date) !== new Date()" v-on:click="resetDate()">
+        &#128198;
       </span>
-      <span v-else-if="scale === 'month'">
-        Month
-        {{new Date(date).getMonth() + 1}}
+      <span class="text-button" v-on:click="switchDate(1)">
+        &#9654;
       </span>
-      <span v-else>
-        Year
-        {{new Date(date).getFullYear()}}
-      </span>
-      <span class="text-button" v:on:click="switchDate(1)">
-        >
-      </span>
-
-<%--      <span style="float: right">--%>
-<%--        <span v-for="s in scales" v-on:click="scale = s" class="text-button">--%>
-<%--          [ {{s}} ]--%>
-<%--        </span>--%>
-<%--      </span>--%>
     </td>
     <td style="text-align: center">
       <fmt:message key="calendar.active"/>
@@ -76,7 +61,7 @@
     </td>
     <td style="width: 50%">
       <div class="item-container">
-        <div v-for="item in getCalendarItems()">
+        <div v-for="item in getCalendarItems()" v-on:click="edit(item.id)">
           {{item.time}} {{item.title}}
         </div>
       </div>

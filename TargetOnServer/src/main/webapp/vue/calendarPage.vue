@@ -10,10 +10,26 @@ calendar = new Vue({
         }
     },
     methods:{
+        calendarHandler:function(data){
+            if (data.update){
+                let update = data.update;
+                let date = update.date;
+                if (!date || date === this.date){
+                    this.calendar.push(update);
+                }
+            }
+        },
         switchDate:function(value){
             let date = new Date(this.date);
             date.setDate(date.getDate() + value);
+            this.setDate(date);
+        },
+        resetDate:function(){
+            this.setDate(new Date());
+        },
+        setDate:function(date){
             this.date = date.toISOString().substring(0, 10);
+            this.getCalendar();
         },
         getCalendar:function () {
             const self = this;

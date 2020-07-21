@@ -1,16 +1,27 @@
 calendarEdit = new Vue({
     el:'#calendarEdit',
+    components:{
+        'input-search':inputSearch
+    },
     data:{
         api:{},
         repeats:['none','day', 'week', 'month', 'year'],
         calendarItem:{
             id:-1,
-            title:'',
+            category:{
+                id:-1,
+                title:''
+            },
             date:new Date(),
             length:1,
             repeat:'none',
             useDate:true,
             useTime:true
+        },
+        props:{
+            put:function(category){
+                calendarEdit.calendarItem.category = category;
+            }
         }
     },
     methods:{
