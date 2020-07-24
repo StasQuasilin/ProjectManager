@@ -16,6 +16,12 @@
   <c:choose>
   <c:when test="${not empty goal}">
   goalEdit.goal = ${goal.toJson()};
+  if (goalEdit.goal.begin){
+    goalEdit.useBeginDate = true;
+    if (goalEdit.goal.end){
+      goalEdit.useEndDate = true;
+    }
+  }
   </c:when>
   </c:choose>
 </script>
@@ -42,7 +48,7 @@
       </td>
       <td>
         <span class="text-button">
-          {{new Date(goal.dateBegin).toLocaleDateString()}}
+          {{new Date(goal.begin).toLocaleDateString()}}
         </span>
         <span class="text-button" v-on:click="useBeginDate = false">
           &times;
@@ -63,7 +69,7 @@
         </td>
         <td>
           <span class="text-button">
-            {{new Date(goal.dateEnd).toLocaleDateString()}}
+            {{new Date(goal.end).toLocaleDateString()}}
           </span>
           <span class="text-button" v-on:click="useEndDate = false">
             &times;

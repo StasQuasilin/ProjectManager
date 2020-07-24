@@ -50,3 +50,6 @@ input{
 ::-webkit-scrollbar-thumb:hover {
     background: #f4b400;
 }
+button{
+    min-width: 60pt;
+}

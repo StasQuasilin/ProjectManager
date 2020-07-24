@@ -94,4 +94,5 @@ public interface Keys {
     String SPEND = "spend";
     String ACTIVE = "active";
     String PROGRESSING = "progressing";
+    String REMOVE = "remove";
 }

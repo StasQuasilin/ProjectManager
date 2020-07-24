@@ -25,7 +25,7 @@ inputSearch = {
                 this.items = [];
                 clearTimeout(this.timer);
                 let input = this.object.title;
-                if (input && input.length >= 3) {
+                if (input && input.length >= 1) {
                     this.object.id = -1;
                     const self = this;
                     this.timer = setTimeout(function () {

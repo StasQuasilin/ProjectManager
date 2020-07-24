@@ -74,16 +74,19 @@ public class EditTransactionAPI extends API {
             transaction.setRate(rate);
 
             Category prevCategory = transaction.getCategory();
-            transaction.setCategory(categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), getUser(req)));
+            if (type == TransactionType.income || type == TransactionType.spending) {
+                transaction.setCategory(categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), getUser(req)));
+            }
 
             transactionSaver.save(transaction);
             write(resp, SUCCESS_ANSWER);
-
-            if (prevCategory != null && !prevCategory.equals(transaction.getCategory())){
-                transactionUtil.removePoint(prevCategory, transaction.getDate());
+            if (type == TransactionType.income || type == TransactionType.spending) {
+                if (prevCategory != null && !prevCategory.equals(transaction.getCategory())) {
+                    transactionUtil.removePoint(prevCategory, transaction.getDate());
+                }
             }
             if (prevDate != null && !prevDate.equals(transaction.getDate())){
-                transactionUtil.updateCategory(transaction.getCategory(), transaction.getDate());
+                transactionUtil.updateCategory(transaction.getCategory(), prevDate);
             }
             if (prevAccountFrom != null && !prevAccountFrom.equals(transaction.getAccountFrom())){
                 transactionUtil.removePoint(transaction, prevAccountFrom);

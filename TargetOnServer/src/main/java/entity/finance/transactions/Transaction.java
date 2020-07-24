@@ -122,7 +122,9 @@ public class Transaction extends JsonAble {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
         jsonObject.put(DATE, date.toString());
-        jsonObject.put(CATEGORY, category.shortJson());
+        if (category != null){
+            jsonObject.put(CATEGORY, category.shortJson());
+        }
         if (accountFrom != null){
             jsonObject.put(ACCOUNT_FROM, accountFrom.shortJson());
         }

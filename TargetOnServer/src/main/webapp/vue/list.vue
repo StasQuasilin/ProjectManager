@@ -26,11 +26,16 @@ let list = {
                 if (items.update){
                     this.update(items.update);
                 }
+                if (items.remove){
+                    this.remove(items.remove.id);
+                }
             }
         },
         update:function(item){
-            console.log(item);
             Vue.set(this.items, item.id, item);
+        },
+        remove:function(id){
+            Vue.delete(this.items, id);
         },
         getItems:function () {
             let values = Object.values(this.items);

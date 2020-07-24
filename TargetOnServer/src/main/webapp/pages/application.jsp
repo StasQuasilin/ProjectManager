@@ -17,8 +17,10 @@
     <link rel="stylesheet" href="${context}/css/main.css">
     <link rel="stylesheet" href="${context}/css/application.css">
     <link rel="stylesheet" href="${context}/css/modalLayer.css">
+    <link rel="stylesheet" href="${context}/css/datePicker.css">
     <script src="${context}/external/jquery.min.js"></script>
     <script src="${context}/external/vue.js"></script>
+    <script src="${context}/external/vuetify.js"></script>
     <script src="${context}/js/constants.js"></script>
     <script src="${context}/js/connection.js"></script>
     <script src="${context}/js/subscriber.js"></script>

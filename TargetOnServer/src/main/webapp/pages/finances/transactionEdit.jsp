@@ -16,6 +16,8 @@
   transactionEdit.props.findCategory = '${findCategory}';
   transactionEdit.api.findCounterparty = '${findCounterparty}';
   transactionEdit.api.save = '${save}';
+  transactionEdit.api.remove = '${remove}';
+  transactionEdit.locale = '${locale}';
   <c:forEach items="${types}" var="type">
   transactionEdit.types.push({
     id:'${type}',
@@ -35,15 +37,22 @@
   <c:otherwise>
   transactionEdit.transaction.type = transactionEdit.types[0].id;
   transactionEdit.transaction.accountFrom = transactionEdit.accounts[0];
+  transactionEdit.transaction.accountTo = transactionEdit.accounts[1];
   transactionEdit.transaction.currency = transactionEdit.currency[0];
   </c:otherwise>
   </c:choose>
 
 </script>
-<table id="transactionEdit">
+<table id="transactionEdit" v-if="transaction.accountFrom">
   <tr>
     <td>
-      Календурік
+      <v-date-picker
+              :no-title="true"
+              class="date-picker"
+              :locale="locale"
+              :first-day-of-week="1"
+              v-model="transaction.date">
+      </v-date-picker>
     </td>
     <td>
       <div>
@@ -66,10 +75,15 @@
               <input-search :object="transaction.category" :props="props"></input-search>
             </td>
           </tr>
-          <tr>
+          <tr v-if="transaction.accountFrom">
             <td>
               <label for="accountFrom">
-                <fmt:message key="transaction.account.from"/>
+                <template v-if="transaction.type === 'spending' || transaction.type === 'transfer'">
+                  <fmt:message key="transaction.account.from"/>
+                </template>
+                <template v-else>
+                  <fmt:message key="transaction.account.to"/>
+                </template>
               </label>
             </td>
             <td>
@@ -116,12 +130,36 @@
                      autocomplete="off" onfocus="this.select()" style="width: 75pt">
             </td>
           </tr>
+          <tr v-if="transaction.type === 'transfer'">
+            <td>
+              <label for="accountTo">
+                <fmt:message key="transaction.account.to"/>
+              </label>
+            </td>
+            <td>
+              <select id="accountTo" v-model="transaction.accountTo.id">
+                <option v-for="account in accounts" :value="account.id">
+                  {{account.title}} ( {{account.sum}} {{account.currency}} )
+                </option>
+              </select>
+            </td>
+          </tr>
+          <tr v-if="!editNote">
+            <td colspan="2" style="text-align: center">
+              <span class="text-button" v-if="!editNote">
+                <fmt:message key="note.add"/>
+              </span>
+            </td>
+          </tr>
         </table>
       </div>
     </td>
   </tr>
   <tr>
     <td colspan="2" style="text-align: center">
+      <button v-if="transaction.id > 0" v-on:click="remove">
+        <fmt:message key="button.remove"/>
+      </button>
       <button onclick="closeModal()">
         <fmt:message key="button.cancel"/>
       </button>

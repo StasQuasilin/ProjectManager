@@ -50,6 +50,7 @@ public class TransactionEdit extends ModalWindow {
         req.setAttribute(CURRENCY, currencyDAO.getUserCurrency(user));
         req.setAttribute(FIND_COUNTERPARTY, ApiLinks.FIND_COUNTERPARTY);
         req.setAttribute(FIND_CATEGORY, ApiLinks.FIND_CATEGORY);
+        req.setAttribute(REMOVE, UrlLinks.TRANSACTION_REMOVE);
         show(req, resp);
     }
 

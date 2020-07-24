@@ -24,6 +24,7 @@ public class GoalEdit extends ModalWindow {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject body = parseBody(req);
         if (body != null){
+            System.out.println(body);
             req.setAttribute(GOAL, goalDAO.getGoal(body.get(ID)));
         }
         req.setAttribute(CONTENT, _CONTENT);

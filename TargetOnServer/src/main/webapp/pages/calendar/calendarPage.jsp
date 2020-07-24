@@ -8,6 +8,8 @@
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<link rel="stylesheet" href="${context}/external/full_calendar/main.css"/>
+<script src="${context}/external/full_calendar/main.min.js"></script>
 <script src="${context}/vue/pathBuilder.vue"></script>
 <script src="${context}/vue/weekNumber.vue"></script>
 <script src="${context}/vue/calendarPage.vue"></script>
@@ -61,11 +63,7 @@
     </td>
     <td style="width: 50%">
       <div class="item-container">
-        <template v-for="(tem, key) in buildCalendar()">
-          <div style="border: dashed gray 1pt; margin-bottom: 2px;">
-            {{key}}: {{tem}}
-          </div>
-        </template>
+        <full-calendar :options="calendarOptions"></full-calendar>
       </div>
     </td>
     <td style="width: 25%; height: 100%">

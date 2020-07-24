@@ -17,4 +17,5 @@ public interface UrlLinks {
     String TASK_EDIT = "/task/edit/" + SUFFIX;
     String CALENDAR_EDIT = "/calendar/edit" + SUFFIX;
     String PERSONAL = "/personal" + SUFFIX;
+    String TRANSACTION_REMOVE = "/transaction/remove" + SUFFIX;
 }

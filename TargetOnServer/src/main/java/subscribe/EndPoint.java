@@ -54,6 +54,7 @@ public class EndPoint {
     @OnClose
     public void OnClose(Session session){
         User user = sessions.remove(session);
+        System.out.println("Session #" + session.getId() + " for user " + user + " closed");
         subscriber.onClose(user, session);
     }
 

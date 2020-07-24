@@ -1,6 +1,26 @@
 .goal-page{
-
+    display: flex;
 }
 .goal-item{
-
+    margin: 8px;
+    border: solid;
+    min-width: 200pt;
+}
+.goal-title{
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 14pt;
+    font-weight: bold;
+    background-color: #3788d8;
+    color: whitesmoke;
+}
+.goal-title span{
+    color: gray;
+    background-color: transparent;
+}
+.goal-title-buttons{
+    display: inline-block;
+    float: right;
+    padding: 0 4px;
 }

@@ -1,5 +1,8 @@
 calendar = new Vue({
     el:'#calendar',
+    components:{
+        'full-calendar':FullCalendar
+    },
     mixins:[list, pathBuilder, weekNumber],
     data:function(){
         return{
@@ -14,7 +17,7 @@ calendar = new Vue({
                     length: 3 * 60
                 },
                 {
-                    date:'2020-07-20',
+                    date:'2020-07-21',
                     time:'23:00:00',
                     title:'Item 1',
                     length: 8 * 60
@@ -31,7 +34,13 @@ calendar = new Vue({
                     title: 'Item 4',
                     length: 8 * 60
                 }
-            ]
+            ],
+            calendarOptions:{
+                events: [
+                    { title: 'event 1', date: '2020-07-22' },
+                    { title: 'event 2', date: '2020-07-22' }
+                ]
+            }
         }
     },
     methods:{

@@ -156,4 +156,11 @@ public class AccountPointUtil {
         param.put(SCALE, PointScale.year);
         return hibernator.query(AccountPoint.class, param);
     }
+
+    public void removeDay(Date date, Account account) {
+        final AccountPoint point = getPoint(account.getId(), date, PointScale.day);
+        if (point != null){
+            hibernator.remove(point);
+        }
+    }
 }

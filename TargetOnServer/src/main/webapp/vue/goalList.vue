@@ -1,9 +1,19 @@
 goalList = new Vue({
     el:'#goalList',
+    components:{
+        'goal-tile':goalTile
+    },
     mixins:[list],
     data:function(){
         return {
-            test:'TEST'
+            props:{
+                edit:function (id) {
+                    goalList.edit(id)
+                },
+                tree:function (id) {
+                    goalList.openTree(id);
+                }
+            }
         }
     },
     methods:{
@@ -11,4 +21,4 @@ goalList = new Vue({
             loadPage(this.api.tree, {item:itemId});
         }
     }
-})
+});

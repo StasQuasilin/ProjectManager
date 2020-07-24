@@ -76,6 +76,10 @@ public class TransactionUtil {
 
     private void updatePoint(Transaction transaction, Account account, float amount) {
         final TransactionPoint point = transactionPointUtil.getPoint(transaction, account);
+        final Date oldDate = point.getDate();
+        if (oldDate != null && !oldDate.equals(transaction.getDate())){
+            accountPointUtil.removeDay(oldDate, account);
+        }
         point.setDate(transaction.getDate());
         point.setAmount(amount);
         point.setRate(transaction.getRate());

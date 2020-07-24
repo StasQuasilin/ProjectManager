@@ -29,7 +29,14 @@
             <div class="full-size item-container">
                 <div v-for="item in getItems()" v-on:click="edit(item.id)">
                     <div>
-                        {{item.date}}/ {{item.category.title}}: {{item.amount}} {{item.currency}}
+                        {{item.type}}
+                        <span>{{item.date}}</span>
+                        <span v-if="item.category">
+                            {{item.category.title}}
+                        </span>
+                        <span>
+                            : {{item.amount}} {{item.currency}}
+                        </span>
                     </div>
                     <div>
                         {{item.accountFrom.title}}

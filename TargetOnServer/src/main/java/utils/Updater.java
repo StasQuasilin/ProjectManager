@@ -1,5 +1,6 @@
 package utils;
 
+import entity.RemovePack;
 import entity.user.User;
 import subscribe.Subscribe;
 import subscribe.Subscriber;
@@ -17,6 +18,11 @@ public class Updater {
         } else {
             System.out.println("Subscriber is null");
         }
+    }
+
+    public void remove(Subscribe subscribe, int id, User user) {
+        final Subscriber subscriber = Subscriber.getInstance();
+        subscriber.send(subscribe, UpdateAction.remove, new RemovePack(id), user);
     }
 }
 ;

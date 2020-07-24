@@ -15,4 +15,5 @@ public interface ApiLinks {
     String TREE_BUILDER = API + "/tree/builder";
     String GET_CALENDAR = API + "/get/calendar";
     String CALENDAR_EDIT = API + "/calendar/save";
+    String TRANSACTION_REMOVE = API + "/transaction/remove";
 }

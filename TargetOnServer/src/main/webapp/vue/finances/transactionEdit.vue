@@ -13,8 +13,12 @@ transactionEdit = new Vue({
             type:null,
             date:new Date().toISOString().substring(0, 10),
             category:{},
-            accountFrom:null,
-            accountTo:null,
+            accountFrom:{
+                id:-1
+            },
+            accountTo:{
+                id:-1
+            },
             counterparty:null,
             amount:0,
             currency:null,
@@ -26,13 +30,21 @@ transactionEdit = new Vue({
                 console.log('Put category : ' + category.title);
                 transactionEdit.transaction.category = category;
             }
-        }
+        },
+        locale:'uk',
+        editNote:false
     },
     methods:{
         save:function(){
             let transaction = Object.assign({}, this.transaction);
+            if (transaction.type === 'transfer'){
+                delete transaction.category;
+            }
             if (transaction.accountFrom){
                 transaction.accountFrom = transaction.accountFrom.id;
+            }
+            if (transaction.accountTo){
+                transaction.accountTo = transaction.accountTo.id;
             }
             PostApi(this.api.save, transaction, function(a){
                 if (a.status === 'success'){
@@ -58,6 +70,12 @@ transactionEdit = new Vue({
                 this.transaction[name] = num;
             }
 
+        },
+        remove:function(){
+            if (this.api.remove){
+                closeModal();
+                loadModal(this.api.remove, {id: this.transaction.id})
+            }
         }
     }
 });

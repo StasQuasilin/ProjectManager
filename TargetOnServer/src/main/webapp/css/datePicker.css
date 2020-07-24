@@ -1,0 +1,44 @@
+.date-picker-holder{
+	background-color: aliceblue;
+	border: solid 1px;
+	padding: 4px;
+}
+.date-picker .v-btn--flat,.date-picker .v-date-picker-header__value{
+	display: inline-block;
+}
+.v-btn--flat{
+	border: none;
+}
+.v-btn--flat:hover{
+	background-color: rgb(254, 226, 166);
+}
+.v-btn{
+	min-width: auto;
+}
+.v-btn__content{
+	background: transparent;
+}
+.date-picker .v-date-picker-title{
+	height: 36px;
+}
+.date-picker .v-date-picker-header{
+	text-align: center;
+}
+.date-picker .v-date-picker-table .v-btn {
+	width: 100%;
+}
+.v-date-picker-table table{
+	border-collapse: collapse;
+}
+.v-date-picker-table table td{
+	border: solid gray 1px;
+}
+.date-picker .v-date-picker-table .v-date-picker-table__current{
+	border: solid green;
+}
+.date-picker .v-date-picker-table .v-btn--active{
+	outline: none;
+	background-color: orange;
+	border: none;
+}
+
