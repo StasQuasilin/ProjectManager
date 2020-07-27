@@ -6,6 +6,7 @@ import entity.finance.accounts.PointScale;
 import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionPoint;
+import entity.finance.transactions.TransactionType;
 import entity.task.TaskStatistic;
 import utils.db.hibernate.Hibernator;
 
@@ -25,39 +26,49 @@ public class TransactionUtil {
         final float amount = transaction.getAmount();
         if (amount != 0){
             final Account accountFrom = transaction.getAccountFrom();
-            final Account accountTo = transaction.getAccountTo();
             if (accountFrom != null) {
-                updatePoint(transaction, accountFrom, amount);
-            }
-            if (accountTo != null){
                 updatePoint(transaction, accountFrom, -amount);
+            }
+            final Account accountTo = transaction.getAccountTo();
+            if (accountTo != null){
+                updatePoint(transaction, accountTo, amount);
             }
             updateCategory(transaction.getCategory(), transaction.getDate());
         }
     }
 
     public void updateCategory(Category category, Date date) {
-        final HashMap<String, Object> param = new HashMap<>();
-        param.put(CATEGORY, category);
-        param.put(DATE, date);
+        if (!category.isHidden()) {
+            final HashMap<String, Object> param = new HashMap<>();
+            param.put(CATEGORY, category);
+            param.put(DATE, date);
 
-        float plus = 0;
-        float minus = 0;
-        for (Transaction t : hibernator.query(Transaction.class, param)){
-            final float amount = t.getAmount();
-            if (amount > 0){
-                plus += amount;
-            } else {
-                minus += amount;
+            float plus = 0;
+            float minus = 0;
+            for (Transaction t : hibernator.query(Transaction.class, param)) {
+                float amount = t.getAmount();
+                if (t.getTransactionType() == TransactionType.spending ){
+                    amount *= -1;
+                }
+                if (amount > 0) {
+                    plus += amount;
+                } else {
+                    minus += amount;
+                }
             }
-        }
-        AccountPoint point = accountPointUtil.getPoint(category.getId(), date, PointScale.day);
-        point.setPlus(plus);
-        point.setMinus(minus);
-        hibernator.save(point);
-        accountPointUtil.pointByPoint(category.getId(), date, PointScale.week);
+            final AccountPoint point = accountPointUtil.getPoint(category.getId(), date, PointScale.day);
+            if (plus != 0 || minus != 0){
+                point.setPlus(plus);
+                point.setMinus(minus);
+                hibernator.save(point);
+            } else if(point.getId() > 0){
+                hibernator.remove(point);
+            }
 
-        calculateCategory(category);
+            accountPointUtil.pointByPoint(category.getId(), date, PointScale.week);
+
+            calculateCategory(category);
+        }
     }
 
     private void calculateCategory(Category category) {
@@ -75,11 +86,12 @@ public class TransactionUtil {
     }
 
     private void updatePoint(Transaction transaction, Account account, float amount) {
+        System.out.println("Update point for account '" + account.getTitle() + "': " + amount);
         final TransactionPoint point = transactionPointUtil.getPoint(transaction, account);
-        final Date oldDate = point.getDate();
-        if (oldDate != null && !oldDate.equals(transaction.getDate())){
-            accountPointUtil.removeDay(oldDate, account);
-        }
+//        final Date oldDate = point.getDate();
+//        if (oldDate != null && !oldDate.equals(transaction.getDate())){
+//            accountPointUtil.removeDay(oldDate, account);
+//        }
         point.setDate(transaction.getDate());
         point.setAmount(amount);
         point.setRate(transaction.getRate());
@@ -90,7 +102,7 @@ public class TransactionUtil {
         accountPointUtil.updateAccount(account);
     }
 
-    private void calculateAccountDay(Account account, Date date){
+    public void calculateAccountDay(Account account, Date date){
         final HashMap<String, Object> param = new HashMap<>();
         param.put(ACCOUNT, account.getId());
         param.put(DATE, date);
@@ -105,21 +117,24 @@ public class TransactionUtil {
             }
         }
         AccountPoint point = accountPointUtil.getPoint(account.getId(), date, PointScale.day);
-        point.setPlus(plus);
-        point.setMinus(minus);
-        hibernator.save(point);
+        if (plus != 0 || minus != 0) {
+            point.setPlus(plus);
+            point.setMinus(minus);
+            hibernator.save(point);
+        } else if (point.getId() > 0){
+            hibernator.remove(point);
+        }
+
         accountPointUtil.pointByPoint(account.getId(), date, PointScale.week);
     }
 
-    public void removePoint(Transaction transaction, Account account){
-        transactionPointUtil.removePoint(transaction, account);
-        calculateAccountDay(account, transaction.getDate());
+    public void removeTransactionPoint(Account account, int transaction, Date date) {
+        transactionPointUtil.removePoint(account.getId(), transaction, date);
+        calculateAccountDay(account, date);
         accountPointUtil.updateAccount(account);
     }
 
-    public void removePoint(Category category, Date date) {
-        AccountPoint point = accountPointUtil.getPoint(category.getId(), date, PointScale.day);
-        hibernator.remove(point);
-        accountPointUtil.pointByPoint(category.getId(), date, PointScale.week);
+    public void removePoint(Transaction transaction, Account account) {
+        removeTransactionPoint(account, transaction.getId(), transaction.getDate());
     }
 }

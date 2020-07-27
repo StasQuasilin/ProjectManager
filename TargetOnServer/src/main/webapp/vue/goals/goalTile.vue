@@ -21,9 +21,15 @@ goalTile = {
                     '{{new Date(goal.begin).toLocaleDateString()}}' +
                 '</span>' +
             '</div>' +
-            // '<div>' +
-            //     '{{goal}}' +
-            // '</div>' +
+            '<div v-if="goal.budget">' +
+                'Budget:' +
+                '<span>' +
+                    '{{goal.budget.toLocaleString()}} {{goal.currency}}' +
+                '</span>' +
+            '</div>' +
+            '<div>' +
+                '{{goal.statistic}}' +
+            '</div>' +
             '' +
         '</div>'
 };

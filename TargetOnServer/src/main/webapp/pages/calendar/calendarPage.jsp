@@ -8,8 +8,7 @@
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<link rel="stylesheet" href="${context}/external/full_calendar/main.css"/>
-<script src="${context}/external/full_calendar/main.min.js"></script>
+<link rel="stylesheet" href="${context}/css/calendar/calendar.css">
 <script src="${context}/vue/pathBuilder.vue"></script>
 <script src="${context}/vue/weekNumber.vue"></script>
 <script src="${context}/vue/calendarPage.vue"></script>
@@ -63,7 +62,22 @@
     </td>
     <td style="width: 50%">
       <div class="item-container">
-        <full-calendar :options="calendarOptions"></full-calendar>
+        <div v-for="item in buildCalendar()" :style="{'min-height': (item.length)+ 'pt'}" class="calendar-item" :class="{'filled' : item.title}">
+          <div style="font-size: 10pt; color: white">
+              {{item.from.toLocaleDateString()}}
+          </div>
+          <div>
+            {{item.from.toLocaleTimeString().substring(0, 5)}} - {{item.to.toLocaleTimeString().substring(0, 5)}}
+          </div>
+          <div v-if="item.title">
+            {{item.title}}
+          </div>
+          <div style="font-size: 10px">
+            <div v-for="(v, k) in item">
+              {{k}}: {{v}}
+            </div>
+          </div>
+        </div>
       </div>
     </td>
     <td style="width: 25%; height: 100%">

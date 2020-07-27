@@ -32,7 +32,7 @@ public class TransactionRemove extends ModalWindow {
             req.setAttribute(TITLE, _TITLE);
             req.setAttribute(CONTENT, _CONTENT);
             req.setAttribute(REMOVE, ApiLinks.TRANSACTION_REMOVE);
-            req.setAttribute(EDIT, TRANSACTION_EDIT);
+            req.setAttribute(EDIT, UrlLinks.TRANSACTION_EDIT);
             show(req, resp);
         }
     }

@@ -31,7 +31,7 @@ public class Goal extends JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = "category")
+    @JoinColumn(name = "_category")
     public Category getCategory() {
         return category;
     }
@@ -93,6 +93,7 @@ public class Goal extends JsonAble {
             jsonObject.put(STATISTIC, statistic.toJson());
         }
         jsonObject.put(BUDGET, budget);
+        jsonObject.put(CURRENCY, category.getCurrency());
 
         return jsonObject;
     }

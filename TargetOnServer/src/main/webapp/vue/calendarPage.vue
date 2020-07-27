@@ -1,8 +1,5 @@
 calendar = new Vue({
     el:'#calendar',
-    components:{
-        'full-calendar':FullCalendar
-    },
     mixins:[list, pathBuilder, weekNumber],
     data:function(){
         return{
@@ -56,7 +53,6 @@ calendar = new Vue({
             date.setHours(0);
             date.setMinutes(0);
             date.setSeconds(0);
-            let map = {};
             for (let i in list){
                 if (list.hasOwnProperty(i)){
                     let item = list[i];
@@ -64,60 +60,25 @@ calendar = new Vue({
                     let to = new Date(from);
                     let l = item.length;
                     to.setMinutes(to.getMinutes() + l);
-                    item.from = from.toLocaleString();
-                    item.to = to.toLocaleString();
-
-
-                    let difference = (from - date) / 1000 / 60;
-                    if (difference < 0){
-                        item.difference = difference;
-                    }
-                    let min = from < date ? date.toLocaleTimeString() : from.toLocaleTimeString();
-                    map[min] = item;
+                    item.from = from;
+                    item.to = to;
                 }
             }
-
-            let calendar = [];
-            for (let i = 0; i < 24; i++){
-                let hour = date.toLocaleTimeString();
-                console.log('Hour: ' + date.toLocaleString());
-                let add = true;
-                let minutes = date.getMinutes();
-
-                for (let j = minutes; j < 60; j++){
-                    let time = date.toLocaleTimeString();
-                    if (map[time]){
-                        add = false;
-                        if (j > 0) {
-                            calendar.push({
-                                time: hour,
-                                length: j
-                            });
+            let calendar = {};
+            for (let i = 0; i < list.length; i++){
+                let item1 = list[i];
+                calendar[item1.from.toLocaleTimeString()] = item1;
+                if (i < list.length - 1){
+                    let item2 = list[i + 1];
+                    if (item1.to !== item2.from){
+                        calendar[item1.to.toLocaleTimeString()] = {
+                            from:item1.to,
+                            to:item2.from,
+                            length:(item2.from - item1.to) / 1000 / 60
                         }
-                        let item = map[time];
-                        item.key = time;
-                        let length = item.length;
-                        if (item.difference){
-                            length += item.difference;
-                        }
-                        calendar.push(item);
-                        console.log(date.toLocaleString());
-                        date.setMinutes(date.getMinutes() + length);
-                        console.log(date.toLocaleString())
-                    } else {
-                        date.setMinutes(date.getMinutes() + 1);
                     }
                 }
-
-                if (add){
-                    console.log('add hour: ' + hour);
-                    calendar.push({
-                        time:hour,
-                        length:60 - minutes
-                    })
-                }
             }
-
             return calendar;
         },
         calendarHandler:function(data){
@@ -145,14 +106,6 @@ calendar = new Vue({
             const self = this;
             PostApi(this.api.getCalendar, {date:this.date}, function (a) {
                 self.calendar = a;
-                let date = new Date(self.date);
-                date.setDate(date.getDate() - 1);
-                date.setHours(22);
-                date.setMinutes(50);
-                self.calendar.push({
-                    time:date.toString(),
-                    title:'Test'
-                })
             })
         },
         getCalendarItems:function(){

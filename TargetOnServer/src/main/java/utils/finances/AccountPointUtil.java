@@ -34,10 +34,13 @@ public class AccountPointUtil {
         }
 
         final AccountPoint point = getPoint(accountId, Date.valueOf(beginDate), scale);
-        point.setPlus(plus);
-        point.setMinus(minus);
-
-        hibernator.save(point);
+        if(plus != 0 || minus != 0) {
+            point.setPlus(plus);
+            point.setMinus(minus);
+            hibernator.save(point);
+        } else if(point.getId() > 0){
+            hibernator.remove(point);
+        }
 
         PointScale next = nextScale(scale);
         if (next != scale){
@@ -162,5 +165,6 @@ public class AccountPointUtil {
         if (point != null){
             hibernator.remove(point);
         }
+
     }
 }

@@ -12,6 +12,7 @@ public class UserSystemCategory implements Serializable {
     private User owner;
     private Category createAccount;
     private Category accountCorrection;
+    private Category transferTransaction;
 
     @Id
     @OneToOne
@@ -39,5 +40,14 @@ public class UserSystemCategory implements Serializable {
     }
     public void setAccountCorrection(Category accountCorrection) {
         this.accountCorrection = accountCorrection;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "transfer_transaction")
+    public Category getTransferTransaction() {
+        return transferTransaction;
+    }
+    public void setTransferTransaction(Category transferTransaction) {
+        this.transferTransaction = transferTransaction;
     }
 }

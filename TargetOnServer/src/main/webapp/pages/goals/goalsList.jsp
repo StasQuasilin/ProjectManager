@@ -16,7 +16,7 @@
     </script>
     <jsp:include page="goalHeader.jsp"/>
     <body>
-        <div id="goalList" class="goal-page">
+        <div id="goalList" class="goal-page item-container">
             <goal-tile v-for="goal in getItems()" :key="goal.id" :goal="goal" :props="props"
                        class="goal-item"></goal-tile>
         </div>

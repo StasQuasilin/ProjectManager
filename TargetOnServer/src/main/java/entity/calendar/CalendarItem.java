@@ -127,7 +127,7 @@ public class CalendarItem extends JsonAble {
         if (date != null && time != null && endDate != null && endTime != null){
             LocalDateTime from = LocalDateTime.of(date.toLocalDate(), time.toLocalTime());
             LocalDateTime to = LocalDateTime.of(endDate.toLocalDate(), endTime.toLocalTime());
-            return Math.twoDatesDifference(from, to) / 1000 / 60;
+            return Math.twoDatesDifference(to, from) / 1000 / 60;
         }
         return 0;
     }

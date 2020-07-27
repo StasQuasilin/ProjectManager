@@ -36,12 +36,18 @@ public class EditGoalAPI extends API {
             User user = getUser(req);
             System.out.println(user);
 
+            final float budget = body.getFloat(BUDGET);
+            final String currency = body.getString(CURRENCY);
+
             Category category = goal.getCategory();
             if (category == null){
                 category = new Category();
                 category.setOwner(user);
                 goal.setCategory(category);
             }
+
+            goal.setBudget(budget);
+            category.setCurrency(currency);
 
             String title = body.getString(TITLE);
             category.setTitle(title);

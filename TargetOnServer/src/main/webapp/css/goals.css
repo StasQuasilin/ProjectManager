@@ -4,6 +4,7 @@
 .goal-item{
     margin: 8px;
     border: solid;
+    height: fit-content;
     min-width: 200pt;
 }
 .goal-title{

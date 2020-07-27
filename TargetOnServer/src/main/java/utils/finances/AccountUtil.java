@@ -8,6 +8,7 @@ import entity.finance.transactions.TransactionType;
 import utils.UserSystemCategoryUtil;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.transactions.TransactionDAO;
+import utils.savers.TransactionSaver;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -15,26 +16,30 @@ import java.time.LocalDate;
 public class AccountUtil {
 
     private final UserSystemCategoryUtil uscu = new UserSystemCategoryUtil();
-    private final TransactionDAO transactionDAO = daoService.getTransactionDAO();
+    private final TransactionSaver saver = new TransactionSaver();
 
     public void updateSum(Account account, float sum, boolean isNew) {
         float amount = sum - account.getSum();
+        System.out.println("Update sum " + amount + " for account '" + account.getTitle() + "'");
         if (amount != 0) {
             Transaction transaction = new Transaction();
             final UserSystemCategory cat = uscu.getCategories(account.getOwner());
             Category category = isNew ? cat.getCreateAccount() : cat.getAccountCorrection();
             transaction.setCategory(category);
-            transaction.setAccountFrom(account);
+
+            transaction.setAmount(amount);
 
             if (amount > 0){
                 transaction.setTransactionType(TransactionType.income);
+                transaction.setAccountTo(account);
             } else {
                 transaction.setTransactionType(TransactionType.spending);
+                transaction.setAccountFrom(account);
             }
             transaction.setDate(Date.valueOf(LocalDate.now()));
             transaction.setCurrency(account.getCurrency());
             transaction.setRate(1);
-            transactionDAO.saveTransaction(transaction);
+            saver.save(transaction);
         }
     }
 }

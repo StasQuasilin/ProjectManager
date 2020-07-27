@@ -13,6 +13,9 @@
 <script src="${context}/vue/goals/goalEdit.vue"></script>
 <script>
   goalEdit.api.save = '${save}';
+  <c:forEach items="${currency}" var="c">
+  goalEdit.currency.push('${c}');
+  </c:forEach>
   <c:choose>
   <c:when test="${not empty goal}">
   goalEdit.goal = ${goal.toJson()};
@@ -24,6 +27,9 @@
   }
   </c:when>
   </c:choose>
+  if (!goalEdit.goal.currency){
+    goalEdit.goal.currency = goalEdit.currency[0];
+  }
 </script>
 <div>
   <table id="goalEdit">
@@ -77,6 +83,22 @@
         </td>
       </tr>
     </template>
+    <tr>
+      <td>
+        <label for="budget">
+          <fmt:message key="goal.budget"/>
+        </label>
+      </td>
+      <td>
+        <input id="budget" type="number" v-model="goal.budget" autocomplete="off" onfocus="this.select()"
+          style="width: 72pt">
+        <select id="currency" v-model="goal.currency">
+          <option v-for="c in currency">
+            {{c}}
+          </option>
+        </select>
+      </td>
+    </tr>
     <tr>
       <td colspan="2" style="text-align: center">
         <button onclick="closeModal()">

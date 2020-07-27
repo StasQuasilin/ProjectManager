@@ -23,23 +23,16 @@ public class TransactionRemover {
     public void removeTransaction(Transaction transaction){
         hibernator.remove(transaction);
         updater.remove(Subscribe.transactions, transaction.getId(), transaction.getOwner());
-        final Date date = transaction.getDate();
 
-        transactionUtil.removePoint(transaction.getCategory(), date);
+        final Date date = transaction.getDate();
 
         final Account accountFrom = transaction.getAccountFrom();
         if (accountFrom != null){
-            transactionPointUtil.removePoint(transaction, accountFrom);
-            accountPointUtil.removeDay(date, accountFrom);
-            accountPointUtil.pointByPoint(accountFrom.getId(), date, PointScale.week);
-            accountPointUtil.updateAccount(accountFrom);
+            transactionUtil.removePoint(transaction, accountFrom);
         }
         final Account accountTo = transaction.getAccountTo();
         if (accountTo != null){
-            transactionPointUtil.removePoint(transaction, accountTo);
-            accountPointUtil.removeDay(date, accountTo);
-            accountPointUtil.pointByPoint(accountTo.getId(), date, PointScale.week);
-            accountPointUtil.updateAccount(accountTo);
+            transactionUtil.removePoint(transaction, accountTo);
         }
     }
 }

@@ -5,10 +5,10 @@ import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionPoint;
 import utils.db.hibernate.Hibernator;
 
+import java.sql.Date;
 import java.util.HashMap;
 
-import static constants.Keys.ACCOUNT;
-import static constants.Keys.TRANSACTION;
+import static constants.Keys.*;
 
 public class TransactionPointUtil {
 
@@ -32,13 +32,17 @@ public class TransactionPointUtil {
         hibernator.save(point);
     }
 
-    public void removePoint(Transaction transaction, Account account) {
+    public void removePoint(int accountId, int transaction, Date date) {
         params.clear();
-        params.put(TRANSACTION, transaction.getId());
-        params.put(ACCOUNT, account.getId());
+        params.put(TRANSACTION, transaction);
+        params.put(ACCOUNT, accountId);
+        params.put(DATE, date);
         TransactionPoint point = hibernator.get(TransactionPoint.class, params);
         if (point != null){
+            System.out.println("Remove transaction point for transaction " + transaction + ", account: " + accountId + ", date: " + date.toString());
             hibernator.remove(point);
         }
     }
+
+
 }

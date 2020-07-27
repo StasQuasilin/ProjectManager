@@ -6,8 +6,6 @@ import utils.json.JsonAble;
 
 import javax.persistence.*;
 
-import java.util.Objects;
-
 import static constants.Keys.*;
 
 @Entity
@@ -18,6 +16,7 @@ public class Category extends JsonAble {
     private Category parent;
     private boolean hidden;
     private User owner;
+    private String currency;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -43,6 +42,12 @@ public class Category extends JsonAble {
         return parent;
     }
     public void setParent(Category parent) {
+        if (parent != null){
+            final String currency = parent.getCurrency();
+            if (currency != null){
+                this.currency = currency;
+            }
+        }
         this.parent = parent;
     }
 
@@ -56,7 +61,7 @@ public class Category extends JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = "owner")
+    @JoinColumn(name = "_owner")
     public User getOwner() {
         return owner;
     }
@@ -64,11 +69,23 @@ public class Category extends JsonAble {
         this.owner = owner;
     }
 
+    @Basic
+    @Column(name = "currency")
+    public String getCurrency() {
+        return currency;
+    }
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
     @Override
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
         jsonObject.put(TITLE, title);
+        if (currency != null) {
+            jsonObject.put(CURRENCY, currency);
+        }
         return jsonObject;
     }
 

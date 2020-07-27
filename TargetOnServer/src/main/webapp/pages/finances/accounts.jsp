@@ -19,7 +19,15 @@
                         ( {{item.type}} )
                     </div>
                     <div>
-                        {{item.sum.toLocaleString()}}
+                        <span>
+                            {{(item.sum + item.limit).toLocaleString()}}
+                        </span>
+                        <span v-if="item.limit">
+                            ( {{item.sum.toLocaleString()}} + {{item.limit.toLocaleString()}} )
+                        </span>
+                        <span>
+                            {{item.currency}}
+                        </span>
                     </div>
                 </div>
             </div>
