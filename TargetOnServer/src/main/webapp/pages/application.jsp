@@ -21,6 +21,8 @@
     <script src="${context}/external/jquery.min.js"></script>
     <script src="${context}/external/vue.js"></script>
     <script src="${context}/external/vuetify.js"></script>
+    <script src="${context}/external/vue2-timepicker.js"></script>
+    <script src="${context}/external/vue2-timepicker/dist/VueTimepicker.umd.min.js"></script>
     <script src="${context}/js/constants.js"></script>
     <script src="${context}/js/connection.js"></script>
     <script src="${context}/js/subscriber.js"></script>

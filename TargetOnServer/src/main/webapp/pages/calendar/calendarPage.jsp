@@ -15,7 +15,7 @@
 <script>
   calendar.api.edit = '${edit}';
   calendar.api.getCalendar = '${getCalendar}';
-  // calendar.getCalendarData();
+  calendar.getCalendarData();
   subscriber.subscribe('${taskSubscribe}', calendar.handler);
   subscriber.subscribe('${subscribe}', calendar.calendarHandler);
 </script>

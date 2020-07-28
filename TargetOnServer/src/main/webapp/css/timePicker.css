@@ -1,0 +1,65 @@
+.v-time-picker-clock__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+.v-time-picker-clock {
+    border-radius: 100%;
+    position: relative;
+    transition: .3s cubic-bezier(.25,.8,.5,1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 100%;
+    padding-top: 100%;
+    flex: 1 0 auto;
+}
+.v-time-picker-clock__item {
+    align-items: center;
+    border-radius: 100%;
+    background: transparent;
+    cursor: default;
+    display: flex;
+    font-size: 16px;
+    justify-content: center;
+    height: 26px;
+    position: absolute;
+    text-align: center;
+    width: 26px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transform: translate(-50%, -50%);
+}
+.accent {
+    background-color: #005caf !important;
+    border-color: #005caf !important;
+}
+.accent span{
+    background-color: transparent;
+}
+.v-time-picker-clock__hand {
+    height: calc(50% - 4px);
+    width: 2px;
+    bottom: 50%;
+    left: calc(50% - 1px);
+    transform-origin: center bottom;
+    position: absolute;
+    will-change: transform;
+    z-index: 1;
+}
+.v-time-picker-clock__item--active {
+    color: #fff;
+    cursor: default;
+    z-index: 2;
+    background-color: #bdbdbd;
+}
+.v-time-picker-clock__item--active span{
+    background-color: transparent;
+}
+.v-picker__title__btn{
+    display: inline-block;
+}

@@ -17,7 +17,12 @@ public class CategoryUtil {
             category = new Category();
             category.setOwner(owner);
             String string = data.getString(TITLE);
-            category.setTitle(string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase());
+            if (string.length() > 0){
+                category.setTitle(string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase());
+            } else {
+                category.setTitle(string);
+            }
+
             hibernator.save(category);
         }
         return category;

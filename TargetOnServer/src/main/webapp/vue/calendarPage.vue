@@ -6,38 +6,7 @@ calendar = new Vue({
             date:new Date().toISOString().substring(0, 10),
             scales:['day', 'week', 'month'],
             scale:'day',
-            calendar:[
-                {
-                    date:'2020-07-21',
-                    time:'08:30:00',
-                    title:'Item 2',
-                    length: 3 * 60
-                },
-                {
-                    date:'2020-07-21',
-                    time:'23:00:00',
-                    title:'Item 1',
-                    length: 8 * 60
-                },
-                {
-                    date: '2020-07-21',
-                    time:'11:30:00',
-                    title: 'Item 3',
-                    length: 20
-                },
-                {
-                    date: '2020-07-21',
-                    time: '22:50',
-                    title: 'Item 4',
-                    length: 8 * 60
-                }
-            ],
-            calendarOptions:{
-                events: [
-                    { title: 'event 1', date: '2020-07-22' },
-                    { title: 'event 2', date: '2020-07-22' }
-                ]
-            }
+            calendar:[],
         }
     },
     methods:{
@@ -79,6 +48,7 @@ calendar = new Vue({
                     }
                 }
             }
+
             return calendar;
         },
         calendarHandler:function(data){

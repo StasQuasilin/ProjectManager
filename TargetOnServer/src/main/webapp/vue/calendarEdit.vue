@@ -1,22 +1,36 @@
 calendarEdit = new Vue({
     el:'#calendarEdit',
     components:{
-        'input-search':inputSearch
+        'input-search':inputSearch,
+        'date-picker':datePicker,
+        'time-picker':timePicker,
+        VueTimepicker
     },
     data:{
         api:{},
         repeats:['none','day', 'week', 'month', 'year'],
+        useDate:true,
+        useTime:true,
         calendarItem:{
             id:-1,
             category:{
                 id:-1,
                 title:''
             },
-            date:new Date(),
+            date:null,
+            time:null,
             length:1,
             repeat:'none',
-            useDate:true,
-            useTime:true
+        },
+        dateProps:{
+            put:function (date) {
+                calendarEdit.calendarItem.date = date;
+            }
+        },
+        timeProps:{
+            put:function (time) {
+                calendarEdit.calendarItem.time = time;
+            }
         },
         props:{
             put:function(category){
@@ -27,8 +41,12 @@ calendarEdit = new Vue({
     methods:{
         save:function(){
             let item = Object.assign({}, this.calendarItem);
-            let d = item.date;
-            item.date =  d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate() + ' ' + d.getHours() + ':' + d.getMinutes() + ':00';
+            if (!this.useDate){
+                delete item.date;
+            }
+            if (!this.useTime){
+                delete item.time;
+            }
             PostApi(this.api.save, item, function(a){
                 if (a.status === 'success'){
                     closeModal();

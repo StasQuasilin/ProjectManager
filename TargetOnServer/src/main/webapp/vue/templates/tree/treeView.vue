@@ -22,13 +22,11 @@ treeView = {
                     '+' +
                 '</template>' +
             '</span>' +
-            '<span class="text-button" v-on:click="open()" style="font-size: 10pt">' +
+            '<span class="text-button" :class="item.status" v-on:click="open()" style="font-size: 10pt">' +
                 '{{item.title}}' +
             '</span>' +
             '<div style="padding-left: 18px; border-left: dotted 1px gray; " v-if="isOpen && item.children">' +
-                '<div v-for="c in item.children">' +
-                    '<tree-view :item="c" :props="props"></tree-view>' +
-                '</div>' +
+                '<tree-view v-for="c in item.children" :item="c" :props="props"></tree-view>' +
             '</div>' +
         '</div>'
-}
+};

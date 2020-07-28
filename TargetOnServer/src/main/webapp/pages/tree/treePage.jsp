@@ -27,7 +27,7 @@
     <tr>
       <td>
           <template v-for="(i, k) in path" class="tree-path">
-              <span class="text-button" v-on:click="getChildren(i)">
+              <span class="text-button" v-on:click="getChildren(i.category)">
                   {{i}}
               </span>
               <span v-if="k < path.length - 1">

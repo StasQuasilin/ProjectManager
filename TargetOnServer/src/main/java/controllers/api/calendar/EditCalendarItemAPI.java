@@ -48,6 +48,20 @@ public class EditCalendarItemAPI extends API {
             
             boolean useDate = body.getBoolean(USE_DATE);
 
+            if (body.containKey(DATE)){
+                Date date = Date.valueOf(body.getString(DATE));
+                item.setDate(date);
+                if (body.containKey(TIME)){
+                    Time time = Time.valueOf(body.getString(TIME));
+                    item.setTime(time);
+                } else {
+                    item.setTime(null);
+                }
+            } else {
+                item.setDate(null);
+                item.setTime(null);
+            }
+
             if (useDate){
                 Timestamp timestamp = body.getTimestamp(DATE);
                 final LocalDateTime localDateTime = timestamp.toLocalDateTime();
@@ -64,7 +78,6 @@ public class EditCalendarItemAPI extends API {
                 } else {
                     item.setTime(null);
                 }
-
             }  else {
                 item.setDate(null);
                 item.setTime(null);

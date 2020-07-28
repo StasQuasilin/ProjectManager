@@ -9,21 +9,30 @@
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<link rel="stylesheet" href="${context}/css/timePicker.css">
+<script src="${context}/vue/templates/datetime/datePicker.vue"></script>
+<script src="${context}/vue/templates/datetime/timePicker.vue"></script>
 <script src="${context}/vue/templates/inputWithSearch.vue"></script>
 <script src="${context}/vue/calendarEdit.vue"></script>
 <script>
     calendarEdit.api.save = '${save}';
     calendarEdit.props.findCategory = '${findCategory}';
+
     <c:if test="${not empty item}">
     calendarEdit.calendarItem = ${item.toJson()};
+    </c:if>
+    now = new Date();
     if (calendarEdit.calendarItem.date){
         calendarEdit.useDate = true;
         if (calendarEdit.calendarItem.time){
             calendarEdit.useTime = true;
+        } else {
+            calendarEdit.calendarItem.time = now.toLocaleTimeString()
         }
+    } else {
+        calendarEdit.calendarItem.date = now.toISOString().substring(0, 10);
+        calendarEdit.calendarItem.time = now.toLocaleTimeString().substring(0, 5);
     }
-    </c:if>
-
 </script>
 <table id="calendarEdit">
     <tr>
@@ -49,9 +58,7 @@
                 <fmt:message key="task.date"/>
             </td>
             <td>
-                <span>
-                    {{new Date(calendarItem.date).toLocaleDateString()}}
-                </span>
+                <date-picker :date="calendarItem.date" :props="dateProps"></date-picker>
                 <span class="text-button" v-on:click="calendarItem.useDate = false">
                     &times;
                 </span>
@@ -69,9 +76,7 @@
                 <fmt:message key="task.time"/>
             </td>
             <td>
-                <span class="text-button">
-                    {{new Date(calendarItem.date).toLocaleTimeString()}}
-                </span>
+                <time-picker :time="calendarItem.time" :props="timeProps"></time-picker>
                 <span class="text-button" v-on:click="calendarItem.useTime = false">
                     &times;
                 </span>
@@ -83,7 +88,7 @@
             <fmt:message key="task.length"/>
         </td>
         <td>
-            1:00
+<%--            <vue-timepicker></vue-timepicker>--%>
         </td>
     </tr>
     <tr>
