@@ -31,7 +31,7 @@
         }
     } else {
         calendarEdit.calendarItem.date = now.toISOString().substring(0, 10);
-        calendarEdit.calendarItem.time = now.toLocaleTimeString().substring(0, 5);
+        calendarEdit.calendarItem.time = now.toLocaleTimeString();
     }
 </script>
 <table id="calendarEdit">
@@ -45,9 +45,9 @@
             <input-search :object="calendarItem.category" :props="props"></input-search>
         </td>
     </tr>
-    <tr v-if="!calendarItem.useDate">
+    <tr v-if="!useDate">
         <td colspan="2" style="text-align: right">
-            <span class="text-button" v-on:click="calendarItem.useDate = true">
+            <span class="text-button" v-on:click="useDate = true">
                 <fmt:message key="task.date.add"/>
             </span>
         </td>
@@ -59,14 +59,14 @@
             </td>
             <td>
                 <date-picker :date="calendarItem.date" :props="dateProps"></date-picker>
-                <span class="text-button" v-on:click="calendarItem.useDate = false">
+                <span class="text-button" v-on:click="useDate = false">
                     &times;
                 </span>
             </td>
         </tr>
-        <tr v-if="!calendarItem.useTime">
+        <tr v-if="!useTime">
             <td colspan="2" style="text-align: right">
-                <span class="text-button" v-on:click="calendarItem.useTime = true">
+                <span class="text-button" v-on:click="useTime = true">
                     <fmt:message key="task.time.add"/>
                 </span>
             </td>
@@ -77,7 +77,7 @@
             </td>
             <td>
                 <time-picker :time="calendarItem.time" :props="timeProps"></time-picker>
-                <span class="text-button" v-on:click="calendarItem.useTime = false">
+                <span class="text-button" v-on:click="useTime = false">
                     &times;
                 </span>
             </td>
@@ -88,7 +88,7 @@
             <fmt:message key="task.length"/>
         </td>
         <td>
-<%--            <vue-timepicker></vue-timepicker>--%>
+            {{calendarItem.length}}
         </td>
     </tr>
     <tr>

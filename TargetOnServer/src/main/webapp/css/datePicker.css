@@ -6,6 +6,26 @@
 .date-picker .v-btn--flat,.date-picker .v-date-picker-header__value{
 	display: inline-block;
 }
+.v-date-picker-years{
+	font-size: 16px;
+	font-weight: 400;
+	height: 160px;
+	list-style-type: none;
+	overflow: auto;
+	text-align: center;
+}
+.v-date-picker-years li{
+	padding: 8px 0;
+	transition: none;
+}
+.v-date-picker-years .active{
+	font-size: 26px;
+	font-weight: 500;
+	padding: 10px 0;
+}
+.v-date-picker-years .primary--text{
+	background-color: rgb(254, 238, 198);
+}
 .v-btn--flat{
 	border: none;
 }

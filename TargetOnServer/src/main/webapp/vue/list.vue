@@ -6,6 +6,12 @@ let list = {
         }
     },
     methods:{
+        remove:function(id){
+            event.preventDefault();
+            if (this.api.remove){
+                loadModal(this.api.remove, {id:id})
+            }
+        },
         edit:function(id, params){
             if (this.api.edit){
                 let data = Object.assign({}, params);
@@ -27,16 +33,14 @@ let list = {
                     this.update(items.update);
                 }
                 if (items.remove){
-                    this.remove(items.remove.id);
+                    Vue.delete(this.items, items.remove.id);
                 }
             }
         },
         update:function(item){
             Vue.set(this.items, item.id, item);
         },
-        remove:function(id){
-            Vue.delete(this.items, id);
-        },
+
         getItems:function () {
             let values = Object.values(this.items);
             values.sort(this.sort);

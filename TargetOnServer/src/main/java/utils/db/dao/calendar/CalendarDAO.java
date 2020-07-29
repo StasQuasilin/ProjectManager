@@ -10,4 +10,5 @@ public interface CalendarDAO {
     List<CalendarItem> getCalendarItems(Date date, User user);
     CalendarItem getCalendarItem(Object id);
     void saveCalendarItem(CalendarItem item);
+    CalendarItem getCalendarItemByCategory(Object id);
 }

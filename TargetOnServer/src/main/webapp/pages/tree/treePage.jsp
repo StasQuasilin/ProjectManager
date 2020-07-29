@@ -77,7 +77,7 @@
       </td>
         <td style="width: 20%">
             <div class="item-container">
-                <tree-view :item="tree" :props="props"></tree-view>
+                <tree-view :item="tree" :key="tree.id" :props="props"></tree-view>
             </div>
         </td>
     </tr>

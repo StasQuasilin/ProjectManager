@@ -45,8 +45,6 @@ public class EditCalendarItemAPI extends API {
 
             final User user = getUser(req);
             item.setCategory(categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), user));
-            
-            boolean useDate = body.getBoolean(USE_DATE);
 
             if (body.containKey(DATE)){
                 Date date = Date.valueOf(body.getString(DATE));
@@ -54,31 +52,16 @@ public class EditCalendarItemAPI extends API {
                 if (body.containKey(TIME)){
                     Time time = Time.valueOf(body.getString(TIME));
                     item.setTime(time);
+                    if (body.containKey(LENGTH)){
+                        Time length = Time.valueOf(body.getString(LENGTH));
+                        LocalDateTime localDateTime = LocalDateTime.of(date.toLocalDate(), time.toLocalTime()).plusMinutes(length.getTime() / 1000/ 60);
+                        item.setEndDate(Date.valueOf(localDateTime.toLocalDate()));
+                        item.setEndTime(Time.valueOf(localDateTime.toLocalTime()));
+                    }
                 } else {
                     item.setTime(null);
                 }
             } else {
-                item.setDate(null);
-                item.setTime(null);
-            }
-
-            if (useDate){
-                Timestamp timestamp = body.getTimestamp(DATE);
-                final LocalDateTime localDateTime = timestamp.toLocalDateTime();
-                final LocalDate localDate = localDateTime.toLocalDate();
-                item.setDate(Date.valueOf(localDate));
-                boolean useTime = body.getBoolean(USE_TIME);
-                if (useTime){
-                    final LocalTime localTime = localDateTime.toLocalTime();
-                    item.setTime(Time.valueOf(localTime));
-                    long length = body.getLong(LENGTH);
-                    final LocalDateTime endDateTime = localDateTime.plusMinutes(length);
-                    item.setEndDate(Date.valueOf(endDateTime.toLocalDate()));
-                    item.setEndTime(Time.valueOf(endDateTime.toLocalTime()));
-                } else {
-                    item.setTime(null);
-                }
-            }  else {
                 item.setDate(null);
                 item.setTime(null);
                 item.setEndDate(null);

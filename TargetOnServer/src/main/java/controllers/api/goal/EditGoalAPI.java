@@ -52,13 +52,18 @@ public class EditGoalAPI extends API {
             String title = body.getString(TITLE);
             category.setTitle(title);
 
-            if (body.containKey(DATE_BEGIN)){
-                Date dateBegin = Date.valueOf(body.getString(DATE_BEGIN));
+            if (body.containKey(BEGIN)){
+                Date dateBegin = Date.valueOf(body.getString(BEGIN));
                 goal.setBegin(dateBegin);
-            }
-            if (body.containKey(DATE_END)){
-                Date dateEnd = Date.valueOf(body.getString(DATE_END));
-                goal.setEnd(dateEnd);
+                if (body.containKey(END)){
+                    Date dateEnd = Date.valueOf(body.getString(END));
+                    goal.setEnd(dateEnd);
+                } else {
+                    goal.setEnd(null);
+                }
+            } else {
+                goal.setBegin(null);
+
             }
 
             goalDAO.saveGoal(goal);

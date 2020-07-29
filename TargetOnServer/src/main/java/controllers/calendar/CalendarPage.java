@@ -28,6 +28,7 @@ public class CalendarPage extends Page {
         req.setAttribute(CONTENT, _CONTENT);
         req.setAttribute(GET_CALENDAR, ApiLinks.GET_CALENDAR);
         req.setAttribute(EDIT, UrlLinks.CALENDAR_EDIT);
+        req.setAttribute(REMOVE, UrlLinks.CALENDAR_REMOVE);
         req.setAttribute(TASK_SUBSCRIBE, Subscribe.tree);
         req.setAttribute(SUBSCRIBE, Subscribe.calendar);
         show(req, resp);

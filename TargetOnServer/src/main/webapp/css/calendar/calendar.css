@@ -3,6 +3,16 @@
     margin: 2px 0;
     padding: 4px 8px;
 }
+.calendar-item-remove{
+    color: orangered;
+    float: right;
+}
+.calendar-item .calendar-item-remove{
+    display: none;
+}
+.calendar-item:hover .calendar-item-remove{
+    display: inline-block;
+}
 .filled{
     background-color: #3788d8;
 }

@@ -11,7 +11,7 @@ tree = new Vue({
             tree:{},
             props:{
                 onOpen:function (item) {
-                    tree.getChildren(item.id);
+                    tree.getChildren(item.category);
                 }
             }
         }
@@ -38,10 +38,12 @@ tree = new Vue({
             if (!found){
                 this.children.push(update);
             }
-            if (update.parent == null){
-                this.goals.push(update);
-            } else {
-                this.updateTree(this.tree, update)
+            if (update) {
+                if (update.parent == null) {
+                    this.goals.push(update);
+                } else {
+                    this.updateTree(this.tree, update)
+                }
             }
         },
         updateTree(parent, item){
@@ -86,7 +88,6 @@ tree = new Vue({
                 if (root !== self.root){
                     self.buildTree();
                 }
-
             })
         },
         changeRoot:function(){

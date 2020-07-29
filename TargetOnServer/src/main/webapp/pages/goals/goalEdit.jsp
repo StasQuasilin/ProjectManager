@@ -10,23 +10,30 @@
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script src="${context}/vue/templates/datetime/datePicker.vue"></script>
 <script src="${context}/vue/goals/goalEdit.vue"></script>
 <script>
   goalEdit.api.save = '${save}';
   <c:forEach items="${currency}" var="c">
   goalEdit.currency.push('${c}');
   </c:forEach>
-  <c:choose>
-  <c:when test="${not empty goal}">
+  <c:if test="${not empty goal}">
   goalEdit.goal = ${goal.toJson()};
+  </c:if>
+  now = new Date();
+  end = new Date();
+  end.setMonth(end.getMonth() + 1);
   if (goalEdit.goal.begin){
     goalEdit.useBeginDate = true;
     if (goalEdit.goal.end){
       goalEdit.useEndDate = true;
+    } else {
+      goalEdit.goal.end = end.toISOString().substring(0, 10);
     }
+  } else {
+    goalEdit.goal.begin = now.toISOString().substring(0, 10);
+    goalEdit.goal.end = end.toISOString().substring(0, 10);
   }
-  </c:when>
-  </c:choose>
   if (!goalEdit.goal.currency){
     goalEdit.goal.currency = goalEdit.currency[0];
   }
@@ -53,9 +60,7 @@
         <fmt:message key="goal.begin.date"/>
       </td>
       <td>
-        <span class="text-button">
-          {{new Date(goal.begin).toLocaleDateString()}}
-        </span>
+        <date-picker :date="goal.begin" :props="beginDateProps"></date-picker>
         <span class="text-button" v-on:click="useBeginDate = false">
           &times;
         </span>
@@ -74,12 +79,48 @@
           <fmt:message key="goal.end.date"/>
         </td>
         <td>
-          <span class="text-button">
-            {{new Date(goal.end).toLocaleDateString()}}
-          </span>
+          <date-picker :date="goal.end" :props="endDateProps"></date-picker>
           <span class="text-button" v-on:click="useEndDate = false">
             &times;
           </span>
+        </td>
+      </tr>
+    </template>
+    <template v-if="useBeginDate && useEndDate">
+      <tr>
+        <td>
+          <fmt:message key="goal.duration"/>
+        </td>
+        <td>
+          <span>
+            <span v-if="goalDuration.year > 0">
+              {{goalDuration.year.toLocaleString()}}
+              <template v-if="goalDuration.year === 1">
+                <fmt:message key="1.year"/>
+              </template>
+              <template v-else-if="goalDuration.year < 5">
+                <fmt:message key="2.years"/>
+              </template>
+              <template v-else>
+                <fmt:message key="5.years"/>
+              </template><span v-if="goalDuration.month > 0">
+                ,
+              </span>
+            </span>
+            <template v-if="goalDuration.month > 0">
+              {{goalDuration.month.toLocaleString()}}
+              <template v-if="goalDuration.month === 1">
+                <fmt:message key="1.month"/>
+              </template>
+              <template v-else-if="goalDuration.month < 5">
+                <fmt:message key="2.months"/>
+              </template>
+              <template v-else>
+                <fmt:message key="5.months"/>
+              </template>
+            </template>
+          </span>
+
         </td>
       </tr>
     </template>

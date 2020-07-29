@@ -18,4 +18,5 @@ public interface UrlLinks {
     String CALENDAR_EDIT = "/calendar/edit" + SUFFIX;
     String PERSONAL = "/personal" + SUFFIX;
     String TRANSACTION_REMOVE = "/transaction/remove" + SUFFIX;
+    String CALENDAR_REMOVE = "/calendar/remove" + SUFFIX;
 }

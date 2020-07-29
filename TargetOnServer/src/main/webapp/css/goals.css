@@ -16,6 +16,9 @@
     background-color: #3788d8;
     color: whitesmoke;
 }
+.goal-content{
+    padding: 0 8px;
+}
 .goal-title span{
     color: gray;
     background-color: transparent;

@@ -20,6 +20,7 @@ public class Goal extends JsonAble {
     private Date begin;
     private Date end;
     private float budget;
+    private GoalStatus status = GoalStatus.active;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +40,8 @@ public class Goal extends JsonAble {
         this.category = category;
     }
 
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "category", cascade = CascadeType.ALL)
+//    @OneToOne(fetch = FetchType.EAGER, mappedBy = "category", cascade = CascadeType.ALL)
+    @Transient
     public TaskStatistic getStatistic() {
         return statistic;
     }
@@ -74,6 +76,15 @@ public class Goal extends JsonAble {
         this.budget = budget;
     }
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "_status")
+    public GoalStatus getStatus() {
+        return status;
+    }
+    public void setStatus(GoalStatus status) {
+        this.status = status;
+    }
+
     @Override
     public JSONObject toJson() {
 
@@ -89,11 +100,12 @@ public class Goal extends JsonAble {
             jsonObject.put(END, end.toString());
         }
 
-        if (statistic != null){
-            jsonObject.put(STATISTIC, statistic.toJson());
+        if (category.getStatistic() != null){
+            jsonObject.put(STATISTIC, category.getStatistic().toJson());
         }
         jsonObject.put(BUDGET, budget);
         jsonObject.put(CURRENCY, category.getCurrency());
+        jsonObject.put(STATUS, status.toString());
 
         return jsonObject;
     }

@@ -21,8 +21,8 @@ timePicker = {
         }
     },
     template:'<div style="position: relative; display: inline-block; top: 0">' +
-            '<div v-if="!show" class="text-button" v-on:click="show=!show">' +
-                '{{time}}' +
+            '<div v-if="time" class="text-button" v-on:click="show=!show">' +
+                '{{time.substring(0, 5)}}' +
             '</div>' +
             '<div v-if="show" style="position: absolute;">' +
                 '<v-time-picker style="display: inline-block" ' +

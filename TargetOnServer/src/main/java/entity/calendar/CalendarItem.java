@@ -101,7 +101,7 @@ public class CalendarItem extends JsonAble {
     public JSONObject toJson() {
         final JSONObject json = category.toJson();
         json.put(ID, id);
-        json.put(CATEGORY, category.toJson());
+        json.put(CATEGORY, category.shortJson());
         if (date != null){
 
             json.put(DATE, date.toString());

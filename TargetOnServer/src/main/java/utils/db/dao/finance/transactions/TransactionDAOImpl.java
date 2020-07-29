@@ -1,5 +1,6 @@
 package utils.db.dao.finance.transactions;
 
+import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import entity.user.User;
 import subscribe.Subscribe;
@@ -9,8 +10,7 @@ import utils.finances.TransactionUtil;
 
 import java.util.List;
 
-import static constants.Keys.ID;
-import static constants.Keys.TASK_OWNER;
+import static constants.Keys.*;
 
 public class TransactionDAOImpl implements TransactionDAO {
 
@@ -34,5 +34,10 @@ public class TransactionDAOImpl implements TransactionDAO {
         hibernator.save(transaction);
         updater.update(Subscribe.transactions, transaction, transaction.getOwner());
 
+    }
+
+    @Override
+    public List<Transaction> getTransactionsByCategory(Category category, int limit) {
+        return hibernator.query(Transaction.class, CATEGORY, category);
     }
 }

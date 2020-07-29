@@ -52,6 +52,11 @@ public class GaolDAOPlug implements GoalDAO {
         updater.update(Subscribe.goal, goal, goal.getOwner());
     }
 
+    @Override
+    public Goal getGoalByCategory(Category category) {
+        return null;
+    }
+
     static void save(Goal goal){
         if (goal.getId() <= 0){
             goal.setId(goals.size() + 1);

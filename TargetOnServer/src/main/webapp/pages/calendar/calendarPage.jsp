@@ -14,6 +14,7 @@
 <script src="${context}/vue/calendarPage.vue"></script>
 <script>
   calendar.api.edit = '${edit}';
+  calendar.api.remove = '${remove}';
   calendar.api.getCalendar = '${getCalendar}';
   calendar.getCalendarData();
   subscriber.subscribe('${taskSubscribe}', calendar.handler);
@@ -62,12 +63,16 @@
     </td>
     <td style="width: 50%">
       <div class="item-container">
-        <div v-for="item in buildCalendar()" :style="{'min-height': (item.length)+ 'pt'}" class="calendar-item" :class="{'filled' : item.title}">
+        <div v-for="item in buildCalendar()" v-on:click="edit(item.id)" :style="{'min-height': (item.length)+ 'pt'}"
+             class="calendar-item" :class="{'filled' : item.title}">
           <div style="font-size: 10pt; color: white">
               {{item.from.toLocaleDateString()}}
           </div>
-          <div>
+          <div class="calendar-item-time">
             {{item.from.toLocaleTimeString().substring(0, 5)}} - {{item.to.toLocaleTimeString().substring(0, 5)}}
+            <span class="text-button calendar-item-remove" v-on:click="remove(item.id)">
+              &times;
+            </span>
           </div>
           <div v-if="item.title">
             {{item.title}}
@@ -82,11 +87,9 @@
     </td>
     <td style="width: 25%; height: 100%">
       <div class="item-container">
-        <div v-for="item in getItems()" style="border: solid gray 1pt; padding: 2px; margin: 2px">
-          <div style="font-size: 10pt">
-            <span>
-              {{getPath(item)}}
-            </span>
+        <div v-for="item in getItems()" v-on:click="edit(-1, {category:item.category})" style="border: solid gray 1pt; padding: 2px; margin: 2px">
+          <div style="font-size: 8pt">
+            {{getPath(item)}}
           </div>
           <div>
             {{item.title}}
@@ -94,6 +97,5 @@
         </div>
       </div>
     </td>
-
   </tr>
 </table>

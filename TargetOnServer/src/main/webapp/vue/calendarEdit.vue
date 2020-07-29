@@ -19,7 +19,7 @@ calendarEdit = new Vue({
             },
             date:null,
             time:null,
-            length:1,
+            length:'01:00',
             repeat:'none',
         },
         dateProps:{
@@ -46,6 +46,11 @@ calendarEdit = new Vue({
             }
             if (!this.useTime){
                 delete item.time;
+            } else if (item.time.length === 5){
+                item.time += ':00';
+            }
+            if (item.length === 5){
+                item.length += ':00';
             }
             PostApi(this.api.save, item, function(a){
                 if (a.status === 'success'){

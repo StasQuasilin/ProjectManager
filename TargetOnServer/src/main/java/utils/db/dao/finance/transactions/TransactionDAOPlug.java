@@ -65,6 +65,11 @@ public class TransactionDAOPlug implements TransactionDAO {
         updater.update(Subscribe.transactions, transaction, transaction.getOwner());
     }
 
+    @Override
+    public List<Transaction> getTransactionsByCategory(Category category, int limit) {
+        return null;
+    }
+
     private static void save(Transaction transaction){
         if (transaction.getId() <= 0){
             transaction.setId(transactions.size() + 1);

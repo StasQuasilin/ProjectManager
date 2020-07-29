@@ -26,7 +26,7 @@ treeView = {
                 '{{item.title}}' +
             '</span>' +
             '<div style="padding-left: 18px; border-left: dotted 1px gray; " v-if="isOpen && item.children">' +
-                '<tree-view v-for="c in item.children" :item="c" :props="props"></tree-view>' +
+                '<tree-view v-for="c in item.children" :key="c.id" :item="c" :props="props"></tree-view>' +
             '</div>' +
         '</div>'
 };

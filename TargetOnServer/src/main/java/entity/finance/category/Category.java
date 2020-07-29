@@ -1,5 +1,6 @@
 package entity.finance.category;
 
+import entity.task.TaskStatistic;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -17,6 +18,7 @@ public class Category extends JsonAble {
     private boolean hidden;
     private User owner;
     private String currency;
+    private TaskStatistic statistic;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -76,6 +78,14 @@ public class Category extends JsonAble {
     }
     public void setCurrency(String currency) {
         this.currency = currency;
+    }
+
+    @OneToOne(fetch = FetchType.EAGER, mappedBy = "category", cascade = CascadeType.ALL)
+    public TaskStatistic getStatistic() {
+        return statistic;
+    }
+    public void setStatistic(TaskStatistic statistic) {
+        this.statistic = statistic;
     }
 
     @Override
