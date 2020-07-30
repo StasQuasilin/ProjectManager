@@ -13,7 +13,7 @@ public class TaskSaver {
     public void save(Task task){
         taskDAO.saveTask(task);
         Category category = task.getCategory();
-        categoryStatisticUtil.updateStatistic(category);
-        categoryStatisticUtil.updateChildren(category, taskDAO);
+        categoryStatisticUtil.calculateChildren(category, taskDAO);
+//        categoryStatisticUtil.updateStatistic(category);
     }
 }

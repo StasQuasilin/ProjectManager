@@ -7,9 +7,49 @@ calendar = new Vue({
             scales:['day', 'week', 'month'],
             scale:'day',
             calendar:[],
+            calendarItems:[]
+        }
+    },
+    computed:{
+        calendarStructure:function(){
+            let structure = {};
+            //init structure
+            let date = new Date();
+            date.setHours(0);
+            date.setMinutes(0);
+            date.setSeconds(0);
+            for (let i = 0; i < 4; i++){
+                let key = date.toLocaleTimeString().substring(0, 5);
+                structure[i] = {
+                    time:key,
+                    turn:0,
+                    events:[]
+                };
+                date.setMinutes(date.getMinutes() + 30);
+            }
+            console.log(structure);
+            for (let i in this.calendarItems){
+                if (this.calendarItems.hasOwnProperty(i)){
+                    let item = this.calendarItems[i];
+                    let time = item.time;
+                    let length = item.length;
+                    let turn = structure[time].events.push(item).length;
+
+                    for (let j = 0; j < length / 30 - 1; j++ ){
+                        ++time;
+                        structure[time].turn = turn;
+                        structure[time].events.splice(0, 0, null);
+                    }
+
+                }
+            }
+            return structure;
         }
     },
     methods:{
+        calendarBuilder:function(){
+            return this.calendarStructure;
+        },
         buildCalendar:function(){
             let list = this.calendar.filter(function (item) {
                 return item.time;
@@ -34,6 +74,7 @@ calendar = new Vue({
                 }
             }
             let calendar = {};
+
             for (let i = 0; i < list.length; i++){
                 let item1 = list[i];
                 calendar[item1.from.toLocaleTimeString()] = item1;

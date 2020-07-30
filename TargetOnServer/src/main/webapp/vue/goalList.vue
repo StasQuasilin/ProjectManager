@@ -12,6 +12,9 @@ goalList = new Vue({
                 },
                 tree:function (id) {
                     goalList.openTree(id);
+                },
+                remove:function(id){
+                    goalList.remove(id);
                 }
             }
         }

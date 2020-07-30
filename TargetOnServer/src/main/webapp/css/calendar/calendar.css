@@ -3,19 +3,22 @@
     margin: 2px 0;
     padding: 4px 8px;
 }
-.calendar-item-remove{
-    color: orangered;
-    float: right;
-}
-.calendar-item .calendar-item-remove{
-    display: none;
-}
-.calendar-item:hover .calendar-item-remove{
-    display: inline-block;
-}
 .filled{
     background-color: #3788d8;
 }
 .filled *{
     background-color: transparent;
+}
+.calendar-item-menu{
+    background-color: whitesmoke;
+    border-radius: 12pt;
+    padding: 0 12px;
+    color: orangered;
+    float: right;
+}
+.calendar-item .calendar-item-menu{
+    display: none;
+}
+.calendar-item:hover .calendar-item-menu{
+    display: inline-block;
 }

@@ -15,6 +15,9 @@ goalTile = {
                     '</span>' +
                     '<span class="text-button" v-on:click="props.edit(goal.id)">' +
                         '&#10000;' +
+                    '</span>' +
+                    '<span class="text-button" v-on:click="props.remove(goal.id)">' +
+                        '&times;' +
                     '</span> ' +
                 '</div>' +
             '</div>' +

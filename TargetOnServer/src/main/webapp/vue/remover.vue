@@ -12,11 +12,13 @@ remover = new Vue({
             }
         },
         remove:function(){
-            PostApi(this.api.remove, {id:this.object}, function (a) {
-                if (a.status === 'success'){
-                    closeModal();
-                }
-            })
+            if (this.object && this.object !== -1) {
+                PostApi(this.api.remove, {id: this.object}, function (a) {
+                    if (a.status === 'success') {
+                        closeModal();
+                    }
+                })
+            }
         }
     }
 });

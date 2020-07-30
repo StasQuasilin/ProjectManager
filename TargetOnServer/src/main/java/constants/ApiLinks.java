@@ -17,4 +17,5 @@ public interface ApiLinks {
     String CALENDAR_EDIT = API + "/calendar/save";
     String TRANSACTION_REMOVE = API + "/transaction/remove";
     String CALENDAR_REMOVE = API + "/calendar/remove";
+    String GOAL_REMOVE = API + "/goal/remove";
 }

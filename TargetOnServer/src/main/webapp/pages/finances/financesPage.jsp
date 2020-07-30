@@ -5,7 +5,7 @@
   Time: 14:27
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<script src="${context}/vue/finances/transactionsList.vue"></script>
+<script src="${context}/vue/finances/transactions/transactionsList.vue"></script>
 <script src="${context}/vue/finances/fastTransactions.vue"></script>
 <script src="${context}/vue/finances/accounts.vue"></script>
 <script src="${context}/vue/finances/buyList.vue"></script>

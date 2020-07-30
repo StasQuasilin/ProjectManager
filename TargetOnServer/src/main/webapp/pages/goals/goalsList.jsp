@@ -17,6 +17,7 @@
     <script>
         goalList.api.edit = '${edit}';
         goalList.api.tree = '${tree}';
+        goalList.api.remove = '${remove}';
         goalList.props.budget = '<fmt:message key="goal.budget"/>';
         goalList.props.dateBegin = '<fmt:message key="goal.begin.date"/>';
         goalList.props.dateEnd = '<fmt:message key="goal.end.date"/>';

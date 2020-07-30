@@ -7,8 +7,7 @@ let list = {
     },
     methods:{
         remove:function(id){
-            event.preventDefault();
-            if (this.api.remove){
+            if (this.api.remove && id){
                 loadModal(this.api.remove, {id:id})
             }
         },

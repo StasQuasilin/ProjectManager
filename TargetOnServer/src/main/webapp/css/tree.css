@@ -4,7 +4,18 @@
 .task-container{
 
 }
+.tree-tile{
+    display: inline-flex;
+    border: solid 2px;
+    border-radius: 8px;
+    margin: 4px;
+    padding: 8px;
+}
+.tree-tile:hover{
+    box-shadow: 0 0 4px 2px gray;
+}
 .task-container-title{
+    color: white;
     padding: 4px;
 }
 .task-container-title-active{

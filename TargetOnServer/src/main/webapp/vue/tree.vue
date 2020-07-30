@@ -79,16 +79,22 @@ tree = new Vue({
             this.edit(-1, params);
         },
         getChildren:function(itemId){
-            const self = this;
-            PostApi(this.api.getChildren, {parent: itemId}, function (a) {
-                self.item = a.item;
-                self.children = a.children;
-                let root = self.root;
-                self.root = a.root;
-                if (root !== self.root){
-                    self.buildTree();
-                }
-            })
+            if (itemId) {
+                const self = this;
+                PostApi(this.api.getChildren, {parent: itemId}, function (a) {
+                    self.item = a.item;
+                    self.children = a.children;
+                    let root = self.root;
+                    // self.root = a.root;
+                    if (root !== self.root) {
+                        self.buildTree();
+                    }
+                })
+            }
+        },
+        setRoot(root){
+            this.root = root.category;
+            this.changeRoot();
         },
         changeRoot:function(){
             this.getChildren(this.root);

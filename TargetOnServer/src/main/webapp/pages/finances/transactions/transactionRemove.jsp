@@ -8,7 +8,7 @@
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<script src="${context}/vue/finances/transactions/transactionRemove.vue"></script>
+<script src="${context}/vue/finances/transactions/remover.vue"></script>
 <script>
     remover.api.onCancel = '${edit}';
     remover.api.remove = '${remove}';

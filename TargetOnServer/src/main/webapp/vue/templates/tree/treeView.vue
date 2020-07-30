@@ -13,7 +13,7 @@ treeView = {
             this.props.onOpen(this.item);
         }
     },
-    template:'<div>' +
+    template:'<div v-if="item">' +
             '<span class="text-button" v-on:click="isOpen=!isOpen" style="padding-right: 4px">' +
                 '<template v-if="isOpen">' +
                     '-' +

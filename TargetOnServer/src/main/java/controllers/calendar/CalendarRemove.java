@@ -27,12 +27,15 @@ public class CalendarRemove extends ModalWindow {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
         if (body != null){
-            final CalendarItem item = calendarDAO.getCalendarItem(body.get(ID));
-            req.setAttribute(ITEM, item);
-            req.setAttribute(TITLE, _TITLE);
-            req.setAttribute(CONTENT, _CONTENT);
-            req.setAttribute(REMOVE, ApiLinks.CALENDAR_REMOVE);
-            show(req, resp);
+            System.out.println(body);
+            if (body.containKey(ID)) {
+                final CalendarItem item = calendarDAO.getCalendarItem(body.get(ID));
+                req.setAttribute(ITEM, item);
+                req.setAttribute(TITLE, _TITLE);
+                req.setAttribute(CONTENT, _CONTENT);
+                req.setAttribute(REMOVE, ApiLinks.CALENDAR_REMOVE);
+                show(req, resp);
+            }
         }
     }
 }

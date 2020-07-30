@@ -3,9 +3,14 @@
 }
 .goal-item{
     margin: 8px;
-    border: solid;
+    border: solid 2px;
+    border-radius: 8px;
+    overflow: hidden;
     height: fit-content;
     min-width: 200pt;
+}
+.goal-item:hover{
+    box-shadow: 0 0 4px 2px gray;
 }
 .goal-title{
     display: block;

@@ -1,21 +1,22 @@
 <%--
   Created by IntelliJ IDEA.
   User: szpt-user045
-  Date: 29.07.20
-  Time: 15:46
+  Date: 30.07.20
+  Time: 10:08
 --%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <script src="${context}/vue/remover.vue"></script>
 <script>
     remover.api.remove = '${remove}';
-    remover.object = '${item.id}';
+    remover.object = ${goal.id};
 </script>
 <table id="remover">
     <tr>
         <td>
+            {{object}}
         </td>
     </tr>
     <tr>
@@ -23,9 +24,10 @@
             <button onclick="closeModal()">
                 <fmt:message key="button.cancel"/>
             </button>
-            <button v-on:click="remove">
+            <button v-on:click="remove()">
                 <fmt:message key="button.remove"/>
             </button>
         </td>
     </tr>
 </table>
+

@@ -103,19 +103,11 @@ public class CalendarItem extends JsonAble {
         json.put(ID, id);
         json.put(CATEGORY, category.shortJson());
         if (date != null){
-
             json.put(DATE, date.toString());
-            json.put(USE_DATE, true);
             if (time != null){
                 json.put(TIME, time.toString());
                 json.put(LENGTH, length());
-                json.put(USE_TIME, true);
-            } else {
-                json.put(USE_TIME, false);
             }
-        } else {
-            json.put(USE_DATE, false);
-            json.put(USE_TIME, false);
         }
 
         json.put(REPEAT, repeat.toString());

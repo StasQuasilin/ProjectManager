@@ -11,7 +11,7 @@
 <fmt:setLocale value="${locale}"/>
 <link rel="stylesheet" href="${context}/css/transactionEdit.css">
 <script src="${context}/vue/templates/inputWithSearch.vue"></script>
-<script src="${context}/vue/finances/transactionEdit.vue"></script>
+<script src="${context}/vue/finances/transactions/transactionEdit.vue"></script>
 <script>
   transactionEdit.props.findCategory = '${findCategory}';
   transactionEdit.api.findCounterparty = '${findCounterparty}';
