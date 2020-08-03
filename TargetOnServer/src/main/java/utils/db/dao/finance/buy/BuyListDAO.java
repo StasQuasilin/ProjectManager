@@ -2,6 +2,7 @@ package utils.db.dao.finance.buy;
 
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
+import entity.finance.category.Category;
 import entity.user.User;
 
 import java.util.Collection;
@@ -14,4 +15,8 @@ public interface BuyListDAO {
     void saveList(BuyList list);
     void removeItems(Collection<BuyListItem> items);
     List<BuyList> findList(String key, User user);
+
+    BuyListItem getItemByCategory(Category category);
+
+    void removeItem(BuyListItem item);
 }

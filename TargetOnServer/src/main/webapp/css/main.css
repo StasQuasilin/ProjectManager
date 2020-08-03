@@ -29,6 +29,7 @@ input{
     border-top: none;
     max-height: 200px;
     overflow-y: scroll;
+    z-index: 10;
 }
 .custom-data-list-item{
     border-bottom: dashed gray 1px;

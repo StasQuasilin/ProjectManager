@@ -51,7 +51,6 @@ public class CategoryStatisticUtil {
     public void calculateChildren(Category category, TaskDAO taskDAO){
         final Category parent = category.getParent();
         if (parent != null){
-            System.out.println("Calculate statistic for '" + parent.getTitle() + "'" );
             final TaskStatistic statistic = getStatistic(parent);
             statistic.setActiveChildren(0);
             statistic.setProgressingChildren(0);
@@ -59,12 +58,7 @@ public class CategoryStatisticUtil {
 
             for (Task task : taskDAO.getTasksByParent(parent)){
                 final Category children = task.getCategory();
-                System.out.println("\t-" + children.getTitle());
                 TaskStatistic childrenStat = getStatistic(children, false);
-                System.out.println("\t\tStatus: " + task.getStatus());
-                if(childrenStat != null) {
-                    System.out.println("\t\tActive: " + childrenStat.getActiveChildren());
-                }
                 statistic.add(task.getStatus(), childrenStat);
             }
             hibernator.save(statistic);

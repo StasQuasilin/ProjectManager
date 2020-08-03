@@ -25,7 +25,11 @@
     </c:if>
     <c:choose>
     <c:when test="${not empty task}">
-    taskEdit.task = ${task.toJson()}
+    taskEdit.task = ${task.toJson()};
+    <c:if test="${not empty buyList}">
+    taskEdit.addToBuyList = true;
+    taskEdit.task.buyList = ${buyList.toJson()}
+    </c:if>
     </c:when>
     <c:otherwise>
     taskEdit.task.title = '<fmt:message key="task.title.default"/>';

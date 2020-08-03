@@ -96,4 +96,5 @@ public interface Keys {
     String PROGRESSING = "progressing";
     String REMOVE = "remove";
     String FIND_BUY_LIST = "findBuyList";
+    String BUY_LIST = "buyList";
 }

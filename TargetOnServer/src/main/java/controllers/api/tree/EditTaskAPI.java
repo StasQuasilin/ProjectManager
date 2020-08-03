@@ -7,6 +7,7 @@ import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.user.User;
 import utils.CategoryUtil;
+import utils.TaskToBuyListUtil;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
@@ -27,6 +28,7 @@ public class EditTaskAPI extends API {
     private final TaskDAO taskDAO = daoService.getTaskDAO();
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
     private final TaskSaver taskSaver = new TaskSaver();
+    private final TaskToBuyListUtil buyListUtil = new TaskToBuyListUtil();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -66,6 +68,12 @@ public class EditTaskAPI extends API {
 
             write(resp, SUCCESS_ANSWER);
             taskSaver.save(task);
+
+            if (body.containKey(BUY_LIST)){
+                buyListUtil.taskToBuyList(task, new JsonObject(body.get(BUY_LIST)));
+            } else {
+                buyListUtil.remove(task);
+            }
         }
     }
 }

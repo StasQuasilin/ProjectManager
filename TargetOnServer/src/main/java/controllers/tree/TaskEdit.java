@@ -3,11 +3,13 @@ package controllers.tree;
 import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
+import entity.finance.buy.BuyListItem;
 import entity.finance.category.Category;
 import entity.task.Task;
 import entity.task.TaskStatus;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
+import utils.db.dao.finance.buy.BuyListDAO;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
 
@@ -26,6 +28,7 @@ public class TaskEdit extends ModalWindow {
 
     private final TaskDAO taskDAO = daoService.getTaskDAO();
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
+    private final BuyListDAO buyListDAO = daoService.getBuyListDAO();
     private final TaskStatus[] statuses = {TaskStatus.active, TaskStatus.progressing, TaskStatus.done};
 
     @Override
@@ -35,8 +38,13 @@ public class TaskEdit extends ModalWindow {
             System.out.println(body);
             final Task task = taskDAO.getTask(body.get(ID));
             final Category parent = categoryDAO.getCategory(body.get(PARENT));
+
             req.setAttribute(TASK, task);
             req.setAttribute(PARENT, parent);
+            final BuyListItem buyListItem = buyListDAO.getItemByCategory(task.getCategory());
+            if (buyListItem != null){
+                req.setAttribute(BUY_LIST, buyListItem.getList());
+            }
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);

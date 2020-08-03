@@ -2,6 +2,7 @@ package utils.db.dao.finance.buy;
 
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
+import entity.finance.category.Category;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -35,14 +36,6 @@ public class BuyListDAOImpl implements BuyListDAO {
             hibernator.save(item);
         }
         updater.update(Subscribe.buy, list, list.getOwner());
-
-    }
-
-    @Override
-    public void removeItems(Collection<BuyListItem> items) {
-        for(BuyListItem item : items){
-            hibernator.remove(item);
-        }
     }
 
     @Override
@@ -51,5 +44,25 @@ public class BuyListDAOImpl implements BuyListDAO {
         params.put(OWNER, user);
 
         return hibernator.find(BuyList.class, params, TITLE, key);
+    }
+
+    @Override
+    public BuyListItem getItemByCategory(Category category) {
+        final HashMap<String, Object> params = new HashMap<>();
+        params.put(CATEGORY, category);
+
+        return hibernator.get(BuyListItem.class, params);
+    }
+
+    @Override
+    public void removeItems(Collection<BuyListItem> items) {
+        for(BuyListItem item : items){
+            removeItem(item);
+        }
+    }
+
+    @Override
+    public void removeItem(BuyListItem item) {
+        hibernator.remove(item);
     }
 }

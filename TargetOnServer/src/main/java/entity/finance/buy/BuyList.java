@@ -59,16 +59,21 @@ public class BuyList extends JsonAble {
     public void clearItems() {
         itemSet.clear();
     }
-
     public void addItem(BuyListItem item) {
         itemSet.add(item);
     }
 
     @Override
-    public JSONObject toJson() {
+    public JSONObject shortJson() {
         JSONObject json  = getJsonObject();
         json.put(ID, id);
         json.put(TITLE, title);
+        return json;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        final JSONObject json = shortJson();
         json.put(ITEMS, items());
         return json;
     }

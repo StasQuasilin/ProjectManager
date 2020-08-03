@@ -4,6 +4,8 @@ import constants.ApiLinks;
 import controllers.api.API;
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
+import entity.finance.category.Category;
+import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import subscribe.Subscribe;
@@ -44,6 +46,7 @@ public class BuyListEditAPI extends API {
                 items.put(item.getId(), item);
             }
             list.clearItems();
+            final User user = getUser(req);
             for (Object o : (JSONArray)body.get(ITEMS)){
                 JsonObject item = new JsonObject(o);
                 BuyListItem remove = items.remove(item.getInt(ID));
@@ -51,7 +54,13 @@ public class BuyListEditAPI extends API {
                     remove = new BuyListItem();
                     remove.setList(list);
                 }
-                remove.setTitle(item.getString(TITLE));
+                Category category = remove.getCategory();
+                if (category == null){
+                    category = new Category();
+                    category.setOwner(user);
+                    remove.setCategory(category);
+                }
+                category.setTitle(item.getString(TITLE));
                 remove.setCount(item.getFloat(COUNT));
                 remove.setPrice(item.getFloat(PRICE));
                 list.addItem(remove);
