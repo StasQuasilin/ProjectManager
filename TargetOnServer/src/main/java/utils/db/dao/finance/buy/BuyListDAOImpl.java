@@ -8,9 +8,11 @@ import utils.Updater;
 import utils.db.hibernate.Hibernator;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
-import static constants.Keys.OWNER;
-import static constants.Keys.ID;
+
+import static constants.Keys.*;
+
 public class BuyListDAOImpl implements BuyListDAO {
 
     private final Hibernator hibernator = Hibernator.getInstance();
@@ -41,5 +43,13 @@ public class BuyListDAOImpl implements BuyListDAO {
         for(BuyListItem item : items){
             hibernator.remove(item);
         }
+    }
+
+    @Override
+    public List<BuyList> findList(String key, User user) {
+        final HashMap<String, Object> params = new HashMap<>();
+        params.put(OWNER, user);
+
+        return hibernator.find(BuyList.class, params, TITLE, key);
     }
 }

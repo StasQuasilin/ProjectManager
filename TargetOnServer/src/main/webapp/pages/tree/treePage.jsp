@@ -16,6 +16,10 @@
     tree.api.edit = '${edit}';
     tree.api.getChildren = '${getTask}';
     tree.api.treeBuilder = '${treeBuilder}';
+    <c:forEach items="${status}" var="s">
+    tree.status.push('${s}');
+    tree.statusNames['${s}'] = '<fmt:message key="task.${s}"/>';
+    </c:forEach>
     <c:forEach items="${goals}" var="goal">
     tree.goals.push(${goal.toJson()});
     </c:forEach>
@@ -28,13 +32,14 @@
         <tr>
             <td>
                 <template v-for="(i, k) in path" class="tree-path">
-              <span class="text-button" v-on:click="getChildren(i.category)">
-                  {{i}}
-              </span>
-                    <span v-if="k < path.length - 1">
-                  /
-              </span>
+                  <span class="text-button" v-on:click="getChildren(i.id)">
+                      {{i.title}}
+                  </span>
+                    >
                 </template>
+                <b>
+                    {{item.title}}
+                </b>
             </td>
             <td style="min-width: 20%">
                 <select v-model="root" v-if="root" v-on:change="changeRoot()" style="width: 100%">
@@ -47,38 +52,26 @@
         <tr>
             <td style="width: 60%; height: 100%">
                 <div class="task-container item-container">
-                    <div class="task-container-title task-container-title-active">
-                  <span>
-                  <fmt:message key="task.active"/>
-                    </span>
-                        <button v-on:click="newTask()">
-                            <fmt:message key="task.add"/>
-                        </button>
-                    </div>
-                    <div v-for="item in childrenByStatus('active')" v-on:click="edit(item.id)">
-                        {{item.id}}. {{item.title}}
-                    </div>
-                    <div class="task-container-title task-container-title-progressing">
-                  <span>
-                  <fmt:message key="task.progressing"/>
-                </span>
-                    </div>
-                    <div v-for="item in childrenByStatus('progressing')" v-on:click="edit(item.id)">
-                        {{item.id}}. {{item.title}}
-                    </div>
-                    <div class="task-container-title task-container-title-done">
-                  <span>
-                  <fmt:message key="task.done"/>
-                </span>
-                    </div>
-                    <div v-for="item in childrenByStatus('done')" v-on:click="edit(item.id)">
-                        {{item.id}}. {{item.title}}
-                    </div>
+                    <button v-on:click="newTask()">
+                        <fmt:message key="task.add"/>
+                    </button>
+                    <template v-for="s in status">
+                        <template v-if="childrenByStatus(s).length > 0">
+                            <div class="task-container-title" :class="'task-container-title-' + s">
+                                <span>
+                                    {{statusNames[s]}}
+                                </span>
+                            </div>
+                            <div v-for="item in childrenByStatus(s)" v-on:click="edit(item.id)">
+                                {{item.id}}. {{item.title}}
+                            </div>
+                        </template>
+                    </template>
                 </div>
             </td>
             <td style="width: 20%">
                 <div class="item-container">
-                    <tree-view :item="tree" :key="tree.id" :props="props"></tree-view>
+                    <tree-view :item="tree" :key="tree.id" :props="props" :current="item.id"></tree-view>
                 </div>
             </td>
         </tr>

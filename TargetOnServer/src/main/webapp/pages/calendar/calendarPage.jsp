@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="${context}/css/calendar/calendar.css">
 <script src="${context}/vue/pathBuilder.vue"></script>
 <script src="${context}/vue/weekNumber.vue"></script>
+<script src="${context}/vue/templates/calendar.vue"></script>
 <script src="${context}/vue/calendarPage.vue"></script>
 <script>
   calendar.api.edit = '${edit}';
@@ -65,28 +66,10 @@
       <div class="item-container">
         <div v-for="item in calendarBuilder()" :style="{'min-height': (item.length)+ 'pt'}"
              class="calendar-item" :class="{'filled' : item.title}">
-              <template v-for="e in item.events" style="display: inline-block">
-                <template v-if="e">
-                  {{e}}
-                </template>
-                <template v-else>
-                  -
-                </template>
-              </template>
-<%--          <div class="calendar-item-time">--%>
-<%--            {{item.from.toLocaleTimeString().substring(0, 5)}} - {{item.to.toLocaleTimeString().substring(0, 5)}}--%>
-<%--            <div class="calendar-item-menu">--%>
-<%--              <span class="text-button" v-on:click="edit(item.id)">--%>
-<%--                /--%>
-<%--              </span>--%>
-<%--              <span class="text-button" v-on:click="remove(item.id)">--%>
-<%--                &times;--%>
-<%--              </span>--%>
-<%--            </div>--%>
-<%--          </div>--%>
-<%--          <div v-if="item.title">--%>
-<%--            {{item.title}}--%>
-<%--          </div>--%>
+              {{item}}
+          <div v-if="item.title">
+            {{item.title}}
+          </div>
           <div style="font-size: 10px">
             <div v-for="(v, k) in item">
               {{k}}: {{v}}

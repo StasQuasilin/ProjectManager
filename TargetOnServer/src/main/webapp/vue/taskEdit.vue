@@ -1,5 +1,8 @@
 taskEdit = new Vue({
     el:'#taskEdit',
+    components:{
+        'find-input':inputSearch
+    },
     data:{
         api:{},
         useDate:false,
@@ -8,7 +11,20 @@ taskEdit = new Vue({
             id:-1,
             parent:{},
             title:'',
-            date:new Date().toISOString().substring(0, 10)
+            date:new Date().toISOString().substring(0, 10),
+            buyList:{}
+        },
+        status:[],
+        statusNames:{},
+        props:{
+            put:function(parent){
+                taskEdit.task.parent = parent;
+            }
+        },
+        buyListProps:{
+            put:function (buyList) {
+                taskEdit.task.buyList = buyList;
+            }
         }
     },
     methods:{

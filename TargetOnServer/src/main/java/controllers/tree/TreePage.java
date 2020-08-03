@@ -3,6 +3,7 @@ package controllers.tree;
 import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.Page;
+import entity.task.TaskStatus;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.db.dao.daoService;
@@ -40,6 +41,7 @@ public class TreePage extends Page {
         req.setAttribute(GOALS, goalDAO.getGoals(user));
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
+        req.setAttribute(STATUS, TaskStatus.values());
         req.setAttribute(EDIT, UrlLinks.TASK_EDIT);
         req.setAttribute(GET_TASK, ApiLinks.GET_TASK);
         req.setAttribute(TREE_BUILDER, ApiLinks.TREE_BUILDER);

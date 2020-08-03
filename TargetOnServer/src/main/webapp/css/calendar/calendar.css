@@ -2,6 +2,7 @@
     border: dotted gray 1px;
     margin: 2px 0;
     padding: 4px 8px;
+    position: relative;
 }
 .filled{
     background-color: #3788d8;
@@ -21,4 +22,12 @@
 }
 .calendar-item:hover .calendar-item-menu{
     display: inline-block;
+}
+.calendar-tile{
+    display: inline-block;
+    background-color: #3788d8;
+    border: dashed 1px white;
+    margin-left: 2px;
+    position: absolute;
+    z-index: 2;
 }

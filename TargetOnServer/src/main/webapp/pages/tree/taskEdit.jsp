@@ -10,9 +10,16 @@
 <fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script src="${context}/vue/templates/inputWithSearch.vue"></script>
 <script src="${context}/vue/taskEdit.vue"></script>
 <script>
     taskEdit.api.save = '${save}';
+    taskEdit.props.findCategory = '${findCategory}';
+    taskEdit.buyListProps.findCategory = '${findBuyList}';
+    <c:forEach items="${status}" var="s">
+    taskEdit.status.push('${s}');
+    taskEdit.statusNames['${s}'] = '<fmt:message key="task.${s}"/>';
+    </c:forEach>
     <c:if test="${not empty parent}">
     taskEdit.task.parent = ${parent.toJson()}
     </c:if>
@@ -22,6 +29,7 @@
     </c:when>
     <c:otherwise>
     taskEdit.task.title = '<fmt:message key="task.title.default"/>';
+    taskEdit.task.status = 'active';
     </c:otherwise>
     </c:choose>
 </script>
@@ -38,14 +46,26 @@
             <input id="title" v-model="task.title" autocomplete="off" onfocus="this.select()">
         </td>
     </tr>
+    <tr>
+        <td>
+            <label for="status">
+                <fmt:message key="task.current.status"/>
+            </label>
+        </td>
+        <td>
+            <select id="status" v-model="task.status">
+                <option v-for="s in status" :value="s">
+                    {{statusNames[s]}}
+                </option>
+            </select>
+        </td>
+    </tr>
     <tr v-if="task.parent">
         <td>
             <fmt:message key="task.parent"/>
         </td>
         <td>
-            <span class="text-button">
-                {{task.parent.title}}
-            </span>
+            <find-input :object="task.parent" :props="props"></find-input>
         </td>
     </tr>
     <tr v-if="!useDate">
@@ -85,7 +105,22 @@
             </td>
         </tr>
     </template>
+    <tr v-if="!addToBuyList">
+        <td colspan="2">
+            <span class="text-button" v-on:click="addToBuyList=true">
+                <fmt:message key="task.to.buy.list"/>
+            </span>
 
+        </td>
+    </tr>
+    <tr v-else>
+        <td>
+            <fmt:message key="buy.list"/>
+        </td>
+        <td>
+            <find-input :object="task.buyList" :props="buyListProps"></find-input>
+        </td>
+    </tr>
     <tr>
         <td colspan="2" style="text-align: center">
             <button onclick="closeModal()">

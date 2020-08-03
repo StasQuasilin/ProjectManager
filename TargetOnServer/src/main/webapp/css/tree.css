@@ -4,6 +4,10 @@
 .task-container{
 
 }
+.selected{
+    font-weight: bold;
+    text-shadow: 0 0 4px orangered;
+}
 .tree-tile{
     display: inline-flex;
     border: solid 2px;
@@ -17,6 +21,9 @@
 .task-container-title{
     color: white;
     padding: 4px;
+    border-top: solid gray 4px;
+    border-bottom: solid gray 4px;
+    background-image: linear-gradient(to right, gray, transparent);
 }
 .task-container-title-active{
     border-top: solid cornflowerblue 4px;

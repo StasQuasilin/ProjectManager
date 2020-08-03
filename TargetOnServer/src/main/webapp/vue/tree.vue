@@ -13,7 +13,9 @@ tree = new Vue({
                 onOpen:function (item) {
                     tree.getChildren(item.category);
                 }
-            }
+            },
+            status:[],
+            statusNames:{}
         }
     },
     computed:{

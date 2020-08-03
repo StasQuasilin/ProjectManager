@@ -10,7 +10,10 @@ pathBuilder = {
         buildPath:function (path, item) {
             let parent = item.parent;
             if (parent){
-                path.unshift(parent.title);
+                path.unshift({
+                    id:parent.id,
+                    title:parent.title
+                });
                 this.buildPath(path, parent);
             }
         }

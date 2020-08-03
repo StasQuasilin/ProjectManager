@@ -37,8 +37,15 @@ public class EditTaskAPI extends API {
             if (task == null){
                 task = new Task();
                 task.setUid(UUID.randomUUID().toString());
+            }
+
+            if (body.containKey(STATUS)){
+                TaskStatus status = TaskStatus.valueOf(body.getString(STATUS));
+                task.setStatus(status);
+            } else {
                 task.setStatus(TaskStatus.active);
             }
+
             final User user = getUser(req);
             Category category = task.getCategory();
             if (category == null){

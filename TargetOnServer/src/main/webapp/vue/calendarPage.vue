@@ -7,46 +7,58 @@ calendar = new Vue({
             scales:['day', 'week', 'month'],
             scale:'day',
             calendar:[],
-            calendarItems:[]
+            events:[]
         }
     },
     computed:{
         calendarStructure:function(){
             let structure = {};
-            //init structure
-            let date = new Date();
-            date.setHours(0);
-            date.setMinutes(0);
-            date.setSeconds(0);
-            for (let i = 0; i < 4; i++){
-                let key = date.toLocaleTimeString().substring(0, 5);
-                structure[i] = {
-                    time:key,
-                    turn:0,
-                    events:[]
-                };
-                date.setMinutes(date.getMinutes() + 30);
-            }
-            console.log(structure);
-            for (let i in this.calendarItems){
-                if (this.calendarItems.hasOwnProperty(i)){
-                    let item = this.calendarItems[i];
-                    let time = item.time;
-                    let length = item.length;
-                    let turn = structure[time].events.push(item).length;
-
-                    for (let j = 0; j < length / 30 - 1; j++ ){
-                        ++time;
-                        structure[time].turn = turn;
-                        structure[time].events.splice(0, 0, null);
-                    }
-
+            for (let i = 0; i < 3 * 60; i++){
+                let events = this.getEventsByTime(i);
+                if (events){
+                    structure[i] = events;
                 }
             }
             return structure;
         }
     },
     methods:{
+        getEventsByTime:function(time){
+            let events = this.events.filter(function (item) {
+                return item.time === time;
+            });
+            if (events.length > 0) {
+                events.sort(function (a, b) {
+                    return b.duration - a.duration;
+                });
+                let first = events[0];
+                let length = this.getEventsBetween(first.time, first.time + first.duration).length;
+                let offset = this.getEvents(first.time).length;
+                return {
+                    events,
+                    length,
+                    offset
+                }
+            }
+        },
+        getEvents:function(time){
+            return this.events.filter(function (item) {
+                return item.time <= time && item.time + item.duration >= time;
+            })
+        },
+        getEventsBetween:function(from, to){
+            return this.events.filter(function (item) {
+                return item.time >= from && item.time + item.duration <= to;
+            })
+        },
+        getStyle:function(event, index, events){
+            let width = 90 / events.length;
+            return {
+                width: width + '%',
+                left: (index * width) + '%',
+                height:event.length * 1.5 + 'pt'
+            }
+        },
         calendarBuilder:function(){
             return this.calendarStructure;
         },
