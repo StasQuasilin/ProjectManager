@@ -23,7 +23,7 @@ treeView = {
                     '+' +
                 '</template>' +
             '</span>' +
-            '<span class="text-button" :class="{selected : item.category === current}" v-on:click="open()" style="font-size: 10pt">' +
+            '<span class="text-button" :class="[{selected : item.category === current}, item.status]" v-on:click="open()" style="font-size: 10pt">' +
                 '{{item.title}}' +
             '</span>' +
             '<div style="padding-left: 18px; border-left: dotted 1px gray; " v-if="isOpen && item.children">' +

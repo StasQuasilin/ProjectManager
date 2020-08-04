@@ -4,7 +4,6 @@ calendarEdit = new Vue({
         'input-search':inputSearch,
         'date-picker':datePicker,
         'time-picker':timePicker,
-        VueTimepicker
     },
     data:{
         api:{},

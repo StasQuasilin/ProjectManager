@@ -1,13 +1,45 @@
 * {
     user-select: none;
+    -moz-user-select: none;
     font-family: 'Segoe UI', 'Roboto', arial, sans-serif;
     background-color: #f0fff8;
 }
+html,
+body {
+    height: 100%;
+}
 body{
     margin: 0;
+    overflow: hidden;
 }
 input{
     width: 100%;
+}
+
+.load-screen{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: whitesmoke;
+    z-index: 5;
+}
+.loader {
+    border: 4px solid #dbdbdb; /* Light grey */
+    border-top: 4px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 0.5s linear infinite;
+    background-color: transparent;
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
 .text-button:hover{
     text-shadow: 0 0 6px #282828;

@@ -1,10 +1,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
-
-<script>
-
-</script>
+<fmt:setBundle basename="messages"/>
 <table id="transactions" class="full-size">
     <tr>
         <td>

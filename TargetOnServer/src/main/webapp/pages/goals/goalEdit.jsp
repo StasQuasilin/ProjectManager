@@ -7,11 +7,11 @@
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<script src="${context}/vue/templates/datetime/datePicker.vue"></script>
-<script src="${context}/vue/goals/goalEdit.vue"></script>
+<script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue"></script>
+<script type="application/javascript" src="${context}/vue/goals/goalEdit.vue"></script>
 <script>
   goalEdit.api.save = '${save}';
   <c:forEach items="${currency}" var="c">
@@ -131,7 +131,7 @@
         </label>
       </td>
       <td>
-        <input id="budget" type="number" v-model="goal.budget" autocomplete="off" onfocus="this.select()"
+        <input id="budget" type="number" min="0" v-model="goal.budget" autocomplete="off" onfocus="this.select()"
           style="width: 72pt">
         <select id="currency" v-model="goal.currency">
           <option v-for="c in currency">

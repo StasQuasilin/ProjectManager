@@ -7,8 +7,8 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
 <link rel="stylesheet" href="${context}/css/transactionEdit.css">
 <script src="${context}/vue/templates/inputWithSearch.vue"></script>
 <script src="${context}/vue/finances/transactions/transactionEdit.vue"></script>

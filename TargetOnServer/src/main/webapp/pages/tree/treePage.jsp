@@ -6,13 +6,13 @@
   Date: 06.07.2020
   Time: 14:10
 --%>
-<fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <link rel="stylesheet" href="${context}/css/tree.css">
-<script src="${context}/vue/pathBuilder.vue"></script>
-<script src="${context}/vue/tree.vue"></script>
-<script>
+<script type="application/javascript" src="${context}/vue/pathBuilder.vue"></script>
+<script type="application/javascript" src="${context}/vue/tree.vue"></script>
+<script type="application/javascript">
     tree.api.edit = '${edit}';
     tree.api.getChildren = '${getTask}';
     tree.api.treeBuilder = '${treeBuilder}';

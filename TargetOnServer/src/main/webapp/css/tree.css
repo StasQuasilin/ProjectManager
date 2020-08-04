@@ -48,3 +48,18 @@
 .active{
     color: #3788d8;
 }
+.active::before{
+    content: '■';
+}
+.progressing{
+    color: coral;
+}
+.progressing::before{
+    content: '▸';
+}
+.done{
+    color: green;
+}
+.done::before{
+    content: '✓';
+}

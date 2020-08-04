@@ -8,71 +8,79 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
-<html>
-<head>
-    <title>Targeton</title>
-    <link rel="icon" href="${context}/images/icon.svg">
-    <link rel="stylesheet" href="${context}/css/main.css">
-    <link rel="stylesheet" href="${context}/css/application.css">
-    <link rel="stylesheet" href="${context}/css/modalLayer.css">
-    <link rel="stylesheet" href="${context}/css/datePicker.css">
-    <script src="${context}/external/jquery.min.js"></script>
-    <script src="${context}/external/vue.js"></script>
-    <script src="${context}/external/vuetify.js"></script>
-    <script src="${context}/external/vue2-timepicker.js"></script>
-    <script src="${context}/external/vue2-timepicker/dist/VueTimepicker.umd.min.js"></script>
-    <script src="${context}/js/constants.js"></script>
-    <script src="${context}/js/connection.js"></script>
-    <script src="${context}/js/subscriber.js"></script>
-    <script src="${context}/js/application.js"></script>
-    <script src="${context}/js/utils.js"></script>
-    <script src="${context}/vue/list.vue"></script>
-    <script src="${context}/vue/templates/tree/treeView.vue"></script>
-    <script>
-        Vue.component('tree-view', treeView);
-        SUBSCRIBE_API = '${subscribe}';
-        user = 1;
-        if (typeof context === 'undefined'){
-            context = '${context}'
-        }
-        subscriber.connect();
-    </script>
-</head>
-<body>
-    <div id="modalLayer" class="modal-layer"></div>
-    <div class="body-wrapper">
-        <table border="1" style="height: 100%;">
-            <tr>
-                <td rowspan="2" style="vertical-align: top">
+<fmt:setBundle basename="messages"/>
+<html lang="${locale}">
+    <head>
+        <title><fmt:message key="application.title"/></title>
+        <link rel="icon" href="${context}/images/icon.svg">
+        <link rel="stylesheet" href="${context}/css/main.css">
+        <link rel="stylesheet" href="${context}/css/application.css">
+        <link rel="stylesheet" href="${context}/css/modalLayer.css">
+        <link rel="stylesheet" href="${context}/css/datePicker.css">
+        <script type="application/javascript" src="${context}/external/jquery.min.js"></script>
+        <script type="application/javascript" src="${context}/external/vue.js"></script>
+        <script type="application/javascript" src="${context}/external/vuetify.js"></script>
+        <script type="application/javascript" src="${context}/js/constants.js"></script>
+        <script type="application/javascript" src="${context}/js/connection.js"></script>
+        <script type="application/javascript" src="${context}/js/subscriber.js"></script>
+        <script type="application/javascript" src="${context}/js/application.js"></script>
+        <script type="application/javascript" src="${context}/js/utils.js"></script>
+        <script type="application/javascript" src="${context}/vue/list.vue"></script>
+        <script type="application/javascript" src="${context}/vue/templates/tree/treeView.vue"></script>
+        <script>
+            Vue.component('tree-view', treeView);
+            SUBSCRIBE_API = '${subscribe}';
+            user = 1;
+            if (typeof context === 'undefined'){
+                context = '${context}'
+            }
+            subscriber.connect();
+        </script>
+    </head>
+    <body>
+
+        <div id="modalLayer" class="modal-layer"></div>
+        <div class="body-wrapper">
+            <div class="body">
+                <div class="menu-holder">
                     <jsp:include page="navigation/navigationMenu.jsp"/>
-                </td>
-                <td id="titleHolder" class="title-holder"></td>
-                <td style="width: 30%; text-align: right">
-                    <c:set var="personalRoom"><fmt:message key="personal.room"/></c:set>
-                    <span class="text-button" title="${personalRoom}" onclick="loadModal('${personal}')">
-                        ${user.surname} ${user.forename}
-                    </span>
-                    <span class="text-button">
-                        ( <fmt:message key="logout"/> )
-                    </span>
-                </td>
-            </tr>
-            <tr>
-                <td id="contentHolder" colspan="2" style="width: 100%; height: 100%" >
-                    Content
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3" style="text-align: center">
-                    2019
-                    <c:if test="${year ne 2019}">
-                        - ${year}
-                    </c:if>
-                </td>
-            </tr>
-        </table>
-    </div>
-</body>
+                </div>
+                <div class="content">
+                    <div id="coverlet" class="load-screen">
+                        <div class="loader"></div>
+                    </div>
+                    <div class="header">
+                        <div id="titleHolder" class="title-holder"></div>
+                        <div class="personal-holder">
+                            <c:set var="personalRoom"><fmt:message key="personal.room"/></c:set>
+                            <span class="text-button" title="${personalRoom}" onclick="loadModal('${personal}')">
+                                ${user.surname} ${user.forename}
+                            </span>
+                            <span class="text-button">
+                                ( <fmt:message key="logout"/> )
+                            </span>
+                        </div>
+                    </div>
+                    <div class="content-holder" id="contentHolder">
+                        <div style="max-height: 100%">
+                            <div class="item-container">
+                                <c:forEach begin="0" end="30" var="i">
+                                    <div>
+                                        ${i}
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer">
+                2019
+                <c:if test="${year ne 2019}">
+                    - ${year}
+                </c:if>
+            </div>
+        </div>
+    </body>
 </html>

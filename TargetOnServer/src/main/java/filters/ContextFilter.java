@@ -8,6 +8,7 @@ import utils.db.hibernate.Hibernator;
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static constants.Keys.*;
@@ -27,10 +28,16 @@ public class ContextFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
+
         request.setAttribute(CONTEXT, request.getContextPath());
         request.setAttribute(LOCALE, "uk");
+
         request.getSession().setAttribute(USER, user);
-        filterChain.doFilter(request, servletResponse);
+
+        HttpServletResponse response = (HttpServletResponse) servletResponse;
+        response.setHeader("X-Content-Type-Options", "nosniff");
+
+        filterChain.doFilter(request, response);
     }
 
     @Override

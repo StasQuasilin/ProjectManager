@@ -6,8 +6,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
 <html>
     <div class="navigation-menu">
         <div onclick="loadPage('${goals}')"><fmt:message key="menu.goals"/></div>

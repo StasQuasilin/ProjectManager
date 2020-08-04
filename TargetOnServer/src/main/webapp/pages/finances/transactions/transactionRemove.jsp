@@ -5,8 +5,8 @@
   Time: 10:13
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <script src="${context}/vue/finances/transactions/remover.vue"></script>
 <script>

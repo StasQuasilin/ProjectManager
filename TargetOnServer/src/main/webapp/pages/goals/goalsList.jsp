@@ -5,15 +5,15 @@
   Time: 18:25
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename="messages"/>
-<fmt:setLocale value="${locale}"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
 <html>
     <link rel="stylesheet" href="${context}/css/goals.css"/>
     <link rel="stylesheet" href="${context}/css/progressBar.css">
-    <script src="${context}/vue/templates/progressBar.vue"></script>
-    <script src="${context}/vue/goals/goalTile.vue"></script>
-    <script src="${context}/vue/goalList.vue"></script>
+    <script type="application/javascript" src="${context}/vue/templates/progressBar.vue"></script>
+    <script type="application/javascript" src="${context}/vue/goals/goalTile.vue"></script>
+    <script type="application/javascript" src="${context}/vue/goalList.vue"></script>
     <script>
         goalList.api.edit = '${edit}';
         goalList.api.tree = '${tree}';

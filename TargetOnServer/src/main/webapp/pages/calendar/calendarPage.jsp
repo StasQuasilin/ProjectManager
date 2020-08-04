@@ -5,8 +5,8 @@
   Time: 14:24
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setBundle basename="messages"/>
 <fmt:setLocale value="${locale}"/>
+<fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <link rel="stylesheet" href="${context}/css/calendar/calendar.css">
 <script src="${context}/vue/pathBuilder.vue"></script>
@@ -21,34 +21,17 @@
   subscriber.subscribe('${taskSubscribe}', calendar.handler);
   subscriber.subscribe('${subscribe}', calendar.calendarHandler);
 </script>
-<table id="calendar" class="full-size" border="1">
-  <tr>
-    <td style="text-align: center">
-      <fmt:message key="calendar.today"/>
-      <span class="text-button" style="float: right" v-on:click="edit()">
+<div id="calendar" class="full-size">
+  <div class="left-panel">
+    <div class="panel-header">
+      <div class="panel-header-content">
+        <fmt:message key="calendar.today"/>
+        <span class="text-button" style="float: right" v-on:click="edit()">
         <fmt:message key="button.add"/>
       </span>
-    </td>
-    <td style="text-align: center">
-      <span class="text-button" v-on:click="switchDate(-1)">
-        &#9664;
-      </span>
-      <span class="text-button">
-        {{new Date(date).toLocaleDateString()}}
-      </span>
-      <span class="text-button" v-if="new Date(date) !== new Date()" v-on:click="resetDate()">
-        &#128198;
-      </span>
-      <span class="text-button" v-on:click="switchDate(1)">
-        &#9654;
-      </span>
-    </td>
-    <td style="text-align: center">
-      <fmt:message key="calendar.active"/>
-    </td>
-  </tr>
-  <tr>
-    <td style="width: 25%">
+      </div>
+    </div>
+    <div class="panel-content">
       <div class="item-container">
         <div v-for="item in getOtherItems()" v-on:click="edit(item.id)">
           <div>
@@ -61,12 +44,30 @@
           </div>
         </div>
       </div>
-    </td>
-    <td style="width: 50%">
+    </div>
+  </div>
+  <div class="central-panel">
+    <div class="panel-header">
+      <div class="panel-header-content">
+        <span class="text-button" v-on:click="switchDate(-1)">
+          &#9664;
+        </span>
+        <span class="text-button">
+          {{new Date(date).toLocaleDateString()}}
+        </span>
+        <span class="text-button" v-if="new Date(date) !== new Date()" v-on:click="resetDate()">
+          &#128198;
+        </span>
+        <span class="text-button" v-on:click="switchDate(1)">
+          &#9654;
+        </span>
+      </div>
+    </div>
+    <div class="panel-content">
       <div class="item-container">
         <div v-for="item in calendarBuilder()" :style="{'min-height': (item.length)+ 'pt'}"
              class="calendar-item" :class="{'filled' : item.title}">
-              {{item}}
+          {{item}}
           <div v-if="item.title">
             {{item.title}}
           </div>
@@ -77,8 +78,15 @@
           </div>
         </div>
       </div>
-    </td>
-    <td style="width: 25%; height: 100%">
+    </div>
+  </div>
+  <div class="right-panel">
+    <div class="panel-header">
+      <div class="panel-header-content">
+        <fmt:message key="calendar.active"/>
+      </div>
+    </div>
+    <div class="panel-content">
       <div class="item-container">
         <div v-for="item in getItems()" v-on:click="edit(-1, {category:item.category})" style="border: solid gray 1pt; padding: 2px; margin: 2px">
           <div style="font-size: 8pt">
@@ -89,6 +97,6 @@
           </div>
         </div>
       </div>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+</div>
