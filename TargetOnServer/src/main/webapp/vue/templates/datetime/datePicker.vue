@@ -4,7 +4,11 @@ datePicker = {
         props:Object
     },
     mounted:function(){
-        this._date = this.date;
+        if (this.date){
+            this._date = this.date;
+        } else {
+            this._date = new Date().toISOString().substring(0, 10);
+        }
     },
     data:function(){
         return {

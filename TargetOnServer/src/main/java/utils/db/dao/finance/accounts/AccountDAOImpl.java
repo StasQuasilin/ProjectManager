@@ -1,6 +1,7 @@
 package utils.db.dao.finance.accounts;
 
 import entity.finance.accounts.Account;
+import entity.finance.accounts.AccountMember;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -8,8 +9,7 @@ import utils.db.hibernate.Hibernator;
 
 import java.util.List;
 
-import static constants.Keys.ID;
-import static constants.Keys.OWNER;
+import static constants.Keys.*;
 
 public class AccountDAOImpl implements AccountDAO {
 
@@ -18,7 +18,11 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<Account> getUserAccounts(User user) {
-        return hibernator.query(Account.class, OWNER, user);
+        final List<Account> accounts = hibernator.query(Account.class, OWNER, user);
+        for (AccountMember member : hibernator.query(AccountMember.class, USER, user)){
+            accounts.add(member.getAccount());
+        }
+        return accounts;
     }
 
     @Override

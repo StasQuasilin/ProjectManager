@@ -1,8 +1,12 @@
 accountEdit = new Vue({
     el:'#accountEdit',
+    components:{
+        'date-picker':datePicker
+    },
     data:{
         api:{},
         types:[],
+        typeNames:{},
         currency:[],
         account:{
             id:-1,
@@ -15,7 +19,11 @@ accountEdit = new Vue({
     },
     methods:{
         save:function(){
-            PostApi(this.api.save, this.account, function(a){
+            let account = Object.assign({}, this.account);
+            if (account.type === 'credit'){
+                account.amount = 0;
+            }
+            PostApi(this.api.save, account, function(a){
                 if(a.status === 'success'){
                     closeModal();
                 }
@@ -23,6 +31,22 @@ accountEdit = new Vue({
         },
         sort:function(a, b){
             return a.title.localeCompare(b.title);
+        },
+        checkType:function () {
+            let account = this.account;
+            if (account.type === 'card'){
+                account.settings = {
+                    exemption:0,
+                    remember:true
+                }
+            } else if (account.type === 'deposit'){
+                account.settings = {
+                    open:new Date().toISOString().substring(0, 10),
+                    period:30,
+                    rate:12,
+                    capitalization:false
+                }
+            }
         }
     }
 });

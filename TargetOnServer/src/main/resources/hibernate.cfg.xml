@@ -33,7 +33,7 @@
         <mapping class="entity.finance.buy.BuyListItem"/>
         <mapping class="entity.finance.transactions.Transaction"/>
         <mapping class="entity.UserSystemCategory"/>
-
+        <mapping class="entity.finance.accounts.AccountMember"/>
 
     </session-factory>
 </hibernate-configuration>

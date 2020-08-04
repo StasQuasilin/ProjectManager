@@ -15,7 +15,9 @@ body{
 input{
     width: 100%;
 }
-
+input[type=checkbox]{
+    width: 0;
+}
 .load-screen{
     position: absolute;
     width: 100%;
@@ -52,6 +54,18 @@ input{
     overflow-y: scroll;
     height: 100%;
 }
+::-webkit-scrollbar {
+    width: 2px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgb(254, 226, 142);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #e3a800;
+}
 .custom-data-list{
     width: 100%;
     background-color: whitesmoke;
@@ -71,18 +85,7 @@ input{
 .custom-data-list-item:hover{
     background-color: #d0d0d0;
 }
-::-webkit-scrollbar {
-    width: 4px;
-}
-::-webkit-scrollbar-track {
-    background: transparent;
-}
-::-webkit-scrollbar-thumb {
-    background: #fbba00;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #f4b400;
-}
+
 button{
     min-width: 60pt;
 }

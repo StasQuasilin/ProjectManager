@@ -9,11 +9,13 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
-<script src="${context}/vue/finances/accountEdit.vue"></script>
-<script>
+<script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue"></script>
+<script type="application/javascript" src="${context}/vue/finances/accountEdit.vue"></script>
+<script type="application/javascript">
   accountEdit.api.save = '${save}';
   <c:forEach items="${types}" var="type">
   accountEdit.types.push('${type}');
+  accountEdit.typeNames['${type}'] = '<fmt:message key="account.${type}"/>';
   </c:forEach>
   <c:forEach items="${currency}" var="c">
   accountEdit.currency.push('${c}');
@@ -27,7 +29,6 @@
   accountEdit.account.currency = accountEdit.currency[0];
   </c:otherwise>
   </c:choose>
-
 </script>
 <table id="accountEdit">
   <tr>
@@ -49,14 +50,14 @@
       </label>
     </td>
     <td>
-      <select id="accountType" v-model="account.type">
+      <select id="accountType" v-model="account.type" style="width: 100%" v-on:change="checkType()">
         <option v-for="type in types" :value="type">
-          {{type}}
+          {{typeNames[type]}}
         </option>
       </select>
     </td>
   </tr>
-  <tr>
+  <tr v-if="account.type !== 'credit'">
     <td>
       <label for="accountAmount">
         <fmt:message key="account.amount"/>
@@ -80,8 +81,77 @@
     <td>
       <input id="accountLimit" v-model="account.limit" style="width: 90px"
              autocomplete="off" onfocus="this.select()">
-
       {{account.currency}}
+    </td>
+  </tr>
+  <template v-if="account.type === 'card' && account.limit > 0">
+    <tr>
+      <td colspan="2" style="text-align: right">
+        <input id="remember" type="checkbox" v-model="account.settings.remember">
+        <label for="remember">
+          <fmt:message key="card.settings.remember"/>
+        </label>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="exemption">
+          <fmt:message key="card.exemption.period"/>
+        </label>
+      </td>
+      <td>
+        <input id="exemption" v-model="account.settings.exemption" type="number" style="width: 90px">
+        <fmt:message key="5.days"/>
+      </td>
+    </tr>
+  </template>
+
+  <template v-if="account.type === 'deposit'">
+    <tr>
+      <td colspan="2" style="text-align: center">
+        <fmt:message key="deposit.settings"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fmt:message key="deposit.date"/>
+      </td>
+      <td>
+        <date-picker :date="account.settings.open"></date-picker>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fmt:message key="deposit.period"/>
+      </td>
+      <td>
+        {{account.settings.period}}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="rate">
+          <fmt:message key="deposit.rate"/>
+        </label>
+      </td>
+      <td>
+        <input id="rate" v-model="account.settings.rate" type="number" step="0.01" autocomplete="off"
+               onfocus="this.select()" style="width: 90px"> %
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align: right">
+        <input id="capitalization" v-model="account.settings.capitalization" type="checkbox">
+        <label for="capitalization">
+          <fmt:message key="deposit.capitalization"/>
+        </label>
+      </td>
+    </tr>
+  </template>
+
+  <tr>
+    <td>
+
     </td>
   </tr>
   <tr>
