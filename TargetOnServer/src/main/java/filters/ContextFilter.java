@@ -9,6 +9,7 @@ import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static constants.Keys.*;
@@ -30,9 +31,15 @@ public class ContextFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
         request.setAttribute(CONTEXT, request.getContextPath());
-        request.setAttribute(LOCALE, "uk");
 
-        request.getSession().setAttribute(USER, user);
+        //todo delete this
+        final HttpSession session = request.getSession();
+        if (session.getAttribute(USER) == null) {
+            session.setAttribute(USER, user);
+        }
+        if (session.getAttribute(LOCALE) == null){
+            session.setAttribute(LOCALE, "uk");
+        }
 
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("X-Content-Type-Options", "nosniff");

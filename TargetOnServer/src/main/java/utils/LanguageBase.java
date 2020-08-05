@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 
 public class LanguageBase{
@@ -26,5 +28,21 @@ public class LanguageBase{
         } else {
             return "???" + key + "???";
         }
+    }
+
+    public String getLocale(String lang) {
+        final HashSet<String> strings = new HashSet<>(Arrays.asList(LANGUAGES));
+        if (strings.contains(lang)){
+            return lang;
+        }
+        return DEFAULT_LANGUAGE;
+    }
+
+    public String[] getLocales() {
+        return LANGUAGES;
+    }
+
+    public String getDefaultLocale() {
+        return DEFAULT_LANGUAGE;
     }
 }

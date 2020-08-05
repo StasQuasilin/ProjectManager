@@ -1,26 +1,25 @@
 package utils.db.dao;
 
+import utils.db.dao.access.UserAccessDAO;
+import utils.db.dao.access.UserAccessDAOImpl;
 import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.calendar.CalendarDAOImpl;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.category.CategoryDAOImpl;
-import utils.db.dao.category.CategoryDAOPlug;
 import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.finance.accounts.AccountDAOImpl;
-import utils.db.dao.finance.accounts.AccountDAOPlug;
 import utils.db.dao.finance.buy.BuyListDAO;
 import utils.db.dao.finance.buy.BuyListDAOImpl;
 import utils.db.dao.finance.currency.CurrencyDAO;
 import utils.db.dao.finance.currency.CurrencyDAOPlug;
 import utils.db.dao.finance.transactions.TransactionDAO;
 import utils.db.dao.finance.transactions.TransactionDAOImpl;
-import utils.db.dao.finance.transactions.TransactionDAOPlug;
-import utils.db.dao.goal.GaolDAOPlug;
 import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.goal.GoalDAOImpl;
 import utils.db.dao.tree.TaskDAO;
 import utils.db.dao.tree.TaskDAOImpl;
-import utils.db.dao.tree.TaskDAOPlug;
+import utils.db.dao.user.UserDAO;
+import utils.db.dao.user.UserDAOImpl;
 
 /**
  * Created by DELL on 07.07.2020.
@@ -34,6 +33,8 @@ public class daoService {
     private static final TaskDAO        taskDAO;
     private static final CalendarDAO    calendarDAO = new CalendarDAOImpl();
     private static final BuyListDAO     buyListDAO = new BuyListDAOImpl();
+    private static final UserAccessDAO  userAccessDAO = new UserAccessDAOImpl();
+    private static final UserDAO        userDAO = new UserDAOImpl();
     static {
         accountDao = new AccountDAOImpl();
         categoryDAO = new CategoryDAOImpl();
@@ -70,5 +71,13 @@ public class daoService {
 
     public static BuyListDAO getBuyListDAO() {
         return buyListDAO;
+    }
+
+    public static UserAccessDAO getUserAccessDAO() {
+        return userAccessDAO;
+    }
+
+    public static UserDAO getUserDAO() {
+        return userDAO;
     }
 }

@@ -29,13 +29,18 @@
         <script type="application/javascript" src="${context}/vue/list.vue"></script>
         <script type="application/javascript" src="${context}/vue/templates/tree/treeView.vue"></script>
         <script>
+            welcomeUrl = '${welcome}';
+            logoutUrl = '${logout}';
+            user = ${user.id};
+            openLastPage();
             Vue.component('tree-view', treeView);
             SUBSCRIBE_API = '${subscribe}';
-            user = 1;
+
             if (typeof context === 'undefined'){
                 context = '${context}'
             }
             subscriber.connect();
+
         </script>
     </head>
     <body>
@@ -48,7 +53,9 @@
                 </div>
                 <div class="content">
                     <div id="coverlet" class="load-screen">
-                        <div class="loader"></div>
+                        <div class="loader-holder">
+                            <div class="loader"></div>
+                        </div>
                     </div>
                     <div class="header">
                         <div id="titleHolder" class="title-holder"></div>
@@ -57,7 +64,7 @@
                             <span class="text-button" title="${personalRoom}" onclick="loadModal('${personal}')">
                                 ${user.surname} ${user.forename}
                             </span>
-                            <span class="text-button">
+                            <span class="text-button" onclick="logout()">
                                 ( <fmt:message key="logout"/> )
                             </span>
                         </div>

@@ -1,28 +1,18 @@
 package entity.user;
 
-import entity.finance.Currency;
-
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user_settings")
-public class UserSettings {
-    private int id;
+public class UserSettings implements Serializable {
     private User user;
-    private String mainCurrency;
+    private String currency;
     private String locale;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @OneToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "_user")
     public User getUser() {
         return user;
     }
@@ -31,16 +21,16 @@ public class UserSettings {
     }
 
     @Basic
-    @Column(name = "currency")
-    public String getMainCurrency() {
-        return mainCurrency;
+    @Column(name = "_currency")
+    public String getCurrency() {
+        return currency;
     }
-    public void setMainCurrency(String mainCurrency) {
-        this.mainCurrency = mainCurrency;
+    public void setCurrency(String mainCurrency) {
+        this.currency = mainCurrency;
     }
 
     @Basic
-    @Column(name = "locale")
+    @Column(name = "_locale")
     public String getLocale() {
         return locale;
     }

@@ -51,12 +51,14 @@
     width: 100%;
     text-align: center;
     background-color: #41b883;
+    position: relative;
 }
 .panel-header-content{
     width: 100%;
     padding: 4px 0;
+    background-color: transparent;
 }
-.panel-header *{
+.panel-header-content span{
     background-color: transparent;
 }
 .panel-content{

@@ -4,6 +4,8 @@ let modal;
 let coverlet;
 let currentPage;
 let modals = [];
+let logoutUrl;
+let welcomeUrl;
 
 $(document).ready(function () {
     titleHolder = document.getElementById('titleHolder');
@@ -11,11 +13,22 @@ $(document).ready(function () {
     modal = document.getElementById('modalLayer');
     coverlet = document.getElementById('coverlet');
     hideModalLayer();
+
     // coverlet.style.display = 'none';
 });
 
+function openLastPage() {
+    let last = localStorage.getItem('last-page-for-' + user);
+    if (last){
+        loadPage(last)
+    } else {
+        loadPage(welcomeUrl);
+    }
+}
+
 function loadPage(url, params) {
     if (url && currentPage !== url) {
+        localStorage.setItem('last-page-for-' + user, url);
         coverlet.style.display = 'block';
         currentPage = url;
         PostReq(url, params, function (content) {
@@ -38,4 +51,9 @@ function hideModalLayer() {
 }
 function closeModal(){
     hideModalLayer();
+}
+function logout() {
+    PostReq(logoutUrl, null, function (a) {
+        location.href = a + '?lang=' + window.navigator.language.slice(0, 2);
+    });
 }

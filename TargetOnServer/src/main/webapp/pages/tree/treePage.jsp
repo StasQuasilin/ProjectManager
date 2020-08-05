@@ -28,29 +28,22 @@
     subscriber.subscribe('${subscribe}', tree.handler);
 </script>
 <div id="tree" class="full-size">
-    <table v-if="root !== -1" class="full-size" border="1">
-        <tr>
-            <td>
-                <template v-for="(i, k) in path" class="tree-path">
-                  <span class="text-button" v-on:click="getChildren(i.id)">
-                      {{i.title}}
-                  </span>
-                    >
-                </template>
-                <b>
-                    {{item.title}}
-                </b>
-            </td>
-            <td style="min-width: 20%">
-                <select v-model="root" v-if="root" v-on:change="changeRoot()" style="width: 100%">
-                    <option v-for="goal in goals" :value="goal.category">
-                        {{goal.title}}
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td style="width: 60%; height: 100%">
+    <template v-if="root !== -1">
+        <div class="central-panel">
+            <div class="panel-header">
+                <div class="panel-header-content task-path">
+                    <template v-for="(i, k) in path" class="tree-path">
+                      <span class="text-button" v-on:click="getChildren(i.id)">
+                          {{i.title}}
+                      </span>
+                        >
+                    </template>
+                    <b>
+                        {{item.title}}
+                    </b>
+                </div>
+            </div>
+            <div class="panel-content">
                 <div class="task-container item-container">
                     <button v-on:click="newTask()">
                         <fmt:message key="task.add"/>
@@ -62,21 +55,32 @@
                                     {{statusNames[s]}}
                                 </span>
                             </div>
-                            <div v-for="item in childrenByStatus(s)" v-on:click="edit(item.id)">
+                            <div v-for="item in childrenByStatus(s)" v-on:click="edit(item.id)" class="task-item">
                                 {{item.id}}. {{item.title}}
                             </div>
                         </template>
                     </template>
                 </div>
-            </td>
-            <td style="width: 20%">
+            </div>
+        </div>
+        <div class="right-panel">
+            <div class="panel-header">
+                <div class="panel-header-content">
+                    <select v-model="root" v-if="root" v-on:change="changeRoot()" style="width: 100%">
+                        <option v-for="goal in goals" :value="goal.category">
+                            {{goal.title}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <div class="panel-content">
                 <div class="item-container">
                     <tree-view :item="tree" :key="tree.id" :props="props" :current="item.id"></tree-view>
                 </div>
-            </td>
-        </tr>
-    </table>
-    <div v-else class="item-container task-container">
+            </div>
+        </div>
+    </template>
+    <div v-else class="item-container task-container" style="width: 100%">
         <div v-for="g in goals" class="tree-tile" v-on:click="setRoot(g)">
             {{g.title}}
         </div>

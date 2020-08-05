@@ -114,4 +114,15 @@ public final class Subscriber {
             System.out.println("No subscribes " + subscribe + " for " + user);
         }
     }
+
+    public void unsubscribe(User user) {
+        subscribesMap.remove(user);
+        for (Session session : sessionMap.remove(user)){
+            try {
+                session.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

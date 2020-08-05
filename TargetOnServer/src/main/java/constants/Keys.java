@@ -4,6 +4,7 @@ public interface Keys {
     String ENCODING = "UTF-8";
     String CONTEXT = "context";
     String LOCALE = "locale";
+    String LOCALES = "locales";
     String CONTENT = "content";
     String ACTION = "action";
     String ID= "id";
@@ -12,6 +13,7 @@ public interface Keys {
     String NAME = "name";
     String UID = "uid";
     String SUBSCRIBE = "subscribe";
+    String WELCOME = "welcome";
     String TASK_SUBSCRIBE = "taskSubscribe";
     String SLASH = "/";
     String ASTERISK = "*";
@@ -97,4 +99,15 @@ public interface Keys {
     String REMOVE = "remove";
     String FIND_BUY_LIST = "findBuyList";
     String BUY_LIST = "buyList";
+    String LOGOUT = "logout";
+    String LOGIN = "login";
+    String REGISTRATION = "registration";
+    String LANG = "lang";
+    String LANGUAGE = "language";
+    String EMAIL = "email";
+    String PASSWORD = "password";
+    String SUCCESS = "success";
+    String ERROR = "error";
+    String MESSAGE = "message";
+    String REDIRECT = "redirect";
 }

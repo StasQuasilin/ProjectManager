@@ -25,8 +25,8 @@ datePicker = {
             }
         }
     },
-    template:'<div style="position: relative; display: inline-block">' +
-            '<div class="text-button" v-on:click="show=!show">' +
+    template:'<div style="position: relative; display: inline-block; background-color: transparent">' +
+            '<div class="text-button" style="background-color: transparent" v-on:click="show=!show">' +
                 '{{new Date(date).toLocaleDateString()}}' +
             '</div>' +
             '<div v-if="show" style="position: absolute; z-index: 2">' +

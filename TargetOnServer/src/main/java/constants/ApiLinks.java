@@ -19,4 +19,7 @@ public interface ApiLinks {
     String CALENDAR_REMOVE = API + "/calendar/remove";
     String GOAL_REMOVE = API + "/goal/remove";
     String FIND_BUY_LIST = API + "/find/buy/list";
+    String LOGOUT = API + "/logout";
+    String LOGIN = API + "/login";
+    String REGISTRATION = API + "/registration";
 }

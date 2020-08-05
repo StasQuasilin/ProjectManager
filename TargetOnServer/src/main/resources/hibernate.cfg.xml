@@ -15,8 +15,8 @@
 <!--        <property name="hibernate.hbm2ddl.auto">create</property>-->
 
         <mapping class="entity.user.User"/>
-<!--        <mapping class="entity.user.UserAccess"/>-->
-<!--        <mapping class="entity.user.UserSettings"/>-->
+        <mapping class="entity.user.UserAccess"/>
+        <mapping class="entity.user.UserSettings"/>
 <!--        <mapping class="entity.user.UserCurrency"/>-->
         <mapping class="entity.finance.category.Category"/>
         <mapping class="entity.task.Task"/>

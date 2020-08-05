@@ -2,6 +2,7 @@ package controllers.api;
 
 import controllers.Servlet;
 import org.json.simple.JSONObject;
+import utils.json.JsonAble;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -19,4 +20,9 @@ public abstract class API extends Servlet {
         resp.setCharacterEncoding(ENCODING);
         resp.getWriter().write(msg);
     }
+
+    public void write(HttpServletResponse resp, JsonAble jsonAble) throws IOException {
+        write(resp, jsonAble.toJson());
+    }
+
 }

@@ -1,3 +1,4 @@
+const POST = 'post';
 function PostReq(url, parameters, onSuccess, onError, debug){
     if (url) {
         if (debug) {

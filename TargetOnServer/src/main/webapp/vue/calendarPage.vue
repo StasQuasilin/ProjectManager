@@ -1,5 +1,8 @@
 calendar = new Vue({
     el:'#calendar',
+    components:{
+        'date-picker':datePicker
+    },
     mixins:[list, pathBuilder, weekNumber],
     data:function(){
         return{
@@ -7,7 +10,12 @@ calendar = new Vue({
             scales:['day', 'week', 'month'],
             scale:'day',
             calendar:[],
-            events:[]
+            events:[],
+            props:{
+                put:function (date) {
+                    calendar.setDate(new Date(date));
+                }
+            }
         }
     },
     computed:{

@@ -37,7 +37,7 @@
                         <span v-if="item.accountFrom">
                             {{item.accountFrom.title}} &#10141;
                         </span>
-                        <span>
+                        <b>
                             <template v-if="item.type === 'income' || item.type === 'spending'">
                                 <template v-if="item.type === 'income'">
                                     +
@@ -47,7 +47,7 @@
                                 </template>
                             </template>
                             {{Math.abs(item.amount).toLocaleString()}} {{item.currency}}
-                        </span>
+                        </b>
                         <span v-if="item.accountTo">
                             &#10141; {{item.accountTo.title}}
                         </span>

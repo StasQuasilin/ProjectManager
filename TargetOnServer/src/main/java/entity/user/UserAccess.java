@@ -1,26 +1,18 @@
 package entity.user;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "user_access")
-public class UserAccess {
-    private int id;
+public class UserAccess implements Serializable {
     private User user;
     private String login;
     private String password;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public int getId() {
-        return id;
-    }
-    public void setId(int id) {
-        this.id = id;
-    }
-
     @OneToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "_user")
     public User getUser() {
         return user;
     }
@@ -29,7 +21,7 @@ public class UserAccess {
     }
 
     @Basic
-    @Column(name = "login")
+    @Column(name = "_login")
     public String getLogin() {
         return login;
     }
@@ -38,7 +30,7 @@ public class UserAccess {
     }
 
     @Basic
-    @Column(name = "password")
+    @Column(name = "_password")
     public String getPassword() {
         return password;
     }

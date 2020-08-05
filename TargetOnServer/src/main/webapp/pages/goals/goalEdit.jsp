@@ -120,7 +120,6 @@
               </template>
             </template>
           </span>
-
         </td>
       </tr>
     </template>
@@ -138,6 +137,14 @@
             {{c}}
           </option>
         </select>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fmt:message key="goal.members"/>
+      </td>
+      <td>
+
       </td>
     </tr>
     <tr>

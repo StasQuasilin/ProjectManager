@@ -1,3 +1,43 @@
+.full-size{
+    display: flex;
+    flex-direction: row;
+}
+.central-panel, .right-panel{
+    display: flex;
+    flex-direction: column;
+}
+.central-panel{
+    width: 75%;
+    flex: 1 0 auto;
+}
+.panel-header{
+    flex: 0 0 auto;
+    width: 100%;
+    background-color: #41b883;
+    position: relative;
+}
+.panel-header-content{
+    width: 100%;
+    padding: 4px 0;
+    background-color: transparent;
+}
+.task-path{
+    padding: 6px 0;
+}
+.task-path * {
+    background-color: transparent;
+}
+.task-item{
+    margin: 8px;
+}
+
+.panel-content{
+    flex: 1 0 auto;
+}
+.right-panel{
+    width: 25%;
+    flex: 1 0 auto;
+}
 .tree-path{
     width: 100%;
 }
@@ -44,6 +84,9 @@
     background-color: transparent;
     font-weight: bold;
     font-size: 14pt;
+}
+.active, .progressing, .done ::before{
+    padding-right: 4px;
 }
 .active{
     color: #3788d8;

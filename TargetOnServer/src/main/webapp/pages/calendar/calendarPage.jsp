@@ -8,11 +8,13 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<link rel="stylesheet" href="${context}/css/datePicker.css">
 <link rel="stylesheet" href="${context}/css/calendar/calendar.css">
-<script src="${context}/vue/pathBuilder.vue"></script>
-<script src="${context}/vue/weekNumber.vue"></script>
-<script src="${context}/vue/templates/calendar.vue"></script>
-<script src="${context}/vue/calendarPage.vue"></script>
+<script type="application/javascript" src="${context}/vue/pathBuilder.vue"></script>
+<script type="application/javascript" src="${context}/vue/weekNumber.vue"></script>
+<script type="application/javascript" src="${context}/vue/templates/calendar.vue"></script>
+<script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue"></script>
+<script type="application/javascript" src="${context}/vue/calendarPage.vue"></script>
 <script>
   calendar.api.edit = '${edit}';
   calendar.api.remove = '${remove}';
@@ -50,16 +52,15 @@
     <div class="panel-header">
       <div class="panel-header-content">
         <span class="text-button" v-on:click="switchDate(-1)">
-          &#9664;
+          <
         </span>
-        <span class="text-button">
-          {{new Date(date).toLocaleDateString()}}
-        </span>
-        <span class="text-button" v-if="new Date(date) !== new Date()" v-on:click="resetDate()">
-          &#128198;
-        </span>
+        <date-picker :date="date" :props="props"></date-picker>
         <span class="text-button" v-on:click="switchDate(1)">
-          &#9654;
+          >
+        </span>
+        <span class="text-button" v-if="new Date(date).toLocaleDateString() !== new Date().toLocaleDateString()"
+              v-on:click="resetDate()" style="position: absolute; right: 0">
+          <fmt:message key="date.today"/>
         </span>
       </div>
     </div>
