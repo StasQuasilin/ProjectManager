@@ -4,11 +4,11 @@
   Date: 07.07.2020
   Time: 09:03
 --%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <script src="${context}/vue/buyListEdit.vue"></script>
 <script>
     buyListEdit.api.save = '${save}';

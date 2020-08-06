@@ -15,8 +15,7 @@ public interface BuyListDAO {
     void saveList(BuyList list);
     void removeItems(Collection<BuyListItem> items);
     List<BuyList> findList(String key, User user);
-
     BuyListItem getItemByCategory(Category category);
-
     void removeItem(BuyListItem item);
+    void removeList(BuyList list);
 }

@@ -31,10 +31,11 @@ public class BuyListDAOImpl implements BuyListDAO {
 
     @Override
     public void saveList(BuyList list) {
-        hibernator.save(list);
         for (BuyListItem item : list.getItemSet()){
+            hibernator.save(item.getCategory());
             hibernator.save(item);
         }
+        hibernator.save(list);
         updater.update(Subscribe.buy, list, list.getOwner());
     }
 
@@ -64,5 +65,11 @@ public class BuyListDAOImpl implements BuyListDAO {
     @Override
     public void removeItem(BuyListItem item) {
         hibernator.remove(item);
+    }
+
+    @Override
+    public void removeList(BuyList list) {
+        removeItems(list.getItemSet());
+        hibernator.remove(list);
     }
 }

@@ -16,6 +16,7 @@
     tree.api.edit = '${edit}';
     tree.api.getChildren = '${getTask}';
     tree.api.treeBuilder = '${treeBuilder}';
+    tree.api.timer = '${taskTimer}';
     <c:forEach items="${status}" var="s">
     tree.status.push('${s}');
     tree.statusNames['${s}'] = '<fmt:message key="task.${s}"/>';
@@ -55,8 +56,18 @@
                                     {{statusNames[s]}}
                                 </span>
                             </div>
-                            <div v-for="item in childrenByStatus(s)" v-on:click="edit(item.id)" class="task-item">
-                                {{item.id}}. {{item.title}}
+                            <div v-for="item in childrenByStatus(s)" class="task-item">
+                                <span>
+                                    {{item.id}}. {{item.title}}
+                                </span>
+                                <span class="task-menu">
+                                    <span class="text-button" v-on:click="timer(item.id)">
+                                        🕐🕐🕐🕐&#128336;
+                                    </span>
+                                    <span class="text-button" v-on:click="edit(item.id)">
+                                        &#9999;
+                                    </span>
+                                </span>
                             </div>
                         </template>
                     </template>

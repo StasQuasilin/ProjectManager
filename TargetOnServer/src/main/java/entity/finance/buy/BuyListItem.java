@@ -1,6 +1,7 @@
 package entity.finance.buy;
 
 import entity.finance.category.Category;
+import entity.task.Unit;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
 
@@ -15,7 +16,9 @@ public class BuyListItem extends JsonAble {
     private BuyList list;
     private Category category;
     private float count;
+    private Unit unit;
     private float price;
+    private String currency;
     private boolean done;
 
     @Id
@@ -54,6 +57,15 @@ public class BuyListItem extends JsonAble {
         this.count = count;
     }
 
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "_unit")
+    public Unit getUnit() {
+        return unit;
+    }
+    public void setUnit(Unit unit) {
+        this.unit = unit;
+    }
+
     @Basic
     @Column(name = "price")
     public float getPrice() {
@@ -61,6 +73,16 @@ public class BuyListItem extends JsonAble {
     }
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @Basic
+    @Column(name = "currency")
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
     @Basic
@@ -79,7 +101,9 @@ public class BuyListItem extends JsonAble {
         json.put(CATEGORY, category.getId());
         json.put(TITLE, category.getTitle());
         json.put(COUNT, count);
+        json.put(UNIT, unit.toString());
         json.put(PRICE, price);
+        json.put(CURRENCY, currency);
         json.put(DONE, done);
         return json;
     }

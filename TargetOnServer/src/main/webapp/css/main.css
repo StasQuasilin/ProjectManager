@@ -93,3 +93,9 @@ input[type=checkbox]{
 button{
     min-width: 60pt;
 }
+.error{
+    color: orangered;
+}
+.error *{
+    border-color: orangered;
+}

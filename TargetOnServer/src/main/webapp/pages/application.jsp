@@ -32,7 +32,6 @@
             welcomeUrl = '${welcome}';
             logoutUrl = '${logout}';
             user = ${user.id};
-            openLastPage();
             Vue.component('tree-view', treeView);
             SUBSCRIBE_API = '${subscribe}';
 
@@ -40,7 +39,6 @@
                 context = '${context}'
             }
             subscriber.connect();
-
         </script>
     </head>
     <body>
@@ -61,7 +59,7 @@
                         <div id="titleHolder" class="title-holder"></div>
                         <div class="personal-holder">
                             <c:set var="personalRoom"><fmt:message key="personal.room"/></c:set>
-                            <span class="text-button" title="${personalRoom}" onclick="loadModal('${personal}')">
+                            <span class="text-button" title="${personalRoom}" onclick="loadPage('${personal}')">
                                 ${user.surname} ${user.forename}
                             </span>
                             <span class="text-button" onclick="logout()">

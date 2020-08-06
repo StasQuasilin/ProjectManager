@@ -2,10 +2,12 @@ package controllers.api.goal;
 
 import controllers.api.API;
 import constants.ApiLinks;
+import entity.finance.buy.BuyList;
 import entity.finance.category.Category;
 import entity.goal.Goal;
 import entity.user.User;
 import utils.db.dao.daoService;
+import utils.db.dao.finance.buy.BuyListDAO;
 import utils.db.dao.goal.GoalDAO;
 import utils.json.JsonObject;
 
@@ -22,6 +24,7 @@ import static constants.Keys.*;
 public class EditGoalAPI extends API {
 
     private final GoalDAO goalDAO = daoService.getGoalDAO();
+    private final BuyListDAO buyListDAO = daoService.getBuyListDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -66,8 +69,35 @@ public class EditGoalAPI extends API {
 
             }
 
+            if (body.containKey(BUY_LIST)){
+                final JsonObject buyListJson = new JsonObject(body.get(BUY_LIST));
+                BuyList buyList = null;
+                if (buyListJson.containKey(ID)){
+                    buyList = buyListDAO.getList(buyListJson.get(ID));
+                }
+                if (buyList == null){
+                    buyList = new BuyList();
+                    buyList.setOwner(user);
+                }
+
+                if (buyListJson.getBoolean(SEPARATED)){
+                    buyList.setTitle(category.getTitle());
+                } else {
+                    buyList.setTitle(buyListJson.getString(TITLE));
+                }
+                buyListDAO.saveList(buyList);
+            } else {
+                final BuyList list = buyListDAO.getList(goal.getBuyList());
+                if (list != null){
+                    buyListDAO.removeList(list);
+                }
+                goal.setBuyList(-1);
+            }
+
             goalDAO.saveGoal(goal);
             write(resp, SUCCESS_ANSWER);
+
+
 
         }
     }

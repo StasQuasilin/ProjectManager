@@ -1,4 +1,9 @@
 buyList = new Vue({
     el:'#buyList',
-    mixins:[list]
+    mixins:[list],
+    data:function(){
+        return {
+            unitNames:{}
+        }
+    }
 });

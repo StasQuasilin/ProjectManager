@@ -42,6 +42,9 @@ public class ContextFilter implements Filter {
         }
 
         HttpServletResponse response = (HttpServletResponse) servletResponse;
+        response.setHeader("Access-Control-Allow-Origin", request.getContextPath());
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
         response.setHeader("X-Content-Type-Options", "nosniff");
 
         filterChain.doFilter(request, response);

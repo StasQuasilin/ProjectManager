@@ -17,12 +17,28 @@
                     <span>
                         {{item.title}}
                         <span class="text-button" v-on:click="edit(item.id)">
-                            <fmt:message key="button.edit"/>
+                            &#9999;
                         </span>
                     </span>
-                    <div style="padding-left: 8px">
+                    <div style="padding-left: 8px; font-size: 10pt">
                         <div v-for="i in item.items">
-                            {{i.title}} {{i.count}} &times; {{i.price}}
+                            <div>
+                                {{i.title}}
+                            </div>
+                            <div v-if="i.count !== 0 || i.price !== 0" style="color: gray">
+                                <span v-if="i.count !== 0">
+                                    {{i.count.toLocaleString()}} {{unitNames[i.unit]}}
+                                </span>
+                                <span v-if="i.count !== 0 && i.price !== 0">
+                                    &times;
+                                </span>
+                                <span v-if="i.price !== 0">
+                                    {{i.price.toLocaleString()}} {{i.currency}}
+                                </span>
+                                <span v-if="i.count > 1 && i.price !== 0">
+                                    = {{(i.count * i.price).toLocaleString()}} {{i.currency}}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -24,9 +24,3 @@
     flex-direction: column;
     justify-items: center;
 }
-.error{
-    color: orangered;
-}
-.error *{
-    border-color: orangered;
-}

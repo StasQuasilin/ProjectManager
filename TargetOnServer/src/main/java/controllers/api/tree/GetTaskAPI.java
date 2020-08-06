@@ -12,6 +12,7 @@ import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
 
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,7 +24,6 @@ import static constants.Keys.*;
 @WebServlet(ApiLinks.GET_TASK)
 public class GetTaskAPI extends API {
 
-    private final GoalDAO goalDAO = daoService.getGoalDAO();
     private final TaskDAO taskDAO = daoService.getTaskDAO();
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
 

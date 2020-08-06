@@ -1,5 +1,6 @@
 package entity.goal;
 
+import entity.finance.buy.BuyList;
 import entity.finance.category.Category;
 import entity.task.TaskStatistic;
 import entity.user.User;
@@ -16,7 +17,7 @@ import static constants.Keys.*;
 public class Goal extends JsonAble {
     private int id;
     private Category category;
-    private TaskStatistic statistic;
+    private int buyList;
     private Date begin;
     private Date end;
     private float budget;
@@ -40,13 +41,13 @@ public class Goal extends JsonAble {
         this.category = category;
     }
 
-//    @OneToOne(fetch = FetchType.EAGER, mappedBy = "category", cascade = CascadeType.ALL)
-    @Transient
-    public TaskStatistic getStatistic() {
-        return statistic;
+    @Basic
+    @Column(name = "buy_list")
+    public int getBuyList() {
+        return buyList;
     }
-    public void setStatistic(TaskStatistic statistic) {
-        this.statistic = statistic;
+    public void setBuyList(int buyList) {
+        this.buyList = buyList;
     }
 
     @Basic

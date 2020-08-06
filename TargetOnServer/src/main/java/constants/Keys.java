@@ -79,6 +79,7 @@ public interface Keys {
     String SPACE = " ";
     String GET_TASK = "getTask";
     String TREE_BUILDER = "treeBuilder";
+    String TASK_TIMER = "taskTimer";
     String GET_CALENDAR = "getCalendar";
     String REPEAT = "repeat";
     String USE_DATE = "useDate";
@@ -99,6 +100,7 @@ public interface Keys {
     String REMOVE = "remove";
     String FIND_BUY_LIST = "findBuyList";
     String BUY_LIST = "buyList";
+    String SEPARATED = "separated";
     String LOGOUT = "logout";
     String LOGIN = "login";
     String REGISTRATION = "registration";
@@ -110,4 +112,7 @@ public interface Keys {
     String ERROR = "error";
     String MESSAGE = "message";
     String REDIRECT = "redirect";
+    String TIMER_START = "timerStart";
+    String UNITS = "units";
+    String UNIT = "unit";
 }

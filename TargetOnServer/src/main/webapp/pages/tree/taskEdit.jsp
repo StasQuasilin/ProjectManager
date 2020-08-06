@@ -64,6 +64,11 @@
             </select>
         </td>
     </tr>
+    <tr>
+        <td>
+
+        </td>
+    </tr>
     <tr v-if="task.parent">
         <td>
             <fmt:message key="task.parent"/>

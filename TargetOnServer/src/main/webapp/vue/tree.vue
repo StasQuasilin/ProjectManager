@@ -117,7 +117,9 @@ tree = new Vue({
                 return a.title.localeCompare(b.title);
             });
             return items;
+        },
+        timer:function(id){
+            loadModal(this.api.timer, {id:id})
         }
-
     }
 });

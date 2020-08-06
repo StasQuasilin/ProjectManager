@@ -10,15 +10,21 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script type="application/javascript" src="${context}/vue/templates/inputWithSearch.vue"></script>
 <script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue"></script>
 <script type="application/javascript" src="${context}/vue/goals/goalEdit.vue"></script>
 <script>
   goalEdit.api.save = '${save}';
+  goalEdit.buyListProps.findCategory = '${findBuyList}';
   <c:forEach items="${currency}" var="c">
   goalEdit.currency.push('${c}');
   </c:forEach>
   <c:if test="${not empty goal}">
   goalEdit.goal = ${goal.toJson()};
+  <c:if test="${not empty buyList}">
+  goalEdit.buyList = ${buyList.shortJson()};
+  useBuyList = true;
+  </c:if>
   </c:if>
   now = new Date();
   end = new Date();
@@ -40,12 +46,13 @@
 </script>
 <div>
   <table id="goalEdit">
-    <tr>
+    <tr :class="{error : errors.title}">
       <td colspan="2">
         <label for="title">
           <fmt:message key="goal.title"/>
         </label>
-        <input id="title" v-model="goal.title" autocomplete="off" onfocus="this.select()">
+        <input id="title" v-model="goal.title" autocomplete="off" v-on:click="errors.title = false"
+               onfocus="this.select()">
       </td>
     </tr>
     <tr v-if="!useBeginDate">
@@ -137,6 +144,37 @@
             {{c}}
           </option>
         </select>
+      </td>
+    </tr>
+    <tr v-if="!useBuyList">
+      <td colspan="2">
+        <span class="text-button" v-on:click="useBuyList = true">
+          <fmt:message key="use.buy.list"/>
+        </span>
+      </td>
+    </tr>
+    <tr v-else :class="{error : errors.buyList}">
+      <td>
+        <fmt:message key="buy.list"/>
+      </td>
+      <td>
+        <span v-if="separatedBuyList" v-on:click="separatedBuyList=false">
+          <fmt:message key="goal.separated.buy.list"/>
+        </span>
+        <template v-else >
+          <div v-on:click="errors.buyList = false">
+            <find-input :object="buyList" :props="buyListProps"></find-input>
+          </div>
+          <div style="font-size: 10pt">
+            <span class="text-button" v-on:click="separatedBuyList=true">
+              <fmt:message key="goal.separated.buy.list"/>
+            </span>
+            <span class="text-button" v-on:click="useBuyList = false">
+              &times;
+            </span>
+          </div>
+        </template>
+
       </td>
     </tr>
     <tr>

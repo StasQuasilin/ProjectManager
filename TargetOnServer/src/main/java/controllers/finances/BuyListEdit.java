@@ -4,6 +4,7 @@ import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
 import entity.finance.buy.BuyList;
+import entity.task.Unit;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.buy.BuyListDAO;
 import utils.json.JsonObject;
@@ -33,6 +34,7 @@ public class BuyListEdit extends ModalWindow {
             final BuyList list = buyListDAO.getList(body.get(ID));
             req.setAttribute(LIST, list);
         }
+        req.setAttribute(UNITS, Unit.values());
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
         req.setAttribute(SAVE, ApiLinks.BUY_LIST_EDIT);

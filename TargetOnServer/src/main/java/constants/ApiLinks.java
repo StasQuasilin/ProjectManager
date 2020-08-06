@@ -22,4 +22,6 @@ public interface ApiLinks {
     String LOGOUT = API + "/logout";
     String LOGIN = API + "/login";
     String REGISTRATION = API + "/registration";
+    String TIMER_START = "/task/timer/start";
+
 }

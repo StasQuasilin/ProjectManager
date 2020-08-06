@@ -41,9 +41,11 @@ public class TaskEdit extends ModalWindow {
 
             req.setAttribute(TASK, task);
             req.setAttribute(PARENT, parent);
-            final BuyListItem buyListItem = buyListDAO.getItemByCategory(task.getCategory());
-            if (buyListItem != null){
-                req.setAttribute(BUY_LIST, buyListItem.getList());
+            if (task.getCategory() != null) {
+                final BuyListItem buyListItem = buyListDAO.getItemByCategory(task.getCategory());
+                if (buyListItem != null) {
+                    req.setAttribute(BUY_LIST, buyListItem.getList());
+                }
             }
         }
         req.setAttribute(TITLE, _TITLE);

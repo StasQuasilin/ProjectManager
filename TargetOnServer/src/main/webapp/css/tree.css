@@ -29,8 +29,26 @@
 }
 .task-item{
     margin: 8px;
+    border-bottom: solid transparent 1px;
 }
-
+.task-item .task-menu{
+    display: none;
+}
+.task-item:hover{
+    border-bottom: solid green 1px;
+}
+.task-item:hover .task-menu{
+    display: block;
+}
+.task-menu{
+    float: right;
+    background-color: #41b883;
+    border-radius: 12pt;
+    padding: 2px 8px;
+}
+.task-menu *{
+    background-color: transparent;
+}
 .panel-content{
     flex: 1 0 auto;
 }

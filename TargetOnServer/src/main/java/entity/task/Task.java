@@ -7,6 +7,8 @@ import utils.json.JsonAble;
 
 import javax.persistence.*;
 
+import java.sql.Date;
+
 import static constants.Keys.*;
 
 @Entity
@@ -14,10 +16,12 @@ import static constants.Keys.*;
 public class Task extends JsonAble {
     private int id;
     private String uid;
+    private Date deadline;
     private Category category;
     private TaskStatus status;
     private User doer;
     private String result;
+    private TaskPriority priority;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +39,15 @@ public class Task extends JsonAble {
     }
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    @Basic
+    @Column(name = "deadline")
+    public Date getDeadline() {
+        return deadline;
+    }
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 
     @OneToOne
@@ -72,6 +85,15 @@ public class Task extends JsonAble {
     }
     public void setResult(String result) {
         this.result = result;
+    }
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "_priority")
+    public TaskPriority getPriority() {
+        return priority;
+    }
+    public void setPriority(TaskPriority priority) {
+        this.priority = priority;
     }
 
     @Override

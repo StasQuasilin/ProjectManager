@@ -13,8 +13,7 @@ $(document).ready(function () {
     modal = document.getElementById('modalLayer');
     coverlet = document.getElementById('coverlet');
     hideModalLayer();
-
-    // coverlet.style.display = 'none';
+    openLastPage();
 });
 
 function openLastPage() {
@@ -28,8 +27,8 @@ function openLastPage() {
 
 function loadPage(url, params) {
     if (url && currentPage !== url) {
-        localStorage.setItem('last-page-for-' + user, url);
         coverlet.style.display = 'block';
+        localStorage.setItem('last-page-for-' + user, url);
         currentPage = url;
         PostReq(url, params, function (content) {
             $(contentHolder).empty();
