@@ -7,5 +7,6 @@ public enum TaskStatus {
     done,
     pause,
     cancel,
-    impossible
+    impossible,
+    buy
 }

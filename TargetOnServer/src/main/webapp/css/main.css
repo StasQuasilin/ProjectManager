@@ -57,6 +57,10 @@ input[type=checkbox]{
 .item-container{
     overflow-y: scroll;
     height: 100%;
+
+}
+.item-container-wrapper{
+    padding: 2px 4px 2px 8px;
 }
 ::-webkit-scrollbar {
     width: 2px;

@@ -157,7 +157,6 @@ transactionEdit = new Vue({
         editDetail:function(detail, index){
             this.detail = detail;
             this.detailIndex = index;
-            this.transaction.details.splice(index, 1);
         },
         addDetail:function(){
             let detail = Object.assign({}, this.detail);
@@ -167,7 +166,8 @@ transactionEdit = new Vue({
                 }
             }
             if (this.detailIndex !== -1){
-                this.transaction.details.splice(this.detailIndex, 0, detail);
+                this.transaction.details.splice(this.detailIndex, 1, detail);
+                this.detailIndex = -1;
             } else {
                 this.transaction.details.push(detail);
             }

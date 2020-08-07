@@ -9,6 +9,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
+<link rel="stylesheet" href="${context}/css/finances/financePage.css">
 <script type="application/javascript" src="${context}/vue/finances/transactions/transactionsList.vue"></script>
 <script type="application/javascript" src="${context}/vue/finances/fastTransactions.vue"></script>
 <script type="application/javascript" src="${context}/vue/finances/accounts.vue"></script>
@@ -25,21 +26,21 @@
   subscriber.subscribe('${accountSubscribe}', accounts.handler);
   subscriber.subscribe('${buyListSubscribe}', buyList.handler);
 </script>
-<table class="full-size" border="1">
-  <tr>
-    <td rowspan="2" style="width: 40%">
+<div class="full-size finance-page">
+  <div class="colon">
+    <div class="colon-cell">
       <jsp:include page="transactions.jsp"/>
-    </td>
-    <td style="width: 30%">
+    </div>
+  </div>
+  <div class="colon central">
+    <div class="colon-cell">
       <jsp:include page="fastTransactions.jsp"/>
-    </td>
-    <td rowspan="2" style="width: 30%;">
-      <jsp:include page="buyList/buyList.jsp"/>
-    </td>
-  </tr>
-  <tr>
-    <td>
+    </div>
+    <div class="colon-cell">
       <jsp:include page="accounts.jsp"/>
-    </td>
-  </tr>
-</table>
+    </div>
+  </div>
+  <div class="colon colon-cell">
+    <jsp:include page="buyList/buyList.jsp"/>
+  </div>
+</div>

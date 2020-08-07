@@ -36,6 +36,9 @@ taskEdit = new Vue({
             if (task.parent){
                 task.parent = task.parent.id;
             }
+            if (!this.useBuyList){
+                delete task.buyList;
+            }
             PostApi(this.api.save, task, function (a) {
                 if (a.status === 'success'){
                     closeModal();

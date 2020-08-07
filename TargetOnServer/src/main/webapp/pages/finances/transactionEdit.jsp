@@ -71,54 +71,6 @@
               v-model="transaction.date">
       </v-date-picker>
     </td>
-    <td>
-      <template v-if="(transaction.type === 'spending' || transaction.type === 'income') && useDetails">
-        <div class="detail-header">
-          <fmt:message key="transaction.details"/>
-        </div>
-        <div class="detail-list">
-          <div v-for="(d, dIndex) in transaction.details" :key="d.id" class="detail-item">
-            <div class="detail-title">
-              {{d.title}}
-              <div class="detail-menu">
-                <span class="text-button" v-on:click="deleteDetail(dIndex)">
-                  &times;
-                </span>
-                <span class="text-button" v-on:click="editDetail(d, dIndex)">
-                  &#9999;
-                </span>
-              </div>
-            </div>
-            <div style="font-size: 10pt; color: gray; padding-left: 16pt">
-              {{d.amount}}
-              &times;
-              {{d.price}}
-              <span v-if="d.amount > 1 && d.price > 0">
-                = {{(d.amount * d.price).toLocaleString()}}
-              </span>
-              {{transaction.currency}}
-            </div>
-          </div>
-        </div>
-        <div style="font-size: 10pt">
-          <input-search :object="detail" :props="detailProps" ></input-search>
-          <label for="detailAmount">
-            <fmt:message key="amount"/>
-          </label>
-          <input id="detailAmount" style="width: 40pt" v-model="detail.amount" v-on:keyup.enter="addDetail()"
-                 autocomplete="off" onfocus="this.select()">
-          <label for="price">
-            <fmt:message key="transaction.price"/>
-          </label>
-          <input id="price" style="width: 50pt" v-model="detail.price" autocomplete="off"
-                 onfocus="this.select()" v-on:keyup.enter="addDetail()">
-
-          <button v-on:click="addDetail()">
-            <fmt:message key="button.add"/>
-          </button>
-        </div>
-      </template>
-    </td>
     <td style="vertical-align: top">
       <div>
         <template v-for="type in types">
@@ -220,6 +172,54 @@
           </tr>
         </table>
       </div>
+    </td>
+    <td>
+      <template v-if="(transaction.type === 'spending' || transaction.type === 'income') && useDetails">
+        <div class="detail-header">
+          <fmt:message key="transaction.details"/>
+        </div>
+        <div class="detail-list">
+          <div v-for="(d, dIndex) in transaction.details" :key="d.id" class="detail-item" :class="{edited : dIndex === detailIndex}">
+            <div class="detail-title">
+              {{d.title}}
+              <div class="detail-menu">
+                <span class="text-button" v-on:click="deleteDetail(dIndex)">
+                  &times;
+                </span>
+                <span class="text-button" v-on:click="editDetail(d, dIndex)">
+                  &#9999;
+                </span>
+              </div>
+            </div>
+            <div style="font-size: 10pt; color: gray; padding-left: 16pt">
+              {{d.amount}}
+              &times;
+              {{d.price}}
+              <span v-if="d.amount > 1 && d.price > 0">
+                = {{(d.amount * d.price).toLocaleString()}}
+              </span>
+              {{transaction.currency}}
+            </div>
+          </div>
+        </div>
+        <div style="font-size: 10pt">
+          <input-search :object="detail" :props="detailProps" ></input-search>
+          <label for="detailAmount">
+            <fmt:message key="amount"/>
+          </label>
+          <input id="detailAmount" style="width: 40pt" v-model="detail.amount" v-on:keyup.enter="addDetail()"
+                 autocomplete="off" onfocus="this.select()">
+          <label for="price">
+            <fmt:message key="transaction.price"/>
+          </label>
+          <input id="price" style="width: 50pt" v-model="detail.price" autocomplete="off"
+                 onfocus="this.select()" v-on:keyup.enter="addDetail()">
+
+          <button v-on:click="addDetail()">
+            <fmt:message key="button.add"/>
+          </button>
+        </div>
+      </template>
     </td>
   </tr>
   <tr>

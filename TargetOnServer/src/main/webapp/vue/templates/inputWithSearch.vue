@@ -54,7 +54,7 @@ inputSearch = {
                 'v-on:keyup.esc.prevent="clear()" v-on:keyup="find()" onfocus="this.select()">' +
             '<div class="custom-data-list" v-if="items.length > 0">' +
                 '<div class="custom-data-list-item" v-for="item in items" v-on:click="putValue(item)">' +
-                    '{{item}}' +
+                    '{{item.title}}' +
                 '</div>' +
             '</div>' +
         '</div>'

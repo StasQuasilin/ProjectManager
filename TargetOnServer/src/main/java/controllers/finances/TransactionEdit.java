@@ -40,10 +40,12 @@ public class TransactionEdit extends ModalWindow {
         JsonObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
-            Transaction transaction = transactionDAO.getTransaction(body.get(ID));
-            req.setAttribute(TRANSACTION, transaction);
-            final List<TransactionDetail> details = transactionDAO.getDetails(transaction.getId());
-            req.setAttribute(DETAILS, details);
+            if (body.containKey(ID)) {
+                Transaction transaction = transactionDAO.getTransaction(body.get(ID));
+                req.setAttribute(TRANSACTION, transaction);
+                final List<TransactionDetail> details = transactionDAO.getDetails(transaction.getId());
+                req.setAttribute(DETAILS, details);
+            }
         }
         req.setAttribute(SAVE, ApiLinks.TRANSACTION_SAVE);
         req.setAttribute(TITLE, _TITLE);

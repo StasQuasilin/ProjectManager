@@ -29,6 +29,7 @@ function PostReq(url, parameters, onSuccess, onError, debug){
             url = context + url;
         }
         xhr.open(POST, url, true);
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded; charset=UTF-8');
         xhr.send(JSON.stringify(parameters));
     } else {
         console.error('Empty url!!!');

@@ -13,6 +13,11 @@
 <div class="room">
     <div class="room-colon">
         <div class="room-colon-cell">
+            <div>
+                <img src="${context}/images/avatart.jpg" alt="" style="width: 200pt">
+            </div>
+        </div>
+        <div class="room-colon-cell">
             <div class="cell-title">
                 <fmt:message key="personal.info"/>
             </div>

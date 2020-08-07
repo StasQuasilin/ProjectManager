@@ -20,13 +20,25 @@
 .detail-item{
     border-bottom: dashed gray 1pt;
     margin-bottom: 2px;
+    position: relative;
 }
 .detail-menu{
-    float: right;
+    position: absolute;
+    right: 0;
+    padding-left: 16px;
+    padding-right: 8px;
+    border-bottom: solid gray 1px;
+
 }
 .detail-item .detail-title .detail-menu{
     display: none;
 }
 .detail-item:hover .detail-title .detail-menu{
     display: block;
+}
+.edited{
+    color: white;
+}
+.edited * {
+    background-color: darkgreen;
 }

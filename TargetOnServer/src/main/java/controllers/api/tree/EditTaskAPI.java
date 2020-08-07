@@ -59,7 +59,11 @@ public class EditTaskAPI extends API {
             if (body.containKey(PARENT)){
                 final Category parent = categoryDAO.getCategory(body.get(PARENT));
                 category.setParent(parent);
+                final Task parentTask = taskDAO.getTaskByCategory(parent);
+                parentTask.setStatus(TaskStatus.impossible);
+                taskDAO.saveTask(parentTask);
             } else {
+
                 category.setParent(null);
             }
 

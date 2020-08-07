@@ -26,10 +26,12 @@ tree = new Vue({
     methods:{
         handler:function(data){
             let update = data.update;
+            console.log(update);
             let found = false;
             for (let i in this.children){
                 if (this.children.hasOwnProperty(i)){
                     let item = this.children[i];
+                    console.log(item);
                     if (item.id === update.id){
                         this.children.splice(i, 1, update);
                         found = true;

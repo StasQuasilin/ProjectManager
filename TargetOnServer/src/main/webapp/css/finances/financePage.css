@@ -1,0 +1,29 @@
+.finance-page{
+    display: flex;
+    flex-direction: row;
+}
+.colon{
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 33.33%;
+}
+.colon-cell{
+    flex: 0 1 auto;
+    height: 100%;
+}
+.central{
+    border-left: solid gray 1px;
+    border-right: solid gray 1px;
+}
+.cell-header{
+    background-color: #41b883;
+}
+.header-wrapper{
+    padding: 2px 4px;
+    background-color: transparent;
+}
+.cell-header span{
+    background-color: transparent;
+}
