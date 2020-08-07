@@ -26,15 +26,20 @@
     <c:choose>
     <c:when test="${not empty task}">
     taskEdit.task = ${task.toJson()};
-    <c:if test="${not empty buyList}">
-    taskEdit.addToBuyList = true;
-    taskEdit.task.buyList = ${buyList.toJson()}
-    </c:if>
     </c:when>
     <c:otherwise>
     taskEdit.task.title = '<fmt:message key="task.title.default"/>';
     taskEdit.task.status = 'active';
     </c:otherwise>
+    </c:choose>
+    <c:choose>
+    <c:when test="${not empty buyList}">
+    taskEdit.addToBuyList = true;
+    taskEdit.task.buyList = ${buyList.toJson()}
+    </c:when>
+    <c:when test="${not empty rootBuyList}">
+    taskEdit.task.buyList = ${rootBuyList.toJson()};
+    </c:when>
     </c:choose>
 </script>
 <table id="taskEdit">

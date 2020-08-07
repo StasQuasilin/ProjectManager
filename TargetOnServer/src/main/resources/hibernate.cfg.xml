@@ -28,10 +28,11 @@
         <mapping class="entity.calendar.CalendarItem"/>
         <mapping class="entity.finance.accounts.Account"/>
         <mapping class="entity.finance.accounts.AccountPoint"/>
-        <mapping class="entity.finance.transactions.TransactionPoint"/>
         <mapping class="entity.finance.buy.BuyList"/>
         <mapping class="entity.finance.buy.BuyListItem"/>
         <mapping class="entity.finance.transactions.Transaction"/>
+        <mapping class="entity.finance.transactions.TransactionDetail"/>
+        <mapping class="entity.finance.transactions.TransactionPoint"/>
         <mapping class="entity.UserSystemCategory"/>
         <mapping class="entity.finance.accounts.AccountMember"/>
 

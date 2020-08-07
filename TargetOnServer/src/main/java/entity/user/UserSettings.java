@@ -9,6 +9,7 @@ public class UserSettings implements Serializable {
     private User user;
     private String currency;
     private String locale;
+    private String avatar;
 
     @Id
     @OneToOne
@@ -36,5 +37,13 @@ public class UserSettings implements Serializable {
     }
     public void setLocale(String locale) {
         this.locale = locale;
+    }
+
+    @Transient
+    public String getAvatar() {
+        return avatar;
+    }
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

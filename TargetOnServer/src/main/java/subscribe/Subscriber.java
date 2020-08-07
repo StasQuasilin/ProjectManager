@@ -117,11 +117,13 @@ public final class Subscriber {
 
     public void unsubscribe(User user) {
         subscribesMap.remove(user);
-        for (Session session : sessionMap.remove(user)){
-            try {
-                session.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+        if (sessionMap.containsKey(user)) {
+            for (Session session : sessionMap.remove(user)) {
+                try {
+                    session.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

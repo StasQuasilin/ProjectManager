@@ -5,5 +5,10 @@ buyList = new Vue({
         return {
             unitNames:{}
         }
+    },
+    methods:{
+        changeStatus:function(item){
+            PostApi(this.api.changeStatus, {id:item.id, status:item.done});
+        }
     }
 });

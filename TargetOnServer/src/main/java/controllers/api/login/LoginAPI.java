@@ -51,8 +51,15 @@ public class LoginAPI extends API {
                     String locale;
                     if (settings != null){
                         locale = settings.getLocale();
+                        final String avatar = settings.getAvatar();
+                        if (avatar != null){
+                            session.setAttribute(AVATAR, avatar);
+                        } else {
+                            session.setAttribute(AVATAR, "/images/avatar.jpg");
+                        }
                     } else {
                         locale = languageBase.getDefaultLocale();
+                        session.setAttribute(AVATAR, "/images/avatar.jpg");
                     }
                     session.setAttribute(LOCALE, locale);
 

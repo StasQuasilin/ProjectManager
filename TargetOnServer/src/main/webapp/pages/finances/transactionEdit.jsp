@@ -13,10 +13,12 @@
 <script src="${context}/vue/templates/inputWithSearch.vue"></script>
 <script src="${context}/vue/finances/transactions/transactionEdit.vue"></script>
 <script>
-  transactionEdit.props.findCategory = '${findCategory}';
+
   transactionEdit.api.findCounterparty = '${findCounterparty}';
   transactionEdit.api.save = '${save}';
   transactionEdit.api.remove = '${remove}';
+  transactionEdit.props.findCategory = '${findCategory}';
+  transactionEdit.detailProps.findCategory = '${findCategory}';
   transactionEdit.locale = '${locale}';
   <c:forEach items="${types}" var="type">
   transactionEdit.types.push({
@@ -40,6 +42,14 @@
     transactionEdit.transaction.accountTo = transactionEdit.transaction.accountTo.id;
   }
   transactionEdit.transaction.amount = Math.abs(transactionEdit.transaction.amount);
+  transactionEdit.transaction.details = [];
+  <c:if test="${not empty details}">
+  transactionEdit.useDetails = true;
+  <c:forEach items="${details}" var="detail">
+  transactionEdit.transaction.details.push(${detail.toJson()});
+  </c:forEach>
+  </c:if>
+
   </c:when>
   <c:otherwise>
   transactionEdit.transaction.type = transactionEdit.types[0].id;
@@ -62,6 +72,54 @@
       </v-date-picker>
     </td>
     <td>
+      <template v-if="(transaction.type === 'spending' || transaction.type === 'income') && useDetails">
+        <div class="detail-header">
+          <fmt:message key="transaction.details"/>
+        </div>
+        <div class="detail-list">
+          <div v-for="(d, dIndex) in transaction.details" :key="d.id" class="detail-item">
+            <div class="detail-title">
+              {{d.title}}
+              <div class="detail-menu">
+                <span class="text-button" v-on:click="deleteDetail(dIndex)">
+                  &times;
+                </span>
+                <span class="text-button" v-on:click="editDetail(d, dIndex)">
+                  &#9999;
+                </span>
+              </div>
+            </div>
+            <div style="font-size: 10pt; color: gray; padding-left: 16pt">
+              {{d.amount}}
+              &times;
+              {{d.price}}
+              <span v-if="d.amount > 1 && d.price > 0">
+                = {{(d.amount * d.price).toLocaleString()}}
+              </span>
+              {{transaction.currency}}
+            </div>
+          </div>
+        </div>
+        <div style="font-size: 10pt">
+          <input-search :object="detail" :props="detailProps" ></input-search>
+          <label for="detailAmount">
+            <fmt:message key="amount"/>
+          </label>
+          <input id="detailAmount" style="width: 40pt" v-model="detail.amount" v-on:keyup.enter="addDetail()"
+                 autocomplete="off" onfocus="this.select()">
+          <label for="price">
+            <fmt:message key="transaction.price"/>
+          </label>
+          <input id="price" style="width: 50pt" v-model="detail.price" autocomplete="off"
+                 onfocus="this.select()" v-on:keyup.enter="addDetail()">
+
+          <button v-on:click="addDetail()">
+            <fmt:message key="button.add"/>
+          </button>
+        </div>
+      </template>
+    </td>
+    <td style="vertical-align: top">
       <div>
         <template v-for="type in types">
           <b v-if="transaction.type === type.id" class="transaction-type">
@@ -79,7 +137,7 @@
               <fmt:message key="transaction.category"/>
             </td>
             <td>
-              <input-search :object="transaction.category" :props="props"></input-search>
+              <input-search :object="transaction.category" :props="props" :width="'200pt'"></input-search>
             </td>
           </tr>
           <tr v-if="transaction.type === 'spending' || transaction.type === 'transfer'">
@@ -96,6 +154,7 @@
               </select>
             </td>
           </tr>
+
           <tr v-if="transaction.type === 'income' || transaction.type === 'transfer'">
             <td>
               <label for="accountTo">
@@ -110,6 +169,7 @@
               </select>
             </td>
           </tr>
+
           <tr>
             <td>
               <label for="sum">
@@ -146,11 +206,16 @@
                      autocomplete="off" onfocus="this.select()" style="width: 75pt">
             </td>
           </tr>
-          <tr v-if="!editNote">
+          <tr v-if="!editNote || !useDetail">
             <td colspan="2" style="text-align: center">
               <span class="text-button" v-if="!editNote">
                 <fmt:message key="note.add"/>
               </span>
+              <template v-if="(transaction.type === 'spending' || transaction.type === 'income') && !useDetails">
+                <span class="text-button" v-on:click="useDetails = true">
+                  <fmt:message key="transaction.details.add"/>
+                </span>
+              </template>
             </td>
           </tr>
         </table>
@@ -158,7 +223,7 @@
     </td>
   </tr>
   <tr>
-    <td colspan="2" style="text-align: center">
+    <td colspan="3" style="text-align: center">
       <span class="text-button" v-if="transaction.id > 0" v-on:click="remove">
         <fmt:message key="button.remove"/>
       </span>

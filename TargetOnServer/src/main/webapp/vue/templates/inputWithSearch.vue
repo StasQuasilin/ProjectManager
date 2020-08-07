@@ -1,7 +1,8 @@
 inputSearch = {
     props:{
         object:Object,
-        props:Object
+        props:Object,
+        width:String
     },
     data:function (){
         return{
@@ -39,10 +40,18 @@ inputSearch = {
         clear:function () {
             this.object = this.oldObject;
             this.items = [];
+        },
+        inputStyle:function () {
+            let style = {};
+            if (this.width){
+                style.width = this.width;
+            }
+            return style;
         }
     },
-    template: '<div style="position: relative" v-on:blur="clear">' +
-            '<input v-model="object.title"  v-on:keyup.esc.prevent="clear()" v-on:keyup="find()" onfocus="this.select()">' +
+    template: '<div style="position: relative" :style="inputStyle()" v-on:blur="clear">' +
+            '<input v-model="object.title"' +
+                'v-on:keyup.esc.prevent="clear()" v-on:keyup="find()" onfocus="this.select()">' +
             '<div class="custom-data-list" v-if="items.length > 0">' +
                 '<div class="custom-data-list-item" v-for="item in items" v-on:click="putValue(item)">' +
                     '{{item}}' +

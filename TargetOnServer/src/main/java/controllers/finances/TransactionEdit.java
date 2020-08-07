@@ -4,6 +4,7 @@ import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
 import entity.finance.transactions.Transaction;
+import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionType;
 import entity.user.User;
 import utils.db.dao.finance.accounts.AccountDAO;
@@ -17,6 +18,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static constants.Keys.*;
 
@@ -40,6 +42,8 @@ public class TransactionEdit extends ModalWindow {
             System.out.println(body);
             Transaction transaction = transactionDAO.getTransaction(body.get(ID));
             req.setAttribute(TRANSACTION, transaction);
+            final List<TransactionDetail> details = transactionDAO.getDetails(transaction.getId());
+            req.setAttribute(DETAILS, details);
         }
         req.setAttribute(SAVE, ApiLinks.TRANSACTION_SAVE);
         req.setAttribute(TITLE, _TITLE);

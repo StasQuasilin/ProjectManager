@@ -101,9 +101,13 @@ public class BuyListItem extends JsonAble {
         json.put(CATEGORY, category.getId());
         json.put(TITLE, category.getTitle());
         json.put(COUNT, count);
-        json.put(UNIT, unit.toString());
+        if (unit != null) {
+            json.put(UNIT, unit.toString());
+        }
         json.put(PRICE, price);
-        json.put(CURRENCY, currency);
+        if (currency != null) {
+            json.put(CURRENCY, currency);
+        }
         json.put(DONE, done);
         return json;
     }

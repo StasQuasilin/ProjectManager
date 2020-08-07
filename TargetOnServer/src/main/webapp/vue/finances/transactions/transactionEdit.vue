@@ -8,6 +8,7 @@ transactionEdit = new Vue({
         types:[],
         accounts:[],
         currency:[],
+        useDetails:false,
         transaction:{
             id:-1,
             type:null,
@@ -23,7 +24,8 @@ transactionEdit = new Vue({
             amount:0,
             currency:null,
             rate:1,
-            comment:''
+            comment:'',
+            details:[]
         },
         props:{
             put:function(category){
@@ -34,8 +36,27 @@ transactionEdit = new Vue({
                 }
             }
         },
+        detailProps:{
+            put:function (item) {
+                transactionEdit.detail.category = item.id;
+                transactionEdit.detail.title = item.title;
+                if (item.parent){
+                    transactionEdit.detail.parent = item.parent;
+                }
+            }
+        },
+        detail:{
+            id:-1,
+            category:-1,
+            title:'',
+            amount:1,
+            price:0,
+            currency:'',
+            rate:1
+        },
+        detailIndex:-1,
         locale:'uk',
-        editNote:false
+        editNote:false,
     },
     methods:{
         save:function(){
@@ -128,6 +149,43 @@ transactionEdit = new Vue({
                 closeModal();
                 loadModal(this.api.remove, {id: this.transaction.id})
             }
+        },
+        deleteDetail:function(index){
+            this.transaction.details.splice(index, 1);
+            this.calculateTotal();
+        },
+        editDetail:function(detail, index){
+            this.detail = detail;
+            this.detailIndex = index;
+            this.transaction.details.splice(index, 1);
+        },
+        addDetail:function(){
+            let detail = Object.assign({}, this.detail);
+            if (!this.transaction.category.id){
+                if (detail.parent){
+                    this.transaction.category = detail.parent;
+                }
+            }
+            if (this.detailIndex !== -1){
+                this.transaction.details.splice(this.detailIndex, 0, detail);
+            } else {
+                this.transaction.details.push(detail);
+            }
+            this.detail = {
+                id:-1,
+                title:'',
+                amount:1,
+                price:0
+            };
+            this.calculateTotal();
+        },
+        calculateTotal:function(){
+            let total = 0;
+            for (let i = 0; i < this.transaction.details.length; i++){
+                let d = this.transaction.details[i];
+                total += d.amount * d.price
+            }
+            this.transaction.amount = total;
         }
     }
 });

@@ -86,6 +86,7 @@ public class EditGoalAPI extends API {
                     buyList.setTitle(buyListJson.getString(TITLE));
                 }
                 buyListDAO.saveList(buyList);
+                goal.setBuyList(buyList.getId());
             } else {
                 final BuyList list = buyListDAO.getList(goal.getBuyList());
                 if (list != null){

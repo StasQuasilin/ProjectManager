@@ -2,12 +2,14 @@ package utils.db.dao.finance.transactions;
 
 import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
+import entity.finance.transactions.TransactionDetail;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
 import utils.finances.TransactionUtil;
 
+import java.util.Collection;
 import java.util.List;
 
 import static constants.Keys.*;
@@ -39,5 +41,27 @@ public class TransactionDAOImpl implements TransactionDAO {
     @Override
     public List<Transaction> getTransactionsByCategory(Category category, int limit) {
         return hibernator.query(Transaction.class, CATEGORY, category);
+    }
+
+    @Override
+    public List<TransactionDetail> getDetails(Object transactionId) {
+        return hibernator.query(TransactionDetail.class, TRANSACTION, transactionId);
+    }
+
+    @Override
+    public void saveDetail(TransactionDetail detail) {
+        hibernator.save(detail.getCategory());
+        hibernator.save(detail);
+    }
+
+    @Override
+    public void removeDetails(Collection<TransactionDetail> details) {
+        for (TransactionDetail detail : details){
+            removeDetail(detail);
+        }
+    }
+
+    private void removeDetail(TransactionDetail detail) {
+        hibernator.remove(detail);
     }
 }

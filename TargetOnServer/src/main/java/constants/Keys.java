@@ -51,6 +51,7 @@ public interface Keys {
     String DATA = "data";
     String ADD = "add";
     String USER = "user";
+    String AVATAR = "avatar";
     String EDIT = "edit";
     String SAVE = "save";
     String TRANSACTION_EDIT = "transactionEdit";
@@ -69,6 +70,8 @@ public interface Keys {
     String COUNTERPARTY = "counterparty";
     String CURRENCY = "currency";
     String RATE = "rate";
+    String DETAILS = "details";
+    String COMMENT = "comment";
     String FIND_CATEGORY = "findCategory";
     String FIND_COUNTERPARTY = "findCounterparty";
     String TRANSACTION_SUBSCRIBE = "transactionSubscribe";
@@ -100,6 +103,7 @@ public interface Keys {
     String REMOVE = "remove";
     String FIND_BUY_LIST = "findBuyList";
     String BUY_LIST = "buyList";
+    String ROOT_BUY_LIST = "rootBuyList";
     String SEPARATED = "separated";
     String LOGOUT = "logout";
     String LOGIN = "login";

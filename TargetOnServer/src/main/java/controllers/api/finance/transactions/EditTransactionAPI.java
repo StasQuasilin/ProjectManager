@@ -6,8 +6,10 @@ import entity.UserSystemCategory;
 import entity.finance.accounts.Account;
 import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
+import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionType;
 import entity.user.User;
+import org.json.simple.JSONArray;
 import utils.CategoryUtil;
 import utils.UserSystemCategoryUtil;
 import utils.db.dao.daoService;
@@ -15,6 +17,7 @@ import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.finance.transactions.TransactionDAO;
 import utils.finances.TransactionUtil;
 import utils.json.JsonObject;
+import utils.savers.TransactionDetailUtil;
 import utils.savers.TransactionSaver;
 
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
 
 import static constants.Keys.*;
 
@@ -34,6 +38,7 @@ public class EditTransactionAPI extends API {
     private final CategoryUtil categoryUtil = new CategoryUtil();
     private final TransactionUtil transactionUtil = new TransactionUtil();
     private final UserSystemCategoryUtil uscu = new UserSystemCategoryUtil();
+    private final TransactionDetailUtil tdu = new TransactionDetailUtil();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -92,6 +97,8 @@ public class EditTransactionAPI extends API {
             }
             write(resp, SUCCESS_ANSWER);
             transactionSaver.save(transaction);
+
+            tdu.saveDetails(transaction, (JSONArray) body.get(DETAILS));
 
 //            if (type == TransactionType.income || type == TransactionType.spending) {
 //                if (prevCategory != null && !prevCategory.equals(transaction.getCategory())) {
