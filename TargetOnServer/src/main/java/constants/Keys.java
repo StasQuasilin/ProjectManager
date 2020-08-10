@@ -58,6 +58,7 @@ public interface Keys {
     String TRANSACTION = "transaction";
     String FAST_TRANSACTION_EDIT = "fastTransactionEdit";
     String ACCOUNT_EDIT = "accountEdit";
+    String ACCOUNT_EXTRACT = "accountExtract";
     String BUY_LIST_EDIT = "buyListEdit";
     String TYPE = "type";
     String TYPES = "types";
@@ -119,4 +120,8 @@ public interface Keys {
     String TIMER_START = "timerStart";
     String UNITS = "units";
     String UNIT = "unit";
+    String DEADLINE = "deadline";
+    String TIME_LOG = "timeLog";
+    String FIND_TASK = "findTask";
+    String TIMER_STOP = "timerStop";
 }

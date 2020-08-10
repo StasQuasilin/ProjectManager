@@ -28,6 +28,7 @@ public class FinancePage extends Page {
         req.setAttribute(TRANSACTION_EDIT, UrlLinks.TRANSACTION_EDIT);
         req.setAttribute(FAST_TRANSACTION_EDIT, UrlLinks.FAST_TRANSACTION_EDIT);
         req.setAttribute(ACCOUNT_EDIT, UrlLinks.ACCOUNT_EDIT);
+        req.setAttribute(ACCOUNT_EXTRACT, UrlLinks.ACCOUNT_EXTRACT);
         req.setAttribute(BUY_LIST_EDIT, UrlLinks.BUY_LIST_EDIT);
         req.setAttribute(TRANSACTION_SUBSCRIBE, Subscribe.transactions);
         req.setAttribute(ACCOUNT_SUBSCRIBE, Subscribe.accounts);

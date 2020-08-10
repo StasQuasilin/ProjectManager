@@ -16,7 +16,7 @@ input{
     width: 100%;
     border: solid #c1c1c1 2px;
 }
-input[type=checkbox]{
+input[type=checkbox], input[type=radio]{
     width: 0;
 }
 .load-screen{
@@ -49,6 +49,14 @@ input[type=checkbox]{
 }
 .text-button:hover{
     text-shadow: 0 0 6px #282828;
+}
+.edit-button{
+    background-image: url("../images/buttons/edit.svg");
+    background-size: 10px;
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
 }
 .full-size{
     width: 100%;

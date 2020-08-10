@@ -121,7 +121,7 @@ tree = new Vue({
             return items;
         },
         timer:function(id){
-            loadModal(this.api.timer, {id:id})
+            loadModal(this.api.timer, {task:id})
         }
     }
 });

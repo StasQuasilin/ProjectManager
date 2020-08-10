@@ -27,3 +27,26 @@
 .cell-header span{
     background-color: transparent;
 }
+.account-item{
+
+}
+.account-item:hover{
+    background-color: #e2e2e2;
+}
+.account-item *{
+    background-color: transparent;
+}
+.account-title{
+    position: relative;
+}
+.account-menu{
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.account-title .account-menu{
+    display: none;
+}
+.account-title:hover .account-menu{
+    display: block;
+}

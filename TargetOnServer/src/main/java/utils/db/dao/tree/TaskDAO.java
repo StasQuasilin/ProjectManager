@@ -3,8 +3,10 @@ package utils.db.dao.tree;
 import entity.finance.category.Category;
 import entity.task.Task;
 import entity.task.TaskStatus;
+import entity.task.TimeLog;
 import entity.user.User;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public interface TaskDAO {
@@ -14,4 +16,10 @@ public interface TaskDAO {
     void saveTask(Task task);
     List<Task> getTaskByStatus(User user, TaskStatus active);
     Task getTaskByCategory(Category category);
+
+    TimeLog getTimeLogByUser(User user);
+
+    TimeLog getTimeLog(Object o);
+
+    void saveTimeLog(TimeLog timeLog);
 }

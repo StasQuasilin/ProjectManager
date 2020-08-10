@@ -10,9 +10,10 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<script src="${context}/vue/templates/inputWithSearch.vue"></script>
-<script src="${context}/vue/taskEdit.vue"></script>
-<script>
+<script type="application/javascript" src="${context}/vue/templates/inputWithSearch.vue"></script>
+<script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue"></script>
+<script type="application/javascript" src="${context}/vue/taskEdit.vue"></script>
+<script type="application/javascript">
     taskEdit.api.save = '${save}';
     taskEdit.props.findCategory = '${findCategory}';
     taskEdit.buyListProps.findCategory = '${findBuyList}';
@@ -26,6 +27,9 @@
     <c:choose>
     <c:when test="${not empty task}">
     taskEdit.task = ${task.toJson()};
+    if (taskEdit.task.deadline){
+        taskEdit.installDeadline = true;
+    }
     </c:when>
     <c:otherwise>
     taskEdit.task.title = '<fmt:message key="task.title.default"/>';
@@ -41,6 +45,9 @@
     taskEdit.task.buyList = ${rootBuyList.toJson()};
     </c:when>
     </c:choose>
+    if (!taskEdit.task.deadline){
+        taskEdit.task.deadline = new Date().toISOString().substring(0, 10);
+    }
 </script>
 <table id="taskEdit">
     <tr>
@@ -82,6 +89,24 @@
             <find-input :object="task.parent" :props="props"></find-input>
         </td>
     </tr>
+    <tr v-if="!installDeadline">
+        <td colspan="2" style="text-align: right">
+            <span class="text-button" v-on:click="installDeadline = true">
+                <fmt:message key="task.install.deadline"/>
+            </span>
+        </td>
+    </tr>
+    <tr v-else>
+        <td>
+            <fmt:message key="task.deadline"/>
+        </td>
+        <td>
+            <date-picker :date="task.deadline" :props="deadlineProps"></date-picker>
+            <span class="text-button" v-on:click="installDeadline = false">
+                &times;
+            </span>
+        </td>
+    </tr>
     <tr v-if="!useDate">
         <td colspan="2">
             <span class="text-button" v-on:click="useDate = true">
@@ -95,12 +120,10 @@
                 <fmt:message key="task.date"/>
             </td>
             <td>
-            <span class="text-button">
-                {{new Date(task.date).toLocaleDateString()}}
-            </span>
-                <span class="text-button" v-on:click="useDate = false">
-                &times;
-            </span>
+                <date-picker :date="task.date" :props="dateProps"></date-picker>
+                <span class="text-button" v-on:click="useDate=false">
+                    &times;
+                </span>
             </td>
         </tr>
         <tr>
@@ -109,11 +132,11 @@
             </td>
             <td>
                 <div>
-                    <input type="radio">
+                    <input type="radio" name="notDoneAction">
                     <fmt:message key="task.next.day"/>
                 </div>
                 <div>
-                    <input type="radio">
+                    <input type="radio" name="notDoneAction">
                     <fmt:message key="task.status.paused.set"/>
                 </div>
             </td>
@@ -124,17 +147,18 @@
             <span class="text-button" v-on:click="addToBuyList=true">
                 <fmt:message key="task.to.buy.list"/>
             </span>
-
         </td>
     </tr>
-    <tr v-else>
-        <td>
-            <fmt:message key="buy.list"/>
-        </td>
-        <td>
-            <find-input :object="task.buyList" :props="buyListProps"></find-input>
-        </td>
-    </tr>
+    <template v-else>
+        <tr>
+            <td>
+                <fmt:message key="buy.list"/>
+            </td>
+            <td>
+                <find-input :object="task.buyList" :props="buyListProps"></find-input>
+            </td>
+        </tr>
+    </template>
     <tr>
         <td colspan="2" style="text-align: center">
             <button onclick="closeModal()">

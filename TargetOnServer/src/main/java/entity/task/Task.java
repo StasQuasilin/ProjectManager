@@ -111,7 +111,9 @@ public class Task extends JsonAble {
         final JSONObject jsonObject = shortJson();
         jsonObject.put(PARENT, category.getParent().toJson());
         jsonObject.put(UID, uid);
-
+        if (deadline != null){
+            jsonObject.put(DEADLINE, deadline.toString());
+        }
         if (doer != null){
             jsonObject.put(DOER, doer.toJson());
         }

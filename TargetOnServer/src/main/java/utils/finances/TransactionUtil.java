@@ -24,14 +24,16 @@ public class TransactionUtil {
 
     public void updateAccounts(Transaction transaction) {
         final float amount = transaction.getAmount();
+        final float rate = transaction.getRate();
+        final TransactionType type = transaction.getTransactionType();
         if (amount != 0){
             final Account accountFrom = transaction.getAccountFrom();
             if (accountFrom != null) {
-                updatePoint(transaction, accountFrom, -amount);
+                updatePoint(transaction, accountFrom, type != TransactionType.transfer ? -amount * rate: -amount);
             }
             final Account accountTo = transaction.getAccountTo();
             if (accountTo != null){
-                updatePoint(transaction, accountTo, amount);
+                updatePoint(transaction, accountTo, type != TransactionType.transfer ? amount / rate: amount);
             }
             updateCategory(transaction.getCategory(), transaction.getDate());
         }

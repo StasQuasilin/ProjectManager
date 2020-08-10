@@ -49,13 +49,14 @@
   transactionEdit.transaction.details.push(${detail.toJson()});
   </c:forEach>
   </c:if>
-
   </c:when>
   <c:otherwise>
   transactionEdit.transaction.type = transactionEdit.types[0].id;
   transactionEdit.transaction.accountFrom = transactionEdit.accounts[0].id;
-  // transactionEdit.transaction.accountTo = transactionEdit.accounts[1];
   transactionEdit.transaction.currency = transactionEdit.currency[0];
+  <c:if test="${not empty category}">
+  transactionEdit.transaction.category = ${category.shortJson()}
+  </c:if>
   </c:otherwise>
   </c:choose>
 
@@ -106,7 +107,6 @@
               </select>
             </td>
           </tr>
-
           <tr v-if="transaction.type === 'income' || transaction.type === 'transfer'">
             <td>
               <label for="accountTo">
@@ -121,7 +121,6 @@
               </select>
             </td>
           </tr>
-
           <tr>
             <td>
               <label for="sum">
@@ -135,31 +134,38 @@
               <span v-else-if="transaction.type === 'income'">
                 +
               </span>
-              <input id="sum" v-model="transaction.amount" v-on:keyup="checkField('amount')" style="width: 90px;"
+              <input id="sum" type="number" step="0.01" v-model="transaction.amount" style="width: 90px;"
                      autocomplete="off" onfocus="this.select()">
-              <select v-model="transaction.currency">
+              <select v-model="transaction.currency" v-if="transaction.type === 'income' || transaction.type === 'spending'">
                 <option v-for="c in currency" :value="c">
                   {{c}}
                 </option>
               </select>
-              <span v-if="transaction.rate !== 1">
+              <span v-else-if="transaction.type === 'transfer'">
+                {{accountsMap[transaction.accountTo].currency}}
+              </span>
+              <span v-if="showRate && transaction.rate !== 1" style="font-size: 10pt">
                 &times; {{transaction.rate}} =
                 {{(transaction.amount * transaction.rate).toLocaleString()}}
-                {{transaction.accountFrom.currency}}
               </span>
             </td>
           </tr>
-          <tr v-if="showRate()">
-            <td colspan="2">
+          <tr v-if="showRate">
+            <td>
               <label for="rate">
                 <fmt:message key="transaction.rate"/>
               </label>
+            </td>
+            <td>
               <input id="rate" v-model="transaction.rate" v-on:keyup="checkField('rate')"
                      autocomplete="off" onfocus="this.select()" style="width: 75pt">
+              <span class="text-button" v-on:click="invertRate()">
+                &#8617;
+              </span>
             </td>
           </tr>
           <tr v-if="!editNote || !useDetail">
-            <td colspan="2" style="text-align: center">
+            <td colspan="2" style="text-align: center; font-size: 10pt">
               <span class="text-button" v-if="!editNote">
                 <fmt:message key="note.add"/>
               </span>

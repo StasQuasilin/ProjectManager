@@ -1,7 +1,10 @@
 package utils.db.dao.finance.accounts;
 
 import entity.finance.accounts.Account;
+import entity.finance.accounts.AccountPoint;
+import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -14,4 +17,6 @@ public interface AccountDAO {
     Account getAccount(Object id);
 
     void saveAccount(Account account);
+
+    List<TransactionPoint> getAccountPoints(Object o);
 }

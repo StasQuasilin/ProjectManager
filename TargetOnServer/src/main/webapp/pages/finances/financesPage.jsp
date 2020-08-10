@@ -18,7 +18,9 @@
   transactionsList.api.edit = '${transactionEdit}';
   fastTransactions.api.edit = '${fastTransactionEdit}';
   accounts.api.edit = '${accountEdit}';
+  accounts.api.extract = '${accountExtract}';
   buyList.api.edit = '${buyListEdit}';
+  buyList.api.changeStatus = '${transactionEdit}';
   <c:forEach items="${units}" var="unit">
   buyList.unitNames['${unit}'] = '<fmt:message key="unit.${unit}"/>';
   </c:forEach>

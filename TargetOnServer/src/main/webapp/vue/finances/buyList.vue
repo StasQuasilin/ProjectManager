@@ -8,7 +8,8 @@ buyList = new Vue({
     },
     methods:{
         changeStatus:function(item){
-            PostApi(this.api.changeStatus, {id:item.id, status:item.done});
+            console.log(item);
+            loadModal(this.api.changeStatus, {category:item.category});
         }
     }
 });

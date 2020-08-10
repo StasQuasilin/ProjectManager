@@ -21,4 +21,5 @@ public interface UrlLinks {
     String CALENDAR_REMOVE = "/calendar/remove" + SUFFIX;
     String GOAL_REMOVE = "/goal/remove" + SUFFIX;
     String TASK_TIMER = "/task/timer" + SUFFIX;
+    String ACCOUNT_EXTRACT = "/accounts/extract" + SUFFIX;
 }

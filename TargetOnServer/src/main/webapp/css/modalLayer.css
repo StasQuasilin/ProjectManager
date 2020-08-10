@@ -14,7 +14,7 @@
     margin: auto;
     top: 50%;
     bottom: 50%;
-    height: fit-content;
+    /*height: fit-content;*/
     height: -moz-fit-content;
 }
 .modal-title{

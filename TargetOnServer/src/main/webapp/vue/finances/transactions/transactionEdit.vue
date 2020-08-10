@@ -13,13 +13,9 @@ transactionEdit = new Vue({
             id:-1,
             type:null,
             date:new Date().toISOString().substring(0, 10),
-            category:{},
-            accountFrom:{
-                id:-1
-            },
-            accountTo:{
-                id:-1
-            },
+            category:{id:-1, title:''},
+            accountFrom:-1,
+            accountTo:-1,
             counterparty:null,
             amount:0,
             currency:null,
@@ -29,7 +25,6 @@ transactionEdit = new Vue({
         },
         props:{
             put:function(category){
-                console.log('Put category : ' + category.title);
                 transactionEdit.transaction.category = category;
                 if (category.currency && !transactionEdit.transaction.currency){
                     transactionEdit.transaction.currency = category.currency;
@@ -58,6 +53,32 @@ transactionEdit = new Vue({
         locale:'uk',
         editNote:false,
     },
+    computed:{
+        accountsMap:function () {
+            let accounts = {};
+            for (let i in this.accounts) {
+                if (this.accounts.hasOwnProperty(i)) {
+                    let account = this.accounts[i];
+                    accounts[account.id] = account;
+                }
+            }
+            return accounts;
+        },
+        showRate:function(){
+            if (this.transaction) {
+                let accounts = this.accountsMap;
+                let type = this.transaction.type;
+                let currency = this.transaction.currency;
+                if (type === 'income') {
+                    return currency !== accounts[this.transaction.accountTo].currency;
+                } else if (type === 'spending') {
+                    return currency !== accounts[this.transaction.accountFrom].currency;
+                } else if (type === 'transfer') {
+                    return accounts[this.transaction.accountTo].currency !== accounts[this.transaction.accountFrom].currency;
+                }
+            }
+        }
+    },
     methods:{
         save:function(){
             let transaction = Object.assign({}, this.transaction);
@@ -68,6 +89,7 @@ transactionEdit = new Vue({
                 delete transaction.accountFrom;
             } else if (transaction.type === 'transfer'){
                 delete transaction.category;
+                transaction.currency = this.accountsMap[transaction.accountTo].currency;
             }
 
             PostApi(this.api.save, transaction, function(a){
@@ -87,13 +109,16 @@ transactionEdit = new Vue({
                 this.transaction.accountFrom = this.transaction.accountTo;
                 this.transaction.accountTo = -1;
             } else if (type === 'transfer'){
-                console.log(this.transaction);
+
                 if(this.transaction.type === 'income'){
-                    this.transaction.accountFrom = this.transaction.accountTo;
+                    let accounts = this.getAccountsWithout(this.transaction.accountTo);
+                    this.transaction.accountFrom = accounts[0].id;
+                //     this.transaction.accountTo = ;
+                } else if (this.transaction.type === 'spending'){
+                    let accounts = this.getAccountsWithout(this.transaction.accountFrom);
+                    this.transaction.accountTo = accounts[0].id;
                 }
-                this.transaction.accountTo = this.accounts[1];
-                let accounts = this.getAccountsWithout(this.transaction.accountFrom);
-                console.log(accounts);
+
                 // if (accounts.length > 0){
                 //     this.transaction.accountTo = accounts[1];
                 // } else {
@@ -104,7 +129,7 @@ transactionEdit = new Vue({
         },
         getAccountsWithout:function(account){
             let accounts = this.accounts.filter(function (item) {
-                return item.id !== account.id;
+                return item.id !== account;
             });
             if (accounts.length === 0){
                 return this.accounts;
@@ -112,19 +137,7 @@ transactionEdit = new Vue({
                 return accounts;
             }
         },
-        showRate:function(){
-            let type = this.transaction.type;
-            let accountFrom = this.transaction.accountFrom;
-            let accountTo = this.transaction.accountTo;
-            let currency = this.transaction.currency;
-            if (type === 'income'){
-                return currency !== accountTo.currency;
-            } else if (type === 'spending'){
-                return currency !== accountFrom.currency;
-            } else {
-                return accountFrom.currency !== accountTo.currency;
-            }
-        },
+
         parseFloat:function(val){
             return parseFloat(val.replaceAll(',', '.'));
         },
@@ -186,6 +199,9 @@ transactionEdit = new Vue({
                 total += d.amount * d.price
             }
             this.transaction.amount = total;
+        },
+        invertRate:function(){
+            this.transaction.rate = -1;
         }
     }
 });

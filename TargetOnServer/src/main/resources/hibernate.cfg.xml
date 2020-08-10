@@ -22,7 +22,7 @@
         <mapping class="entity.task.Task"/>
         <mapping class="entity.task.TaskSettings"/>
         <mapping class="entity.task.TaskStatistic"/>
-<!--        <mapping class="entity.task.TimeLog"/>-->
+        <mapping class="entity.task.TimeLog"/>
         <mapping class="entity.goal.Goal"/>
         <mapping class="entity.goal.GoalMember"/>
         <mapping class="entity.calendar.CalendarItem"/>

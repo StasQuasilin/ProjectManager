@@ -3,10 +3,12 @@ package controllers.finances;
 import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
+import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionType;
 import entity.user.User;
+import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.currency.CurrencyDAO;
@@ -34,6 +36,7 @@ public class TransactionEdit extends ModalWindow {
     private final AccountDAO accountDAO = daoService.getAccountDAO();
     private final CurrencyDAO currencyDAO = daoService.getCurrencyDAO();
     private final TransactionDAO transactionDAO = daoService.getTransactionDAO();
+    private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -45,6 +48,11 @@ public class TransactionEdit extends ModalWindow {
                 req.setAttribute(TRANSACTION, transaction);
                 final List<TransactionDetail> details = transactionDAO.getDetails(transaction.getId());
                 req.setAttribute(DETAILS, details);
+            } else {
+                if (body.containKey(CATEGORY)){
+                    final Category category = categoryDAO.getCategory(body.get(CATEGORY));
+                    req.setAttribute(CATEGORY, category);
+                }
             }
         }
         req.setAttribute(SAVE, ApiLinks.TRANSACTION_SAVE);

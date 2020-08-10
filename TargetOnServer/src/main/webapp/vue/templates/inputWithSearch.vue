@@ -2,7 +2,8 @@ inputSearch = {
     props:{
         object:Object,
         props:Object,
-        width:String
+        width:String,
+        enable:Boolean
     },
     data:function (){
         return{
@@ -15,6 +16,9 @@ inputSearch = {
         this.oldObject = this.object;
     },
     methods:{
+        isEnabled:function(){
+            return this.enable == null || this.enable;
+        },
         putValue:function(item){
             if (this.props.put){
                 this.props.put(item);
@@ -50,7 +54,7 @@ inputSearch = {
         }
     },
     template: '<div style="position: relative" :style="inputStyle()" v-on:blur="clear">' +
-            '<input v-model="object.title"' +
+            '<input v-model="object.title" :disabled="isEnabled()" ' +
                 'v-on:keyup.esc.prevent="clear()" v-on:keyup="find()" onfocus="this.select()">' +
             '<div class="custom-data-list" v-if="items.length > 0">' +
                 '<div class="custom-data-list-item" v-for="item in items" v-on:click="putValue(item)">' +

@@ -41,20 +41,26 @@ public class TaskEdit extends ModalWindow {
         if (body != null){
             System.out.println(body);
             final Task task = taskDAO.getTask(body.get(ID));
-            final Category parent = categoryDAO.getCategory(body.get(PARENT));
 
-            req.setAttribute(TASK, task);
-            req.setAttribute(PARENT, parent);
+            Category parent = null;
             BuyList buyList = null;
-            if (task != null) {
-                Category category = task.getCategory();
+
+            if (task != null){
+                req.setAttribute(TASK, task);
+                final Category category = task.getCategory();
                 final BuyListItem buyListItem = buyListDAO.getItemByCategory(category);
                 if (buyListItem != null) {
                     buyList = buyListItem.getList();
                     req.setAttribute(BUY_LIST, buyList);
                 }
+                parent = category.getParent();
+            } else if (body.containKey(PARENT)){
+                parent = categoryDAO.getCategory(body.get(PARENT));
             }
-            if (buyList == null){
+
+            req.setAttribute(PARENT, parent);
+
+            if (buyList == null && parent != null){
                 Category root = parent.getParent();
                 if (root != null) {
                     while (root.getParent() != null) {
@@ -70,7 +76,6 @@ public class TaskEdit extends ModalWindow {
                     req.setAttribute(ROOT_BUY_LIST, list);
                 }
             }
-
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);

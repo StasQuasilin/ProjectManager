@@ -8,6 +8,7 @@ import entity.task.TaskStatus;
 import entity.user.User;
 import utils.CategoryUtil;
 import utils.TaskToBuyListUtil;
+import utils.TaskUtil;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
@@ -18,6 +19,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.UUID;
 
 import static constants.Keys.*;
@@ -29,6 +31,7 @@ public class EditTaskAPI extends API {
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
     private final TaskSaver taskSaver = new TaskSaver();
     private final TaskToBuyListUtil buyListUtil = new TaskToBuyListUtil();
+    private final TaskUtil taskUtil = new TaskUtil();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -48,6 +51,13 @@ public class EditTaskAPI extends API {
                 task.setStatus(TaskStatus.active);
             }
 
+            if (body.containKey(DEADLINE)){
+                Date deadline = body.getDate(DEADLINE);
+                task.setDeadline(deadline);
+            } else {
+                task.setDeadline(null);
+            }
+
             final User user = getUser(req);
             Category category = task.getCategory();
             if (category == null){
@@ -60,11 +70,19 @@ public class EditTaskAPI extends API {
                 final Category parent = categoryDAO.getCategory(body.get(PARENT));
                 category.setParent(parent);
                 final Task parentTask = taskDAO.getTaskByCategory(parent);
-                parentTask.setStatus(TaskStatus.impossible);
-                taskDAO.saveTask(parentTask);
+                if (parentTask != null) {
+                    taskUtil.checkPossibility(parentTask);
+                    taskDAO.saveTask(parentTask);
+                }
             } else {
-
+                final Category parent = category.getParent();
                 category.setParent(null);
+                taskDAO.saveTask(task);
+                if (parent != null){
+                    final Task parentTask = taskDAO.getTaskByCategory(parent);
+                    taskUtil.checkPossibility(parentTask);
+                    taskDAO.saveTask(parentTask);
+                }
             }
 
             final String title = body.getString(TITLE);

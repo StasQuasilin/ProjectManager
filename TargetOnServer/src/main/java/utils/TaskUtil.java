@@ -13,10 +13,16 @@ public class TaskUtil {
 
     public void checkPossibility(Task task){
         final List<Task> tasksByParent = taskDAO.getTasksByParent(task.getCategory());
-        if (tasksByParent.size() > 0){
-            task.setStatus(TaskStatus.impossible);
-        } else {
-            task.setStatus(TaskStatus.active);
+        TaskStatus status = TaskStatus.done;
+        for (Task t : tasksByParent) {
+            if (t.getStatus() != TaskStatus.done) {
+                status = TaskStatus.impossible;
+                break;
+            }
         }
+        task.setStatus(status);
+    }
+
+    public void calculateSpendTime(Task task) {
     }
 }

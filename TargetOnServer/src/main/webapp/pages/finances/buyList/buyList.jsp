@@ -15,14 +15,12 @@
             <div v-for="item in getItems()">
             <span>
                 {{item.title}}
-                <span class="text-button" v-on:click="edit(item.id)">
-                    &#128397;
-                </span>
+                <span class="text-button edit-button" v-on:click="edit(item.id)"></span>
             </span>
                 <div style="padding-left: 8px; font-size: 10pt">
                     <div v-for="i in item.items" style="display: flex; flex-direction: row">
                         <div style="flex: 0 0 auto">
-                            <input type="checkbox" v-model="i.done" v-on:change="changeStatus(i)">
+                            <input type="checkbox" v-model="i.done" v-on:change="changeStatus(i)" :disabled="i.done">
                         </div>
                         <div style="flex: 1 0 auto">
                             <div>

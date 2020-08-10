@@ -3,6 +3,7 @@ package utils.db.dao.tree;
 import entity.finance.category.Category;
 import entity.task.Task;
 import entity.task.TaskStatus;
+import entity.task.TimeLog;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.CategoryUtil;
@@ -56,5 +57,23 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public Task getTaskByCategory(Category category) {
         return hibernator.get(Task.class, CATEGORY, category);
+    }
+
+    @Override
+    public TimeLog getTimeLogByUser(User user) {
+        HashMap<String,Object> param = new HashMap<>();
+        param.put(OWNER, user);
+        param.put(LENGTH, 0);
+        return hibernator.get(TimeLog.class, param);
+    }
+
+    @Override
+    public TimeLog getTimeLog(Object id) {
+        return hibernator.get(TimeLog.class, ID, id);
+    }
+
+    @Override
+    public void saveTimeLog(TimeLog timeLog) {
+        hibernator.save(timeLog);
     }
 }

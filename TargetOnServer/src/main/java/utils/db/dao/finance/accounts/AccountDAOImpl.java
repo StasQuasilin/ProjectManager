@@ -2,6 +2,7 @@ package utils.db.dao.finance.accounts;
 
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountMember;
+import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -34,5 +35,10 @@ public class AccountDAOImpl implements AccountDAO {
     public void saveAccount(Account account) {
         hibernator.save(account);
         updater.update(Subscribe.accounts, account, account.getOwner());
+    }
+
+    @Override
+    public List<TransactionPoint> getAccountPoints(Object o) {
+        return hibernator.query(TransactionPoint.class, ACCOUNT, o);
     }
 }

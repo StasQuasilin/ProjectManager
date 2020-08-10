@@ -1,14 +1,14 @@
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: DELL
   Date: 06.07.2020
   Time: 14:10
 --%>
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <link rel="stylesheet" href="${context}/css/tree.css">
 <script type="application/javascript" src="${context}/vue/pathBuilder.vue"></script>
 <script type="application/javascript" src="${context}/vue/tree.vue"></script>
@@ -64,9 +64,7 @@
                                     <span class="text-button" v-on:click="timer(item.id)">
                                         🕐🕐🕐🕐&#128336;
                                     </span>
-                                    <span class="text-button" v-on:click="edit(item.id)">
-                                        &#9999;
-                                    </span>
+                                    <span class="text-button edit-button" v-on:click="edit(item.id)"></span>
                                 </span>
                             </div>
                         </template>
