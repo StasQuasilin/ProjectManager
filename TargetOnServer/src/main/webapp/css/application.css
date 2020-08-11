@@ -12,6 +12,17 @@
     display: inline-block;
     padding: 0 8px;
 }
+.timer-holder{
+    flex: 0 0 auto;
+}
+.timer-holder * {
+    background-color: transparent;
+}
+.timer-wrapper{
+    padding: 0 4px;
+    margin: 0 8px;
+    border: solid gray 1px;
+}
 .personal-holder{
     flex: 0 0 auto;
 }

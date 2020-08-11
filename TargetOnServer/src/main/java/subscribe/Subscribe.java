@@ -9,5 +9,6 @@ public enum Subscribe {
     accounts,
     team,
     messages,
+    timer,
     buy
 }

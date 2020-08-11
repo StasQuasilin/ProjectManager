@@ -13,6 +13,9 @@ inputSearch = {
         }
     },
     mounted:function(){
+        if (!this.object){
+            console.warn('Object is ' + typeof this.object);
+        }
         this.oldObject = this.object;
     },
     methods:{
@@ -53,7 +56,7 @@ inputSearch = {
             return style;
         }
     },
-    template: '<div style="position: relative" :style="inputStyle()" v-on:blur="clear">' +
+    template: '<div v-if="object" style="position: relative" :style="inputStyle()" v-on:blur="clear">' +
             '<input v-model="object.title" :disabled="isEnabled()" ' +
                 'v-on:keyup.esc.prevent="clear()" v-on:keyup="find()" onfocus="this.select()">' +
             '<div class="custom-data-list" v-if="items.length > 0">' +

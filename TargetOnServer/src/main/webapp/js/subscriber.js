@@ -11,9 +11,11 @@ let subscriber = {
             this.socket.send(JSON.stringify(data));
             this.subscribes[subscriber] = handler;
         } else {
-            console.log('Connecting:' + WebSocket.CONNECTING);
-            console.log('Open: ' + WebSocket.OPEN);
-            console.error('Socket status: \'' + this.socket.readyState);
+            console.log('Wait socket connection');
+            const self = this;
+            setTimeout(function () {
+                self.subscribe(subscriber, handler);
+            }, 1000)
         }
     },
     send:function(message){

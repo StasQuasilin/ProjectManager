@@ -6,6 +6,23 @@ transactionsList = new Vue({
             useFilter:false
         }
     },
+    computed:{
+        compoundItems:function () {
+            let compound = {};
+            let items = this.getItems();
+            for (let i in items){
+                if (items.hasOwnProperty(i)){
+                    let item = items[i];
+                    let date = item.date;
+                    if (!compound[date]){
+                        compound[date] = [];
+                    }
+                    compound[date].push(item);
+                }
+            }
+            return compound;
+        }
+    },
     methods:{
         sort:function(a, b){
             return new Date(b.date) - new Date(a.date);

@@ -4,6 +4,9 @@ import constants.ApiLinks;
 import controllers.api.API;
 import entity.task.Task;
 import entity.task.TimeLog;
+import entity.user.User;
+import subscribe.Subscribe;
+import utils.Updater;
 import utils.answers.SuccessAnswer;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
@@ -23,6 +26,7 @@ import static constants.Keys.*;
 public class TaskTimerStartAPI extends API {
 
     private final TaskDAO taskDAO = daoService.getTaskDAO();
+    private final Updater updater = new Updater();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,19 +37,23 @@ public class TaskTimerStartAPI extends API {
             if (body.containKey(ID)){
                 timeLog = taskDAO.getTimeLog(body.get(ID));
             } else if (body.containKey(TASK)){
+                final User user = getUser(req);
                 timeLog = new TimeLog();
                 final Task task = taskDAO.getTask(body.get(TASK));
                 timeLog.setTask(task);
                 Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
                 timeLog.setBegin(timestamp);
-                timeLog.setOwner(getUser(req));
+                timeLog.setOwner(user);
                 taskDAO.saveTimeLog(timeLog);
                 final SuccessAnswer successAnswer = new SuccessAnswer();
                 successAnswer.addAttribute(ID, timeLog.getId());
-                successAnswer.addAttribute(BEGIN, timestamp);
+                successAnswer.addAttribute(BEGIN, timestamp.toString());
+                write(resp, successAnswer);
+                updater.update(Subscribe.timer, timeLog, user);
             }
-
+        } else {
+            write(resp, SUCCESS_ANSWER);
         }
-        write(resp, SUCCESS_ANSWER);
+
     }
 }

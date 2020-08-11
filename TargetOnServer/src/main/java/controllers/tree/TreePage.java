@@ -43,6 +43,7 @@ public class TreePage extends Page {
         req.setAttribute(CONTENT, _CONTENT);
         req.setAttribute(STATUS, TaskStatus.values());
         req.setAttribute(EDIT, UrlLinks.TASK_EDIT);
+        req.setAttribute(DELETE, UrlLinks.TASK_DELETE);
         req.setAttribute(GET_TASK, ApiLinks.GET_TASK);
         req.setAttribute(TREE_BUILDER, ApiLinks.TREE_BUILDER);
         req.setAttribute(TASK_TIMER, UrlLinks.TASK_TIMER);

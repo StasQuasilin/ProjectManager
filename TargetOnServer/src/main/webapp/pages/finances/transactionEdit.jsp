@@ -19,6 +19,7 @@
   transactionEdit.api.remove = '${remove}';
   transactionEdit.props.findCategory = '${findCategory}';
   transactionEdit.detailProps.findCategory = '${findCategory}';
+  transactionEdit.counterpartyProps.findCategory = '${findCounterparty}';
   transactionEdit.locale = '${locale}';
   <c:forEach items="${types}" var="type">
   transactionEdit.types.push({
@@ -59,7 +60,12 @@
   </c:if>
   </c:otherwise>
   </c:choose>
-
+  if (!transactionEdit.transaction.counterparty){
+    transactionEdit.transaction.counterparty = {
+      id:-1,
+      title:''
+    }
+  }
 </script>
 <table id="transactionEdit" v-if="transaction">
   <tr>
@@ -164,8 +170,19 @@
               </span>
             </td>
           </tr>
-          <tr v-if="!editNote || !useDetail">
+          <tr v-if="editCounterparty">
+            <td>
+              <fmt:message key="transaction.conterparty"/>
+            </td>
+            <td>
+              <input-search :object="transaction.counterparty" :props="counterpartyProps"></input-search>
+            </td>
+          </tr>
+          <tr v-if="!editNote || !useDetail || !editCounterparty">
             <td colspan="2" style="text-align: center; font-size: 10pt">
+              <span class="text-button" v-if="!editCounterparty" v-on:click="editCounterparty=true">
+                <fmt:message key="counterparty.add"/>
+              </span>
               <span class="text-button" v-if="!editNote">
                 <fmt:message key="note.add"/>
               </span>
@@ -198,9 +215,7 @@
               </div>
             </div>
             <div style="font-size: 10pt; color: gray; padding-left: 16pt">
-              {{d.amount}}
-              &times;
-              {{d.price}}
+              {{d.amount}}&times;{{d.price}}
               <span v-if="d.amount > 1 && d.price > 0">
                 = {{(d.amount * d.price).toLocaleString()}}
               </span>

@@ -37,4 +37,14 @@ public class UserAccess implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public int hashCode() {
+        return user.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.getClass().equals(getClass()) && hashCode() == obj.hashCode();
+    }
 }

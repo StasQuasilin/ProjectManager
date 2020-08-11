@@ -15,37 +15,40 @@
     </div>
     <div class="full-size item-container">
         <div class="item-container-wrapper">
-            <div v-for="item in getItems()" v-on:click="edit(item.id)">
-                <div style="font-size: 8pt; color: gray">
-                    {{item.id}}:{{item.type}}
-                </div>
-                <div>
-                    <span>{{new Date(item.date).toLocaleDateString()}}</span>
-                    <span v-if="item.category">
-                    {{item.category.title}}
-                </span>
-                </div>
-                <div>
-                <span v-if="item.accountFrom">
-                    {{item.accountFrom.title}} &#10141;
-                </span>
-                    <b>
-                        <template v-if="item.type === 'income' || item.type === 'spending'">
-                            <template v-if="item.type === 'income'">
-                                +
-                            </template>
-                            <template v-else>
-                                -
-                            </template>
-                        </template>
-                        {{Math.abs(item.amount).toLocaleString()}} {{item.currency}}
-                    </b>
-                    <span v-if="item.accountTo">
-                    &#10141; {{item.accountTo.title}}
-                </span>
+            <div v-for="(values, date) in compoundItems">
+                <div style="font-size: 10pt; font-weight: bold">{{new Date(date).toLocaleDateString()}}</div>
+                <div style="padding-left: 32px">
+                    <div v-for="item in values"  v-on:click="edit(item.id)" style="border-bottom: dashed gray 1px">
+                        <div style="font-size: 8pt; color: gray">
+                            {{item.id}}:{{item.type}}
+                        </div>
+                        <div>
+                            <span v-if="item.category">
+                                {{item.category.title}}
+                            </span>
+                        </div>
+                        <div>
+                            <span v-if="item.accountFrom">
+                                {{item.accountFrom.title}} &#10141;
+                            </span>
+                            <b>
+                                <template v-if="item.type === 'income' || item.type === 'spending'">
+                                    <template v-if="item.type === 'income'">
+                                        +
+                                    </template>
+                                    <template v-else>
+                                        -
+                                    </template>
+                                </template>
+                                {{Math.abs(item.amount).toLocaleString()}} {{item.currency}}
+                            </b>
+                            <span v-if="item.accountTo">
+                                &#10141; {{item.accountTo.title}}
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
 </div>

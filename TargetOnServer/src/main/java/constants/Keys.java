@@ -12,6 +12,7 @@ public interface Keys {
     String TIME = "time";
     String NAME = "name";
     String UID = "uid";
+    String SUBSCRIBER = "subscriber";
     String SUBSCRIBE = "subscribe";
     String WELCOME = "welcome";
     String TASK_SUBSCRIBE = "taskSubscribe";
@@ -124,4 +125,6 @@ public interface Keys {
     String TIME_LOG = "timeLog";
     String FIND_TASK = "findTask";
     String TIMER_STOP = "timerStop";
+    String TIMER_SUBSCRIBE = "timerSubscribe";
+    String DELETE = "delete";
 }

@@ -3,7 +3,9 @@ package controllers.api.tree;
 import constants.ApiLinks;
 import controllers.api.API;
 import entity.task.TimeLog;
+import subscribe.Subscribe;
 import utils.TaskUtil;
+import utils.Updater;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
@@ -23,6 +25,7 @@ public class TaskTimerStopAPI extends API {
 
     private final TaskDAO taskDAO = daoService.getTaskDAO();
     private final TaskUtil taskUtil = new TaskUtil();
+    private final Updater updater = new Updater();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -34,6 +37,7 @@ public class TaskTimerStopAPI extends API {
             taskDAO.saveTimeLog(timeLog);
             taskUtil.calculateSpendTime(timeLog.getTask());
             write(resp, SUCCESS_ANSWER);
+            updater.remove(Subscribe.timer, timeLog.getId(), timeLog.getOwner());
         }
     }
 }

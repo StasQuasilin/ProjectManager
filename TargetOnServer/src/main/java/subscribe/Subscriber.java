@@ -31,6 +31,7 @@ public final class Subscriber {
         addHandler(new TransactionHandler());
         addHandler(new AccountHandler());
         addHandler(new BuyListHandler());
+        addHandler(new TimerHandler());
     }
 
     private void addHandler(SubscribeHandler handler) {

@@ -46,4 +46,14 @@ public class UserSettings implements Serializable {
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
+
+    @Override
+    public int hashCode() {
+        return user.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.getClass().equals(getClass()) && hashCode() == obj.hashCode();
+    }
 }

@@ -50,4 +50,14 @@ public class UserSystemCategory implements Serializable {
     public void setTransferTransaction(Category transferTransaction) {
         this.transferTransaction = transferTransaction;
     }
+
+    @Override
+    public int hashCode() {
+        return owner.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.getClass().equals(getClass()) && hashCode() == obj.hashCode();
+    }
 }

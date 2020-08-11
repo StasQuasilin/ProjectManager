@@ -9,6 +9,7 @@ transactionEdit = new Vue({
         accounts:[],
         currency:[],
         useDetails:false,
+        editCounterparty:false,
         transaction:{
             id:-1,
             type:null,
@@ -16,7 +17,10 @@ transactionEdit = new Vue({
             category:{id:-1, title:''},
             accountFrom:-1,
             accountTo:-1,
-            counterparty:null,
+            counterparty:{
+                id:-1,
+                title:''
+            },
             amount:0,
             currency:null,
             rate:1,
@@ -38,6 +42,11 @@ transactionEdit = new Vue({
                 if (item.parent){
                     transactionEdit.detail.parent = item.parent;
                 }
+            }
+        },
+        counterpartyProps:{
+            put:function(item){
+                transactionEdit.transaction.counterparty = item;
             }
         },
         detail:{
