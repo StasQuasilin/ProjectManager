@@ -24,7 +24,7 @@ let subscriber = {
     connect:function(){
         this.socket = new WebSocket('ws://' + window.location.host + context + SUBSCRIBE_API);
         this.socket.onopen = function(){
-            console.log('OPEN!!')
+
         };
 
         const self = this;

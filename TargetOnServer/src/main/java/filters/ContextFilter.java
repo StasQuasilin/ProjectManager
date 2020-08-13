@@ -33,13 +33,13 @@ public class ContextFilter implements Filter {
         request.setAttribute(CONTEXT, request.getContextPath());
 
         //todo delete this
-        final HttpSession session = request.getSession();
-        if (session.getAttribute(USER) == null) {
-            session.setAttribute(USER, user);
-        }
-        if (session.getAttribute(LOCALE) == null){
-            session.setAttribute(LOCALE, "uk");
-        }
+//        final HttpSession session = request.getSession();
+//        if (session.getAttribute(USER) == null) {
+//            session.setAttribute(USER, user);
+//        }
+//        if (session.getAttribute(LOCALE) == null){
+//            session.setAttribute(LOCALE, "uk");
+//        }
 
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Access-Control-Allow-Origin", request.getContextPath());

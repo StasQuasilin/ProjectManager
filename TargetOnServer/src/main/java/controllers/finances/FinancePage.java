@@ -4,6 +4,8 @@ import constants.UrlLinks;
 import controllers.Page;
 import entity.task.Unit;
 import subscribe.Subscribe;
+import utils.db.dao.finance.transactions.TransactionDAO;
+import utils.db.dao.finance.transactions.TransactionDAOImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -31,6 +33,7 @@ public class FinancePage extends Page {
         req.setAttribute(ACCOUNT_EXTRACT, UrlLinks.ACCOUNT_EXTRACT);
         req.setAttribute(BUY_LIST_EDIT, UrlLinks.BUY_LIST_EDIT);
         req.setAttribute(TRANSACTION_SUBSCRIBE, Subscribe.transactions);
+        req.setAttribute(TRANSACTION_LIMIT, TransactionDAO.LIMIT);
         req.setAttribute(ACCOUNT_SUBSCRIBE, Subscribe.accounts);
         req.setAttribute(BUY_LIST_SUBSCRIBE, Subscribe.buy);
         req.setAttribute(UNITS, Unit.values());

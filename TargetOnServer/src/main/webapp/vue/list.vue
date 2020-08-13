@@ -34,18 +34,30 @@ let list = {
                 if (items.remove){
                     Vue.delete(this.items, items.remove.id);
                 }
+                this.removeOverLimit();
             }
+            this.afterHandle();
         },
+        afterHandle:function(){},
         update:function(item){
             Vue.set(this.items, item.id, item);
         },
-
+        removeOverLimit:function(){
+            if (this.limit > 0){
+                let items = this.getItems();
+                if (items.length > this.limit){
+                    let item = items[items.length - 1];
+                    this.remove(item.id);
+                    this.removeOverLimit();
+                }
+            }
+        },
         getItems:function () {
             let values = Object.values(this.items);
             values.sort(this.sort);
             return values;
         },
-        sort:function(){
+        sort:function(a, b){
             return false;
         }
     }

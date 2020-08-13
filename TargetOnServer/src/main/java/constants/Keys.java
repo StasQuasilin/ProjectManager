@@ -127,4 +127,5 @@ public interface Keys {
     String TIMER_STOP = "timerStop";
     String TIMER_SUBSCRIBE = "timerSubscribe";
     String DELETE = "delete";
+    String TRANSACTION_LIMIT = "transactionLimit";
 }

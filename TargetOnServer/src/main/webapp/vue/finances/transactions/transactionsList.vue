@@ -24,6 +24,13 @@ transactionsList = new Vue({
         }
     },
     methods:{
+        tryEdit:function(){
+            if (accounts.getItems().length === 0){
+                accounts.edit();
+            } else {
+                this.edit();
+            }
+        },
         sort:function(a, b){
             return new Date(b.date) - new Date(a.date);
         }

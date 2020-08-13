@@ -5,7 +5,7 @@
     <div class="cell-header">
         <div class="header-wrapper">
             <fmt:message key="title.transactions"/>
-            <button v-on:click="edit()">
+            <button v-on:click="tryEdit()">
                 <fmt:message key="button.add"/>
             </button>
             <span class="text-button" style="float: right; color: gray" v-on:click="useFilter = !useFilter">

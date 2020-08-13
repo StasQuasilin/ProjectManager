@@ -15,13 +15,11 @@
             <div v-for="item in getItems()" class="account-item" :class="item.type">
                 <div class="account-title">
                     {{item.title}}
-                    <span class="account-menu">
-                        <div class="text-button" v-on:click="edit(item.id)">
-                            E
-                        </div>
-                        <span class="text-button" v-on:click="accountExtract(item.id)">
-                            R
-                        </span>
+                    <span class="account-menu" style="padding: 4px; background-color: gray; border-radius: 8pt">
+                        <div class="text-button edit-button" v-on:click="edit(item.id)"></div>
+<%--                        <span class="text-button" v-on:click="accountExtract(item.id)">--%>
+<%--                            R--%>
+<%--                        </span>--%>
                     </span>
                 </div>
                 <div style="font-size: 10pt; color: gray; padding-left: 16px">

@@ -20,8 +20,8 @@ public interface ApiLinks {
     String GOAL_REMOVE = API + "/goal/remove";
     String FIND_BUY_LIST = API + "/find/buy/list";
     String LOGOUT = API + "/logout";
-    String LOGIN = API + "/login";
-    String REGISTRATION = API + "/registration";
+    String LOGIN = "/sign/in";
+    String REGISTRATION = "/sign/up";
     String TIMER_START = API + "/task/timer/start";
 
     String FIND_TASK = API + "/find/task";

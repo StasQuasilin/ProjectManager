@@ -19,10 +19,9 @@ public class TransactionDAOImpl implements TransactionDAO {
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
 
-
     @Override
     public List<Transaction> getUserTransactions(User user) {
-        return hibernator.query(Transaction.class, TASK_OWNER, user);
+        return hibernator.query(Transaction.class, TASK_OWNER, user, LIMIT);
     }
 
     @Override

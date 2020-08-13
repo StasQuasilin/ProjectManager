@@ -13,6 +13,9 @@ import java.util.List;
  * Created by DELL on 09.07.2020.
  */
 public interface TransactionDAO {
+
+    int LIMIT = 32;
+
     List<Transaction> getUserTransactions(User user);
     Transaction getTransaction(Object id);
     void saveTransaction(Transaction transaction);

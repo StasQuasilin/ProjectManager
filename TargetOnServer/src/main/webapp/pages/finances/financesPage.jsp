@@ -16,6 +16,7 @@
 <script type="application/javascript" src="${context}/vue/finances/buyList.vue"></script>
 <script type="application/javascript">
   transactionsList.api.edit = '${transactionEdit}';
+  transactionsList.limit = ${transactionLimit};
   fastTransactions.api.edit = '${fastTransactionEdit}';
   accounts.api.edit = '${accountEdit}';
   accounts.api.extract = '${accountExtract}';
@@ -27,6 +28,7 @@
   subscriber.subscribe('${transactionSubscribe}', transactionsList.handler);
   subscriber.subscribe('${accountSubscribe}', accounts.handler);
   subscriber.subscribe('${buyListSubscribe}', buyList.handler);
+
 </script>
 <div class="full-size finance-page">
   <div class="colon">
@@ -35,9 +37,9 @@
     </div>
   </div>
   <div class="colon central">
-    <div class="colon-cell">
-      <jsp:include page="fastTransactions.jsp"/>
-    </div>
+<%--    <div class="colon-cell">--%>
+<%--      <jsp:include page="fastTransactions.jsp"/>--%>
+<%--    </div>--%>
     <div class="colon-cell">
       <jsp:include page="accounts.jsp"/>
     </div>

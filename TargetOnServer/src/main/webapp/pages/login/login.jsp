@@ -12,6 +12,7 @@
 <html>
     <head>
         <title><fmt:message key="login.title"/></title>
+        <link rel="icon" href="${context}/images/icon.svg">
         <link rel="stylesheet" href="${context}/css/main.css">
         <link rel="stylesheet" href="${context}/css/login.css">
         <script type="application/javascript" src="${context}/js/connection.js"></script>
@@ -81,7 +82,6 @@
         login.locales.push('${l}');
         login.localeNames['${l}'] = '<fmt:message key="language.${l}"/>';
         </c:forEach>
-        login.locales.push('en');
         login.locale = '${locale}'
     </script>
 </html>

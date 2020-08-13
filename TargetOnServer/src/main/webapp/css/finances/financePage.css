@@ -28,7 +28,7 @@
     background-color: transparent;
 }
 .account-item{
-
+    padding: 2px;
 }
 .account-item:hover{
     background-color: #e2e2e2;
@@ -37,6 +37,7 @@
     background-color: transparent;
 }
 .account-title{
+
     position: relative;
 }
 .account-menu{

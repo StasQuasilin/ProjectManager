@@ -12,6 +12,7 @@
 <html>
     <head>
         <title><fmt:message key="registration.title"/></title>
+        <link rel="icon" href="${context}/images/icon.svg">
         <link rel="stylesheet" href="${context}/css/main.css">
         <link rel="stylesheet" href="${context}/css/login.css">
         <script type="application/javascript" src="${context}/js/connection.js"></script>

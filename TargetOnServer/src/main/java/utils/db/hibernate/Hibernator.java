@@ -1,6 +1,9 @@
 package utils.db.hibernate;
 
+import entity.finance.transactions.Transaction;
+import entity.user.User;
 import org.hibernate.Session;
+import org.hibernate.query.Query;
 import utils.db.hibernate.DateContainers.*;
 
 import javax.persistence.criteria.*;
@@ -156,16 +159,26 @@ public class Hibernator {
         return sum;
     }
 
-    public synchronized <T>List<T> query(Class<T> tClass, HashMap<String, Object> params){
+    public synchronized <T>List<T> query(Class<T> tClass, HashMap<String, Object> params, int limit){
         Session session = HibernateSessionFactory.getSession();
         CriteriaQuery<T> query = getCriteriaQuery(session, tClass, params);
+        final Query<T> sessionQuery = session.createQuery(query);
 
-        List<T> resultList = session.createQuery(query).getResultList();
+        if (limit > 0){
+            sessionQuery.setMaxResults(limit);
+        }
+
+        List<T> resultList = sessionQuery.getResultList();
 
         HibernateSessionFactory.putSession(session);
         putParams(params);
         return resultList;
     }
+
+    public <T>List<T> query(Class<T> tClass, String key, Object value) {
+        return query(tClass, key, value, -1);
+    }
+
 
     private void putParams(HashMap<String, Object> params) {
         if (params != null) {
@@ -178,10 +191,10 @@ public class Hibernator {
         HibernateSessionFactory.getSession().clear();
     }
 
-    public <T> List<T> query(Class<T> tClass, String key, Object value) {
+    public <T> List<T> query(Class<T> tClass, String key, Object value, int limit) {
         HashMap<String, Object> params = getParams();
         params.put(key, value);
-        return query(tClass, params);
+        return query(tClass, params, limit);
     }
 
     final ArrayList<HashMap<String, Object>> pool = new ArrayList<>();
@@ -201,28 +214,13 @@ public class Hibernator {
 
     public <T> T get(Class<T> tClass, HashMap<String, Object> parameters) {
 
-        List<T> query = query(tClass, parameters);
+        List<T> query = query(tClass, parameters, 1);
         if (query == null || query.isEmpty()) {
             return null;
         } else {
             return query.get(0);
         }
     }
-
-    public <T> void Clear(Class<T> tClass) {
-        Session session = HibernateSessionFactory.getSession();
-
-        List<T> query = query(tClass, null);
-
-        query.forEach(session::delete);
-
-        session.beginTransaction().commit();
-
-        System.out.println("\tdelete " + query.size() + " " + tClass.getSimpleName() + " items");
-        query.clear();
-        HibernateSessionFactory.putSession(session);
-    }
-
     public <T> void removeList(List<T> list) {
         Session session = HibernateSessionFactory.getSession();
         list.forEach(session::delete);
@@ -307,5 +305,10 @@ public class Hibernator {
         HashMap<String, String> find = new HashMap<>();
         find.put(value, key);
         return find(tClass, find, params);
+    }
+
+
+    public <T>List<T> query(Class<T> tClass, HashMap<String, Object> param) {
+        return query(tClass, param, -1);
     }
 }

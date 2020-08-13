@@ -51,6 +51,7 @@ public class EndPoint {
     public void OnError(Session session, Throwable cause){
         cause.printStackTrace();
     }
+
     @OnClose
     public void OnClose(Session session){
         User user = sessions.remove(session);
