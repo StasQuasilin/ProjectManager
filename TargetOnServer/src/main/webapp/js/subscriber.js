@@ -1,7 +1,27 @@
 let subscriber = {
     socket : null,
     subscribes:{},
+    unsubscribes:[],
+    unsubscribe:function(){
+        for (let i in this.unsubscribes){
+            if (this.unsubscribes.hasOwnProperty(i)){
+                let unsubscribe = this.unsubscribes[i];
+                let data = {
+                    'action': 'unsubscribe',
+                    'subscribe': unsubscribe,
+                    'user': user
+                };
+                this.socket.send(JSON.stringify(data));
+            }
+        }
+        this.unsubscribes = [];
+    },
+
     subscribe:function(subscriber, handler){
+        this.infiniteSubscribe(subscriber, handler);
+        this.unsubscribes.push(subscriber);
+    },
+    infiniteSubscribe:function(subscriber, handler){
         if (this.socket.readyState === WebSocket.OPEN) {
             let data = {
                 'action': 'subscribe',
@@ -41,8 +61,12 @@ let subscriber = {
                 console.log('Subscribers is ' + typeof self.subscribes);
             }
         };
-        this.socket.onclose = function () {
-            console.log('Socket is close')
+        this.socket.onclose = function (reason) {
+            console.log('Socket is close ');
+            console.log(reason);
         }
+    },
+    shutdown:function () {
+        this.socket.close();
     }
 };

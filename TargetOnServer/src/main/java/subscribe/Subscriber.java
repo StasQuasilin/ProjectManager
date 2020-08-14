@@ -10,6 +10,7 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import static constants.Keys.DATA;
 import static constants.Keys.SUBSCRIBE;
@@ -42,90 +43,63 @@ public final class Subscriber {
         return instance;
     }
 
-    final HashMap<User, ArrayList<Subscribe>> subscribesMap = new HashMap<>();
-    final HashMap<User, ArrayList<Session>> sessionMap = new HashMap<>();
+    final HashMap<User, ArrayList<Session>> sessions = new HashMap<>();
+    final HashMap<Session, ArrayList<Subscribe>> subscribes = new HashMap<>();
 
     public void subscribe(User user, Subscribe subscribe, Session session){
-        if (user != null){
-            System.out.println("User '" + user + "' subscribe on " + subscribe.toString());
-        }
+
         SubscribeHandler handler = handlers.get(subscribe);
 
         if (handler != null) {
+            if (!sessions.containsKey(user)){
+                sessions.put(user, new ArrayList<>());
+            }
+            sessions.get(user).add(session);
+            if(!subscribes.containsKey(session)){
+                subscribes.put(session, new ArrayList<>());
+            }
+            subscribes.get(session).add(subscribe);
             handler.onSubscribe(user, session);
-            if (!subscribesMap.containsKey(user)){
-                subscribesMap.put(user, new ArrayList<>());
-            }
-            subscribesMap.get(user).add(subscribe);
-            if (!sessionMap.containsKey(user)) {
-                sessionMap.put(user, new ArrayList<>());
-            }
-            sessionMap.get(user).add(session);
         } else {
             System.out.println("No handlers for " + subscribe);
         }
     }
 
     public void onClose(User user, Session session){
-        if (sessionMap.containsKey(user)){
-            ArrayList<Session> sessionList = this.sessionMap.get(user);
-            sessionList.remove(session);
-            if (sessionList.size() == 0){
-                subscribesMap.remove(user);
-                sessionMap.remove(user);
-            }
-        }
+        final ArrayList<Session> remove = sessions.remove(user);
+        remove.remove(session);
+        subscribes.remove(session);
     }
 
     public void send(Subscribe subscribe, UpdateAction action, JsonAble jsonAble, User user) {
-        ArrayList<Subscribe> subscribes = subscribesMap.get(user);
-        if (subscribes != null) {
+        final ArrayList<Session> sessions = this.sessions.get(user);
+        if (sessions.size() > 0){
             JSONObject json = new JSONObject();
+
             json.put(action.toString(), jsonAble.toJson());
 
             JSONObject object = new JSONObject();
             object.put(SUBSCRIBE, subscribe.toString());
             object.put(DATA, json);
 
-            final String s = object.toJSONString();
+            final String data = object.toJSONString();
 
-            for (Subscribe sub : subscribes) {
-                if (sub == subscribe) {
-                    ArrayList<Session> sessions = sessionMap.get(user);
-                    ArrayList<Session> remove = new ArrayList<>();
-                    for (Session session : sessions) {
+            for (Session session : sessions){
+                for (Subscribe s : subscribes.get(session)){
+                    if (s == subscribe){
                         try {
-                            if (session.isOpen()) {
-                                session.getBasicRemote().sendText(s);
-                            } else {
-                                System.out.println("Session '" + session.getId() + "' is Close");
-                                remove.add(session);
-                            }
+                            session.getBasicRemote().sendText(data);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
-                    for (Session session : remove){
-                        sessions.remove(session);
-                    }
-                    remove.clear();
                 }
             }
-        } else {
-            System.out.println("No subscribes " + subscribe + " for " + user);
         }
     }
 
-    public void unsubscribe(User user) {
-        subscribesMap.remove(user);
-        if (sessionMap.containsKey(user)) {
-            for (Session session : sessionMap.remove(user)) {
-                try {
-                    session.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    public void unsubscribe(Session session, Subscribe subscribe) {
+        final ArrayList<Subscribe> subscribes = this.subscribes.get(session);
+        subscribes.remove(subscribe);
     }
 }

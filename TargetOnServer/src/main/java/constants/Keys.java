@@ -116,6 +116,7 @@ public interface Keys {
     String PASSWORD = "password";
     String SUCCESS = "success";
     String ERROR = "error";
+    String ERRORS = "errors";
     String MESSAGE = "message";
     String REDIRECT = "redirect";
     String TIMER_START = "timerStart";

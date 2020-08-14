@@ -25,8 +25,9 @@
     <c:forEach items="${goals}" var="goal">
     tree.goals.push(${goal.toJson()});
     </c:forEach>
+    <c:if test="${not empty item}">
     tree.getChildren('${item}');
-
+    </c:if>
     subscriber.subscribe('${subscribe}', tree.handler);
 </script>
 <div id="tree" class="full-size">
@@ -47,9 +48,14 @@
             </div>
             <div class="panel-content">
                 <div class="task-container item-container">
-                    <button v-on:click="newTask()">
-                        <fmt:message key="task.add"/>
-                    </button>
+                    <div>
+                        <fmt:message key="task.params.be.here"/> '{{item.title}}'
+                    </div>
+                    <div>
+                        <button v-on:click="newTask()">
+                            <fmt:message key="task.add"/>
+                        </button>
+                    </div>
                     <template v-for="s in status">
                         <template v-if="childrenByStatus(s).length > 0">
                             <div class="task-container-title" :class="'task-container-title-' + s">
@@ -59,7 +65,7 @@
                             </div>
                             <div v-for="item in childrenByStatus(s)" class="task-item">
                                 <span>
-                                    {{item.id}}. {{item.title}}
+                                    {{item.id}}/{{item.category}}. {{item.title}}
                                 </span>
                                 <span class="task-menu" v-if="item.status !== 'done'">
                                     <span class="text-button" v-on:click="timer(item.id)">

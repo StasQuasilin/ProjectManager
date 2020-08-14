@@ -26,6 +26,9 @@
                             <span v-if="item.category">
                                 {{item.category.title}}
                             </span>
+                            <span v-else style="color: gray">
+                                <fmt:message key="transaction.without.category"/>
+                            </span>
                         </div>
                         <div>
                             <span v-if="item.accountFrom">

@@ -25,7 +25,7 @@
     <body>
         <div id="loginApp" class="login-page">
             <div class="login-welcome">
-
+                <jsp:include page="welcome.jsp"/>
             </div>
             <div class="login-content-holder">
                 <div class="login-content">
@@ -46,7 +46,7 @@
                         </label>
                         <input id="password" type="password" v-model="login.password" v-on:click="errors.password = false">
                     </div>
-                    <div>
+                    <div style="text-align: center">
                         <button v-on:click="signIn">
                             <fmt:message key="login.enter"/>
                         </button>

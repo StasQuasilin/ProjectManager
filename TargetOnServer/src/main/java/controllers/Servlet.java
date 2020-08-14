@@ -7,6 +7,7 @@ import utils.json.JsonObject;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
 import java.io.IOException;
 
 import static constants.Keys.USER;
@@ -19,9 +20,7 @@ public abstract class Servlet extends HttpServlet {
     public JsonObject parseBody(HttpServletRequest req) throws IOException {
         try {
             return new JsonObject( parser.parse(req.getReader()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        } catch (ParseException ignore) {}
         return null;
     }
     public User getUser(HttpServletRequest req){

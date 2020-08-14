@@ -27,6 +27,9 @@ function openLastPage() {
 
 function loadPage(url, params) {
     if (url && currentPage !== url) {
+        if (typeof subscriber.unsubscribe !== "undefined"){
+            subscriber.unsubscribe();
+        }
         coverlet.style.display = 'block';
         localStorage.setItem('last-page-for-' + user, url);
         currentPage = url;
@@ -53,6 +56,7 @@ function closeModal(){
 }
 function logout() {
     PostReq(logoutUrl, null, function (a) {
+        subscriber.shutdown();
         location.href = a + '?lang=' + window.navigator.language.slice(0, 2);
     });
 }

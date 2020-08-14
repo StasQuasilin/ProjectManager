@@ -26,32 +26,41 @@ tree = new Vue({
     methods:{
         handler:function(data){
             let update = data.update;
-            console.log(update);
-            let found = false;
-            for (let i in this.children){
-                if (this.children.hasOwnProperty(i)){
-                    let item = this.children[i];
-                    console.log(item);
-                    if (item.id === update.id){
-                        this.children.splice(i, 1, update);
-                        found = true;
-                        break;
+            if (update) {
+                if (update.category !== this.item.id) {
+                    let found = false;
+                    for (let i in this.children) {
+                        if (this.children.hasOwnProperty(i)) {
+                            let item = this.children[i];
+                            if (item.id === update.id) {
+                                this.children.splice(i, 1, update);
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (!found) {
+                        this.children.push(update);
+                    }
+                    if (update.parent == null) {
+                        this.goals.push(update);
+                    } else {
+                        this.updateTree(this.tree, update)
                     }
                 }
-            }
-            if (!found){
-                this.children.push(update);
-            }
-            if (update) {
-                if (update.parent == null) {
-                    this.goals.push(update);
-                } else {
-                    this.updateTree(this.tree, update)
+            } else if (data.add){
+                for (let i in data.add){
+                    if (data.add.hasOwnProperty(i)){
+                        let add = data.add[i];
+                        this.updateTree(this.tree, add)
+                    }
                 }
+            } else {
+                console.log(data);
             }
         },
         updateTree(parent, item){
-            if (parent.id === item.parent.id){
+            if (parent.category === item.parent.id){
                 let found = false;
                 for (let i in parent.children){
                     if (parent.children.hasOwnProperty(i)){
@@ -66,7 +75,6 @@ tree = new Vue({
                 if (!found){
                     parent.children.push(item);
                 }
-
             } else {
                 for (let i in parent.children){
                     if (parent.children.hasOwnProperty(i)){

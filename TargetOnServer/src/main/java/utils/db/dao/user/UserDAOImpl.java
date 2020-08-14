@@ -18,4 +18,9 @@ public class UserDAOImpl implements UserDAO{
     public UserSettings getUserSettings(User user) {
         return hibernator.get(UserSettings.class, USER, user);
     }
+
+    @Override
+    public void saveSettings(UserSettings settings) {
+        hibernator.save(settings);
+    }
 }

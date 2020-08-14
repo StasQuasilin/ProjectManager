@@ -14,7 +14,10 @@ public class JsonObject {
     }
 
     public String getString(String key){
-        return String.valueOf(json.get(key));
+        if (json.containsKey(key)){
+            return String.valueOf(json.get(key));
+        }
+        return null;
     }
 
     public boolean containKey(String key) {
@@ -32,7 +35,11 @@ public class JsonObject {
 
     public float getFloat(String name) {
         if (containKey(name)){
-            return Float.parseFloat(String.valueOf(json.get(name)));
+            final String string = getString(name);
+            if (string.isEmpty()){
+                return 0;
+            }
+            return Float.parseFloat(string);
         }
         return 0;
     }

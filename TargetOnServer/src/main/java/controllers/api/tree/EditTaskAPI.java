@@ -71,8 +71,9 @@ public class EditTaskAPI extends API {
                 category.setParent(parent);
                 final Task parentTask = taskDAO.getTaskByCategory(parent);
                 if (parentTask != null) {
+                    taskDAO.saveTask(task);
                     taskUtil.checkPossibility(parentTask);
-                    taskDAO.saveTask(parentTask);
+                    taskSaver.save(parentTask);
                 }
             } else {
                 final Category parent = category.getParent();
@@ -80,8 +81,9 @@ public class EditTaskAPI extends API {
                 taskDAO.saveTask(task);
                 if (parent != null){
                     final Task parentTask = taskDAO.getTaskByCategory(parent);
+                    taskDAO.saveTask(task);
                     taskUtil.checkPossibility(parentTask);
-                    taskDAO.saveTask(parentTask);
+                    taskSaver.save(parentTask);
                 }
             }
 

@@ -36,12 +36,13 @@ public class EndPoint {
                 }
                 if (parse.containKey(ACTION)) {
                     SubscribeAction action = SubscribeAction.valueOf(parse.getString(ACTION));
+                    Subscribe subscribe = Subscribe.valueOf(parse.getString(SUBSCRIBE));
                     switch (action) {
                         case subscribe:
-                            Subscribe subscribe = Subscribe.valueOf(parse.getString(SUBSCRIBE));
                             subscriber.subscribe(user, subscribe, session);
                             break;
                         case unsubscribe:
+                            subscriber.unsubscribe(session, subscribe);
                     }
                 }
             }

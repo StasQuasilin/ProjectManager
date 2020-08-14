@@ -7,4 +7,6 @@ public interface UserDAO {
     User getUserById(Object token);
 
     UserSettings getUserSettings(User user);
+
+    void saveSettings(UserSettings settings);
 }

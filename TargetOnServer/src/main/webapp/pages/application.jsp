@@ -104,6 +104,6 @@
 <script type="application/javascript" src="${context}/vue/tree/timerWidget.vue"></script>
 <script type="application/javascript">
     timerWidget.api.timerStop = '${timerStop}';
-    subscriber.subscribe('${timerSubscribe}', timerWidget.handler)
+    subscriber.infiniteSubscribe('${timerSubscribe}', timerWidget.handler)
 </script>
 </html>

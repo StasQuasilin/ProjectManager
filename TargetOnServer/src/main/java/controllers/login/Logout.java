@@ -20,7 +20,6 @@ public class Logout extends API {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final User user = getUser(req);
-        Subscriber.getInstance().unsubscribe(user);
 
         final Enumeration<String> sessionNames = req.getSession().getAttributeNames();
         while (sessionNames.hasMoreElements()){

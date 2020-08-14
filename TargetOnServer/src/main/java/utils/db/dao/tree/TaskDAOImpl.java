@@ -43,7 +43,7 @@ public class TaskDAOImpl implements TaskDAO {
         final Category category = task.getCategory();
         hibernator.save(category);
         hibernator.save(task);
-        updater.update(Subscribe.tree, task, task.getOwner());
+//        updater.update(Subscribe.tree, task, task.getOwner());
     }
 
     @Override

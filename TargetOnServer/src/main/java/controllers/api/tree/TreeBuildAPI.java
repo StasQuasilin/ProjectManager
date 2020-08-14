@@ -30,6 +30,7 @@ public class TreeBuildAPI extends API {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject body = parseBody(req);
         if (body != null){
+            System.out.println(body);
             Category root = categoryDAO.getCategory(body.get(ID));
             write(resp, buildTree(taskDAO.getTaskByCategory(root), root));
         }

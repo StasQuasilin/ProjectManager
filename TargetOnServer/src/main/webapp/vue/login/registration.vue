@@ -48,6 +48,7 @@ registration = new Vue({
                     if (a.status === 'success'){
                         location.href = context + a.redirect
                     } else {
+                        self.errors = a.errors;
                         self.message = a.message;
                     }
                 })

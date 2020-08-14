@@ -24,7 +24,7 @@
         goalList.props.activeTasks = '<fmt:message key="goal.active.tasks"/>';
         goalList.props.progressingTasks = '<fmt:message key="goal.progressing.task"/>';
         goalList.props.doneTasks = '<fmt:message key="goal.done.tasks"/>';
-        subscriber.subscribe('${subscribe}', goalList.handler)
+        subscriber.subscribe('${subscribe}', goalList.handler);
     </script>
     <jsp:include page="goalHeader.jsp"/>
     <body>

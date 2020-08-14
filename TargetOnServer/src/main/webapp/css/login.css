@@ -7,20 +7,29 @@
 .login-welcome{
     width: 60%;
     flex: 1 0 auto;
-    background-color: orange;
+    border-right: solid gray 1px;
 }
-.login.content{
+.welcome-text{
+    font-size: 14pt;
+    /*width: 50%;*/
+    line-height: 24pt;
+    margin: auto;
+    overflow-y: scroll;
+    height: 100%;
+    padding: 0 25%;
+}
+.login-content{
     display: flex;
     flex-direction: column;
     flex: 1 0 auto;
     position: relative;
-}
-.login-content{
-    /*position: absolute;*/
     padding: 12px;
     margin: auto;
     vertical-align: center;
-    display: flex;
-    flex-direction: column;
     justify-items: center;
+}
+.login-content div{
+    margin-bottom: 14px;
+    width: 100%;
+
 }
