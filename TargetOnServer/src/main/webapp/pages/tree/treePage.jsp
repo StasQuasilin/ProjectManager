@@ -39,11 +39,14 @@
                       <span class="text-button" v-on:click="getChildren(i.id)">
                           {{i.title}}
                       </span>
-                        >
+                        /
                     </template>
                     <b>
                         {{item.title}}
                     </b>
+                    <button v-on:click="newTask()">
+                        <fmt:message key="task.add"/>
+                    </button>
                 </div>
             </div>
             <div class="panel-content">
@@ -51,11 +54,7 @@
                     <div>
                         <fmt:message key="task.params.be.here"/> '{{item.title}}'
                     </div>
-                    <div>
-                        <button v-on:click="newTask()">
-                            <fmt:message key="task.add"/>
-                        </button>
-                    </div>
+
                     <template v-for="s in status">
                         <template v-if="childrenByStatus(s).length > 0">
                             <div class="task-container-title" :class="'task-container-title-' + s">

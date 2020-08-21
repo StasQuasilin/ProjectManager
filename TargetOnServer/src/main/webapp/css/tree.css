@@ -27,6 +27,9 @@
 .task-path * {
     background-color: transparent;
 }
+.task-path button{
+    background-color: white;
+}
 .task-item{
     margin: 8px;
     border-bottom: solid transparent 1px;

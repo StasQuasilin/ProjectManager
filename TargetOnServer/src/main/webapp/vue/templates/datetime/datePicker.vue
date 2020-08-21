@@ -9,6 +9,7 @@ datePicker = {
         } else {
             this._date = new Date().toISOString().substring(0, 10);
         }
+
     },
     data:function(){
         return {
@@ -22,6 +23,8 @@ datePicker = {
             this.show = false;
             if (this.props.put){
                 this.props.put(this._date);
+            } else {
+                console.warn('Props not contain methods \'put\'');
             }
         }
     },

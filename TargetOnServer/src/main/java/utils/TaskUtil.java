@@ -13,7 +13,9 @@ public class TaskUtil {
 
     public void checkPossibility(Task task){
         final List<Task> tasksByParent = taskDAO.getTasksByParent(task.getCategory());
-        TaskStatus status = tasksByParent.size() == 0 ? TaskStatus.active : TaskStatus.done;
+
+        TaskStatus status = tasksByParent.size() == 0 ? TaskStatus.active : task.isDoneIfChildren() ? TaskStatus.done : TaskStatus.active;
+
         for (Task t : tasksByParent) {
             if (t.getStatus() != TaskStatus.done) {
                 status = TaskStatus.impossible;

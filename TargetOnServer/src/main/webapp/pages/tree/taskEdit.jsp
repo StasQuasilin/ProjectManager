@@ -45,6 +45,9 @@
     taskEdit.task.buyList = ${rootBuyList.toJson()};
     </c:when>
     </c:choose>
+    if (!taskEdit.task.date){
+        taskEdit.task.date = new Date().toISOString().substring(0, 10);
+    }
     if (!taskEdit.task.deadline){
         taskEdit.task.deadline = new Date().toISOString().substring(0, 10);
     }
@@ -62,7 +65,7 @@
             <input id="title" v-model="task.title" autocomplete="off" onfocus="this.select()">
         </td>
     </tr>
-    <tr>
+    <tr v-if="status.includes(task.status)">
         <td>
             <label for="status">
                 <fmt:message key="task.current.status"/>
@@ -159,6 +162,12 @@
             </td>
         </tr>
     </template>
+    <tr>
+        <td colspan="2">
+            <input id="doneIf" type="checkbox" v-model="task.doneIf">
+            <fmt:message key="task.done.if.children"/>
+        </td>
+    </tr>
     <tr>
         <td colspan="2" style="text-align: center">
             <button onclick="closeModal()">

@@ -16,12 +16,14 @@ import static constants.Keys.*;
 public class Task extends JsonAble {
     private int id;
     private String uid;
+    private Date date;
     private Date deadline;
     private Category category;
     private TaskStatus status;
     private User doer;
     private String result;
     private TaskPriority priority;
+    private boolean doneIfChildren;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,6 +41,15 @@ public class Task extends JsonAble {
     }
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    @Basic
+    @Column(name = "_date")
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Basic
@@ -96,6 +107,15 @@ public class Task extends JsonAble {
         this.priority = priority;
     }
 
+    @Basic
+    @Column(name = "_done_if_children")
+    public boolean isDoneIfChildren() {
+        return doneIfChildren;
+    }
+    public void setDoneIfChildren(boolean doneIfChildren) {
+        this.doneIfChildren = doneIfChildren;
+    }
+
     @Override
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
@@ -111,6 +131,9 @@ public class Task extends JsonAble {
         final JSONObject jsonObject = shortJson();
         jsonObject.put(PARENT, category.getParent().toJson());
         jsonObject.put(UID, uid);
+        if (date != null){
+            jsonObject.put(DATE, date.toString());
+        }
         if (deadline != null){
             jsonObject.put(DEADLINE, deadline.toString());
         }
@@ -120,6 +143,7 @@ public class Task extends JsonAble {
         if (result != null){
             jsonObject.put(RESULT, result);
         }
+        jsonObject.put(DONE_IF, doneIfChildren);
         return jsonObject;
     }
 

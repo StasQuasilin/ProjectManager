@@ -135,4 +135,5 @@ public interface Keys {
     String PERIOD = "period";
     String CAPITALIZATION = "capitalization";
     String SETTINGS = "settings";
+    String DONE_IF = "doneIf";
 }

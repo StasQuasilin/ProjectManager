@@ -58,6 +58,9 @@ public class EditTaskAPI extends API {
                 task.setDeadline(null);
             }
 
+            boolean doneIf = body.getBoolean(DONE_IF);
+            task.setDoneIfChildren(doneIf);
+
             final User user = getUser(req);
             Category category = task.getCategory();
             if (category == null){
@@ -89,6 +92,8 @@ public class EditTaskAPI extends API {
 
             final String title = body.getString(TITLE);
             category.setTitle(title);
+
+
 
             write(resp, SUCCESS_ANSWER);
             taskSaver.save(task);

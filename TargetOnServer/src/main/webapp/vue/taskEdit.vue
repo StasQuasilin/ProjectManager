@@ -31,6 +31,7 @@ taskEdit = new Vue({
         },
         dateProps:{
             put:function (date) {
+                console.log(date);
                 taskEdit.task.date = date;
             }
         },

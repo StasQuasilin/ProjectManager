@@ -10,7 +10,7 @@ import utils.db.dao.tree.TaskDAO;
 
 public class CalendarHandler extends SubscribeHandler {
 
-
+    private final TaskDAO taskDAO = daoService.getTaskDAO();
 
     public CalendarHandler() {
         super(Subscribe.calendar);
@@ -18,6 +18,10 @@ public class CalendarHandler extends SubscribeHandler {
 
     @Override
     Object getItems(User user) {
-        return null;
+        JSONArray array = new JSONArray();
+        for (Task task : taskDAO.getTaskByStatus(user, TaskStatus.active)){
+            array.add(task.shortJson());
+        }
+        return array;
     }
 }
