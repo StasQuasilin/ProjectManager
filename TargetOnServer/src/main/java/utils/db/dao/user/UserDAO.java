@@ -9,4 +9,5 @@ public interface UserDAO {
     UserSettings getUserSettings(User user);
 
     void saveSettings(UserSettings settings);
+
 }

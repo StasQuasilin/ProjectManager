@@ -5,6 +5,7 @@ import constants.UrlLinks;
 import controllers.ModalWindow;
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountType;
+import entity.finance.accounts.DepositSettings;
 import entity.user.User;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.accounts.AccountDAO;
@@ -37,12 +38,11 @@ public class AccountEdit extends ModalWindow {
         if (body != null){
             System.out.println(body);
             Account account = accountDAO.getAccount(body.get(ID));
-            if (account != null){
-                System.out.println(account.getTitle());
-            } else {
-                System.out.println("Account is null");
-            }
             req.setAttribute(ACCOUNT, account);
+            final DepositSettings depositSettings = accountDAO.getDepositSettings(account);
+            if (depositSettings != null){
+                req.setAttribute(DEPOSIT_SETTINGS, depositSettings);
+            }
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);

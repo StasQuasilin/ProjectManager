@@ -129,4 +129,10 @@ public interface Keys {
     String TIMER_SUBSCRIBE = "timerSubscribe";
     String DELETE = "delete";
     String TRANSACTION_LIMIT = "transactionLimit";
+    String SHOW = "show";
+    String DEPOSIT_SETTINGS = "depositSettings";
+    String OPEN = "open";
+    String PERIOD = "period";
+    String CAPITALIZATION = "capitalization";
+    String SETTINGS = "settings";
 }

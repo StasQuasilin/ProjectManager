@@ -96,15 +96,16 @@ public class Category extends JsonAble {
         if (currency != null) {
             jsonObject.put(CURRENCY, currency);
         }
+        if (parent != null){
+            jsonObject.put(PARENT, parent.shortJson());
+        }
         return jsonObject;
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = shortJson();
-        if (parent != null){
-            jsonObject.put(PARENT, parent.toJson());
-        }
+
         jsonObject.put(OWNER, owner.toJson());
         return jsonObject;
     }

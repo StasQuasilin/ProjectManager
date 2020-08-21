@@ -8,7 +8,7 @@
         <property name="connection.url">jdbc:postgresql://localhost:5432/pm_db</property>
         <property name="connection.driver_class">org.postgresql.Driver</property>
         <property name="connection.username">postgres</property>
-        <property name="connection.password">Stas53721456!</property>
+        <property name="connection.password">53721456</property>
         <property name="current_session_context_class">thread</property>
         <property name="connection.pool_size">150</property>
         <property name="show_sql">false</property>
@@ -28,6 +28,7 @@
         <mapping class="entity.calendar.CalendarItem"/>
         <mapping class="entity.finance.accounts.Account"/>
         <mapping class="entity.finance.accounts.AccountPoint"/>
+        <mapping class="entity.finance.accounts.DepositSettings"/>
         <mapping class="entity.finance.buy.BuyList"/>
         <mapping class="entity.finance.buy.BuyListItem"/>
         <mapping class="entity.finance.transactions.Transaction"/>

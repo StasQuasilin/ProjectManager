@@ -15,9 +15,19 @@ accountEdit = new Vue({
             sum:0,
             currency:null,
             limit:0
+        },
+        depositDateProps:{
+            put:function (date) {
+                Vue.set(accountEdit.account.settings, 'open', date);
+            }
         }
     },
     methods:{
+        datePlusDays:function(date, days){
+            let open = new Date(date);
+            open.setDate(open.getDate() + days);
+            return open;
+        },
         save:function(){
             let account = Object.assign({}, this.account);
             if (account.type === 'credit'){

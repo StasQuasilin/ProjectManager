@@ -18,6 +18,7 @@ public class Account extends JsonAble{
     private String currency;
     private int limit;
     private User owner;
+    private boolean show;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -83,6 +84,15 @@ public class Account extends JsonAble{
         this.owner = owner;
     }
 
+    @Basic
+    @Column(name = "_show")
+    public boolean isShow() {
+        return show;
+    }
+    public void setShow(boolean showInPayments) {
+        this.show = showInPayments;
+    }
+
     @Override
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
@@ -98,6 +108,7 @@ public class Account extends JsonAble{
         jsonObject.put(SUM, sum);
         jsonObject.put(CURRENCY, currency);
         jsonObject.put(LIMIT, limit);
+        jsonObject.put(SHOW, show);
         return jsonObject;
     }
 

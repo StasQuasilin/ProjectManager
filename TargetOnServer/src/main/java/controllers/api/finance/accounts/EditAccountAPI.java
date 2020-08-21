@@ -4,6 +4,7 @@ import constants.ApiLinks;
 import controllers.api.API;
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountType;
+import entity.finance.accounts.DepositSettings;
 import entity.user.User;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.accounts.AccountDAO;
@@ -50,7 +51,29 @@ public class EditAccountAPI extends API {
             }
             account.setLimit(limit);
 
+            final boolean show = body.getBoolean(SHOW);
+            account.setShow(show);
+
             accountDAO.saveAccount(account);
+
+            DepositSettings depositSettings = accountDAO.getDepositSettings(account);
+            if (type == AccountType.deposit){
+                if (depositSettings == null){
+                    depositSettings = new DepositSettings();
+                    depositSettings.setAccount(account);
+                }
+                final JsonObject settings = new JsonObject(body.get(SETTINGS));
+                depositSettings.setOpen(settings.getDate(OPEN));
+                depositSettings.setPeriod(settings.getLong(PERIOD));
+                depositSettings.setRate(settings.getFloat(RATE));
+                depositSettings.setCapitalization(settings.getBoolean(CAPITALIZATION));
+                accountDAO.saveDepositSettings(depositSettings);
+
+            } else {
+                if (depositSettings != null){
+                    accountDAO.removeSettings(depositSettings);
+                }
+            }
 
             final float sum = body.getFloat(SUM);
             if (account.getSum() != sum){

@@ -12,7 +12,7 @@
     <div class="navigation-menu">
         <div onclick="loadPage('${goals}')"><fmt:message key="menu.goals"/></div>
         <div onclick="loadPage('${tree}')"><fmt:message key="menu.tree"/></div>
-<%--        <div onclick="loadPage('${calendar}')"><fmt:message key="menu.calendar"/></div>--%>
+        <div onclick="loadPage('${calendar}')"><fmt:message key="menu.calendar"/></div>
         <div onclick="loadPage('${finances}')"><fmt:message key="menu.finances"/></div>
     </div>
 </html>

@@ -23,12 +23,25 @@
   <c:choose>
   <c:when test="${not empty account}">
   accountEdit.account = ${account.toJson()};
+  <c:if test="${not empty depositSettings}">
+  accountEdit.account.settings = ${depositSettings.toJson()}
+  </c:if>
   </c:when>
   <c:otherwise>
   accountEdit.account.type = accountEdit.types[0];
   accountEdit.account.currency = accountEdit.currency[0];
   </c:otherwise>
   </c:choose>
+  if(accountEdit.account.type === 'deposit'){
+    if (!accountEdit.account.settings){
+      accountEdit.account.settings = {
+        open:new Date().toISOString().substring(0, 10),
+        period:30,
+        rate:12,
+        capitalization:false
+      }
+    }
+  }
 </script>
 <table id="accountEdit">
   <tr>
@@ -105,7 +118,6 @@
       </td>
     </tr>
   </template>
-
   <template v-if="account.type === 'deposit'">
     <tr>
       <td colspan="2" style="text-align: center">
@@ -117,15 +129,26 @@
         <fmt:message key="deposit.date"/>
       </td>
       <td>
-        <date-picker :date="account.settings.open"></date-picker>
+        <date-picker :date="account.settings.open" :props="depositDateProps"></date-picker>
       </td>
     </tr>
     <tr>
       <td>
-        <fmt:message key="deposit.period"/>
+        <label for="period">
+          <fmt:message key="deposit.period"/>
+        </label>
       </td>
       <td>
-        {{account.settings.period}}
+        <input id="period" type="number" step="1" v-model="account.settings.period"
+               onfocus="this.select()" style="width: 90px">
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <fmt:message key="deposit.close"/>
+      </td>
+      <td>
+        {{datePlusDays(account.settings.open, account.settings.period).toLocaleDateString()}}
       </td>
     </tr>
     <tr>
@@ -148,12 +171,6 @@
       </td>
     </tr>
   </template>
-
-  <tr>
-    <td>
-
-    </td>
-  </tr>
   <tr>
     <td colspan="2" style="text-align: center">
       <button onclick="closeModal()">

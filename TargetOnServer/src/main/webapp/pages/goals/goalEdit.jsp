@@ -23,7 +23,7 @@
   goalEdit.goal = ${goal.toJson()};
   <c:if test="${not empty buyList}">
   goalEdit.buyList = ${buyList.shortJson()};
-  useBuyList = true;
+  goalEdit.useBuyList = true;
   </c:if>
   </c:if>
   now = new Date();

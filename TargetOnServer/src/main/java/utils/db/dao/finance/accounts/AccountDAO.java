@@ -2,6 +2,7 @@ package utils.db.dao.finance.accounts;
 
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountPoint;
+import entity.finance.accounts.DepositSettings;
 import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
 import org.hibernate.Transaction;
@@ -19,4 +20,12 @@ public interface AccountDAO {
     void saveAccount(Account account);
 
     List<TransactionPoint> getAccountPoints(Object o);
+
+    DepositSettings getDepositSettings(Account account);
+
+    List<Account> getVisibleAccounts(User user);
+
+    void removeSettings(DepositSettings depositSettings);
+
+    void saveDepositSettings(DepositSettings depositSettings);
 }

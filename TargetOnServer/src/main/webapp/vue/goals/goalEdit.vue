@@ -18,8 +18,7 @@ goalEdit = new Vue({
             begin:null,
             end:null,
             budget:0,
-            currency:'',
-            buyList:-1,
+            currency:''
         },
         errors:{
             title:false,

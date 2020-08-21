@@ -8,7 +8,7 @@ goalTile = {
     },
     template:'<div>' +
             '<div class="goal-title">' +
-                '{{goal.id}}:{{goal.title}}' +
+                '{{goal.title}}' +
                 '<div class="goal-title-buttons">' +
                     '<span class="text-button" v-on:click="props.tree(goal.category)">' +
                         '&#127795;' +
@@ -41,12 +41,18 @@ goalTile = {
                         ':size="goal.statistic.active + goal.statistic.progressing + goal.statistic.done" ' +
                         ':value="goal.statistic.done" :color="\'orange\'"></progress-bar>' +
                 '</div>' +
-                '<div v-if="goal.budget">' +
+                '<div v-if="goal.budget || goal.statistic.minus || goal.statistic.plus">' +
                     '{{props.budget}}: ' +
+                    '<span v-if="goal.statistic.minus || goal.statistic.plus">' +
+                        '{{Math.abs(goal.statistic.minus + goal.statistic.plus).toLocaleString()}}' +
+                    '</span>' +
+                    '<span>' +
+                        ' / ' +
+                    '</span>' +
                     '<span>' +
                         '{{goal.budget.toLocaleString()}} {{goal.currency}}' +
                     '</span>' +
-                    '<progress-bar :size="10" :value="4"></progress-bar>' +
+                    '<progress-bar v-if="goal.budget" :size="goal.budget" :value="goal.statistic.minus + goal.statistic.plus"></progress-bar>' +
                 '</div>' +
                 '<div v-if="goal.statistic">' +
                     '<div>' +

@@ -2,12 +2,14 @@ package utils.db.dao.finance.accounts;
 
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountMember;
+import entity.finance.accounts.DepositSettings;
 import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
 
+import java.util.HashMap;
 import java.util.List;
 
 import static constants.Keys.*;
@@ -40,5 +42,28 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public List<TransactionPoint> getAccountPoints(Object o) {
         return hibernator.query(TransactionPoint.class, ACCOUNT, o);
+    }
+
+    @Override
+    public DepositSettings getDepositSettings(Account account) {
+        return hibernator.get(DepositSettings.class, ACCOUNT, account);
+    }
+
+    @Override
+    public List<Account> getVisibleAccounts(User user) {
+        final HashMap<String, Object> param = new HashMap<>();
+        param.put(OWNER, user);
+        param.put(SHOW, true);
+        return hibernator.query(Account.class, param);
+    }
+
+    @Override
+    public void removeSettings(DepositSettings depositSettings) {
+        hibernator.remove(depositSettings);
+    }
+
+    @Override
+    public void saveDepositSettings(DepositSettings depositSettings) {
+        hibernator.save(depositSettings);
     }
 }

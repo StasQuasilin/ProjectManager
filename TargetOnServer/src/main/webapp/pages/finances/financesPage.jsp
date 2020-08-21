@@ -10,6 +10,7 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <link rel="stylesheet" href="${context}/css/finances/financePage.css">
+<script type="application/javascript" src="${context}/vue/pathBuilder.vue"></script>
 <script type="application/javascript" src="${context}/vue/finances/transactions/transactionsList.vue"></script>
 <script type="application/javascript" src="${context}/vue/finances/fastTransactions.vue"></script>
 <script type="application/javascript" src="${context}/vue/finances/accounts.vue"></script>

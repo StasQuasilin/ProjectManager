@@ -24,7 +24,10 @@
                         </div>
                         <div style="flex: 1 0 auto">
                             <div>
-                                {{i.title}}
+                                <template v-for="(p, i) in getPath(i)" v-if="i > 0">
+                                    {{p.title}} /
+                                </template>
+                                <b>{{i.title}}</b>
                             </div>
                             <div v-if="i.count !== 0 || i.price !== 0" style="color: gray">
                                 <span v-if="i.count !== 0">

@@ -67,7 +67,7 @@ public class JsonObject {
 
     public long getLong(String name) {
         if (containKey(name)){
-            return (long) json.get(name);
+            return Long.parseLong(getString(name)) ;
         }
         return 0;
     }

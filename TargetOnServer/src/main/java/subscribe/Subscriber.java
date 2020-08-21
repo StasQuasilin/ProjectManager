@@ -73,7 +73,7 @@ public final class Subscriber {
 
     public void send(Subscribe subscribe, UpdateAction action, JsonAble jsonAble, User user) {
         final ArrayList<Session> sessions = this.sessions.get(user);
-        if (sessions.size() > 0){
+        if (sessions != null && sessions.size() > 0){
             JSONObject json = new JSONObject();
 
             json.put(action.toString(), jsonAble.toJson());

@@ -96,10 +96,10 @@ public class BuyListItem extends JsonAble {
 
     @Override
     public JSONObject toJson() {
-        JSONObject json = getJsonObject();
+        JSONObject json = category.shortJson();
         json.put(ID, id);
         json.put(CATEGORY, category.getId());
-        json.put(TITLE, category.getTitle());
+
         json.put(COUNT, count);
         if (unit != null) {
             json.put(UNIT, unit.toString());
