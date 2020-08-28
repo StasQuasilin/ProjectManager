@@ -41,7 +41,7 @@ goalTile = {
                         ':size="goal.statistic.active + goal.statistic.progressing + goal.statistic.done" ' +
                         ':value="goal.statistic.done" :color="\'orange\'"></progress-bar>' +
                 '</div>' +
-                '<div v-if="goal.budget || goal.statistic.minus || goal.statistic.plus">' +
+                '<div v-if="goal.statistic && (goal.budget || goal.statistic.minus || goal.statistic.plus)">' +
                     '{{props.budget}}: ' +
                     '<span v-if="goal.statistic.minus || goal.statistic.plus">' +
                         '{{Math.abs(goal.statistic.minus + goal.statistic.plus).toLocaleString()}}' +
@@ -52,7 +52,8 @@ goalTile = {
                     '<span>' +
                         '{{goal.budget.toLocaleString()}} {{goal.currency}}' +
                     '</span>' +
-                    '<progress-bar v-if="goal.budget" :size="goal.budget" :value="goal.statistic.minus + goal.statistic.plus"></progress-bar>' +
+                    '<progress-bar v-if="goal.budget && goal.statistic" :size="goal.budget" ' +
+                        ':value="goal.statistic.minus + goal.statistic.plus"></progress-bar>' +
                 '</div>' +
                 '<div v-if="goal.statistic">' +
                     '<div>' +

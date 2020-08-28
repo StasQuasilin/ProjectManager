@@ -25,8 +25,11 @@ public class Application extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setAttribute(GOALS, UrlLinks.GOALS);
         req.setAttribute(TREE, UrlLinks.TREE);
+        req.setAttribute(KANBAN, UrlLinks.KANBAN);
         req.setAttribute(CALENDAR, UrlLinks.CALENDAR);
         req.setAttribute(FINANCES, UrlLinks.FINANCES);
+        req.setAttribute(FRIENDS, UrlLinks.FRIENDS);
+        req.setAttribute(MESSAGES, UrlLinks.MESSAGES);
         req.setAttribute(PERSONAL, UrlLinks.PERSONAL);
         req.setAttribute(WELCOME, UrlLinks.GOALS);
         req.setAttribute(LOGOUT, ApiLinks.LOGOUT);

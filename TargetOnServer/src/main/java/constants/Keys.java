@@ -43,6 +43,7 @@ public interface Keys {
     String SURNAME = "surname";
     String FORENAME = "forename";
     String STATUS = "status";
+    String STATUSES = "statuses";
     String DOER = "doer";
     String RESULT = "result";
     String BEGIN = "begin";
@@ -136,4 +137,8 @@ public interface Keys {
     String CAPITALIZATION = "capitalization";
     String SETTINGS = "settings";
     String DONE_IF = "doneIf";
+    String KANBAN = "kanban";
+    String FRIENDS = "friends";
+    String MESSAGES = "messages";
+    String TOKEN = "token";
 }

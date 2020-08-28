@@ -23,4 +23,7 @@ public interface UrlLinks {
     String TASK_TIMER = "/task/timer" + SUFFIX;
     String ACCOUNT_EXTRACT = "/accounts/extract" + SUFFIX;
     String TASK_DELETE = "/task/delete" + SUFFIX;
+    String KANBAN = "/kanban" + SUFFIX;
+    String FRIENDS = "/friends" + SUFFIX;
+    String MESSAGES = "/messages" + SUFFIX;
 }

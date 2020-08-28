@@ -1,8 +1,8 @@
 package constants;
 
 public interface ApiLinks {
-    String API = "/controllers/api/v1";
-    String SUBSCRIBE = API + "/subscribes";
+    String API = "/api/v1";
+    String SUBSCRIBE = "/socket";
     String GET_GOALS = API + "/get/goals";
     String GOAL_SAVE = API + "/goals/save";
     String TRANSACTION_SAVE = API + "/transaction/save";

@@ -1,3 +1,4 @@
+let wait = 10;
 let subscriber = {
     socket : null,
     subscribes:{},
@@ -31,11 +32,16 @@ let subscriber = {
             this.socket.send(JSON.stringify(data));
             this.subscribes[subscriber] = handler;
         } else {
-            console.log('Wait socket connection');
-            const self = this;
-            setTimeout(function () {
-                self.subscribe(subscriber, handler);
-            }, 1000)
+            if (wait >= 0) {
+                wait--;
+                console.log('Wait socket connection ' + wait);
+                const self = this;
+                setTimeout(function () {
+                    self.subscribe(subscriber, handler);
+                }, 1000)
+            } else {
+                location.reload();
+            }
         }
     },
     send:function(message){
@@ -44,12 +50,13 @@ let subscriber = {
     connect:function(){
         this.socket = new WebSocket('ws://' + window.location.host + context + SUBSCRIBE_API);
         this.socket.onopen = function(){
-
+            wait = 10;
         };
 
         const self = this;
         this.socket.onmessage = function (env) {
             let json = JSON.parse(env.data);
+            console.log(json);
             let subscribe = json.subscribe;
             let data = json.data;
             if (self.subscribes) {

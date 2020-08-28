@@ -73,6 +73,7 @@ public class LoginAPI extends API {
 
                         answer = new SuccessAnswer();
                         answer.addAttribute(REDIRECT, UrlLinks.HOME);
+                        answer.addAttribute(TOKEN, userAccess.getToken());
                     } else {
                         answer = new ErrorAnswer();
                         answer.addAttribute(MESSAGE, languageBase.get(language, "wrong.password"));

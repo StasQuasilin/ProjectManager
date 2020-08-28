@@ -21,7 +21,9 @@ let list = {
             }
         },
         handler:function(items){
+            console.log(items);
             if(items) {
+
                 for (let a in items.add) {
                     if (items.add.hasOwnProperty(a)) {
                         let item = items.add[a];

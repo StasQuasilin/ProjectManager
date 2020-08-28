@@ -87,12 +87,18 @@ public class Goal extends JsonAble {
     }
 
     @Override
-    public JSONObject toJson() {
-
+    public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
         jsonObject.put(CATEGORY, category.getId());
         jsonObject.put(TITLE, category.getTitle());
+        return jsonObject;
+    }
+
+    @Override
+    public JSONObject toJson() {
+
+        final JSONObject jsonObject = shortJson();
 
         if (begin != null){
             jsonObject.put(BEGIN, begin.toString());

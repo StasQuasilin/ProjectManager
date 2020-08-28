@@ -89,7 +89,8 @@
     </div>
     <div class="panel-content">
       <div class="item-container">
-        <div v-for="item in getItems()" v-on:click="edit(-1, {category:item.category})" style="border: solid gray 1pt; padding: 2px; margin: 2px">
+        <div v-for="item in getItems()" v-on:click="edit(-1, {category:item.category})"
+             style="border: solid gray 1pt; padding: 2px; margin: 2px">
           <div style="font-size: 8pt">
             {{getPath(item)}}
           </div>

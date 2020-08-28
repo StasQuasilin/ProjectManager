@@ -37,52 +37,43 @@
             </span>
         </td>
     </tr>
-    <tr v-if="edit" >
-        <td>
-            <div style="border: solid gray 1px; font-size: 10pt">
-                <div>
-                    <label for="itemName">
-                        <fmt:message key="buy.list.item.title"/>
-                    </label>
-                </div>
-                <div>
-                    <input id="itemName" v-model="newItem.title" autocomplete="off" onfocus="this.select()">
-                </div>
-                <div>
-                    <label for="count">
-                        <fmt:message key="buy.list.count"/>
-                    </label>
-                    <div style="width: 60px; display: inline-block">
-                        <input id="count" v-model="newItem.count" autocomplete="off" onfocus="this.select()">
-                    </div>
-                </div>
-                <div>
-                    <label for="price">
-                        <fmt:message key="transaction.price"/>
-                    </label>
-                    <div style="width: 60px; display: inline-block">
-                        <input id="price" v-model="newItem.price" autocomplete="off" onfocus="this.select()">
-                    </div>
-                </div>
-                <div style="text-align: center">
-                    <span class="text-button" v-on:click="edit = false">
-                        <fmt:message key="button.cancel"/>
-                    </span>
-                    <span class="text-button" v-on:click="addItem()">
-                        <fmt:message key="button.save"/>
-                    </span>
-                </div>
-            </div>
-        </td>
-    </tr>
     <tr>
         <td style="height: 120pt">
             <div class="item-container">
-                <div v-for="(item, idx) in list.items">
-                    <span class="text-button" v-on:click="removeItem(idx)">
-                        &times;
-                    </span>
-                    <span v-on:click="editItem(idx)">
+                <template v-for="(item, idx) in list.items">
+                    <div v-if="idx === editableIndex && edit" style="border: solid gray 1px; font-size: 10pt">
+                        <div>
+                            <input v-model="newItem.title" autocomplete="off" onfocus="this.select()">
+                        </div>
+                        <div>
+                            <label for="count">
+                                <fmt:message key="buy.list.count"/>
+                            </label>
+                            <input id="count" v-model="newItem.count" autocomplete="off" onfocus="this.select()">
+                        </div>
+                        <div>
+                            <label for="price">
+                                <fmt:message key="transaction.price"/>
+                            </label>
+                            <input id="price" v-model="newItem.price" autocomplete="off" onfocus="this.select()">
+                        </div>
+                        <div style="width: 100%; text-align: center">
+                            <span class="text-button" v-on:click="addItem()">
+                                &check;
+                            </span>
+                            <span class="text-button" v-on:click="edit = false">
+                                &times;
+                            </span>
+                        </div>
+                    </div>
+                    <div v-else>
+                       <span v-if="item.done" style="color: green">
+                           &check;
+                       </span>
+                        <span v-else class="text-button" v-on:click="removeItem(idx)">
+                            &times;
+                        </span>
+                        <span v-on:click="editItem(idx)">
                         <template>
                             {{item.title}}
                         </template>
@@ -90,7 +81,19 @@
                             {{item.count.toLocaleString()}} &times; {{item.price.toLocaleString()}}
                         </template>
                     </span>
-                </div>
+                    </div>
+                </template>
+
+            </div>
+            <div v-if="!edit">
+                <input id="itemName" v-model="newItem.title" autocomplete="off"
+                       onfocus="this.select()" style="width: auto">
+                <span class="text-button" v-on:click="addItem()">
+                    &check;
+                </span>
+                <span class="text-button" v-on:click="edit = false">
+                    &times;
+                </span>
             </div>
         </td>
     </tr>

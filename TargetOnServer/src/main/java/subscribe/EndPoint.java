@@ -10,6 +10,7 @@ import utils.json.JsonParser;
 import javax.websocket.*;
 import javax.websocket.server.ServerEndpoint;
 
+import java.io.IOException;
 import java.util.HashMap;
 
 import static constants.Keys.*;
@@ -21,6 +22,11 @@ public class EndPoint {
     private final JsonParser parser = new JsonParser();
     private final UserDAO userDAO = new UserDAOImpl();
     private final HashMap<Session, User> sessions = new HashMap<>();
+
+    @OnOpen
+    public void OnOpen(Session session){
+        
+    }
 
     @OnMessage
     public void onMessage(Session session, String message){

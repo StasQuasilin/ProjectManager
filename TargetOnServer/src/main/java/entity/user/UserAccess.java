@@ -9,6 +9,7 @@ public class UserAccess implements Serializable {
     private User user;
     private String login;
     private String password;
+    private String token;
 
     @Id
     @OneToOne
@@ -36,6 +37,15 @@ public class UserAccess implements Serializable {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Basic
+    @Column(name = "_token")
+    public String getToken() {
+        return token;
+    }
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

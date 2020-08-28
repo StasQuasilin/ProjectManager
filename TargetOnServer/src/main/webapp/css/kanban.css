@@ -1,0 +1,16 @@
+.full-size{
+
+
+}
+.kanban-board-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 2px;
+    height: 100%;
+}
+.kanban-board{
+    flex: 1 1 auto;
+    border: dashed gray 1px;
+
+}

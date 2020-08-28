@@ -22,6 +22,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -68,7 +69,7 @@ public class RegistrationAPI extends API {
                             user.setSurname(surname);
                             user.setForename(forename);
                             userAccess.setUser(user);
-
+                            userAccess.setToken(UUID.randomUUID().toString());
                             userAccessDAO.userRegistration(userAccess);
 
                             UserSettings settings = new UserSettings();

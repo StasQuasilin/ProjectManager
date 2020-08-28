@@ -3,4 +3,23 @@
     <string name="title_activity_transactions">TransactionsActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
+    <string name="calendar">Календар</string>
+    <string name="transactions">Транзакції</string>
+    <string name="settings">Налаштування</string>
+    <string name="goals">Цілі</string>
+    <string name="login_title">Вхід</string>
+    <string name="sign_in">Увійти</string>
+    <string name="registration">Реєстрація</string>
+    <string name="transaction_spending">Витрати</string>
+    <string name="transaction_income">Дохід</string>
+    <string name="transaction_transfer">Переведення</string>
+    <string name="transaction_debt">Борг</string>
+    <string name="transaction_category">Категорія</string>
+    <string name="transacton_account_from">З рахунку</string>
+    <string name="transaction_amoun">Сума</string>
+    <string name="transaction_date">Дата</string>
+    <string name="transaction_account_to">На рахунок</string>
+    <string name="save">Зберегти</string>
+    <string name="cancel">Відмінити</string>
+    <string name="transaction_edit">Редагування транзакції</string>
 </resources>

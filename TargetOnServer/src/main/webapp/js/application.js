@@ -39,6 +39,13 @@ function loadPage(url, params) {
             $(titleHolder).html(GetChildElemById(contentHolder, 'title'));
             $(titleHolder).append(GetChildElemById(contentHolder, 'titleContent'));
             coverlet.style.display = 'none';
+        }, function (message) {
+            $(contentHolder).empty();
+            $(titleHolder).html(message);
+            $(contentHolder).html('<div style="display: flex; width: 100%; height: 100%">' +
+                '<div style="flex 1 0 auto; width: 100%; height: 100%; text-align: center; vertical-align: middle">' +
+                '<h2>' + message + '</h2></div></div>');
+            coverlet.style.display = 'none';
         })
     }
 }
