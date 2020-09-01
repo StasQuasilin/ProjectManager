@@ -24,4 +24,10 @@
     <string name="transaction_edit">Редагування транзакції</string>
     <string name="date_select">Виберіть дату</string>
     <string name="OK">OK</string>
+    <string name="spending">Витрати</string>
+    <string name="income">Дохід</string>
+    <string name="transfer">Переведення</string>
+    <string name="debt">Борг</string>
+    <string name="without_category"><![CDATA[<Без категорії/>]]></string>
+    <string name="transaction_rate">Курс обміну</string>
 </resources>

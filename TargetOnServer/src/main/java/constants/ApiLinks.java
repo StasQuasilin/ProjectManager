@@ -26,4 +26,5 @@ public interface ApiLinks {
 
     String FIND_TASK = API + "/find/task";
     String TIMER_STOP = API + "task/timer/stop";
+    String USER_DATA = API + "/user/data";
 }

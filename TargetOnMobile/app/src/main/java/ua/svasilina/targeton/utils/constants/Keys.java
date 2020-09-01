@@ -18,7 +18,12 @@ public interface Keys {
     String AMOUNT = "amount";
     String RATE = "rate";
     String CURRENCY = "currency";
+    String SUM = "sum";
     String SPACE = " ";
+    String MINUS = "-";
+    String PLUS = "+";
+    String LEFT_BRACE = "(";
+    String RIGHT_BRACE = ")";
     String TIMES = "*";
     String EQUALS = "=";
     String ID = "id";
@@ -26,4 +31,6 @@ public interface Keys {
     String ACCOUNT_TO = "accountTo";
     String RIGHT_ARROW = "->";
     String USER = "user";
+    String ACCOUNT = "account";
+    String ACCOUNTS = "accounts";
 }

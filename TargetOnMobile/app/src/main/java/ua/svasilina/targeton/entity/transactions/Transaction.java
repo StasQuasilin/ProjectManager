@@ -1,4 +1,4 @@
-package ua.svasilina.targeton.entity;
+package ua.svasilina.targeton.entity.transactions;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -6,6 +6,10 @@ import org.json.JSONObject;
 import java.sql.Date;
 import java.util.Calendar;
 
+import ua.svasilina.targeton.entity.Account;
+import ua.svasilina.targeton.entity.Category;
+
+import static ua.svasilina.targeton.utils.constants.Constants.TYPE;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_FROM;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_TO;
 import static ua.svasilina.targeton.utils.constants.Keys.AMOUNT;
@@ -23,6 +27,7 @@ public class Transaction implements Comparable<Transaction>{
     private String currency;
     private Account accountFrom;
     private Account accountTo;
+    private TransactionType type = TransactionType.spending;
 
     public Transaction(JSONObject json) {
         System.out.println(json);
@@ -42,6 +47,8 @@ public class Transaction implements Comparable<Transaction>{
             if (json.has(ACCOUNT_TO)){
                 accountTo = new Account(json.getJSONObject(ACCOUNT_TO));
             }
+
+            type = TransactionType.valueOf(json.getString(TYPE));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -112,6 +119,14 @@ public class Transaction implements Comparable<Transaction>{
 
     public void setAccountTo(Account accountTo) {
         this.accountTo = accountTo;
+    }
+
+    public TransactionType getType() {
+        return type;
+    }
+
+    public void setType(TransactionType type) {
+        this.type = type;
     }
 
     @Override

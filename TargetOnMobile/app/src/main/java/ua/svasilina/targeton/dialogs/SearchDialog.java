@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,10 +26,9 @@ import java.util.HashMap;
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.adapters.SearchListAdapter;
 import ua.svasilina.targeton.dialogs.transactions.OnChangeListener;
-import ua.svasilina.targeton.entity.Category;
+import ua.svasilina.targeton.dialogs.transactions.SearchDialogItemBuilder;
 import ua.svasilina.targeton.utils.TWatcher;
 import ua.svasilina.targeton.utils.connection.Connector;
-import ua.svasilina.targeton.utils.listeners.ChangeListener;
 
 import static ua.svasilina.targeton.utils.constants.Keys.KEY;
 import static ua.svasilina.targeton.utils.constants.Keys.RESULT;
@@ -42,20 +40,22 @@ public class SearchDialog<T> extends DialogFragment {
     private final LayoutInflater inflater;
     private final String searchApi;
     private final Connector connector = Connector.getInstance();
-    private final SearchListAdapter<Category> adapter;
-    private final OnChangeListener<Category> changeListener;
+    private final SearchListAdapter<T> adapter;
+    private final OnChangeListener<T> changeListener;
 
-    public SearchDialog(Context context, LayoutInflater inflater, String searchApi, OnChangeListener<Category> changeListener) {
+    public SearchDialog(Context context, LayoutInflater inflater, String searchApi,
+                        final SearchDialogItemBuilder<T> builder,
+                        OnChangeListener<T> changeListener,
+                        SearchListBuilder<T> listBuilder) {
         this.inflater = inflater;
         this.searchApi = searchApi;
         this.changeListener = changeListener;
-        adapter  = new SearchListAdapter<>(context, R.layout.search_list_view, inflater, new SearchListBuilder<Category>() {
+        adapter  = new SearchListAdapter<T>(context, R.layout.search_list_view, inflater, listBuilder) {
             @Override
-            public void build(Category item, View view) {
-                final TextView itemValue = view.findViewById(R.id.itemValue);
-                itemValue.setText(item.getTitle());
+            public void addItem(JSONObject jsonObject) {
+                adapter.add(builder.create(jsonObject));
             }
-        });
+        };
     }
 
     @NonNull
@@ -68,7 +68,7 @@ public class SearchDialog<T> extends DialogFragment {
         textInput.addTextChangedListener(new TWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.length() > 3) {
+                if (s.length() > 2) {
                     find(s);
                 }
             }
@@ -78,9 +78,10 @@ public class SearchDialog<T> extends DialogFragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                final Category item = adapter.getItem(position);
-                if (item != null) {
+                final T item = adapter.getItem(position);
+                if (item != null){
                     changeListener.onChange(item);
+                    dismiss();
                 }
             }
         });
@@ -110,7 +111,7 @@ public class SearchDialog<T> extends DialogFragment {
                             if (status.equals(SUCCESS)){
                                 final JSONArray result = response.getJSONArray(RESULT);
                                 for (int i = 0; i < result.length(); i++){
-                                    adapter.add(new Category(result.getJSONObject(i)));
+                                    adapter.addItem(result.getJSONObject(i));
                                 }
                             }
                         } catch (JSONException e) {

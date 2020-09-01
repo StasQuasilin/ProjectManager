@@ -1,42 +1,57 @@
 package ua.svasilina.targeton.ui.main.transactions;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Collections;
+import java.util.HashMap;
 
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.adapters.TransactionsAdapter;
 import ua.svasilina.targeton.dialogs.transactions.TransactionEditDialog;
-import ua.svasilina.targeton.entity.Transaction;
+import ua.svasilina.targeton.entity.transactions.Transaction;
+import ua.svasilina.targeton.entity.transactions.UserData;
 import ua.svasilina.targeton.ui.main.ApplicationFragment;
+import ua.svasilina.targeton.utils.connection.Connector;
+import ua.svasilina.targeton.utils.constants.API;
+import ua.svasilina.targeton.utils.storage.UserAccessStorage;
+import ua.svasilina.targeton.utils.storage.UserDataStorage;
 import ua.svasilina.targeton.utils.subscribes.Subscribe;
 import ua.svasilina.targeton.utils.subscribes.Subscriber;
 
 import static ua.svasilina.targeton.utils.constants.Constants.ADD;
 import static ua.svasilina.targeton.utils.constants.Constants.UPDATE;
+import static ua.svasilina.targeton.utils.constants.Constants.USER;
+import static ua.svasilina.targeton.utils.constants.Keys.STATUS;
+import static ua.svasilina.targeton.utils.constants.Keys.SUCCESS;
 
 public class TransactionFragment extends ApplicationFragment {
 
     private Subscriber subscriber = Subscriber.getInstance();
-    private final Context context;
+    private Context context;
+
+    public TransactionFragment() {
+        context = getActivity();
+    }
 
     public TransactionFragment(Context context, LayoutInflater inflater) {
         this.context = context;
@@ -47,6 +62,9 @@ public class TransactionFragment extends ApplicationFragment {
     @Override
     public void onStart() {
         super.onStart();
+        if (context == null){
+            System.out.println("Context is null");
+        }
 
         Handler handler = new Handler(new Handler.Callback() {
             @Override
@@ -76,7 +94,7 @@ public class TransactionFragment extends ApplicationFragment {
             }
         });
 
-        subscriber.subscribe(Subscribe.transactions, handler);
+        subscriber.subscribe(Subscribe.transactions, handler, context);
     }
 
     @Override
@@ -104,8 +122,18 @@ public class TransactionFragment extends ApplicationFragment {
         final View view = inflater.inflate(R.layout.transactions_fragment, container, false);
 
         ListView transactionList = view.findViewById(R.id.transactionList);
-        adapter = new TransactionsAdapter(context, R.layout.transaction_list_item, inflater);
+        final FragmentActivity activity = getActivity();
+        if (activity != null) {
+            adapter = new TransactionsAdapter(activity, R.layout.transaction_list_item, inflater);
+        }
         transactionList.setAdapter(adapter);
+        transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                final Transaction transaction = adapter.getItem(position);
+                editTransaction(transaction);
+            }
+        });
         final FloatingActionButton newTransaction = view.findViewById(R.id.newTransaction);
         newTransaction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,13 +141,52 @@ public class TransactionFragment extends ApplicationFragment {
                 newTransaction();
             }
         });
-//        adapter.notifyDataSetChanged();
         return view;
     }
 
     private void newTransaction() {
-        final TransactionEditDialog transactionEditDialog = new TransactionEditDialog(new Transaction(), getLayoutInflater());
-        transactionEditDialog.show(getParentFragmentManager(), "Transaction Edit");
+        editTransaction(new Transaction());
+    }
+
+    private void editTransaction(final Transaction transaction){
+        final Connector instance = Connector.getInstance();
+        final HashMap<String, Object> param = new HashMap<>();
+        final Context ctx = getContext();
+        param.put(USER, UserAccessStorage.getUserAccess(ctx));
+        instance.newJsonReq(ctx, API.USER_DATA, new JSONObject(param), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
+                try {
+                    final String status = response.getString(STATUS);
+                    if (status.equals(SUCCESS)){
+                        final UserData userData = new UserData(response);
+                        editTransaction(transaction, userData);
+                        UserDataStorage.saveUserData(ctx, response.toString());
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.getMessage());
+                try {
+                    final UserData userData = new UserData(new JSONObject(UserDataStorage.getUserData(ctx)));
+                    editTransaction(transaction, userData);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    private void editTransaction(Transaction transaction, UserData userData) {
+
+        final TransactionEditDialog ted = new TransactionEditDialog(getContext(), transaction, getLayoutInflater(), userData);
+        ted.setCancelable(false);
+        ted.show(getParentFragmentManager(), "Transaction Edit");
     }
 
     @Override

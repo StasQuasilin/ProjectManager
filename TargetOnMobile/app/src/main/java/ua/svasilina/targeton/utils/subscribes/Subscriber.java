@@ -1,5 +1,6 @@
 package ua.svasilina.targeton.utils.subscribes;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -13,6 +14,7 @@ import java.util.Iterator;
 
 import okhttp3.WebSocket;
 import ua.svasilina.targeton.utils.connection.OkHttpSocket;
+import ua.svasilina.targeton.utils.storage.UserAccessStorage;
 
 import static ua.svasilina.targeton.utils.constants.Constants.*;
 
@@ -26,23 +28,29 @@ public class Subscriber {
     }
     private WebSocket socket;
     private final HashMap<Subscribe, Handler> handlerMap = new HashMap<>();
+    private String userAccess;
 
-    public void subscribe(Subscribe subscribe, Handler handler){
+    public void subscribe(Subscribe subscribe, Handler handler, Context context){
         handlerMap.put(subscribe, handler);
-        sendAction(SubscribeAction.subscribe, subscribe);
+        if (userAccess == null){
+            userAccess = UserAccessStorage.getUserAccess(context);
+        }
+        sendAction(SubscribeAction.subscribe, subscribe, userAccess);
     }
 
     public void unSubscribe(Subscribe subscribe){
         handlerMap.remove(subscribe);
-        sendAction(SubscribeAction.unsubscribe, subscribe);
+        if (userAccess != null) {
+            sendAction(SubscribeAction.unsubscribe, subscribe, userAccess);
+        }
     }
 
-    private void sendAction(SubscribeAction action, Subscribe subscribe){
+    private void sendAction(SubscribeAction action, Subscribe subscribe, String userAccess){
         try {
             JSONObject json = new JSONObject();
             json.put(ACTION, action.toString());
             json.put(SUBSCRIBE, subscribe.toString());
-            json.put(USER, 1);
+            json.put(USER, userAccess);
             Log.i(LOG_TAG, json.toString());
 
             if (socket == null){
