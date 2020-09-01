@@ -43,6 +43,7 @@ public interface Keys {
     String SURNAME = "surname";
     String FORENAME = "forename";
     String STATUS = "status";
+    String REASON = "reason";
     String STATUSES = "statuses";
     String DOER = "doer";
     String RESULT = "result";
@@ -141,4 +142,5 @@ public interface Keys {
     String FRIENDS = "friends";
     String MESSAGES = "messages";
     String TOKEN = "token";
+    String UNAUTHORISED = "unauthorised";
 }

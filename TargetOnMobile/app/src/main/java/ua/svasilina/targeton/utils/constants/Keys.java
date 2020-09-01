@@ -8,6 +8,7 @@ public interface Keys {
     String STATUS = "status";
     String ERROR = "error";
     String SUCCESS = "success";
+    String RESULT = "result";
     String MESSAGE = "message";
     String EMAIL = "email";
     String TOKEN = "token";
@@ -24,5 +25,5 @@ public interface Keys {
     String ACCOUNT_FROM = "accountFrom";
     String ACCOUNT_TO = "accountTo";
     String RIGHT_ARROW = "->";
-
+    String USER = "user";
 }

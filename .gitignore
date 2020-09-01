@@ -33,13 +33,5 @@ Targeton/.idea/*
 TardetOnServer/src/main/webapp/external/
 TargetOnServer/src/main/webapp/external/*
 TargetOnServer/TargetOnServer.iml
-targeton_app/ios/*
-targeton_app/android/*
-targeton_app/.dart_tool/
-targeton_app/.idea/
-targeton_app/.metadata
-targeton_app/.packages
-targeton_app/build/
-targeton_app/targeton_app.iml
-targeton_app/test/
+TargetOnMobile/.gradle
 

@@ -22,4 +22,6 @@
     <string name="save">Зберегти</string>
     <string name="cancel">Відмінити</string>
     <string name="transaction_edit">Редагування транзакції</string>
+    <string name="date_select">Виберіть дату</string>
+    <string name="OK">OK</string>
 </resources>

@@ -5,6 +5,7 @@ public interface Constants {
     int SERVER_PORT = 3322;
     String DATA = "data";
     String ADD = "add";
+    String UPDATE = "update";
     String TYPE = "type";
     String ACTION = "action";
     String SUBSCRIBE = "subscribe";

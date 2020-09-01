@@ -13,13 +13,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import org.json.JSONArray;
+
 import java.util.Calendar;
 import java.util.Date;
 
 import ua.svasilina.targeton.R;
+import ua.svasilina.targeton.dialogs.SearchDialog;
+import ua.svasilina.targeton.dialogs.SearchResult;
+import ua.svasilina.targeton.dialogs.common.DateDialog;
 import ua.svasilina.targeton.entity.Category;
 import ua.svasilina.targeton.entity.Transaction;
 import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
+import ua.svasilina.targeton.utils.constants.API;
+import ua.svasilina.targeton.utils.listeners.ChangeListener;
 
 import static ua.svasilina.targeton.utils.constants.Constants.DATE_PATTERN;
 
@@ -29,7 +36,8 @@ public class TransactionEditDialog extends DialogFragment {
     private final LayoutInflater inflater;
     private final Transaction transaction;
     private Button dateButton;
-    private SearchView transactionCategory;
+    private Button transactionCategory;
+
 
     public TransactionEditDialog(Transaction transaction, LayoutInflater inflater) {
         this.transaction = transaction;
@@ -47,7 +55,6 @@ public class TransactionEditDialog extends DialogFragment {
         initDateButton();
         initTransactionCategory();
 
-
         builder.setView(view);
         builder.setTitle(R.string.transaction_edit);
         builder.setPositiveButton(R.string.save, null);
@@ -55,16 +62,32 @@ public class TransactionEditDialog extends DialogFragment {
         return builder.create();
     }
 
+
+    DateTimeBuilder dateTimeBuilder = new DateTimeBuilder(DATE_PATTERN);
+
     private void initDateButton() {
-        Date date = transaction.getDate();
-        if (date == null){
-            date = Calendar.getInstance().getTime();
+        final Calendar d = transaction.getDate();
+        final Calendar date = d == null ? Calendar.getInstance() : d;
+
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DateDialog(date, getLayoutInflater(), DateDialog.DialogType.calendar, new ChangeListener() {
+                    @Override
+                    public void onChange() {
+                        updateDateButton();
+                    }
+                }).show(getParentFragmentManager(), "DateDialog");
+            }
+        });
+        if (d == null){
+            transaction.setDate(date);
         }
+        updateDateButton();
+    }
 
-        DateTimeBuilder dateTimeBuilder = new DateTimeBuilder(DATE_PATTERN);
-        dateButton.setText(dateTimeBuilder.build(date));
-
-
+    private void updateDateButton() {
+        dateButton.setText(dateTimeBuilder.build(transaction.getDate()));
     }
 
     private void initTransactionCategory() {
@@ -73,13 +96,25 @@ public class TransactionEditDialog extends DialogFragment {
             category = new Category();
             transaction.setCategory(category);
         }
-        transactionCategory.setIconified(false);
-        
-        transactionCategory.setOnKeyListener(new View.OnKeyListener() {
+
+        transactionCategory.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                return false;
+            public void onClick(View v) {
+                final SearchDialog<Category> dialog = new SearchDialog<>(getContext(), getLayoutInflater(), API.FIND_CATEGORY, new OnChangeListener<Category>() {
+                    @Override
+                    public void onChange(Category item) {
+                        transaction.setCategory(item);
+                        updateTransactionCategory();
+                    }
+                });
+                dialog.show(getParentFragmentManager(), "Find Category");
+
             }
         });
+        updateTransactionCategory();
+    }
+
+    private void updateTransactionCategory() {
+        transactionCategory.setText(transaction.getCategory().getTitle());
     }
 }

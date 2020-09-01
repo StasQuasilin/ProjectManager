@@ -20,6 +20,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collections;
+
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.adapters.TransactionsAdapter;
 import ua.svasilina.targeton.dialogs.transactions.TransactionEditDialog;
@@ -29,6 +31,7 @@ import ua.svasilina.targeton.utils.subscribes.Subscribe;
 import ua.svasilina.targeton.utils.subscribes.Subscriber;
 
 import static ua.svasilina.targeton.utils.constants.Constants.ADD;
+import static ua.svasilina.targeton.utils.constants.Constants.UPDATE;
 
 public class TransactionFragment extends ApplicationFragment {
 
@@ -58,10 +61,15 @@ public class TransactionFragment extends ApplicationFragment {
                                 final JSONObject json = jsonArray.getJSONObject(i);
                                 adapter.add(new Transaction(json));
                             }
+                            adapter.sort();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                }
+                if (data.containsKey(UPDATE)){
+                    final String string = data.getString(UPDATE);
+                    System.out.println(string);
                 }
 
                 return false;

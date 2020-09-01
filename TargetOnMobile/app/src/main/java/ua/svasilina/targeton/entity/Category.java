@@ -1,5 +1,7 @@
 package ua.svasilina.targeton.entity;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,5 +39,11 @@ public class Category {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return title;
     }
 }

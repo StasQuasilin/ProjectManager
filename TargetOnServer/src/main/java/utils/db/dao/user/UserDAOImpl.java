@@ -10,8 +10,8 @@ public class UserDAOImpl implements UserDAO{
 
     private final Hibernator hibernator = Hibernator.getInstance();
     @Override
-    public User getUserById(Object token) {
-        return hibernator.get(User.class, ID, token);
+    public User getUserById(Object id) {
+        return hibernator.get(User.class, ID, id);
     }
 
     @Override

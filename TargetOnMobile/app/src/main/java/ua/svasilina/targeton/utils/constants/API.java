@@ -12,4 +12,5 @@ public interface API {
     String API = HOME + "/api/v1";
     String SIGN_IN = HOME + "/sign/in";
     String SUBSCRIBER = WS + "://" + ADDRESS + ":" + PORT + CONTEXT + "/socket";
+    String FIND_CATEGORY = API + "/find/transaction/category";
 }

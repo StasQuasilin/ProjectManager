@@ -11,11 +11,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.Comparator;
+
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.entity.Transaction;
+import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
 
 import static android.view.View.GONE;
+import static ua.svasilina.targeton.utils.constants.Constants.DATE_PATTERN;
 import static ua.svasilina.targeton.utils.constants.Keys.EQUALS;
 import static ua.svasilina.targeton.utils.constants.Keys.RIGHT_ARROW;
 import static ua.svasilina.targeton.utils.constants.Keys.SPACE;
@@ -25,6 +29,7 @@ public class TransactionsAdapter extends ArrayAdapter<Transaction> {
 
     private final int resource;
     private final LayoutInflater inflater;
+    private final DateTimeBuilder dtb = new DateTimeBuilder(DATE_PATTERN);
 
     public TransactionsAdapter(@NonNull Context context, int resource, LayoutInflater inflater) {
         super(context, resource);
@@ -50,7 +55,7 @@ public class TransactionsAdapter extends ArrayAdapter<Transaction> {
             }
 
             if (showData){
-                dateView.setText(item.getDate().toString());
+                dateView.setText(dtb.build(item.getDate()));
             } else {
                 dateView.setVisibility(GONE);
             }
@@ -94,5 +99,14 @@ public class TransactionsAdapter extends ArrayAdapter<Transaction> {
         }
         builder.append(SPACE).append(transaction.getCurrency());
         return builder.toString();
+    }
+
+    public void sort() {
+        sort(new Comparator<Transaction>() {
+            @Override
+            public int compare(Transaction o1, Transaction o2) {
+                return o1.compareTo(o2);
+            }
+        });
     }
 }

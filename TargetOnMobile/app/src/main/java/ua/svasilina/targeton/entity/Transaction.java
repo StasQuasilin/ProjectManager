@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Date;
+import java.util.Calendar;
 
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_FROM;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_TO;
@@ -14,8 +15,8 @@ import static ua.svasilina.targeton.utils.constants.Keys.DATE;
 import static ua.svasilina.targeton.utils.constants.Keys.RATE;
 
 
-public class Transaction {
-    private Date date;
+public class Transaction implements Comparable<Transaction>{
+    private Calendar date;
     private Category category;
     private double amount;
     private double rate;
@@ -26,7 +27,11 @@ public class Transaction {
     public Transaction(JSONObject json) {
         System.out.println(json);
         try {
-            date = Date.valueOf(json.getString(DATE));
+            date = Calendar.getInstance();
+
+            final Date d = Date.valueOf(json.getString(DATE));
+            date.setTimeInMillis(d.getTime());
+
             category = new Category(json.getJSONObject(CATEGORY));
             amount = json.getDouble(AMOUNT);
             rate = json.getDouble(RATE);
@@ -46,11 +51,10 @@ public class Transaction {
 
     }
 
-    public Date getDate() {
+    public Calendar getDate() {
         return date;
     }
-
-    public void setDate(Date date) {
+    public void setDate(Calendar date) {
         this.date = date;
     }
 
@@ -108,5 +112,10 @@ public class Transaction {
 
     public void setAccountTo(Account accountTo) {
         this.accountTo = accountTo;
+    }
+
+    @Override
+    public int compareTo(Transaction o) {
+        return date.compareTo(o.getDate());
     }
 }

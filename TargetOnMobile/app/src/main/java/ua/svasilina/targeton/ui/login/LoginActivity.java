@@ -90,6 +90,7 @@ public class LoginActivity extends Activity {
                         public void onResponse(JSONObject response) {
                             try {
                                 final String status = response.getString(STATUS);
+                                System.out.println(status);
                                 if (status.equals(SUCCESS)){
                                     final String token = response.getString(TOKEN);
                                     final Context context = getApplicationContext();
