@@ -11,4 +11,5 @@ public interface Constants {
     String SUBSCRIBE = "subscribe";
     String USER = "user";
     String DATE_PATTERN = "dd.MM.yyyy";
+    String ISO_PATTERN = "yyyy-MM-dd";
 }

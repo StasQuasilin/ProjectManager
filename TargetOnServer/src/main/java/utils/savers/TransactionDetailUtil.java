@@ -10,6 +10,7 @@ import utils.db.dao.finance.transactions.TransactionDAO;
 import utils.json.JsonObject;
 
 import java.util.HashMap;
+import java.util.List;
 
 import static constants.Keys.*;
 
@@ -23,6 +24,7 @@ public class TransactionDetailUtil {
         for (TransactionDetail detail : transactionDAO.getDetails(transaction.getId())){
             map.put(detail.getId(), detail);
         }
+
         for (Object o : details){
             JsonObject jsonObject = new JsonObject(o);
             TransactionDetail detail = map.remove(jsonObject.getInt(ID));
@@ -47,5 +49,9 @@ public class TransactionDetailUtil {
             transactionDAO.saveDetail(detail);
         }
         transactionDAO.removeDetails(map.values());
+    }
+
+    public void removeDetails(Transaction transaction) {
+        transactionDAO.removeDetails(transactionDAO.getDetails(transaction));
     }
 }

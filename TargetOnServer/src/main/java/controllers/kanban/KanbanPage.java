@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static constants.Keys.*;
+import static constants.UrlLinks.GOAL_EDIT;
 
 @WebServlet(UrlLinks.KANBAN)
 public class KanbanPage extends Page {
@@ -37,6 +38,7 @@ public class KanbanPage extends Page {
         final User user = getUser(req);
         final List<Goal> goals = goalDAO.getGoals(user);
         req.setAttribute(GOALS, goals);
+        req.setAttribute(EDIT, GOAL_EDIT);
 
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);

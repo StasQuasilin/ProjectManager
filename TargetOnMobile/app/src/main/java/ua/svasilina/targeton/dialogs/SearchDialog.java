@@ -122,7 +122,7 @@ public class SearchDialog<T> extends DialogFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        System.out.println(error.getMessage());
+                        System.out.println("!" + error.getMessage());
                     }
                 });
     }

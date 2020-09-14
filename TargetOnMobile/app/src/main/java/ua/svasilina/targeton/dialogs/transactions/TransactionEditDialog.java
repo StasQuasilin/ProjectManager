@@ -18,6 +18,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -33,6 +36,7 @@ import ua.svasilina.targeton.entity.transactions.TransactionType;
 import ua.svasilina.targeton.entity.transactions.UserData;
 import ua.svasilina.targeton.utils.NameUtil;
 import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
+import ua.svasilina.targeton.utils.connection.Connector;
 import ua.svasilina.targeton.utils.constants.API;
 import ua.svasilina.targeton.utils.listeners.ChangeListener;
 
@@ -56,13 +60,6 @@ public class TransactionEditDialog extends DialogFragment {
     private Spinner currencies;
     private View rateGroup;
     private EditText rate;
-
-    public TransactionEditDialog() {
-        this.context = getActivity();
-        if (context != null) {
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
-    }
 
     public TransactionEditDialog(Context context, Transaction transaction, LayoutInflater inflater, UserData userData) {
         this.context = context;
@@ -120,11 +117,28 @@ public class TransactionEditDialog extends DialogFragment {
     }
 
     private void save() {
-
+        final Connector instance = Connector.getInstance();
+        instance.newJsonReq(getContext(), API.SAVE_TRANSACTION, transaction.buildJson(), new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                System.out.println(response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                System.out.println(error.getMessage());
+            }
+        });
     }
 
     private void initTransactionAmount() {
         amount.setText(String.valueOf(transaction.getAmount()));
+        amount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                amount.selectAll();
+            }
+        });
     }
 
     private void showRate() {

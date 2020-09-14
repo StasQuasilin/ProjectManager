@@ -5,10 +5,15 @@ import org.json.JSONObject;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.entity.Category;
+import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
+import ua.svasilina.targeton.utils.constants.Constants;
+import ua.svasilina.targeton.utils.json.JsonAble;
 
+import static ua.svasilina.targeton.utils.constants.Constants.DATE_PATTERN;
 import static ua.svasilina.targeton.utils.constants.Constants.TYPE;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_FROM;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_TO;
@@ -16,10 +21,12 @@ import static ua.svasilina.targeton.utils.constants.Keys.AMOUNT;
 import static ua.svasilina.targeton.utils.constants.Keys.CATEGORY;
 import static ua.svasilina.targeton.utils.constants.Keys.CURRENCY;
 import static ua.svasilina.targeton.utils.constants.Keys.DATE;
+import static ua.svasilina.targeton.utils.constants.Keys.ID;
 import static ua.svasilina.targeton.utils.constants.Keys.RATE;
 
 
-public class Transaction implements Comparable<Transaction>{
+public class Transaction extends JsonAble implements Comparable<Transaction>{
+    private int id;
     private Calendar date;
     private Category category;
     private double amount;
@@ -30,8 +37,9 @@ public class Transaction implements Comparable<Transaction>{
     private TransactionType type = TransactionType.spending;
 
     public Transaction(JSONObject json) {
-        System.out.println(json);
+        System.out.println("!!" + json);
         try {
+            id = json.getInt(ID);
             date = Calendar.getInstance();
 
             final Date d = Date.valueOf(json.getString(DATE));
@@ -57,6 +65,7 @@ public class Transaction implements Comparable<Transaction>{
     public Transaction() {
 
     }
+
 
     public Calendar getDate() {
         return date;
@@ -132,5 +141,25 @@ public class Transaction implements Comparable<Transaction>{
     @Override
     public int compareTo(Transaction o) {
         return date.compareTo(o.getDate());
+    }
+
+
+    @Override
+    public HashMap<String, Object> buildHashMap() {
+        final HashMap<String, Object> hashMap = new HashMap<>();
+        final DateTimeBuilder builder = new DateTimeBuilder(Constants.ISO_PATTERN);
+        hashMap.put(ID, id);
+        hashMap.put(DATE, builder.build(date));
+        hashMap.put(CATEGORY, category.buildJson());
+        hashMap.put(AMOUNT, amount);
+        hashMap.put(CURRENCY, currency);
+        if (accountFrom != null){
+            hashMap.put(ACCOUNT_FROM, accountFrom.getId());
+        }
+        if (accountTo != null){
+            hashMap.put(ACCOUNT_TO, accountTo.getId());
+        }
+        hashMap.put(TYPE, type.toString());
+        return hashMap;
     }
 }

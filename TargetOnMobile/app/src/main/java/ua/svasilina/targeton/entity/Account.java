@@ -6,6 +6,10 @@ import androidx.annotation.Nullable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
+import ua.svasilina.targeton.utils.json.JsonAble;
+
 import static ua.svasilina.targeton.utils.constants.Keys.AMOUNT;
 import static ua.svasilina.targeton.utils.constants.Keys.CURRENCY;
 import static ua.svasilina.targeton.utils.constants.Keys.ID;
@@ -15,7 +19,7 @@ import static ua.svasilina.targeton.utils.constants.Keys.SPACE;
 import static ua.svasilina.targeton.utils.constants.Keys.SUM;
 import static ua.svasilina.targeton.utils.constants.Keys.TITLE;
 
-public class Account {
+public class Account extends JsonAble {
     private int id;
     private String title;
     private double amount;
@@ -76,5 +80,11 @@ public class Account {
     public boolean equals(@Nullable Object obj) {
         assert obj != null;
         return obj.getClass().equals(getClass()) && hashCode() == obj.hashCode();
+    }
+
+    @Override
+    public HashMap<String, Object> buildHashMap() {
+        final HashMap<String, Object> map = new HashMap<>();
+        return map;
     }
 }

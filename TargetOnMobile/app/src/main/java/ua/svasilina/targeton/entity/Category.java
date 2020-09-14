@@ -5,10 +5,14 @@ import androidx.annotation.NonNull;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+
+import ua.svasilina.targeton.utils.json.JsonAble;
+
 import static ua.svasilina.targeton.utils.constants.Keys.ID;
 import static ua.svasilina.targeton.utils.constants.Keys.TITLE;
 
-public class Category {
+public class Category extends JsonAble {
     private int id;
     private String title;
 
@@ -45,5 +49,13 @@ public class Category {
     @Override
     public String toString() {
         return title;
+    }
+
+    @Override
+    public HashMap<String, Object> buildHashMap() {
+        final HashMap<String, Object> map = new HashMap<>();
+        map.put(ID, id);
+        map.put(TITLE, title);
+        return map;
     }
 }

@@ -33,4 +33,6 @@ public interface Keys {
     String USER = "user";
     String ACCOUNT = "account";
     String ACCOUNTS = "accounts";
+    String REASON = "reason";
+    String UNAUTHORISED = "unauthorised";
 }

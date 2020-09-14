@@ -38,7 +38,7 @@ public class Subscriber {
         sendAction(SubscribeAction.subscribe, subscribe, userAccess);
     }
 
-    public void unSubscribe(Subscribe subscribe){
+    public void unsubscribe(Subscribe subscribe){
         handlerMap.remove(subscribe);
         if (userAccess != null) {
             sendAction(SubscribeAction.unsubscribe, subscribe, userAccess);

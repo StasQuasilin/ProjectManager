@@ -6,7 +6,6 @@ import entity.UserSystemCategory;
 import entity.finance.accounts.Account;
 import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
-import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionType;
 import entity.user.User;
 import org.json.simple.JSONArray;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
-import java.util.HashMap;
 
 import static constants.Keys.*;
 
@@ -98,7 +96,11 @@ public class EditTransactionAPI extends API {
             write(resp, SUCCESS_ANSWER);
             transactionSaver.save(transaction);
 
-            tdu.saveDetails(transaction, (JSONArray) body.get(DETAILS));
+            if(body.containKey(DETAILS)) {
+                tdu.saveDetails(transaction, (JSONArray) body.get(DETAILS));
+            } else {
+                tdu.removeDetails(transaction);
+            }
 
 //            if (type == TransactionType.income || type == TransactionType.spending) {
 //                if (prevCategory != null && !prevCategory.equals(transaction.getCategory())) {

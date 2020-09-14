@@ -30,9 +30,11 @@ import ua.svasilina.targeton.adapters.TransactionsAdapter;
 import ua.svasilina.targeton.dialogs.transactions.TransactionEditDialog;
 import ua.svasilina.targeton.entity.transactions.Transaction;
 import ua.svasilina.targeton.entity.transactions.UserData;
+import ua.svasilina.targeton.ui.login.LoginActivity;
 import ua.svasilina.targeton.ui.main.ApplicationFragment;
 import ua.svasilina.targeton.utils.connection.Connector;
 import ua.svasilina.targeton.utils.constants.API;
+import ua.svasilina.targeton.utils.constants.Keys;
 import ua.svasilina.targeton.utils.storage.UserAccessStorage;
 import ua.svasilina.targeton.utils.storage.UserDataStorage;
 import ua.svasilina.targeton.utils.subscribes.Subscribe;
@@ -41,6 +43,7 @@ import ua.svasilina.targeton.utils.subscribes.Subscriber;
 import static ua.svasilina.targeton.utils.constants.Constants.ADD;
 import static ua.svasilina.targeton.utils.constants.Constants.UPDATE;
 import static ua.svasilina.targeton.utils.constants.Constants.USER;
+import static ua.svasilina.targeton.utils.constants.Keys.ERROR;
 import static ua.svasilina.targeton.utils.constants.Keys.STATUS;
 import static ua.svasilina.targeton.utils.constants.Keys.SUCCESS;
 
@@ -87,7 +90,7 @@ public class TransactionFragment extends ApplicationFragment {
                 }
                 if (data.containsKey(UPDATE)){
                     final String string = data.getString(UPDATE);
-                    System.out.println(string);
+                    System.out.println("?!" + string);
                 }
 
                 return false;
@@ -112,7 +115,7 @@ public class TransactionFragment extends ApplicationFragment {
     @Override
     public void onStop() {
         super.onStop();
-        subscriber.unSubscribe(Subscribe.transactions);
+        subscriber.unsubscribe(Subscribe.transactions);
         Toast.makeText(getContext(), "TransactionFragment stop", Toast.LENGTH_SHORT).show();
     }
 
@@ -150,19 +153,24 @@ public class TransactionFragment extends ApplicationFragment {
 
     private void editTransaction(final Transaction transaction){
         final Connector instance = Connector.getInstance();
-        final HashMap<String, Object> param = new HashMap<>();
         final Context ctx = getContext();
+        final HashMap<String, Object> param = new HashMap<>();
         param.put(USER, UserAccessStorage.getUserAccess(ctx));
         instance.newJsonReq(ctx, API.USER_DATA, new JSONObject(param), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println(response);
+                System.out.println("??" + response);
                 try {
                     final String status = response.getString(STATUS);
                     if (status.equals(SUCCESS)){
                         final UserData userData = new UserData(response);
                         editTransaction(transaction, userData);
                         UserDataStorage.saveUserData(ctx, response.toString());
+                    } else {
+                        final String reason = response.getString(Keys.REASON);
+                        if (reason.equals(Keys.UNAUTHORISED)){
+                            startActivity(ctx, LoginActivity.class);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
