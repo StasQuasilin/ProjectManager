@@ -2,8 +2,6 @@ package ua.svasilina.targeton.ui.main.transactions;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,73 +34,56 @@ import ua.svasilina.targeton.utils.constants.API;
 import ua.svasilina.targeton.utils.constants.Keys;
 import ua.svasilina.targeton.utils.storage.UserAccessStorage;
 import ua.svasilina.targeton.utils.storage.UserDataStorage;
+import ua.svasilina.targeton.utils.subscribes.DataHandler;
 import ua.svasilina.targeton.utils.subscribes.Subscribe;
 import ua.svasilina.targeton.utils.subscribes.Subscriber;
+import ua.svasilina.targeton.utils.subscribes.updaters.TransactionUpdater;
 
-import static ua.svasilina.targeton.utils.constants.Constants.ADD;
-import static ua.svasilina.targeton.utils.constants.Constants.UPDATE;
-import static ua.svasilina.targeton.utils.constants.Constants.USER;
-import static ua.svasilina.targeton.utils.constants.Keys.ERROR;
+import static ua.svasilina.targeton.utils.constants.Keys.ID;
 import static ua.svasilina.targeton.utils.constants.Keys.STATUS;
 import static ua.svasilina.targeton.utils.constants.Keys.SUCCESS;
+import static ua.svasilina.targeton.utils.constants.Keys.USER;
 
 public class TransactionFragment extends ApplicationFragment {
 
     private Subscriber subscriber = Subscriber.getInstance();
     private Context context;
 
-    public TransactionFragment() {
-        context = getActivity();
-    }
+    private final DataHandler handler;
 
-    public TransactionFragment(Context context, LayoutInflater inflater) {
+    public TransactionFragment(Context context) {
         this.context = context;
+        handler = new DataHandler(new TransactionUpdater(this));
     }
 
     private TransactionsAdapter adapter;
+    private final HashMap<Integer, Transaction> transactionHashMap = new HashMap<>();
 
     @Override
     public void onStart() {
         super.onStart();
-        if (context == null){
-            System.out.println("Context is null");
-        }
-
-        Handler handler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(@NonNull Message msg) {
-                final Bundle data = msg.getData();
-                if (data.containsKey(ADD)){
-                    final String add = data.getString(ADD);
-                    try {
-                        if (add != null) {
-                            final JSONArray jsonArray = new JSONArray(add);
-                            for (int i = 0; i < jsonArray.length(); i++){
-                                final JSONObject json = jsonArray.getJSONObject(i);
-                                adapter.add(new Transaction(json));
-                            }
-                            adapter.sort();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                if (data.containsKey(UPDATE)){
-                    final String string = data.getString(UPDATE);
-                    System.out.println("?!" + string);
-                }
-
-                return false;
-            }
-        });
-
-        subscriber.subscribe(Subscribe.transactions, handler, context);
     }
+
+    public void update(JSONObject json) throws JSONException {
+        final int id = json.getInt(ID);
+        Transaction transaction = transactionHashMap.get(id);
+        if (transaction == null){
+            transaction = new Transaction(json);
+            transactionHashMap.put(transaction.getId(), transaction);
+            adapter.add(transaction);
+        } else {
+            transaction.update(json);
+        }
+    }
+
+    private ListView transactionList;
 
     @Override
     public void onResume() {
         super.onResume();
-        Toast.makeText(getContext(), "TransactionFragment resume", Toast.LENGTH_SHORT).show();
+        subscriber.subscribe(Subscribe.transactions, handler, context);
+        System.out.println(adapter);
+        System.out.println(transactionList);
     }
 
     @Override
@@ -124,11 +104,8 @@ public class TransactionFragment extends ApplicationFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.transactions_fragment, container, false);
 
-        ListView transactionList = view.findViewById(R.id.transactionList);
-        final FragmentActivity activity = getActivity();
-        if (activity != null) {
-            adapter = new TransactionsAdapter(activity, R.layout.transaction_list_item, inflater);
-        }
+        transactionList = view.findViewById(R.id.transactionList);
+        adapter = new TransactionsAdapter(context, R.layout.transaction_list_item, inflater);
         transactionList.setAdapter(adapter);
         transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -200,5 +177,9 @@ public class TransactionFragment extends ApplicationFragment {
     @Override
     public String getTitle() {
         return "Transactions";
+    }
+
+    public void sort() {
+        adapter.sort();
     }
 }

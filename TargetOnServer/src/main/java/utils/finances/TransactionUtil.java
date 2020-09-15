@@ -24,9 +24,10 @@ public class TransactionUtil {
 
     public void updateAccounts(Transaction transaction) {
         final float amount = transaction.getAmount();
-        final float rate = transaction.getRate();
-        final TransactionType type = transaction.getTransactionType();
         if (amount != 0){
+            final float rate = transaction.getRate();
+            final TransactionType type = transaction.getTransactionType();
+
             final Account accountFrom = transaction.getAccountFrom();
             if (accountFrom != null) {
                 updatePoint(transaction, accountFrom, type != TransactionType.transfer ? -amount * rate: -amount);

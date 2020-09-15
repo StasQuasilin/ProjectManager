@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
@@ -24,52 +26,75 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import ua.svasilina.targeton.R;
-import ua.svasilina.targeton.adapters.SearchListAdapter;
+import ua.svasilina.targeton.adapters.SimpleListAdapter;
 import ua.svasilina.targeton.dialogs.transactions.OnChangeListener;
 import ua.svasilina.targeton.dialogs.transactions.SearchDialogItemBuilder;
 import ua.svasilina.targeton.utils.TWatcher;
 import ua.svasilina.targeton.utils.connection.Connector;
 
+import static ua.svasilina.targeton.utils.constants.Keys.ID;
 import static ua.svasilina.targeton.utils.constants.Keys.KEY;
 import static ua.svasilina.targeton.utils.constants.Keys.RESULT;
 import static ua.svasilina.targeton.utils.constants.Keys.STATUS;
 import static ua.svasilina.targeton.utils.constants.Keys.SUCCESS;
+import static ua.svasilina.targeton.utils.constants.Keys.TITLE;
 
 public class SearchDialog<T> extends DialogFragment {
 
     private final LayoutInflater inflater;
     private final String searchApi;
     private final Connector connector = Connector.getInstance();
-    private final SearchListAdapter<T> adapter;
+    private final SimpleListAdapter<T> adapter;
     private final OnChangeListener<T> changeListener;
+    private final SearchDialogItemBuilder<T> itemBuilder;
+    private EditText textInput;
+    private SearchTimer<T> timer;
 
     public SearchDialog(Context context, LayoutInflater inflater, String searchApi,
-                        final SearchDialogItemBuilder<T> builder,
+                        final SearchDialogItemBuilder<T> itemBuilder,
                         OnChangeListener<T> changeListener,
                         SearchListBuilder<T> listBuilder) {
         this.inflater = inflater;
         this.searchApi = searchApi;
         this.changeListener = changeListener;
-        adapter  = new SearchListAdapter<T>(context, R.layout.search_list_view, inflater, listBuilder) {
+        this.itemBuilder = itemBuilder;
+        adapter  = new SimpleListAdapter<T>(context, R.layout.search_list_view, inflater, listBuilder, itemBuilder) {
             @Override
             public void addItem(JSONObject jsonObject) {
-                adapter.add(builder.create(jsonObject));
+                adapter.add(itemBuilder.create(jsonObject));
             }
         };
+        timer = new SearchTimer<>(300, 1, this);
     }
+
+    private Button addCategoryButton;
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final View view = inflater.inflate(R.layout.search_dialog, null);
+        addCategoryButton = view.findViewById(R.id.addCategoryButton);
+        addCategoryButton.setVisibility(View.GONE);
+        addCategoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final HashMap<String, Object> map = new HashMap<>();
+                map.put(ID, -1);
+                map.put(TITLE, textInput.getText().toString());
+                changeListener.onChange(itemBuilder.create(new JSONObject(map)));
+                dismiss();
+            }
+        });
 
-        final EditText textInput = view.findViewById(R.id.searchValue);
+        textInput = view.findViewById(R.id.searchValue);
         textInput.addTextChangedListener(new TWatcher() {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                timer.cancel();
+                addCategoryButton.setVisibility(View.GONE);
                 if (s.length() > 2) {
-                    find(s);
+                    timer.start();
                 }
             }
         });
@@ -93,9 +118,14 @@ public class SearchDialog<T> extends DialogFragment {
         return builder.create();
     }
 
+    private void find() {
+        final String s = textInput.getText().toString();
+        find(s);
+    }
+
     private void find(CharSequence key) {
         adapter.clear();
-        System.out.println("FIND: " + key);
+
         HashMap<String, CharSequence> param = new HashMap<>();
         param.put(KEY, key.toString());
 
@@ -110,9 +140,14 @@ public class SearchDialog<T> extends DialogFragment {
                             final String status = response.getString(STATUS);
                             if (status.equals(SUCCESS)){
                                 final JSONArray result = response.getJSONArray(RESULT);
-                                for (int i = 0; i < result.length(); i++){
-                                    adapter.addItem(result.getJSONObject(i));
+                                if (result.length() > 0){
+                                    for (int i = 0; i < result.length(); i++){
+                                        adapter.addItem(result.getJSONObject(i));
+                                    }
+                                } else {
+                                    addCategoryButton.setVisibility(View.VISIBLE);
                                 }
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -125,5 +160,33 @@ public class SearchDialog<T> extends DialogFragment {
                         System.out.println("!" + error.getMessage());
                     }
                 });
+    }
+
+    private static class SearchTimer<T> extends CountDownTimer {
+
+        private SearchDialog<T> searchDialog;
+
+        /**
+         * @param millisInFuture    The number of millis in the future from the call
+         *                          to {@link #start()} until the countdown is done and {@link #onFinish()}
+         *                          is called.
+         * @param countDownInterval The interval along the way to receive
+         *                          {@link #onTick(long)} callbacks.
+         */
+        public SearchTimer(long millisInFuture, long countDownInterval, SearchDialog<T> tSearchDialog) {
+            super(millisInFuture, countDownInterval);
+            this.searchDialog = tSearchDialog;
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+
+        }
+
+        @Override
+        public void onFinish() {
+            System.out.println("finish");
+            searchDialog.find();
+        }
     }
 }

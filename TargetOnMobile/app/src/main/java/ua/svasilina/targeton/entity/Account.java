@@ -8,12 +8,14 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import ua.svasilina.targeton.utils.constants.Keys;
 import ua.svasilina.targeton.utils.json.JsonAble;
 
 import static ua.svasilina.targeton.utils.constants.Keys.AMOUNT;
 import static ua.svasilina.targeton.utils.constants.Keys.CURRENCY;
 import static ua.svasilina.targeton.utils.constants.Keys.ID;
 import static ua.svasilina.targeton.utils.constants.Keys.LEFT_BRACE;
+import static ua.svasilina.targeton.utils.constants.Keys.LIMIT;
 import static ua.svasilina.targeton.utils.constants.Keys.RIGHT_BRACE;
 import static ua.svasilina.targeton.utils.constants.Keys.SPACE;
 import static ua.svasilina.targeton.utils.constants.Keys.SUM;
@@ -24,18 +26,14 @@ public class Account extends JsonAble {
     private String title;
     private double amount;
     private String currency;
+    private int limit;
 
     public Account(JSONObject json) {
 
         try {
             id = json.getInt(ID);
-            title = json.getString(TITLE);
-            if (json.has(CURRENCY)){
-                currency = json.getString(CURRENCY);
-            }
-            if (json.has(SUM)){
-                amount = json.getDouble(SUM);
-            }
+            update(json);
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -65,6 +63,22 @@ public class Account extends JsonAble {
         return currency;
     }
 
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -86,5 +100,18 @@ public class Account extends JsonAble {
     public HashMap<String, Object> buildHashMap() {
         final HashMap<String, Object> map = new HashMap<>();
         return map;
+    }
+
+    public void update(JSONObject json) throws JSONException {
+        title = json.getString(TITLE);
+        if (json.has(CURRENCY)){
+            currency = json.getString(CURRENCY);
+        }
+        if (json.has(SUM)){
+            amount = json.getDouble(SUM);
+        }
+        if (json.has(Keys.LIMIT)){
+            limit = json.getInt(LIMIT);
+        }
     }
 }

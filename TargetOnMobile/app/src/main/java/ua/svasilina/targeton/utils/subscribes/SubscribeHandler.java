@@ -4,9 +4,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import static ua.svasilina.targeton.utils.constants.Constants.ADD;
-import static ua.svasilina.targeton.utils.constants.Constants.DATA;
-import static ua.svasilina.targeton.utils.constants.Constants.SUBSCRIBE;
+import static ua.svasilina.targeton.utils.constants.Keys.ADD;
+import static ua.svasilina.targeton.utils.constants.Keys.DATA;
+import static ua.svasilina.targeton.utils.constants.Keys.SUBSCRIBE;
 
 public class SubscribeHandler {
 

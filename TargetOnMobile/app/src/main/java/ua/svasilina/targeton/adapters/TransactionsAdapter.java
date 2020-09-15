@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.Comparator;
+import java.util.LinkedList;
 
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.entity.Account;
@@ -128,7 +129,7 @@ public class TransactionsAdapter extends ArrayAdapter<Transaction> {
         sort(new Comparator<Transaction>() {
             @Override
             public int compare(Transaction o1, Transaction o2) {
-                return o1.compareTo(o2);
+                return o2.compareTo(o1);
             }
         });
     }

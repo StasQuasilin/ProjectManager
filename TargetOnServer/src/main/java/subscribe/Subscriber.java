@@ -4,6 +4,9 @@ import entity.user.User;
 import org.json.simple.JSONObject;
 import subscribe.handlers.*;
 import utils.UpdateAction;
+import utils.answers.Answer;
+import utils.answers.ErrorAnswer;
+import utils.answers.SuccessAnswer;
 import utils.json.JsonAble;
 
 import javax.websocket.Session;
@@ -49,7 +52,7 @@ public final class Subscriber {
     public void subscribe(User user, Subscribe subscribe, Session session){
 
         SubscribeHandler handler = handlers.get(subscribe);
-
+        Answer answer;
         if (handler != null) {
             if (!sessions.containsKey(user)){
                 sessions.put(user, new ArrayList<>());
@@ -60,8 +63,15 @@ public final class Subscriber {
             }
             subscribes.get(session).add(subscribe);
             handler.onSubscribe(user, session);
+            answer = new SuccessAnswer();
         } else {
+            answer = new ErrorAnswer("No handlers for '" + subscribe + "'");
             System.out.println("No handlers for " + subscribe);
+        }
+        try {
+            session.getBasicRemote().sendText(answer.toJson().toJSONString());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

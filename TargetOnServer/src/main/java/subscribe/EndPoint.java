@@ -23,11 +23,6 @@ public class EndPoint {
     private final UserDAO userDAO = new UserDAOImpl();
     private final HashMap<Session, User> sessions = new HashMap<>();
 
-    @OnOpen
-    public void OnOpen(Session session){
-        
-    }
-
     @OnMessage
     public void onMessage(Session session, String message){
         System.out.println(message);

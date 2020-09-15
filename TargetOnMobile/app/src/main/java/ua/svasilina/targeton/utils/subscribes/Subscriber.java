@@ -14,9 +14,8 @@ import java.util.Iterator;
 
 import okhttp3.WebSocket;
 import ua.svasilina.targeton.utils.connection.OkHttpSocket;
+import ua.svasilina.targeton.utils.constants.Keys;
 import ua.svasilina.targeton.utils.storage.UserAccessStorage;
-
-import static ua.svasilina.targeton.utils.constants.Constants.*;
 
 public class Subscriber {
 
@@ -48,9 +47,9 @@ public class Subscriber {
     private void sendAction(SubscribeAction action, Subscribe subscribe, String userAccess){
         try {
             JSONObject json = new JSONObject();
-            json.put(ACTION, action.toString());
-            json.put(SUBSCRIBE, subscribe.toString());
-            json.put(USER, userAccess);
+            json.put(Keys.ACTION, action.toString());
+            json.put(Keys.SUBSCRIBE, subscribe.toString());
+            json.put(Keys.USER, userAccess);
             Log.i(LOG_TAG, json.toString());
 
             if (socket == null){
@@ -72,12 +71,12 @@ public class Subscriber {
     public void handle(String text) {
         try {
             JSONObject json = new JSONObject(text);
-            Subscribe subscribe = Subscribe.valueOf(String.valueOf(json.get(SUBSCRIBE)));
+            Subscribe subscribe = Subscribe.valueOf(String.valueOf(json.get(Keys.SUBSCRIBE)));
             if (handlerMap.containsKey(subscribe)){
                 Handler handler = handlerMap.get(subscribe);
                 if(handler != null) {
                     Message message = new Message();
-                    JSONObject data = (JSONObject) json.get(DATA);
+                    JSONObject data = (JSONObject) json.get(Keys.DATA);
 
                     Iterator<String> keys = data.keys();
                     final Bundle bundle = message.getData();

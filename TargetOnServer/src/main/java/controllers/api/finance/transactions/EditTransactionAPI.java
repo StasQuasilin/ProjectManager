@@ -79,9 +79,13 @@ public class EditTransactionAPI extends API {
             transaction.setCurrency(currency);
 
             float rate = body.getFloat(RATE);
+            if (rate == 0){
+                rate = 1;
+            }
             transaction.setRate(rate);
             final User user = getUser(req);
             Category prevCategory = transaction.getCategory();
+
             if (type == TransactionType.income || type == TransactionType.spending) {
                 final Category category = categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), user);
                 transaction.setCategory(category);

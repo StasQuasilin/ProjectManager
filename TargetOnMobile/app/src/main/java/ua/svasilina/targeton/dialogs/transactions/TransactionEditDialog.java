@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -117,6 +118,23 @@ public class TransactionEditDialog extends DialogFragment {
     }
 
     private void save() {
+        final Editable amountText = amount.getText();
+        float amount = Float.parseFloat(amountText.toString());
+        transaction.setAmount(amount);
+        transaction.setRate(1);
+
+        final TransactionType type = transaction.getType();
+        switch (type){
+            case spending:
+                transaction.setAccountTo(null);
+                break;
+            case income:
+                transaction.setAccountFrom(null);
+                break;
+            case transfer:
+                transaction.setCategory(null);
+        }
+
         final Connector instance = Connector.getInstance();
         instance.newJsonReq(getContext(), API.SAVE_TRANSACTION, transaction.buildJson(), new Response.Listener<JSONObject>() {
             @Override

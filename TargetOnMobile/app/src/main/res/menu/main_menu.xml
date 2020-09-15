@@ -16,6 +16,10 @@
         android:title="@string/transactions"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/accounts"
+        android:title="@string/accounts"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/settings"
         android:title="@string/settings"
         app:showAsAction="never"/>

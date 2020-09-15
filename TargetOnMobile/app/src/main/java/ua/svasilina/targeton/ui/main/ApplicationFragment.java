@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import ua.svasilina.targeton.ui.login.LoginActivity;
 
 public abstract class ApplicationFragment extends Fragment {
+
     public abstract String getTitle();
 
     public void startActivity(Context context, Class<LoginActivity> activityClass){
@@ -15,5 +16,6 @@ public abstract class ApplicationFragment extends Fragment {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
 
 }

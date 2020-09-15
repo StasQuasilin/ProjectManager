@@ -13,8 +13,7 @@ import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
 import ua.svasilina.targeton.utils.constants.Constants;
 import ua.svasilina.targeton.utils.json.JsonAble;
 
-import static ua.svasilina.targeton.utils.constants.Constants.DATE_PATTERN;
-import static ua.svasilina.targeton.utils.constants.Constants.TYPE;
+import static ua.svasilina.targeton.utils.constants.Keys.TYPE;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_FROM;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_TO;
 import static ua.svasilina.targeton.utils.constants.Keys.AMOUNT;
@@ -42,21 +41,9 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
             id = json.getInt(ID);
             date = Calendar.getInstance();
 
-            final Date d = Date.valueOf(json.getString(DATE));
-            date.setTimeInMillis(d.getTime());
+            update(json);
 
-            category = new Category(json.getJSONObject(CATEGORY));
-            amount = json.getDouble(AMOUNT);
-            rate = json.getDouble(RATE);
-            currency = json.getString(CURRENCY);
-            if (json.has(ACCOUNT_FROM)){
-                accountFrom = new Account(json.getJSONObject(ACCOUNT_FROM));
-            }
-            if (json.has(ACCOUNT_TO)){
-                accountTo = new Account(json.getJSONObject(ACCOUNT_TO));
-            }
 
-            type = TransactionType.valueOf(json.getString(TYPE));
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -66,6 +53,14 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
 
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Calendar getDate() {
         return date;
@@ -153,6 +148,8 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
         hashMap.put(CATEGORY, category.buildJson());
         hashMap.put(AMOUNT, amount);
         hashMap.put(CURRENCY, currency);
+        hashMap.put(RATE, rate);
+        
         if (accountFrom != null){
             hashMap.put(ACCOUNT_FROM, accountFrom.getId());
         }
@@ -161,5 +158,26 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
         }
         hashMap.put(TYPE, type.toString());
         return hashMap;
+    }
+
+    public void update(JSONObject json) throws JSONException {
+        final Date d = Date.valueOf(json.getString(DATE));
+        date.setTimeInMillis(d.getTime());
+        category = new Category(json.getJSONObject(CATEGORY));
+        amount = json.getDouble(AMOUNT);
+        rate = json.getDouble(RATE);
+        currency = json.getString(CURRENCY);
+        if (json.has(ACCOUNT_FROM)){
+            accountFrom = new Account(json.getJSONObject(ACCOUNT_FROM));
+        } else {
+            accountFrom = null;
+        }
+        if (json.has(ACCOUNT_TO)){
+            accountTo = new Account(json.getJSONObject(ACCOUNT_TO));
+        } else {
+            accountTo = null;
+        }
+
+        type = TransactionType.valueOf(json.getString(TYPE));
     }
 }

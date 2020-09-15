@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -17,6 +16,7 @@ import ua.svasilina.targeton.ui.login.LoginActivity;
 import ua.svasilina.targeton.ui.main.ApplicationFragment;
 import ua.svasilina.targeton.ui.main.CalendarFragment;
 import ua.svasilina.targeton.ui.main.GoalsFragment;
+import ua.svasilina.targeton.ui.main.accounts.AccountsFragment;
 import ua.svasilina.targeton.ui.main.transactions.TransactionFragment;
 import ua.svasilina.targeton.utils.background.BackgroundWorkerUtil;
 import ua.svasilina.targeton.utils.storage.UserAccessStorage;
@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActionBar actionBar;
     private TransactionFragment transactionFragment;
+    private AccountsFragment accountsFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +33,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
         actionBar = getSupportActionBar();
         final Context context = getApplicationContext();
-        final LayoutInflater inflater = getLayoutInflater();
 
-        transactionFragment = new TransactionFragment(context, inflater);
+        transactionFragment = new TransactionFragment(context);
+        accountsFragment = new AccountsFragment(context);
         if (savedInstanceState == null) {
             setView(transactionFragment);
         }
@@ -55,11 +56,14 @@ public class MainActivity extends AppCompatActivity {
                 setView(GoalsFragment.newInstance());
                 return true;
             case R.id.transactions:
-                setView(transactionFragment);
+                setView(transactionFragment = new TransactionFragment(getApplicationContext()));
+                return true;
+            case R.id.accounts:
+                setView(accountsFragment = new AccountsFragment(getApplicationContext()));
                 return true;
             case R.id.calendar:
-                    setView(CalendarFragment.getInstance());
-                    return true;
+                setView(CalendarFragment.getInstance());
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

@@ -35,4 +35,13 @@ public interface Keys {
     String ACCOUNTS = "accounts";
     String REASON = "reason";
     String UNAUTHORISED = "unauthorised";
+    String DATA = "data";
+    String ADD = "add";
+    String UPDATE = "update";
+    String TYPE = "type";
+    String ACTION = "action";
+    String SUBSCRIBE = "subscribe";
+    String COLON = ":";
+    String COMMA = ",";
+    String LIMIT = "limit";
 }
