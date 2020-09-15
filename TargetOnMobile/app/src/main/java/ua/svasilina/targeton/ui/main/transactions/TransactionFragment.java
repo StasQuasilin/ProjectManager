@@ -76,14 +76,10 @@ public class TransactionFragment extends ApplicationFragment {
         }
     }
 
-    private ListView transactionList;
-
     @Override
     public void onResume() {
         super.onResume();
         subscriber.subscribe(Subscribe.transactions, handler, context);
-        System.out.println(adapter);
-        System.out.println(transactionList);
     }
 
     @Override
@@ -104,7 +100,7 @@ public class TransactionFragment extends ApplicationFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.transactions_fragment, container, false);
 
-        transactionList = view.findViewById(R.id.transactionList);
+        ListView transactionList = view.findViewById(R.id.transactionList);
         adapter = new TransactionsAdapter(context, R.layout.transaction_list_item, inflater);
         transactionList.setAdapter(adapter);
         transactionList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -176,7 +172,7 @@ public class TransactionFragment extends ApplicationFragment {
 
     @Override
     public String getTitle() {
-        return "Transactions";
+        return context.getResources().getString(R.string.transactions_title);
     }
 
     public void sort() {

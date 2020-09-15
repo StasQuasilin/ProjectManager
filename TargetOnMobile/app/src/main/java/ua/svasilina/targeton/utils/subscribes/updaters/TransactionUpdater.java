@@ -5,7 +5,7 @@ import org.json.JSONObject;
 
 import ua.svasilina.targeton.ui.main.transactions.TransactionFragment;
 
-public class TransactionUpdater extends DataUpdater {
+public class TransactionUpdater implements DataUpdater {
 
     private final TransactionFragment transactionFragment;
 

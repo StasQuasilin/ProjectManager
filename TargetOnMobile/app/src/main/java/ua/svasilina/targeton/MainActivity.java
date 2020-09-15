@@ -18,6 +18,7 @@ import ua.svasilina.targeton.ui.main.CalendarFragment;
 import ua.svasilina.targeton.ui.main.GoalsFragment;
 import ua.svasilina.targeton.ui.main.accounts.AccountsFragment;
 import ua.svasilina.targeton.ui.main.transactions.TransactionFragment;
+import ua.svasilina.targeton.ui.main.tree.TreeFragment;
 import ua.svasilina.targeton.utils.background.BackgroundWorkerUtil;
 import ua.svasilina.targeton.utils.storage.UserAccessStorage;
 
@@ -53,8 +54,11 @@ public class MainActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         switch (itemId){
             case R.id.goals:
-                setView(GoalsFragment.newInstance());
+                setView(new GoalsFragment(getApplicationContext()));
                 return true;
+            case R.id.tree:
+                setView(new TreeFragment(getApplicationContext()));
+                break;
             case R.id.transactions:
                 setView(transactionFragment = new TransactionFragment(getApplicationContext()));
                 return true;

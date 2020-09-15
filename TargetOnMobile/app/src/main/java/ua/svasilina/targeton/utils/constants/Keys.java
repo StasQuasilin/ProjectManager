@@ -44,4 +44,7 @@ public interface Keys {
     String COLON = ":";
     String COMMA = ",";
     String LIMIT = "limit";
+    String BUDGET = "budget";
+    String BEGIN = "begin";
+    String END = "end";
 }

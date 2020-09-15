@@ -138,7 +138,13 @@ public class AccountsFragment extends ApplicationFragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        subscriber.unsubscribe(Subscribe.accounts);
+    }
+
+    @Override
     public String getTitle() {
-        return "Accounts";
+        return context.getResources().getString(R.string.accounts_title);
     }
 }

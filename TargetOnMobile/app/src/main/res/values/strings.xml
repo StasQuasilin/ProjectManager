@@ -35,4 +35,11 @@
     <string name="add_category">Додати нову категорію</string>
     <string name="accounts">Рахунки</string>
     <string name="accounts_total">Всього на рахунках</string>
+    <string name="tree">Дерево задач</string>
+    <string name="tree_title">Дерево задач</string>
+    <string name="accounts_title">Рахунки</string>
+    <string name="transactions_title">Транзакції</string>
+    <string name="goals_title">Цілі</string>
+    <string name="date_begin">Дата початку</string>
+    <string name="date_end">Дата завершення</string>
 </resources>

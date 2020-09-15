@@ -4,5 +4,5 @@ public enum Subscribe {
     transactions,
     fast,
     accounts,
-    buyList
+    tree, goal, buyList
 }

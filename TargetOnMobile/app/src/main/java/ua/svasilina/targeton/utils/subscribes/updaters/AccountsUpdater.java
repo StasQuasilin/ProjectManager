@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import ua.svasilina.targeton.ui.main.accounts.AccountsFragment;
 
-public class AccountsUpdater extends DataUpdater {
+public class AccountsUpdater implements DataUpdater {
 
     private final AccountsFragment accountsFragment;
 

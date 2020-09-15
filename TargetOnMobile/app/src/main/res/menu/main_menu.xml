@@ -8,6 +8,10 @@
         android:title="@string/goals"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/tree"
+        android:title="@string/tree"
+        app:showAsAction="never"/>
+    <item
         android:id="@+id/calendar"
         android:title="@string/calendar"
         app:showAsAction="never"/>
