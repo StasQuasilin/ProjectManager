@@ -20,6 +20,7 @@ goalEdit = new Vue({
             budget:0,
             currency:''
         },
+        members:[],
         errors:{
             title:false,
             buyList:false
@@ -42,6 +43,7 @@ goalEdit = new Vue({
         }
     },
     computed:{
+
         goalDuration:function(){
             console.log('Calculate duration...');
             let res = {};
@@ -58,7 +60,17 @@ goalEdit = new Vue({
         }
     },
     methods:{
-        save:function(){
+        memberList:function(){
+            this.saveData(function (a) {
+                console.log(a);
+                if (a.status === 'success'){
+                    loadModal(this.api.goalMembers, {id:this.goal.id}, function (a) {
+                        console.log(a)
+                    })
+                }
+            });
+        },
+        saveData:function(onSuccess){
             if (this.isValid()) {
                 let goal = Object.assign({}, this.goal);
                 if (!this.useBeginDate) {
@@ -75,15 +87,21 @@ goalEdit = new Vue({
                 } else {
                     delete goal.buyList;
                 }
-
-                console.log(goal);
-
+                const self = this;
                 PostApi(this.api.save, goal, function (a) {
                     if (a.status === 'success') {
-                        closeModal();
+                        self.goal.id = a.id;
                     }
+                    onSuccess(a);
                 })
             }
+        },
+        save:function(){
+            this.saveData(function (a) {
+                if (a.status === 'success'){
+                    closeModal();
+                }
+            })
         },
         isValid:function(){
             let goal = this.goal;

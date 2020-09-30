@@ -30,7 +30,9 @@ public class AccountHandler extends SubscribeHandler {
             final JSONObject jsonObject = account.toJson();
             if (account.getType() == AccountType.deposit){
                 final DepositSettings depositSettings = accountDAO.getDepositSettings(account);
-                jsonObject.put(SETTINGS, depositSettings.toJson());
+                if (depositSettings != null) {
+                    jsonObject.put(SETTINGS, depositSettings.toJson());
+                }
             }
             array.add(jsonObject);
         }

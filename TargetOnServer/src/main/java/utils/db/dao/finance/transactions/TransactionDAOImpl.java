@@ -3,6 +3,7 @@ package utils.db.dao.finance.transactions;
 import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
+import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -57,6 +58,14 @@ public class TransactionDAOImpl implements TransactionDAO {
     public void removeDetails(Collection<TransactionDetail> details) {
         for (TransactionDetail detail : details){
             removeDetail(detail);
+        }
+    }
+
+    @Override
+    public void removeTransactions(User user) {
+        for (Transaction transaction : hibernator.query(Transaction.class, "category/owner", user)){
+            hibernator.remove(TransactionPoint.class, "transaction", transaction.getId());
+            hibernator.remove(transaction);
         }
     }
 

@@ -33,8 +33,6 @@ public class Logout extends API {
             req.removeAttribute(name);
         }
 
-
-
         write(resp, req.getContextPath() + UrlLinks.LOGIN);
 
     }

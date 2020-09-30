@@ -28,4 +28,6 @@ public interface AccountDAO {
     void removeSettings(DepositSettings depositSettings);
 
     void saveDepositSettings(DepositSettings depositSettings);
+
+    void removeAccounts(User user);
 }

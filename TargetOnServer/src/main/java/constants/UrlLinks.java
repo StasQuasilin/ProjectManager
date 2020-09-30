@@ -26,4 +26,7 @@ public interface UrlLinks {
     String KANBAN = "/kanban" + SUFFIX;
     String FRIENDS = "/friends" + SUFFIX;
     String MESSAGES = "/messages" + SUFFIX;
+    String CATEGORY_PAGE = "/categories" + SUFFIX;
+    String ADD_GOAL_MEMEBER = "/goal/add/member" + SUFFIX;
+    String GOAL_MEMBERS = "/goa/members" + SUFFIX;
 }

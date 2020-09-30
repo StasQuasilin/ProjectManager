@@ -67,3 +67,11 @@ function logout() {
         location.href = a + '?lang=' + window.navigator.language.slice(0, 2);
     });
 }
+function removeAccount() {
+    PostApi(removeAccountApi, null, function (a) {
+        subscriber.shutdown();
+        if (a.status === 'success'){
+            location.href = a.redirect + '?lang=' + window.navigator.language.slice(0, 2);
+        }
+    })
+}

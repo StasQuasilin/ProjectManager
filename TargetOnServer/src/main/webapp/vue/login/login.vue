@@ -50,6 +50,16 @@ login = new Vue({
         },
         changeLocale:function () {
             location.href = (location.pathname + '?lang=' + this.locale);
+        },
+        demo:function () {
+            PostApi(this.api.demo, {locale: this.locale}, function (a) {
+                if (a.status === 'success'){
+                    if (a.redirect){
+                        location.href = context + a.redirect;
+                    }
+                }
+            })
+
         }
     }
 });

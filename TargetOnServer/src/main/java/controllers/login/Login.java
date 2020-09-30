@@ -1,6 +1,7 @@
 package controllers.login;
 
 import constants.ApiLinks;
+import constants.Keys;
 import constants.UrlLinks;
 import utils.LanguageBase;
 
@@ -26,6 +27,7 @@ public class Login extends HttpServlet {
         req.setAttribute(LOCALES, languageBase.getLocales());
         req.setAttribute(LOGIN, ApiLinks.LOGIN);
         req.setAttribute(REGISTRATION, UrlLinks.REGISTRATION);
+        req.setAttribute(Keys.DEMO, ApiLinks.DEMO);
         req.getRequestDispatcher(LOGIN_PAGE).forward(req, resp);
     }
 }

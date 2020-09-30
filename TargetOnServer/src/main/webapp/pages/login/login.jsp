@@ -66,6 +66,11 @@
                             </option>
                         </select>
                     </div>
+                    <div>
+                        <span class="text-button" v-on:click="demo()">
+                            <fmt:message key="button.demo"/>
+                        </span>
+                    </div>
                     <div class="error">
                         {{message}}
                     </div>
@@ -78,6 +83,7 @@
     <script type="application/javascript">
         login.api.login = '${login}';
         login.api.registration = '${registration}';
+        login.api.demo = '${demo}';
         <c:forEach items="${locales}" var="l">
         login.locales.push('${l}');
         login.localeNames['${l}'] = '<fmt:message key="language.${l}"/>';

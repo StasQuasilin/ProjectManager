@@ -287,18 +287,19 @@ public class Hibernator {
         HibernateSessionFactory.putSession(session);
     }
 
-    public void remove(Object ... values) {
+    public void remove(Object o) {
         Session session = HibernateSessionFactory.getSession();
-        for (Object o : values){
-            session.remove(o);
-        }
+        session.remove(o);
         session.beginTransaction().commit();
         HibernateSessionFactory.putSession(session);
     }
-
-    public void flush() {
+    public <T> void remove(Class<T> tClass, String key, Object value){
         Session session = HibernateSessionFactory.getSession();
-        session.flush();
+        for (T obj : query(tClass, key, value)){
+            session.remove(obj);
+        }
+        session.beginTransaction().commit();
+        HibernateSessionFactory.putSession(session);
     }
 
     public <T> List<T> find(Class<T> tClass, HashMap<String, Object> params, String value, String key) {

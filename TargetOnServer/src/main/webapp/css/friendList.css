@@ -1,0 +1,11 @@
+.friend-list{
+    display: flex;
+    padding: 4px;
+}
+.friend-tile{
+    border: solid gray;
+    border-radius: 4pt;
+    padding: 8pt;
+    display: flex;
+    flex-direction: row;
+}

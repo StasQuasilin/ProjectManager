@@ -1,5 +1,6 @@
 package controllers.finances;
 
+import constants.Keys;
 import constants.UrlLinks;
 import controllers.Page;
 import entity.task.Unit;
@@ -35,6 +36,7 @@ public class FinancePage extends Page {
         req.setAttribute(TRANSACTION_SUBSCRIBE, Subscribe.transactions);
         req.setAttribute(TRANSACTION_LIMIT, TransactionDAO.LIMIT);
         req.setAttribute(ACCOUNT_SUBSCRIBE, Subscribe.accounts);
+        req.setAttribute(Keys.CATEGORIES, UrlLinks.CATEGORY_PAGE);
         req.setAttribute(BUY_LIST_SUBSCRIBE, Subscribe.buy);
         req.setAttribute(UNITS, Unit.values());
         show(req, resp);

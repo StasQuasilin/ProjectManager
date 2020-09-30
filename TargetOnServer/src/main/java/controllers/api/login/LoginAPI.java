@@ -44,8 +44,7 @@ public class LoginAPI extends API {
 
             Answer answer;
             if (!validator.emailValid(String.valueOf(email))){
-                answer = new ErrorAnswer();
-                answer.addAttribute(MESSAGE, languageBase.get(language, "email.invalid"));
+                answer = new ErrorAnswer(languageBase.get(language, "email.invalid"));
             } else {
                 final UserAccess userAccess = userAccessDAO.getUserAccess(email);
 
@@ -75,12 +74,10 @@ public class LoginAPI extends API {
                         answer.addAttribute(REDIRECT, UrlLinks.HOME);
                         answer.addAttribute(TOKEN, user.getId());
                     } else {
-                        answer = new ErrorAnswer();
-                        answer.addAttribute(MESSAGE, languageBase.get(language, "wrong.password"));
+                        answer = new ErrorAnswer(languageBase.get(language, "wrong.password"));
                     }
                 } else {
-                    answer = new ErrorAnswer();
-                    answer.addAttribute(MESSAGE, languageBase.get(language, "user.not.found"));
+                    answer = new ErrorAnswer(languageBase.get(language, "user.not.found"));
                 }
             }
 

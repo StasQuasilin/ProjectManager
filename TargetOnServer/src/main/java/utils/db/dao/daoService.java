@@ -1,5 +1,7 @@
 package utils.db.dao;
 
+import utils.db.dao.access.DemoAccessDAO;
+import utils.db.dao.access.DemoAccessDAOImpl;
 import utils.db.dao.access.UserAccessDAO;
 import utils.db.dao.access.UserAccessDAOImpl;
 import utils.db.dao.calendar.CalendarDAO;
@@ -18,6 +20,8 @@ import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.goal.GoalDAOImpl;
 import utils.db.dao.tree.TaskDAO;
 import utils.db.dao.tree.TaskDAOImpl;
+import utils.db.dao.user.FriendshipDAO;
+import utils.db.dao.user.FriendshipDAOHibernate;
 import utils.db.dao.user.UserDAO;
 import utils.db.dao.user.UserDAOImpl;
 
@@ -35,6 +39,8 @@ public class daoService {
     private static final BuyListDAO     buyListDAO = new BuyListDAOImpl();
     private static final UserAccessDAO  userAccessDAO = new UserAccessDAOImpl();
     private static final UserDAO        userDAO = new UserDAOImpl();
+    private static final DemoAccessDAO  demoDAO = new DemoAccessDAOImpl();
+    private static final FriendshipDAO friendshipDAO = new FriendshipDAOHibernate();
     static {
         accountDao = new AccountDAOImpl();
         categoryDAO = new CategoryDAOImpl();
@@ -79,5 +85,13 @@ public class daoService {
 
     public static UserDAO getUserDAO() {
         return userDAO;
+    }
+
+    public static DemoAccessDAO getDemoDAO() {
+        return demoDAO;
+    }
+
+    public static FriendshipDAO getFriendshipDAO() {
+        return friendshipDAO;
     }
 }

@@ -15,9 +15,13 @@
 <script type="application/javascript" src="${context}/vue/goals/goalEdit.vue"></script>
 <script>
   goalEdit.api.save = '${save}';
+  goalEdit.api.goalMembers = '${goalMembers}';
   goalEdit.buyListProps.findCategory = '${findBuyList}';
   <c:forEach items="${currency}" var="c">
   goalEdit.currency.push('${c}');
+  </c:forEach>
+  <c:forEach items="${members}" var="member">
+  goalEdit.members.push(${member.member.toJson()});
   </c:forEach>
   <c:if test="${not empty goal}">
   goalEdit.goal = ${goal.toJson()};
@@ -174,15 +178,13 @@
             </span>
           </div>
         </template>
-
       </td>
     </tr>
     <tr>
-      <td>
-        <fmt:message key="goal.members"/>
-      </td>
-      <td>
-
+      <td colspan="2" style="text-align: right">
+        <span class="text-button" v-on:click="memberList()">
+          <fmt:message key="goal.members"/>: {{(members.length + 1).toLocaleString()}}
+        </span>
       </td>
     </tr>
     <tr>

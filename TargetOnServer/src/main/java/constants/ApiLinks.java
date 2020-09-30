@@ -21,10 +21,15 @@ public interface ApiLinks {
     String FIND_BUY_LIST = API + "/find/buy/list";
     String LOGOUT = API + "/logout";
     String LOGIN = "/sign/in";
+    String DEMO = "/user/demo";
     String REGISTRATION = "/sign/up";
     String TIMER_START = API + "/task/timer/start";
-
     String FIND_TASK = API + "/find/task";
     String TIMER_STOP = API + "task/timer/stop";
     String USER_DATA = API + "/user/data";
+    String ACCOUNT_REMOVE = API + "/account/remove";
+    String GET_CATEGORIES = API + "/get/category";
+    String FIND_USER = API + "/find/user";
+    String FRIENDSHIP_REQ = API + "/friendship/req";
+    String SAVE_GOAL_MEMBERS = API + "/goal/members/save";
 }

@@ -66,4 +66,9 @@ public class AccountDAOImpl implements AccountDAO {
     public void saveDepositSettings(DepositSettings depositSettings) {
         hibernator.save(depositSettings);
     }
+
+    @Override
+    public void removeAccounts(User user) {
+        hibernator.remove(Account.class, "owner", user);
+    }
 }

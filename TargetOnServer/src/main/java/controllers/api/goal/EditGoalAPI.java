@@ -1,11 +1,14 @@
 package controllers.api.goal;
 
+import constants.Keys;
 import controllers.api.API;
 import constants.ApiLinks;
 import entity.finance.buy.BuyList;
 import entity.finance.category.Category;
 import entity.goal.Goal;
 import entity.user.User;
+import utils.answers.Answer;
+import utils.answers.SuccessAnswer;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.buy.BuyListDAO;
 import utils.db.dao.goal.GoalDAO;
@@ -37,7 +40,6 @@ public class EditGoalAPI extends API {
             }
 
             User user = getUser(req);
-            System.out.println(user);
 
             final float budget = body.getFloat(BUDGET);
             final String currency = body.getString(CURRENCY);
@@ -66,7 +68,6 @@ public class EditGoalAPI extends API {
                 }
             } else {
                 goal.setBegin(null);
-
             }
 
             if (body.containKey(BUY_LIST)){
@@ -96,7 +97,9 @@ public class EditGoalAPI extends API {
             }
 
             goalDAO.saveGoal(goal);
-            write(resp, SUCCESS_ANSWER);
+            Answer answer = new SuccessAnswer();
+            answer.addAttribute(ID, goal.getId());
+            write(resp, answer);
 
 
 

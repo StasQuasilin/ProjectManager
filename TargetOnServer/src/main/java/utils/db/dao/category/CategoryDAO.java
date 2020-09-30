@@ -25,4 +25,8 @@ public abstract class CategoryDAO {
         }
 
     }
+
+    public abstract void removeCategories(User user);
+
+    public abstract List<Category> getCategories(User owner, Category parent);
 }

@@ -22,4 +22,6 @@ public interface TaskDAO {
     TimeLog getTimeLog(Object o);
 
     void saveTimeLog(TimeLog timeLog);
+
+    void removeTasks(User user);
 }

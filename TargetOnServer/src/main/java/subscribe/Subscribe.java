@@ -10,5 +10,7 @@ public enum Subscribe {
     team,
     messages,
     timer,
+    friends,
+    friendshipReq,
     buy
 }

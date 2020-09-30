@@ -32,6 +32,7 @@
         <script>
             welcomeUrl = '${welcome}';
             logoutUrl = '${logout}';
+            removeAccountApi = '${accountRemove}';
             user = ${user.id};
             Vue.component('tree-view', treeView);
             if (typeof context === 'undefined'){
@@ -70,10 +71,22 @@
                             </div>
                         </div>
                         <div class="personal-holder">
-                            <c:set var="personalRoom"><fmt:message key="personal.room"/></c:set>
-                            <span class="text-button" title="${personalRoom}" onclick="loadPage('${personal}')">
-                                ${user.surname} ${user.forename}
-                            </span>
+                            <c:choose>
+                                <c:when test="${not empty demo}">
+                                    <span>
+                                        Demo
+                                    </span>
+                                    <span class="text-button" onclick="removeAccount()">
+                                        <fmt:message key="account.remove"/>
+                                    </span>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="personalRoom"><fmt:message key="personal.room"/></c:set>
+                                    <span class="text-button" title="${personalRoom}" onclick="loadPage('${personal}')">
+                                        ${user.surname} ${user.forename}
+                                    </span>
+                                </c:otherwise>
+                            </c:choose>
                             <span class="text-button" onclick="logout()">
                                 ( <fmt:message key="logout"/> )
                             </span>

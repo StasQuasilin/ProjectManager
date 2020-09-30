@@ -9,7 +9,7 @@
 }
 .title-holder{
     flex: 1 0 auto;
-    display: inline-block;
+    display: flex;
     padding: 0 8px;
 }
 .timer-holder{

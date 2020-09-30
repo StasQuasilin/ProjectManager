@@ -31,6 +31,11 @@
   subscriber.subscribe('${buyListSubscribe}', buyList.handler);
 
 </script>
+<div id="titleContent" style="display: inline-block">
+  <span class="text-button" onclick="loadPage('${categories}')">
+    <fmt:message key="menu.categories"/>
+  </span>
+</div>
 <div class="full-size finance-page">
   <div class="colon">
     <div class="colon-cell">

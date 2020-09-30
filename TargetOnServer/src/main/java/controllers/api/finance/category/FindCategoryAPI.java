@@ -42,7 +42,7 @@ public class FindCategoryAPI extends API {
                 answer.addAttribute(RESULT, array);
 
             } else {
-                answer = new ErrorAnswer();
+                answer = new ErrorAnswer("No user data");
             }
             write(resp, answer);
         }

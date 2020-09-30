@@ -76,4 +76,9 @@ public class TaskDAOImpl implements TaskDAO {
     public void saveTimeLog(TimeLog timeLog) {
         hibernator.save(timeLog);
     }
+
+    @Override
+    public void removeTasks(User user) {
+        hibernator.remove(Task.class, "category/owner", user);
+    }
 }

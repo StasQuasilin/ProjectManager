@@ -27,4 +27,6 @@ public interface TransactionDAO {
     void saveDetail(TransactionDetail detail);
 
     void removeDetails(Collection<TransactionDetail> values);
+
+    void removeTransactions(User user);
 }

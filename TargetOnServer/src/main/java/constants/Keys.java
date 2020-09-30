@@ -143,4 +143,16 @@ public interface Keys {
     String MESSAGES = "messages";
     String TOKEN = "token";
     String UNAUTHORISED = "unauthorised";
+    String DEMO = "demo";
+    String SHARP = "#";
+    String ACCOUNT_REMOVE = "accountRemove";
+    String CATEGORIES = "categories";
+    String GET_CATEGORIES = "getCategories";
+    String ADD_MEMBER = "addMember";
+    String FIND_USER = "findUser";
+    String NOTE = "note";
+    String FRIENDS_SUBSCRIBE = "friendsSubscribe";
+    String FRIENDSHIP_REQ_SUBSCRIBE = "friendshipReqSubscribe";
+    String GOAL_MEMBERS = "goalMembers";
+    String MEMBERS = "members";
 }

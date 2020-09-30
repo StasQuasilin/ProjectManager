@@ -36,6 +36,8 @@ public final class Subscriber {
         addHandler(new AccountHandler());
         addHandler(new BuyListHandler());
         addHandler(new TimerHandler());
+        addHandler(new FriendshipReqHandler());
+        addHandler(new FriendsHandler());
     }
 
     private void addHandler(SubscribeHandler handler) {

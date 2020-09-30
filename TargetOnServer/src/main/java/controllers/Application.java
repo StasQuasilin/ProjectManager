@@ -1,6 +1,7 @@
 package controllers;
 
 import constants.ApiLinks;
+import constants.Keys;
 import constants.UrlLinks;
 import subscribe.Subscribe;
 import utils.db.dao.daoService;
@@ -33,6 +34,7 @@ public class Application extends HttpServlet {
         req.setAttribute(PERSONAL, UrlLinks.PERSONAL);
         req.setAttribute(WELCOME, UrlLinks.GOALS);
         req.setAttribute(LOGOUT, ApiLinks.LOGOUT);
+        req.setAttribute(Keys.ACCOUNT_REMOVE, ApiLinks.ACCOUNT_REMOVE);
         req.setAttribute(SUBSCRIBE, ApiLinks.SUBSCRIBE);
         req.setAttribute(TIMER_SUBSCRIBE, Subscribe.timer);
         req.setAttribute(TIMER_STOP, ApiLinks.TIMER_STOP);

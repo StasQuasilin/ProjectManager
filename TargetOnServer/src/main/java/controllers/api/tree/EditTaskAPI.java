@@ -93,8 +93,6 @@ public class EditTaskAPI extends API {
             final String title = body.getString(TITLE);
             category.setTitle(title);
 
-
-
             write(resp, SUCCESS_ANSWER);
             taskSaver.save(task);
 

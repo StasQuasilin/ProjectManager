@@ -10,6 +10,7 @@ import utils.db.hibernate.Hibernator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 
 import static constants.Keys.*;
@@ -51,5 +52,25 @@ public class GoalDAOImpl implements GoalDAO{
     @Override
     public Goal getGoalByCategory(Category category) {
         return hibernator.get(Goal.class, CATEGORY, category);
+    }
+
+    @Override
+    public void removeGoals(User user) {
+        hibernator.remove(Goal.class, "category/owner", user);
+    }
+
+    @Override
+    public List<GoalMember> getGoalMembers(Goal goal) {
+        return hibernator.query(GoalMember.class, "goal", goal);
+    }
+
+    @Override
+    public void saveMember(GoalMember goalMember) {
+        hibernator.save(goalMember);
+    }
+
+    @Override
+    public void removeMember(GoalMember member) {
+        hibernator.remove(member);
     }
 }

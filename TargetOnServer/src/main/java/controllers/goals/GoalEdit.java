@@ -1,6 +1,7 @@
 package controllers.goals;
 
 import constants.ApiLinks;
+import constants.Keys;
 import constants.UrlLinks;
 import controllers.ModalWindow;
 import entity.finance.buy.BuyList;
@@ -32,19 +33,20 @@ public class GoalEdit extends ModalWindow {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject body = parseBody(req);
         if (body != null){
-            System.out.println(body);
             final Goal goal = goalDAO.getGoal(body.get(ID));
             req.setAttribute(GOAL, goal);
             if (goal.getBuyList() > 0){
                 final BuyList buyList = buyListDAO.getList(goal.getBuyList());
                 req.setAttribute(BUY_LIST, buyList);
             }
+            req.setAttribute(MEMBERS, goalDAO.getGoalMembers(goal));
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
         final User user = getUser(req);
         req.setAttribute(CURRENCY, currencyDAO.getUserCurrency(user));
         req.setAttribute(FIND_BUY_LIST, ApiLinks.FIND_BUY_LIST);
+        req.setAttribute(Keys.GOAL_MEMBERS, UrlLinks.GOAL_MEMBERS);
         req.setAttribute(SAVE, ApiLinks.GOAL_SAVE);
         show(req, resp);
     }

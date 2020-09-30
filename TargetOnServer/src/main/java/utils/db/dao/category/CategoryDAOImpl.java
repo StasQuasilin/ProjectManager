@@ -42,4 +42,18 @@ public class CategoryDAOImpl extends CategoryDAO {
     public TaskStatistic getStatistic(Category category) {
         return null;
     }
+
+    @Override
+    public void removeCategories(User user) {
+        hibernator.remove(Category.class, "owner", user);
+    }
+
+    @Override
+    public List<Category> getCategories(User owner, Category parent) {
+        final HashMap<String, Object> params = new HashMap<>();
+        params.put("owner", owner);
+        params.put("parent", parent);
+        params.put("hidden", false);
+        return hibernator.query(Category.class, params);
+    }
 }
