@@ -155,4 +155,5 @@ public interface Keys {
     String FRIENDSHIP_REQ_SUBSCRIBE = "friendshipReqSubscribe";
     String GOAL_MEMBERS = "goalMembers";
     String MEMBERS = "members";
+    String MEMBER_LIST = "memberList";
 }

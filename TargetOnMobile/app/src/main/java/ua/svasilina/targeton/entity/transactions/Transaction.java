@@ -36,7 +36,6 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
     private TransactionType type = TransactionType.spending;
 
     public Transaction(JSONObject json) {
-        System.out.println("!!" + json);
         try {
             id = json.getInt(ID);
             date = Calendar.getInstance();

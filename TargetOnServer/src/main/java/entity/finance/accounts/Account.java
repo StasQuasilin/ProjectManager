@@ -98,6 +98,8 @@ public class Account extends JsonAble{
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
         jsonObject.put(TITLE, title);
+        jsonObject.put(SUM, sum);
+        jsonObject.put(CURRENCY, currency);
         return jsonObject;
     }
 
@@ -105,8 +107,6 @@ public class Account extends JsonAble{
     public JSONObject toJson() {
         JSONObject jsonObject = shortJson();
         jsonObject.put(TYPE, type.toString());
-        jsonObject.put(SUM, sum);
-        jsonObject.put(CURRENCY, currency);
         jsonObject.put(LIMIT, limit);
         jsonObject.put(SHOW, show);
         return jsonObject;

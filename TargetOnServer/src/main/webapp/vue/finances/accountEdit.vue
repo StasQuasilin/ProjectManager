@@ -16,6 +16,7 @@ accountEdit = new Vue({
             currency:null,
             limit:0
         },
+        members:[],
         depositDateProps:{
             put:function (date) {
                 Vue.set(accountEdit.account.settings, 'open', date);
@@ -23,6 +24,9 @@ accountEdit = new Vue({
         }
     },
     methods:{
+        memberList:function(){
+            loadModal(this.api.memberList, {account:this.account.id});
+        },
         datePlusDays:function(date, days){
             let open = new Date(date);
             open.setDate(open.getDate() + days);

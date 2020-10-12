@@ -7,6 +7,7 @@ import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
 import okio.ByteString;
+import ua.svasilina.targeton.utils.constants.Constants;
 import ua.svasilina.targeton.utils.subscribes.Subscriber;
 
 public class SocketListener extends WebSocketListener {
@@ -26,6 +27,7 @@ public class SocketListener extends WebSocketListener {
     @Override
     public void onMessage(WebSocket webSocket, ByteString bytes) {
         super.onMessage(webSocket, bytes);
+        onMessage(webSocket, bytes.toString());
         System.out.println("Byte message " + bytes.toString());
     }
 

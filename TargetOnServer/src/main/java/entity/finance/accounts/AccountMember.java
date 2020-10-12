@@ -9,7 +9,7 @@ import javax.persistence.*;
 public class AccountMember {
     private int id;
     private Account account;
-    private User user;
+    private User member;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +31,10 @@ public class AccountMember {
 
     @OneToOne
     @JoinColumn(name = "_user")
-    public User getUser() {
-        return user;
+    public User getMember() {
+        return member;
     }
-
-    public void setUser(User user) {
-        this.user = user;
+    public void setMember(User user) {
+        this.member = user;
     }
 }

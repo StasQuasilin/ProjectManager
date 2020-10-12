@@ -5,4 +5,5 @@ public interface Constants {
     int SERVER_PORT = 3322;
     String DATE_PATTERN = "dd.MM.yyyy";
     String ISO_PATTERN = "yyyy-MM-dd";
+    String ENCODING = "UTF-8";
 }

@@ -30,7 +30,7 @@ public class SaveGoalMembersApi extends API {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
         if (body != null){
-            final Goal goal = goalDAO.getGoal(body.get(Keys.GOAL));
+            final Goal goal = goalDAO.getGoal(body.get(Keys.ITEM));
             final HashMap<Integer, GoalMember> memberHashMap = new HashMap<>();
             for (GoalMember member : goalDAO.getGoalMembers(goal)){
                 memberHashMap.put(member.getId(), member);

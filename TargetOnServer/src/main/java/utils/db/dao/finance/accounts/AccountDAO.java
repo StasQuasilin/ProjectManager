@@ -1,11 +1,10 @@
 package utils.db.dao.finance.accounts;
 
 import entity.finance.accounts.Account;
-import entity.finance.accounts.AccountPoint;
+import entity.finance.accounts.AccountMember;
 import entity.finance.accounts.DepositSettings;
 import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
-import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -30,4 +29,10 @@ public interface AccountDAO {
     void saveDepositSettings(DepositSettings depositSettings);
 
     void removeAccounts(User user);
+
+    List<AccountMember> getMembers(Object account);
+
+    void saveMember(AccountMember member);
+
+    void removeMember(AccountMember member);
 }

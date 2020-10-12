@@ -13,6 +13,10 @@
 <script type="application/javascript" src="${context}/vue/finances/accountEdit.vue"></script>
 <script type="application/javascript">
   accountEdit.api.save = '${save}';
+  accountEdit.api.memberList = '${memberList}';
+  <c:forEach items="${members}" var="member">
+  accountEdit.members.push(${member.member.toJson()});
+  </c:forEach>
   <c:forEach items="${types}" var="type">
   accountEdit.types.push('${type}');
   accountEdit.typeNames['${type}'] = '<fmt:message key="account.${type}"/>';
@@ -171,6 +175,13 @@
       </td>
     </tr>
   </template>
+  <tr>
+    <td colspan="2" style="text-align: right">
+      <span class="text-button" v-on:click="memberList()">
+        <fmt:message key="account.members"/>: {{(members.length + 1).toLocaleString()}}
+      </span>
+    </td>
+  </tr>
   <tr>
     <td colspan="2" style="text-align: center">
       <button onclick="closeModal()">

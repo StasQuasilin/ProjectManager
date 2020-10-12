@@ -32,4 +32,5 @@ public interface ApiLinks {
     String FIND_USER = API + "/find/user";
     String FRIENDSHIP_REQ = API + "/friendship/req";
     String SAVE_GOAL_MEMBERS = API + "/goal/members/save";
+    String SAVE_ACCOUNT_MEMBERS = API + "/account/members/save";
 }

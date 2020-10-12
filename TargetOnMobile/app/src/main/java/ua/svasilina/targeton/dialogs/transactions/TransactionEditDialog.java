@@ -73,39 +73,33 @@ public class TransactionEditDialog extends DialogFragment {
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        if (inflater == null){
-            final Context ctx = getContext();
-            assert ctx != null;
-            inflater = (LayoutInflater) ctx.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        }
 
         final View view;
-        if (inflater != null) {
-            view = inflater.inflate(R.layout.transaction_edit, null);
+        view = inflater.inflate(R.layout.transaction_edit, null);
 
-            typeButton = view.findViewById(R.id.typeButton);
-            dateButton = view.findViewById(R.id.dateButton);
-            transactionCategory = view.findViewById(R.id.transactionCategory);
-            categoryGroup = view.findViewById(R.id.categoryGroup);
-            accountFromGroup = view.findViewById(R.id.accountFromGroup);
-            accountFrom = view.findViewById(R.id.transactionAccountFrom);
-            accountToGroup = view.findViewById(R.id.accountToGroup);
-            accountTo = view.findViewById(R.id.transactionAccountTo);
-            currencies = view.findViewById(R.id.currency);
-            rateGroup = view.findViewById(R.id.rateGroup);
-            amount = view.findViewById(R.id.transactionAmount);
-            rate = view.findViewById(R.id.transactionRate);
+        typeButton = view.findViewById(R.id.typeButton);
+        dateButton = view.findViewById(R.id.dateButton);
+        transactionCategory = view.findViewById(R.id.transactionCategory);
+        categoryGroup = view.findViewById(R.id.categoryGroup);
+        accountFromGroup = view.findViewById(R.id.accountFromGroup);
+        accountFrom = view.findViewById(R.id.transactionAccountFrom);
+        accountToGroup = view.findViewById(R.id.accountToGroup);
+        accountTo = view.findViewById(R.id.transactionAccountTo);
+        currencies = view.findViewById(R.id.currency);
+        rateGroup = view.findViewById(R.id.rateGroup);
+        amount = view.findViewById(R.id.transactionAmount);
+        rate = view.findViewById(R.id.transactionRate);
 
-            initTypeButton();
-            initDateButton();
-            initTransactionCategory();
-            initAccountFrom();
-            initAccountTo();
-            initTransactionAmount();
-            initCurrency();
-            showRate();
-            builder.setView(view);
-        }
+        initTypeButton();
+        initDateButton();
+        initTransactionCategory();
+        initAccountFrom();
+        initAccountTo();
+        initTransactionAmount();
+        initCurrency();
+        showRate();
+
+        builder.setView(view);
         builder.setTitle(R.string.transaction_edit);
         builder.setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
@@ -165,15 +159,20 @@ public class TransactionEditDialog extends DialogFragment {
         final Account accountTo = transaction.getAccountTo();
         final String currency = transaction.getCurrency();
         boolean show;
+
         if (type == TransactionType.spending){
-            show = currency.equals(accountFrom.getCurrency());
+            System.out.println(currency + ":" + accountFrom.getCurrency());
+            show = !currency.equals(accountFrom.getCurrency());
         } else if (type == TransactionType.income){
-            show = currency.equals(accountTo.getCurrency());
+            System.out.println(currency + ":" + accountTo.getCurrency());
+            show = !currency.equals(accountTo.getCurrency());
         } else {
-            show = accountFrom.getCurrency().equals(accountTo.getCurrency());
+            show = !accountFrom.getCurrency().equals(accountTo.getCurrency());
         }
-        if (!show){
+
+        if (show){
             rateGroup.setVisibility(View.VISIBLE);
+            rate.setText(String.valueOf(transaction.getRate()));
         } else {
             rateGroup.setVisibility(View.GONE);
         }
@@ -189,6 +188,18 @@ public class TransactionEditDialog extends DialogFragment {
         } else {
             transaction.setAccountTo(accountAdapter.getItem(accountTo.getSelectedItemPosition()));
         }
+        accountTo.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final Account account = accountAdapter.getItem(position);
+                transaction.setAccountTo(account);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                transaction.setAccountTo(null);
+            }
+        });
     }
 
     private ArrayAdapter<Account> createAccountAdapter() {
@@ -233,6 +244,18 @@ public class TransactionEditDialog extends DialogFragment {
         } else {
             transaction.setAccountFrom(accountAdapter.getItem(accountFrom.getSelectedItemPosition()));
         }
+        accountFrom.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                final Account account = accountAdapter.getItem(position);
+                transaction.setAccountFrom(account);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                transaction.setAccountFrom(null);
+            }
+        });
     }
 
     private void initTypeButton() {

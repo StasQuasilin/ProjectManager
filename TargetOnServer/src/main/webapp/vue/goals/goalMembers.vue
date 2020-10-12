@@ -2,7 +2,7 @@ goalMembers = new Vue({
     el:'#memberList',
     data:{
         api:{},
-        goal:-1,
+        item:-1,
         owner:{},
         friends:[],
         members:[]
@@ -16,8 +16,10 @@ goalMembers = new Vue({
                     members.push(friend.id);
                 }
             }
-            PostApi(this.api.save, {goal: this.goal, members:members}, function (a) {
-                console.log(a)
+            PostApi(this.api.save, {item: this.item, members:members}, function (a) {
+                if(a.status === 'success'){
+                    closeModal();
+                }
             })
         }
     }

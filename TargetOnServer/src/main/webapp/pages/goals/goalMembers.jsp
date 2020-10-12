@@ -13,8 +13,8 @@
     <script src="${context}/vue/goals/goalMembers.vue"></script>
     <script>
         goalMembers.api.save = '${save}';
-        goalMembers.goal = ${goal.id};
-        goalMembers.owner = ${goal.owner.toJson()}
+        goalMembers.item = ${item};
+        goalMembers.owner = ${user.toJson()}
         friends = {};
         <c:forEach items="${friends}" var="friend">
         friend = ${friend.toJson()};

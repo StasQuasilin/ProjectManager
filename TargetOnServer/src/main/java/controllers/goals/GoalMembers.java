@@ -21,7 +21,7 @@ import java.io.IOException;
 public class GoalMembers extends ModalWindow {
 
     private static final String _TITLE = "title.goal.members";
-    private static final String _CONTENT = "/pages/goals/goalMembers.jsp";
+    public static final String _CONTENT = "/pages/goals/goalMembers.jsp";
     private final GoalDAO goalDAO = daoService.getGoalDAO();
     private final FriendshipDAO friendshipDAO = daoService.getFriendshipDAO();
 
@@ -32,7 +32,7 @@ public class GoalMembers extends ModalWindow {
             final User user = getUser(req);
             req.setAttribute(Keys.FRIENDS, friendshipDAO.getFriends(user));
             final Goal goal = goalDAO.getGoal(body.get(Keys.ID));
-            req.setAttribute(Keys.GOAL, goal);
+            req.setAttribute(Keys.ITEM, goal.getId());
             req.setAttribute(Keys.MEMBERS, goalDAO.getGoalMembers(goal));
             req.setAttribute(Keys.SAVE, ApiLinks.SAVE_GOAL_MEMBERS);
             req.setAttribute(Keys.TITLE, _TITLE);

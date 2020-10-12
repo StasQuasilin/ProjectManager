@@ -22,7 +22,7 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public List<Account> getUserAccounts(User user) {
         final List<Account> accounts = hibernator.query(Account.class, OWNER, user);
-        for (AccountMember member : hibernator.query(AccountMember.class, USER, user)){
+        for (AccountMember member : hibernator.query(AccountMember.class, MEMBER, user)){
             accounts.add(member.getAccount());
         }
         return accounts;
@@ -70,5 +70,20 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public void removeAccounts(User user) {
         hibernator.remove(Account.class, "owner", user);
+    }
+
+    @Override
+    public List<AccountMember> getMembers(Object account) {
+        return hibernator.query(AccountMember.class, "account", account);
+    }
+
+    @Override
+    public void saveMember(AccountMember member) {
+        hibernator.save(member);
+    }
+
+    @Override
+    public void removeMember(AccountMember member) {
+        hibernator.remove(member);
     }
 }

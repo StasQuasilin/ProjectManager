@@ -42,4 +42,5 @@
     <string name="goals_title">Цілі</string>
     <string name="date_begin">Дата початку</string>
     <string name="date_end">Дата завершення</string>
+    <string name="server_client_id">4f2ed5b150cfb18d0399d5722ba501d41f85eb64</string>
 </resources>

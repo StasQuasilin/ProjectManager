@@ -27,6 +27,6 @@ public interface UrlLinks {
     String FRIENDS = "/friends" + SUFFIX;
     String MESSAGES = "/messages" + SUFFIX;
     String CATEGORY_PAGE = "/categories" + SUFFIX;
-    String ADD_GOAL_MEMEBER = "/goal/add/member" + SUFFIX;
     String GOAL_MEMBERS = "/goa/members" + SUFFIX;
+    String ACCOUNT_MEMBERS = "/account/members" + SUFFIX;
 }
