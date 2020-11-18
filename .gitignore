@@ -24,6 +24,7 @@ hs_err_pid*
 TargetOnServer/.idea/*
 server/
 server/*
+TargetOnMobile/.idea/
 TargetOnServer/target/
 TargetOnServer/target/*
 TargetOnServer/.idea/

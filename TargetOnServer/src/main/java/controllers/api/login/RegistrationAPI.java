@@ -23,8 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static constants.Keys.*;
 
@@ -59,7 +57,7 @@ public class RegistrationAPI extends API {
                     if (!validator.passwordValid(password)){
                         answer = new ErrorAnswer(languageBase.get(locale, "wrong.password"));
                     } else {
-                        userAccess.setPassword(password);
+                        userAccess.setPasswordHash(password.hashCode());
                         User user = new User();
                         final String surname = body.getString(SURNAME);
                         final String forename = body.getString(FORENAME);

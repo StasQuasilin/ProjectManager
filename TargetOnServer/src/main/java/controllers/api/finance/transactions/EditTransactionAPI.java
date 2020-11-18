@@ -89,9 +89,7 @@ public class EditTransactionAPI extends API {
             if (type == TransactionType.income || type == TransactionType.spending) {
                 final Category category = categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), user);
                 transaction.setCategory(category);
-                if (category.getCurrency() == null){
-                    category.setCurrency(currency);
-                }
+
             } else if (type == TransactionType.transfer){
                 final UserSystemCategory categories = uscu.getCategories(user);
                 final Category category = categories.getTransferTransaction();

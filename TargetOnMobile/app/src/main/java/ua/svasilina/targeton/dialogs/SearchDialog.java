@@ -3,6 +3,7 @@ package ua.svasilina.targeton.dialogs;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -49,11 +50,13 @@ public class SearchDialog<T> extends DialogFragment {
     private final SearchDialogItemBuilder<T> itemBuilder;
     private EditText textInput;
     private SearchTimer<T> timer;
+    private String title;
+    private AlertDialog.Builder builder;
 
     public SearchDialog(Context context, LayoutInflater inflater, String searchApi,
                         final SearchDialogItemBuilder<T> itemBuilder,
                         OnChangeListener<T> changeListener,
-                        SearchListBuilder<T> listBuilder) {
+                        SearchListBuilder<T> listBuilder, String title) {
         this.inflater = inflater;
         this.searchApi = searchApi;
         this.changeListener = changeListener;
@@ -65,6 +68,7 @@ public class SearchDialog<T> extends DialogFragment {
             }
         };
         timer = new SearchTimer<>(300, 1, this);
+        this.title = title;
     }
 
     private Button addCategoryButton;
@@ -72,7 +76,7 @@ public class SearchDialog<T> extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder = new AlertDialog.Builder(getActivity());
         final View view = inflater.inflate(R.layout.search_dialog, null);
         addCategoryButton = view.findViewById(R.id.addCategoryButton);
         addCategoryButton.setVisibility(View.GONE);
@@ -93,7 +97,7 @@ public class SearchDialog<T> extends DialogFragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 timer.cancel();
                 addCategoryButton.setVisibility(View.GONE);
-                if (s.length() > 2) {
+                if (s.length() > 1) {
                     timer.start();
                 }
             }
@@ -111,7 +115,7 @@ public class SearchDialog<T> extends DialogFragment {
             }
         });
 
-
+        builder.setTitle(title);
         builder.setView(view);
         builder.setNegativeButton(R.string.cancel, null);
 
@@ -128,7 +132,6 @@ public class SearchDialog<T> extends DialogFragment {
 
         HashMap<String, CharSequence> param = new HashMap<>();
         param.put(KEY, key.toString());
-
         connector.newJsonReq(
                 getContext(),
                 searchApi,
@@ -146,6 +149,12 @@ public class SearchDialog<T> extends DialogFragment {
                                     }
                                 } else {
                                     addCategoryButton.setVisibility(View.VISIBLE);
+                                    builder.setNeutralButton(R.string.add_category, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            System.out.println("New category");
+                                        }
+                                    });
                                 }
 
                             }
@@ -157,6 +166,7 @@ public class SearchDialog<T> extends DialogFragment {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
                         System.out.println("!" + error.getMessage());
                     }
                 });
@@ -185,7 +195,6 @@ public class SearchDialog<T> extends DialogFragment {
 
         @Override
         public void onFinish() {
-            System.out.println("finish");
             searchDialog.find();
         }
     }

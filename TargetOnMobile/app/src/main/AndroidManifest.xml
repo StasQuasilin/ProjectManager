@@ -28,7 +28,7 @@
         <activity android:name=".TransactionAddActivity"/>
         <receiver
             android:name=".widgets.TransactionAddWidget"
-            android:icon="@android:drawable/btn_plus"
+            android:icon="@android:drawable/ic_menu_add"
             android:label="@string/transaction_add_widget_title">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
@@ -36,6 +36,17 @@
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/transaction_add_widget_metadata">
+            </meta-data>
+        </receiver>
+        <receiver android:name=".widgets.AccountsWidget"
+            android:icon="@android:drawable/ic_menu_add"
+            android:label="@string/accounts_widget_title">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/accounts_widget_metadata">
             </meta-data>
         </receiver>
         <receiver android:name=".receivers.TransactionAddReceiver"/>

@@ -23,7 +23,7 @@
                             {{item.id}}:{{item.type}}
                         </div>
                         <div>
-                            <span v-if="item.category">
+                            <span v-if="item.category.title">
                                 {{item.category.title}}
                             </span>
                             <span v-else style="color: gray">

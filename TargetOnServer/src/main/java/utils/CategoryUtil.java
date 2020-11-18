@@ -14,16 +14,17 @@ public class CategoryUtil {
     public Category getCategory(JsonObject data, User owner){
         Category category = hibernator.get(Category.class, ID, data.get(ID));
 
+
         if (category == null){
             category = new Category();
             category.setOwner(owner);
         }
 
-        String string = data.getString(TITLE);
-        if (string.length() > 0){
-            category.setTitle(string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase());
+        String title = data.getString(TITLE);
+        if (title.length() > 0){
+            category.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1).toLowerCase());
         } else {
-            category.setTitle(string);
+            category.setTitle(title);
         }
 
         hibernator.save(category);

@@ -39,5 +39,6 @@
         <mapping class="entity.finance.accounts.AccountMember"/>
         <mapping class="entity.user.DemoAccount"/>
         <mapping class="entity.social.Friendship"/>
+        <mapping class="entity.communication.Notification"/>
     </session-factory>
 </hibernate-configuration>

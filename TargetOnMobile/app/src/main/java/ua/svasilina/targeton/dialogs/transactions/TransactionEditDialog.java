@@ -352,7 +352,7 @@ public class TransactionEditDialog extends DialogFragment {
                                 final TextView itemValue = view.findViewById(R.id.itemValue);
                                 itemValue.setText(item.getTitle());
                             }
-                        });
+                        }, getResources().getString(R.string.find_category_title));
                 dialog.show(getParentFragmentManager(), "Find Category");
 
             }
@@ -365,8 +365,12 @@ public class TransactionEditDialog extends DialogFragment {
         if (category == null){
             transactionCategory.setText(getResources().getString(R.string.without_category));
         } else {
-            transactionCategory.setText(category.getTitle());
+            final String title = category.getTitle();
+            if (title.isEmpty()){
+                transactionCategory.setText(getResources().getString(R.string.without_category));
+            } else {
+                transactionCategory.setText(title);
+            }
         }
-
     }
 }

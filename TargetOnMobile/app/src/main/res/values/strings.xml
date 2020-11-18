@@ -43,4 +43,14 @@
     <string name="date_begin">Дата початку</string>
     <string name="date_end">Дата завершення</string>
     <string name="server_client_id">4f2ed5b150cfb18d0399d5722ba501d41f85eb64</string>
+    <string name="find_category_title">Почніть вводити назву категорії</string>
+    <string name="accounts_widget_title">Рахунки</string>
+    <string name="exit">Вихід</string>
+    <string name="pressBack">Для виходу нажміть Назад ще раз</string>
+    <string name="account_edit">Редагування рахунку</string>
+    <string name="account_name">Назва рахунку</string>
+    <string name="account_type">Тип рахунку</string>
+    <string name="account_sum">Сума на рахунку</string>
+    <string name="account_limit">Кредитний ліміт</string>
+    <string name="account_members">Користувачі рахунку</string>
 </resources>

@@ -20,6 +20,7 @@ import java.util.Map;
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.adapters.SimpleListAdapter;
 import ua.svasilina.targeton.dialogs.SearchListBuilder;
+import ua.svasilina.targeton.dialogs.accounts.AccountEditDialog;
 import ua.svasilina.targeton.dialogs.transactions.SearchDialogItemBuilder;
 import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.ui.main.ApplicationFragment;
@@ -53,7 +54,7 @@ public class AccountsFragment extends ApplicationFragment {
         accountsList = view.findViewById(R.id.accountList);
         adapter = new SimpleListAdapter<>(context, R.layout.account_view, inflater, new SearchListBuilder<Account>() {
             @Override
-            public void build(Account item, View view) {
+            public void build(final Account item, View view) {
                 final TextView accountNameView = view.findViewById(R.id.accountName);
                 final TextView accountValue = view.findViewById(R.id.accountValue);
 
@@ -73,6 +74,12 @@ public class AccountsFragment extends ApplicationFragment {
                 builder.append(Keys.SPACE).append(item.getCurrency());
 
                 accountValue.setText(builder.toString());
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new AccountEditDialog(context, getLayoutInflater(), item).show(getParentFragmentManager(), "Account Edit");
+                    }
+                });
             }
         }, new SearchDialogItemBuilder<Account>() {
             @Override

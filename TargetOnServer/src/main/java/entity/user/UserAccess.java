@@ -8,7 +8,7 @@ import java.io.Serializable;
 public class UserAccess implements Serializable {
     private User user;
     private String login;
-    private String password;
+    private int passwordHash;
     private String token;
 
     @Id
@@ -31,12 +31,12 @@ public class UserAccess implements Serializable {
     }
 
     @Basic
-    @Column(name = "_password")
-    public String getPassword() {
-        return password;
+    @Column(name = "_password_hash")
+    public int getPasswordHash() {
+        return passwordHash;
     }
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordHash(int passwordHash) {
+        this.passwordHash = passwordHash;
     }
 
     @Basic

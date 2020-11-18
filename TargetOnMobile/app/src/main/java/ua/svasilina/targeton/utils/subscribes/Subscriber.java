@@ -71,23 +71,28 @@ public class Subscriber {
     public void handle(String text) {
         try {
             JSONObject json = new JSONObject(text);
-            Subscribe subscribe = Subscribe.valueOf(String.valueOf(json.get(Keys.SUBSCRIBE)));
-            if (handlerMap.containsKey(subscribe)){
-                Handler handler = handlerMap.get(subscribe);
-                if(handler != null) {
-                    Message message = new Message();
-                    JSONObject data = (JSONObject) json.get(Keys.DATA);
+            if (json.has(Keys.SUBSCRIBE)){
+                Subscribe subscribe = Subscribe.valueOf(String.valueOf(json.get(Keys.SUBSCRIBE)));
+                if (handlerMap.containsKey(subscribe)){
+                    Handler handler = handlerMap.get(subscribe);
+                    if(handler != null) {
+                        Message message = new Message();
+                        JSONObject data = (JSONObject) json.get(Keys.DATA);
 
-                    Iterator<String> keys = data.keys();
-                    final Bundle bundle = message.getData();
-                    while (keys.hasNext()) {
-                        String next = keys.next();
-                        Object val = data.get(next);
-                        bundle.putString(next, String.valueOf(val));
+                        Iterator<String> keys = data.keys();
+                        final Bundle bundle = message.getData();
+                        while (keys.hasNext()) {
+                            String next = keys.next();
+                            Object val = data.get(next);
+                            bundle.putString(next, String.valueOf(val));
+                        }
+                        handler.sendMessage(message);
                     }
-                    handler.sendMessage(message);
                 }
+            } else {
+                System.out.println("What can i do with " + json.toString());
             }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

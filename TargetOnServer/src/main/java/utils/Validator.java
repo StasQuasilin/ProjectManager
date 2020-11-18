@@ -16,12 +16,13 @@ public class Validator {
     static Validator validator = new Validator();
 
     public static void main(String[] args) {
-        checkName("");
-        checkName("<script>alert('O kurwa !');</script>");
-        checkName("ійа");
-        checkName("іволіваіsdfsdfs");
-        checkName("0SDFSDFdfsgdfgdfgd@");
-        checkName("DFSDFdfsgdfgdfgd0@sdfsdf.com.ua");
+        System.out.println("U3RhczUzNzIxNDU2".hashCode());
+//        checkName("");
+//        checkName("<script>alert('O kurwa !');</script>");
+//        checkName("ійа");
+//        checkName("іволіваіsdfsdfs");
+//        checkName("0SDFSDFdfsgdfgdfgd@");
+//        checkName("DFSDFdfsgdfgdfgd0@sdfsdf.com.ua");
     }
 
     private static void checkEmail(String s) {

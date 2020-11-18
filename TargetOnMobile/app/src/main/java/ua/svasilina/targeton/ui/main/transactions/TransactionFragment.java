@@ -85,14 +85,12 @@ public class TransactionFragment extends ApplicationFragment {
     @Override
     public void onPause() {
         super.onPause();
-        Toast.makeText(getContext(), "TransactionFragment pause", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onStop() {
         super.onStop();
         subscriber.unsubscribe(Subscribe.transactions);
-        Toast.makeText(getContext(), "TransactionFragment stop", Toast.LENGTH_SHORT).show();
     }
 
     @Nullable
@@ -132,7 +130,6 @@ public class TransactionFragment extends ApplicationFragment {
         instance.newJsonReq(ctx, API.USER_DATA, new JSONObject(param), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                System.out.println("??" + response);
                 try {
                     final String status = response.getString(STATUS);
                     if (status.equals(SUCCESS)){

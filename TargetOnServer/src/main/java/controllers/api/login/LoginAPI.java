@@ -49,8 +49,8 @@ public class LoginAPI extends API {
                 final UserAccess userAccess = userAccessDAO.getUserAccess(email);
 
                 if (userAccess != null){
-                    final String password = userAccess.getPassword();
-                    if (password.equals(body.getString(PASSWORD))){
+                    final int passwordHash = userAccess.getPasswordHash();
+                    if (passwordHash == body.getString(PASSWORD).hashCode()){
                         final HttpSession session = req.getSession();
                         final User user = userAccess.getUser();
                         session.setAttribute(USER, user);

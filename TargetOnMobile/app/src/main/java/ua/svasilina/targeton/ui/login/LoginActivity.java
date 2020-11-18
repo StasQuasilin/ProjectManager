@@ -161,7 +161,7 @@ public class LoginActivity extends Activity {
                                     context.startActivity(new Intent(context, MainActivity.class));
 
                                 } else {
-                                    final String message = response.getString(MESSAGE);
+                                    final String message = response.has(MESSAGE) ? response.getString(MESSAGE) : "Some login error";
                                     showErrorMessage(message);
                                 }
                             } catch (JSONException e) {

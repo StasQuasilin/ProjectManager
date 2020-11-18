@@ -35,9 +35,6 @@ public class TransactionAddWidget extends AppWidgetProvider {
     @Override
     public void onEnabled(Context context) {
         super.onEnabled(context);
-        System.out.println("ENABLE");
-
-
     }
 
     @Override
@@ -47,7 +44,6 @@ public class TransactionAddWidget extends AppWidgetProvider {
         for (int i : appWidgetIds){
             updateWidget(context, appWidgetManager, i);
         }
-        System.out.println("UPDATE");
     }
 
     private void updateWidget(Context context, AppWidgetManager appWidgetManager, int widgetId) {

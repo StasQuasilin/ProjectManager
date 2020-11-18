@@ -3,10 +3,10 @@ package ua.svasilina.targeton;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -68,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.calendar:
                 setView(CalendarFragment.getInstance());
                 return true;
+            case R.id.exit:
+                UserAccessStorage.saveUserAccess(getApplicationContext(), null);
+                showLogin();
+                return false;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -75,17 +79,33 @@ public class MainActivity extends AppCompatActivity {
     private void setView(ApplicationFragment fragment) {
         final String userAccess = UserAccessStorage.getUserAccess(getApplicationContext());
         if (userAccess == null){
-            final Context context = getApplicationContext();
-            final Intent intent = new Intent(context, LoginActivity.class);
-            context.startActivity(intent);
+            showLogin();
         } else {
             actionBar.setTitle(fragment.getTitle());
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commitNow();
         }
     }
 
+    void showLogin(){
+        final Context context = getApplicationContext();
+        final Intent intent = new Intent(context, LoginActivity.class);
+        context.startActivity(intent);
+    }
+
+    private long backPressedTime;
+    private Toast backToast;
+
     @Override
     public void onBackPressed() {
+        if (backPressedTime + 2000 > System.currentTimeMillis()) {
+            backToast.cancel();
+            finish();
+            return;
+        } else {
+            backToast = Toast.makeText(getBaseContext(), R.string.pressBack, Toast.LENGTH_SHORT);
+            backToast.show();
+        }
+        backPressedTime = System.currentTimeMillis();
 
     }
 
@@ -98,12 +118,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        BackgroundWorkerUtil.getInstance().runWorker(getApplicationContext());
+//        BackgroundWorkerUtil.getInstance().runWorker(getApplicationContext());
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        BackgroundWorkerUtil.getInstance().runWorker(getApplicationContext());
+//        BackgroundWorkerUtil.getInstance().runWorker(getApplicationContext());
     }
 }

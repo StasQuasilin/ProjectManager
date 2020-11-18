@@ -3,6 +3,7 @@ package ua.svasilina.targeton.adapters;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,13 +63,22 @@ public class TransactionsAdapter extends ArrayAdapter<Transaction> {
             }
 
             if (showData){
+                dateView.setVisibility(View.VISIBLE);
                 dateView.setText(dtb.build(item.getDate()));
             } else {
                 dateView.setVisibility(GONE);
             }
 
             final TextView transactionID = view.findViewById(R.id.transactionTitle);
-            transactionID.setText(item.getTitle());
+            final String title = item.getTitle();
+            if (title.isEmpty()){
+                transactionID.setTextColor(Color.GRAY);
+                transactionID.setText(context.getResources().getString(R.string.without_category));
+            } else {
+                transactionID.setTextColor(Color.BLACK);
+                transactionID.setText(title);
+            }
+
 
             final TextView accountFromView = view.findViewById(R.id.accountFrom);
             final Account accountFrom = item.getAccountFrom();

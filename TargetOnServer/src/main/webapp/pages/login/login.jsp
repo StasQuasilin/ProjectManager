@@ -78,9 +78,9 @@
             </div>
         </div>
     </body>
-    <script type="application/javascript" src="${context}/external/vue.js"></script>
-    <script type="application/javascript" src="${context}/vue/login/login.vue"></script>
-    <script type="application/javascript">
+    <script type="text/javascript" src="${context}/external/vue.js"></script>
+    <script type="text/javascript" src="${context}/vue/login/login.vue"></script>
+    <script type="text/javascript">
         login.api.login = '${login}';
         login.api.registration = '${registration}';
         login.api.demo = '${demo}';

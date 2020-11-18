@@ -32,7 +32,10 @@ public class TransactionDAOImpl implements TransactionDAO {
 
     @Override
     public void saveTransaction(Transaction transaction) {
-        hibernator.save(transaction.getCategory());
+        final Category category = transaction.getCategory();
+        if (category != null) {
+            hibernator.save();
+        }
         hibernator.save(transaction);
         updater.update(Subscribe.transactions, transaction, transaction.getOwner());
 
