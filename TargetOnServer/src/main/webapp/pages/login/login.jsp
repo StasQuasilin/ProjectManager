@@ -21,6 +21,18 @@
                 context = '${context}'
             }
         </script>
+        <script type="application/javascript" src="${context}/external/vue.js"></script>
+        <script type="application/javascript;charset=utf-8" src="${context}/vue/login/login.vue?v=${now}"></script>
+        <script type="application/javascript">
+            loginApp.api.login = '${login}';
+            loginApp.api.registration = '${registration}';
+            loginApp.api.demo = '${demo}';
+            <c:forEach items="${locales}" var="l">
+            loginApp.locales.push('${l}');
+            loginApp.localeNames['${l}'] = '<fmt:message key="language.${l}"/>';
+            </c:forEach>
+            loginApp.locale = '${locale}'
+        </script>
     </head>
     <body>
         <div id="loginApp" class="login-page">
@@ -78,16 +90,5 @@
             </div>
         </div>
     </body>
-    <script type="text/javascript" src="${context}/external/vue.js"></script>
-    <script type="text/javascript" src="${context}/vue/login/login.vue"></script>
-    <script type="text/javascript">
-        login.api.login = '${login}';
-        login.api.registration = '${registration}';
-        login.api.demo = '${demo}';
-        <c:forEach items="${locales}" var="l">
-        login.locales.push('${l}');
-        login.localeNames['${l}'] = '<fmt:message key="language.${l}"/>';
-        </c:forEach>
-        login.locale = '${locale}'
-    </script>
+
 </html>
