@@ -1,4 +1,4 @@
-login = new Vue({
+loginApp = new Vue({
     el:'#loginApp',
     data:{
         api:{},

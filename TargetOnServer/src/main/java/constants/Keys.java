@@ -156,4 +156,5 @@ public interface Keys {
     String GOAL_MEMBERS = "goalMembers";
     String MEMBERS = "members";
     String MEMBER_LIST = "memberList";
+    String NOW = "now";
 }
