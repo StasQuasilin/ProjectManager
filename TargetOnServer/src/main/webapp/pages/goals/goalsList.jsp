@@ -29,7 +29,7 @@
     <jsp:include page="goalHeader.jsp"/>
     <body>
         <div id="goalList" class="goal-page item-container">
-            <goal-tile v-for="goal in getItems()" :key="goal.id" :goal="goal" :props="props"
+            <goal-tile v-for="goal in getItems()" v-on:click.native="openTree(goal.category)" :key="goal.id" :goal="goal" :props="props"
                        class="goal-item"></goal-tile>
         </div>
     </body>

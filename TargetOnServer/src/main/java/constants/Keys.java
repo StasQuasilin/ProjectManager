@@ -14,6 +14,8 @@ public interface Keys {
     String UID = "uid";
     String SUBSCRIBER = "subscriber";
     String SUBSCRIBE = "subscribe";
+    String TREE_SUBSCRIBE = "treeSubscribe";
+    String GOAL_SUBSCRIBE = "goalSubscribe";
     String WELCOME = "welcome";
     String TASK_SUBSCRIBE = "taskSubscribe";
     String SLASH = "/";

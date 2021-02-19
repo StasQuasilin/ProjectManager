@@ -24,8 +24,8 @@ import static constants.Keys.*;
 @WebServlet(UrlLinks.TREE)
 public class TreePage extends Page {
 
-    private static final String _CONTENT = "/pages/tree/treePage.jsp";
-    private static final String _TITLE = "title.tree";
+    private static final String _CONTENT = "/pages/tree/treePage2.jsp";
+    private static final String _TITLE = "title.goals";
     private final GoalDAO goalDAO = daoService.getGoalDAO();
 
     @Override
@@ -47,7 +47,8 @@ public class TreePage extends Page {
         req.setAttribute(GET_TASK, ApiLinks.GET_TASK);
         req.setAttribute(TREE_BUILDER, ApiLinks.TREE_BUILDER);
         req.setAttribute(TASK_TIMER, UrlLinks.TASK_TIMER);
-        req.setAttribute(SUBSCRIBE, Subscribe.tree);
+        req.setAttribute(GOAL_SUBSCRIBE, Subscribe.goal);
+        req.setAttribute(TREE_SUBSCRIBE, Subscribe.tree);
         show(req, resp);
     }
 }

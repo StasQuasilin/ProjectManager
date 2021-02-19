@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -20,15 +21,13 @@ import static constants.Keys.*;
 @WebFilter(value = {ASTERISK})
 public class ContextFilter implements Filter {
 
-    private User user;
-    private static LocalDateTime now;
+    private static long now;
 
     @Override
     public void init(FilterConfig filterConfig) {
         Hibernator instance = Hibernator.getInstance();
-        user = instance.get(User.class, ID, 1);
         CalendarReplaceUtil.init();
-        now = LocalDateTime.now();
+        now = Timestamp.valueOf(LocalDateTime.now()).getTime();
     }
 
     @Override
@@ -36,21 +35,12 @@ public class ContextFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
 
         request.setAttribute(CONTEXT, request.getContextPath());
-        request.setAttribute(Keys.NOW, now.toString());
-        //todo delete this
-//        final HttpSession session = request.getSession();
-//        if (session.getAttribute(USER) == null) {
-//            session.setAttribute(USER, user);
-//        }
-//        if (session.getAttribute(LOCALE) == null){
-//            session.setAttribute(LOCALE, "uk");
-//        }
+        request.setAttribute(Keys.NOW, now);
+
 
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.setHeader("Access-Control-Allow-Origin", request.getContextPath());
         response.setHeader("Access-Control-Allow-Methods", "POST, GET");
-//        response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//        response.setHeader("X-Content-Type-Options", "nosniff");
 
         filterChain.doFilter(request, response);
     }

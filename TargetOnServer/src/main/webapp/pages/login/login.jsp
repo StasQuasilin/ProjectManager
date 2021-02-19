@@ -15,25 +15,16 @@
         <link rel="icon" href="${context}/images/icon.svg">
         <link rel="stylesheet" href="${context}/css/main.css">
         <link rel="stylesheet" href="${context}/css/login.css">
-        <script type="application/javascript" src="${context}/js/connection.js"></script>
+        <script src="${context}/js/connection.js"></script>
         <script>
             if (typeof context === 'undefined'){
                 context = '${context}'
             }
         </script>
-        <script type="application/javascript" src="${context}/external/vue.js"></script>
-        <script type="application/javascript;charset=utf-8" src="${context}/vue/login/login.vue?v=${now}"></script>
-        <script type="application/javascript">
-            loginApp.api.login = '${login}';
-            loginApp.api.registration = '${registration}';
-            loginApp.api.demo = '${demo}';
-            <c:forEach items="${locales}" var="l">
-            loginApp.locales.push('${l}');
-            loginApp.localeNames['${l}'] = '<fmt:message key="language.${l}"/>';
-            </c:forEach>
-            loginApp.locale = '${locale}'
-        </script>
+        <script src="${context}/external/vue.js"></script>
+
     </head>
+
     <body>
         <div id="loginApp" class="login-page">
             <div class="login-welcome">
@@ -90,5 +81,15 @@
             </div>
         </div>
     </body>
-
+    <script src="${context}/vue/login/login.vue?v=${now}"></script>
+    <script>
+        loginApp.api.login = '${login}';
+        loginApp.api.registration = '${registration}';
+        loginApp.api.demo = '${demo}';
+        <c:forEach items="${locales}" var="l">
+        loginApp.locales.push('${l}');
+        loginApp.localeNames['${l}'] = '<fmt:message key="language.${l}"/>';
+        </c:forEach>
+        loginApp.locale = '${locale}'
+    </script>
 </html>

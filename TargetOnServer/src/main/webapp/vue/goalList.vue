@@ -6,6 +6,7 @@ goalList = new Vue({
     mixins:[list],
     data:function(){
         return {
+            treeView:null,
             props:{
                 edit:function (id) {
                     goalList.edit(id)
@@ -21,7 +22,7 @@ goalList = new Vue({
     },
     methods:{
         openTree:function(itemId){
-            loadPage(this.api.tree, {item:itemId});
+            treeView.openTree(itemId);
         }
     }
 });

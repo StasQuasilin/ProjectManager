@@ -68,7 +68,7 @@
                                 </span>
                                 <span class="task-menu" v-if="item.status !== 'done'">
                                     <span class="text-button" v-on:click="timer(item.id)">
-                                        🕐🕐🕐🕐&#128336;
+                                        🕐
                                     </span>
                                     <span class="text-button edit-button" v-on:click="edit(item.id)"></span>
                                     <span class="text-button delete-button" v-on:click="deleteTask(item.id)"></span>

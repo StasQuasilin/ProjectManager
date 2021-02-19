@@ -26,7 +26,7 @@
         <script type="application/javascript" src="${context}/js/subscriber.js"></script>
         <script type="application/javascript" src="${context}/js/application.js"></script>
         <script type="application/javascript" src="${context}/js/utils.js"></script>
-        <script type="application/javascript" src="${context}/vue/list.vue"></script>
+        <script type="application/javascript" src="${context}/vue/list.vue?v=${now}"></script>
         <script type="application/javascript" src="${context}/vue/templates/tree/treeView.vue"></script>
 
         <script>
@@ -34,7 +34,6 @@
             logoutUrl = '${logout}';
             removeAccountApi = '${accountRemove}';
             user = ${user.id};
-            Vue.component('tree-view', treeView);
             if (typeof context === 'undefined'){
                 context = '${context}'
             }

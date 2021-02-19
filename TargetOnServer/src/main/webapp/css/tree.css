@@ -1,130 +1,40 @@
-.full-size{
-    display: flex;
-    flex-direction: row;
+.tree-view{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width: 500px;
+    height: 100%;
 }
-.central-panel, .right-panel{
-    display: flex;
-    flex-direction: column;
-}
-.central-panel{
-    width: 75%;
-    flex: 1 0 auto;
-}
-.panel-header{
-    flex: 0 0 auto;
-    width: 100%;
-    background-color: #41b883;
-    position: relative;
-}
-.panel-header-content{
-    width: 100%;
-    padding: 4px 0;
-    background-color: transparent;
-}
-.task-path{
-    padding: 6px 0;
-}
-.task-path * {
-    background-color: transparent;
-}
-.task-path button{
-    background-color: white;
-}
-.task-item{
-    margin: 8px;
-    border-bottom: solid transparent 1px;
-}
-.task-item .task-menu{
-    display: none;
-}
-.task-item:hover{
-    border-bottom: solid green 1px;
-}
-.task-item:hover .task-menu{
-    display: block;
-}
-.task-menu{
-    float: right;
-    background-color: #41b883;
-    border-radius: 12pt;
-    padding: 2px 8px;
-}
-.task-menu *{
-    background-color: transparent;
-}
-.panel-content{
-    flex: 1 0 auto;
-    height: calc(100% - 29px);
-}
-.right-panel{
-    width: 25%;
-    flex: 1 0 auto;
-}
-.tree-path{
-    width: 100%;
-}
-.task-container{
+.tree-item{
 
 }
-.selected{
-    font-weight: bold;
-    text-shadow: 0 0 4px orangered;
-}
-.tree-tile{
-    display: inline-flex;
-    border: solid 2px;
-    border-radius: 8px;
-    margin: 4px;
-    padding: 8px;
-}
-.tree-tile:hover{
-    box-shadow: 0 0 4px 2px gray;
-}
-.task-container-title{
+.tree-parent{
+    background-color: #3498db;
     color: white;
-    padding: 4px;
-    border-top: solid gray 4px;
-    border-bottom: solid gray 4px;
-    background-image: linear-gradient(to right, gray, transparent);
-}
-.task-container-title-active{
-    border-top: solid cornflowerblue 4px;
-    border-bottom: solid cornflowerblue 4px;
-    background-image: linear-gradient(to right, cornflowerblue, transparent);
-}
-.task-container-title-progressing{
-    border-top: solid coral 4px;
-    border-bottom: solid coral 4px;
-    background-image: linear-gradient(to right, coral, transparent);
-}
-.task-container-title-done{
-    border-top: solid green 4px;
-    border-bottom: solid green 4px;
-    background-image: linear-gradient(to right, green, transparent);
-}
-.task-container-title span{
-    background-color: transparent;
     font-weight: bold;
-    font-size: 14pt;
+    padding: 2pt 4pt 2pt 4pt;
 }
-.active, .progressing, .done ::before{
-    padding-right: 4px;
+.tree-parent .tree-menu{
+    border-color: white;
 }
-.active{
-    color: #3788d8;
+.tree-menu{
+    border: solid 1px;
+    float: right;
+    border-radius: 8pt;
+    padding: 0 4pt 0 4pt;
 }
-.active::before{
-    content: '■';
+.tree-item .tree-menu{
+    display: none;
 }
-.progressing{
-    color: coral;
+.tree-item:hover .tree-menu{
+    display: block;
 }
-.progressing::before{
-    content: '▸';
+.tree-item *{
+    background-color: transparent;
 }
-.done{
-    color: green;
-}
-.done::before{
-    content: '✓';
+
+.tree-children{
+    padding-left: 24pt;
+    padding-bottom: 2pt;
+    border-left: dashed gray 1px;
+    border-bottom: dashed gray 1px;
 }
