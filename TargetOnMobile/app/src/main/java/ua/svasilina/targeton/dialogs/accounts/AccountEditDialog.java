@@ -41,9 +41,6 @@ public class AccountEditDialog extends DialogFragment {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         final View view = inflater.inflate(R.layout.account_edit, null);
 
-
-
-
         builder.setView(view);
         builder.setTitle(R.string.account_edit);
         builder.setNegativeButton(R.string.cancel, null);

@@ -94,7 +94,7 @@ public class LoginActivity extends Activity {
     private void googleSignIn() {
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.server_client_id))
+                .requestIdToken(getString(R.string.server_client_sha))
                 .requestEmail()
                 .build();
 
@@ -122,8 +122,8 @@ public class LoginActivity extends Activity {
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
-
-            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode() + " ( " + e.getCause() + " )" );
+            e.printStackTrace();
+            Log.w(TAG, "signInResult:failed code=" + e.getStatusCode() + " ( " + e.getMessage() + " )" );
             updateUI(null);
         }
     }
