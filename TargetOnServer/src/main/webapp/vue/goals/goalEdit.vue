@@ -43,9 +43,7 @@ goalEdit = new Vue({
         }
     },
     computed:{
-
         goalDuration:function(){
-            console.log('Calculate duration...');
             let res = {};
             let a = new Date(this.goal.begin);
             let b = new Date(this.goal.end);
@@ -55,7 +53,6 @@ goalEdit = new Vue({
             month -= year * 12;
             res.year = year;
             res.month = month;
-
             return res;
         }
     },
@@ -111,7 +108,6 @@ goalEdit = new Vue({
                 errors.title = true;
                 valid = false;
             }
-
             return valid;
         }
     }

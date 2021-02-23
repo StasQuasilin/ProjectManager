@@ -140,7 +140,7 @@ public class Task extends JsonAble {
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
-        jsonObject.put(CATEGORY, header.getId());
+        jsonObject.put(HEADER, header.getId());
         jsonObject.put(TITLE, header.getTitle());
         jsonObject.put(STATUS, status.toString());
         return jsonObject;
@@ -149,7 +149,7 @@ public class Task extends JsonAble {
     @Override
     public JSONObject toJson() {
         final JSONObject jsonObject = shortJson();
-        jsonObject.put(PARENT, header.getParent());
+        jsonObject.put(PARENT, header.getParent().toJson());
         jsonObject.put(UID, uid);
         if (date != null){
             jsonObject.put(DATE, date.toString());

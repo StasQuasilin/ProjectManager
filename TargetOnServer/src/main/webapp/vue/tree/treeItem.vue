@@ -1,7 +1,15 @@
 treeItem = {
     props:{
         item:Object,
-        onclick:Function
+        onclick:Function,
+        props:Object
+    },
+    computed:{
+        childrenCount:function () {
+            if (this.item.children){
+                return Object.keys(this.item.children).length;
+            }
+        }
     },
     data:function(){
         return {
@@ -15,12 +23,15 @@ treeItem = {
             } else {
                 this.onclick(this.item.id);
             }
+        },
+        addItem:function () {
+            loadModal(this.props.edit, {parent:this.item.header});
         }
     },
     template:'<div>' +
             '<template v-if="item">' +
-                '<div class="tree-item" :class="{\'tree-parent\' : item.children && item.children.length > 0}">' +
-                    '<span v-on:click="show=!show" v-if="item.children && item.children.length > 0">' +
+                '<div class="tree-item" :class="{\'tree-parent\' : childrenCount > 0}">' +
+                    '<span v-on:click="show=!show" v-if="childrenCount > 0">' +
                         '<template v-if="show">' +
                             '-' +
                         '</template>' +
@@ -35,7 +46,7 @@ treeItem = {
                         '{{item.title}}' +
                     '</a>' +
                     '<div class="tree-menu">' +
-                        '<span class="tree-menu-button">' +
+                        '<span class="tree-menu-button" v-on:click="addItem()">' +
                             '&#43;' +
                         '</span>' +
                         '<span v-if="item.status !== \'done\'" class="tree-menu-button">' +
@@ -52,8 +63,8 @@ treeItem = {
                         '</span>' +
                     '</div>' +
                 '</div>' +
-                '<div v-if="item.children && item.children.length > 0 && show" class="tree-children">' +
-                    '<tree-item v-for="child in item.children" :onclick="onclick" :key="child.id" :item="child"></tree-item>' +
+                '<div v-if="childrenCount > 0 && show" class="tree-children">' +
+                    '<tree-item v-for="child in item.children" :onclick="onclick" :key="child.id" :item="child" :props="props"></tree-item>' +
                 '</div>' +
             '</template>' +
         '</div>'

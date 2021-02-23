@@ -5,11 +5,25 @@ treeView = new Vue({
         tree:{},
         isSelected:false,
         title:null,
-
+        props:{}
     },
     methods:{
         handler:function(a){
             console.log(a);
+            if (a.update){
+                let update = a.update;
+                let p = update.parent;
+
+                let parent = this.tree;
+                for (let pi in p.path){
+                    if (p.path.hasOwnProperty(pi)){
+                        let pId = p.path[pi].id;
+                        parent = parent.children[pId];
+                    }
+                }
+                parent.children[update.id] = update;
+                this.$forceUpdate();
+            }
         },
         onClick:function(itemId){
             loadModal(this.api.taskEdit, {id:itemId});

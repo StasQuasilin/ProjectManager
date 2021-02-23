@@ -16,6 +16,7 @@ public interface Keys {
     String SUBSCRIBE = "subscribe";
     String TREE_SUBSCRIBE = "treeSubscribe";
     String GOAL_SUBSCRIBE = "goalSubscribe";
+    String GOAL_EDIT = "goalEdit";
     String WELCOME = "welcome";
     String TASK_SUBSCRIBE = "taskSubscribe";
     String SLASH = "/";
@@ -30,12 +31,12 @@ public interface Keys {
     String CATEGORY = "category";
     String HEADER = "header";
     String TASK = "task";
-    String TASK_OWNER = HEADER + SLASH + "owner";
-    String GOAL_OWNER = TASK + SLASH + TASK_OWNER;
+    String TITLE = "title";
+    String TITLE_OWNER = TITLE + SLASH + "owner";
     String OWNER = "owner";
     String _OWNER = "_owner";
     String MEMBER = "member";
-    String TITLE = "title";
+
     String DEPENDENT = "dependent";
     String PRINCIPAL = "principal";
     String ITEM = "item";
@@ -165,4 +166,7 @@ public interface Keys {
     String MEMBER_LIST = "memberList";
     String NOW = "now";
     String PATH = "path";
+    String EMPTY_BODY = "Empty req body";
+    String EMPTY_TITLE = "Title is empty";
+    String TITLE_ID = "titleId";
 }

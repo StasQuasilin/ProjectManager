@@ -15,7 +15,7 @@
     <script type="application/javascript" src="${context}/vue/goals/goalTile.vue?v=${now}"></script>
     <script type="application/javascript" src="${context}/vue/goalList.vue?v=${now}"></script>
     <script>
-        goalList.api.edit = '${edit}';
+        goalList.api.edit = '${goalEdit}';
         goalList.api.tree = '${tree}';
         goalList.api.remove = '${remove}';
         goalList.props.budget = '<fmt:message key="goal.budget"/>';
@@ -27,10 +27,14 @@
         subscriber.subscribe('${goalSubscribe}', goalList.handler);
     </script>
     <jsp:include page="goalHeader.jsp"/>
-    <body>
-        <div id="goalList" class="goal-page item-container">
-            <goal-tile v-for="goal in getItems()" v-on:click.native="openTree(goal.category)" :key="goal.id" :goal="goal" :props="props"
+    <div id="goalList" class="goal-page item-container">
+<%--        <template v-if="itemsCount > 0">--%>
+            <goal-tile v-for="goal in getItems()"
+                   :openTree="openTree" :key="goal.id" :goal="goal" :props="props"
                        class="goal-item"></goal-tile>
-        </div>
-    </body>
+<%--        </template>--%>
+<%--        <p v-else>--%>
+<%--            ...Press add for do something...--%>
+<%--        </p>--%>
+    </div>
 </html>

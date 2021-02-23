@@ -119,3 +119,21 @@ button{
 .error *{
     border-color: orangered;
 }
+.tips{
+    position: relative;
+    font-size: 8pt;
+}
+.tips:after{
+    content: '?';
+}
+.tips .tips-content{
+    display: none;
+    position: absolute;
+    background-color: darkslategray;
+    padding: 4px;
+    color: white;
+    left: 0;
+}
+.tips:hover .tips-content{
+    display: block;
+}

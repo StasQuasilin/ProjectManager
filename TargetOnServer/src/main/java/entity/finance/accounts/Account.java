@@ -1,5 +1,7 @@
 package entity.finance.accounts;
 
+import entity.Title;
+import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -13,11 +15,10 @@ import static constants.Keys.*;
 public class Account extends JsonAble{
     private int id;
     private AccountType type;
-    private String title;
+    private Title title;
     private float sum;
     private String currency;
     private int limit;
-    private User owner;
     private boolean show;
 
     @Id
@@ -39,12 +40,12 @@ public class Account extends JsonAble{
         this.type = type;
     }
 
-    @Basic
-    @Column(name = "title")
-    public String getTitle() {
+    @OneToOne
+    @JoinColumn(name = "_title")
+    public Title getTitle() {
         return title;
     }
-    public void setTitle(String title) {
+    public void setTitle(Title title) {
         this.title = title;
     }
 
@@ -73,15 +74,6 @@ public class Account extends JsonAble{
     }
     public void setLimit(int limit) {
         this.limit = limit;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "_owner")
-    public User getOwner() {
-        return owner;
-    }
-    public void setOwner(User owner) {
-        this.owner = owner;
     }
 
     @Basic
@@ -120,5 +112,10 @@ public class Account extends JsonAble{
     @Override
     public boolean equals(Object obj) {
         return getClass().equals(obj.getClass()) && hashCode() == obj.hashCode();
+    }
+
+    @Transient
+    public User getOwner() {
+        return title.getOwner();
     }
 }

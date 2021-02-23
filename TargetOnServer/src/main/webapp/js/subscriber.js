@@ -55,17 +55,20 @@ let subscriber = {
 
         const self = this;
         this.socket.onmessage = function (env) {
-            let json = JSON.parse(env.data);
-            console.log(json);
-            let subscribe = json.subscribe;
-            let data = json.data;
-            if (self.subscribes) {
-                let handler = self.subscribes[subscribe];
-                if (handler) {
-                    handler(data);
+            try {
+                let json = JSON.parse(env.data);
+                let subscribe = json.subscribe;
+                let data = json.data;
+                if (self.subscribes) {
+                    let handler = self.subscribes[subscribe];
+                    if (handler) {
+                        handler(data);
+                    }
+                } else {
+                    console.log('Subscribers is ' + typeof self.subscribes);
                 }
-            } else {
-                console.log('Subscribers is ' + typeof self.subscribes);
+            } catch (e) {
+                console.error('Wrong json format!!!', env.data, e);
             }
         };
         this.socket.onclose = function (reason) {

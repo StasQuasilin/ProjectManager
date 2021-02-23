@@ -9,6 +9,7 @@ import entity.task.TaskStatus;
 import entity.user.User;
 import utils.TaskToBuyListUtil;
 import utils.TaskUtil;
+import utils.db.dao.TitleDAO;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
@@ -32,6 +33,7 @@ public class EditTaskAPI extends API {
     private final TaskSaver taskSaver = new TaskSaver();
     private final TaskToBuyListUtil buyListUtil = new TaskToBuyListUtil();
     private final TaskUtil taskUtil = new TaskUtil();
+    private final TitleDAO titleDAO = daoService.getTitleDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -70,16 +72,16 @@ public class EditTaskAPI extends API {
             }
 
             if (body.containKey(PARENT)){
-                final Category parent = categoryDAO.getCategory(body.get(PARENT));
-//                header.setParent(parent);
-                final Task parentTask = taskDAO.getTaskByCategory(parent);
-                if (parentTask != null) {
-                    taskDAO.saveTask(task);
-                    taskUtil.checkPossibility(parentTask);
-                    taskSaver.save(parentTask);
-                }
+                final Header parent = titleDAO.getHeader(body.get(PARENT));
+                header.setParent(parent);
+//                final Task parentTask = taskDAO.getTaskByHeader(parent);
+//                if (parentTask != null) {
+//                    taskDAO.saveTask(task);
+//                    taskUtil.checkPossibility(parentTask);
+//                    taskSaver.save(parentTask);
+//                }
             } else {
-//                final Category parent = header.getParent();
+//                final Header parent = header.getParent();
                 header.setParent(null);
                 taskDAO.saveTask(task);
 //                if (parent != null){
@@ -91,7 +93,7 @@ public class EditTaskAPI extends API {
             }
 
             final String title = body.getString(TITLE);
-            header.setTitle(title);
+            header.setValue(title);
 
             write(resp, SUCCESS_ANSWER);
             taskSaver.save(task);

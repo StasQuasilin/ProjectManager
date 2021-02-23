@@ -2,12 +2,13 @@ package controllers.api.goal;
 
 import controllers.api.API;
 import constants.ApiLinks;
+import entity.Title;
 import entity.finance.buy.BuyList;
-import entity.finance.category.Category;
 import entity.finance.category.Header;
 import entity.goal.Goal;
 import entity.user.User;
 import utils.answers.Answer;
+import utils.answers.ErrorAnswer;
 import utils.answers.SuccessAnswer;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.buy.BuyListDAO;
@@ -32,6 +33,7 @@ public class EditGoalAPI extends API {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject body = parseBody(req);
+        Answer answer;
         if (body != null){
             System.out.println(body);
             Goal goal = goalDAO.getGoal(body.get(ID));
@@ -41,68 +43,67 @@ public class EditGoalAPI extends API {
 
             User user = getUser(req);
 
-            final float budget = body.getFloat(BUDGET);
-
-            Header header = goal.getHeader();
-            if (header == null){
-                header = new Header();
-                header.setOwner(user);
-                goal.setHeader(header);
+            Title title = goal.getTitle();
+            if (title == null){
+                title = new Title();
+                title.setOwner(user);
+                goal.setTitle(title);
             }
-
-            goal.setBudget(budget);
-
-            String title = body.getString(TITLE);
-            header.setTitle(title);
-
-            if (body.containKey(BEGIN)){
-                Date dateBegin = Date.valueOf(body.getString(BEGIN));
-                goal.setBegin(dateBegin);
-                if (body.containKey(END)){
-                    Date dateEnd = Date.valueOf(body.getString(END));
-                    goal.setEnd(dateEnd);
-                } else {
-                    goal.setEnd(null);
-                }
+            String titleString = body.getString(TITLE);
+            if (titleString.isEmpty()){
+                answer = new ErrorAnswer(EMPTY_TITLE);
             } else {
-                goal.setBegin(null);
-            }
+                title.setValue(titleString);
 
-            if (body.containKey(BUY_LIST)){
-                final JsonObject buyListJson = new JsonObject(body.get(BUY_LIST));
-                BuyList buyList = null;
-                if (buyListJson.containKey(ID)){
-                    buyList = buyListDAO.getList(buyListJson.get(ID));
-                }
-                if (buyList == null){
-                    buyList = new BuyList();
-                    buyList.setOwner(user);
-                }
+                final float budget = body.getFloat(BUDGET);
+                goal.setBudget(budget);
 
-                if (buyListJson.getBoolean(SEPARATED)){
-                    buyList.setTitle(header.getTitle());
+                if (body.containKey(BEGIN)){
+                    Date dateBegin = Date.valueOf(body.getString(BEGIN));
+                    goal.setBegin(dateBegin);
+                    if (body.containKey(END)){
+                        Date dateEnd = Date.valueOf(body.getString(END));
+                        goal.setEnd(dateEnd);
+                    } else {
+                        goal.setEnd(null);
+                    }
                 } else {
-                    buyList.setTitle(buyListJson.getString(TITLE));
+                    goal.setBegin(null);
                 }
-                buyListDAO.saveList(buyList);
-                goal.setBuyList(buyList.getId());
-            } else {
-                final BuyList list = buyListDAO.getList(goal.getBuyList());
-                if (list != null){
-                    buyListDAO.removeList(list);
+
+                if (body.containKey(BUY_LIST)){
+                    final JsonObject buyListJson = new JsonObject(body.get(BUY_LIST));
+                    BuyList buyList = null;
+                    if (buyListJson.containKey(ID)){
+                        buyList = buyListDAO.getList(buyListJson.get(ID));
+                    }
+                    if (buyList == null){
+                        buyList = new BuyList();
+                        buyList.setOwner(user);
+                    }
+
+                    if (buyListJson.getBoolean(SEPARATED)){
+                        buyList.setTitle(title);
+                    } else {
+//                    buyList.setTitle(buyListJson.getString(TITLE));
+                    }
+                    buyListDAO.saveList(buyList);
+                    goal.setBuyList(buyList.getId());
+                } else {
+                    final BuyList list = buyListDAO.getList(goal.getBuyList());
+                    if (list != null){
+                        buyListDAO.removeList(list);
+                    }
+                    goal.setBuyList(-1);
                 }
-                goal.setBuyList(-1);
+
+                goalDAO.saveGoal(goal);
+                answer = new SuccessAnswer();
+                answer.addAttribute(ID, goal.getId());
             }
-
-            goalDAO.saveGoal(goal);
-            Answer answer = new SuccessAnswer();
-            answer.addAttribute(ID, goal.getId());
-            write(resp, answer);
-
-
-
+        } else {
+            answer = new ErrorAnswer(EMPTY_BODY);
         }
+        write(resp, answer);
     }
-
-
 }

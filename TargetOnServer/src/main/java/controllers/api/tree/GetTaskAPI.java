@@ -38,13 +38,13 @@ public class GetTaskAPI extends API {
             if (category != null){
                 jsonObject.put(ITEM, category.toJson());
                 jsonObject.put(ROOT, getRoot(category).getId());
-                final List<Task> children = taskDAO.getTasksByParent(category);
-                JSONArray array = new JSONArray();
-                for (Task task : children){
-                    System.out.println(task.getTitle());
-                    array.add(task.toJson());
-                }
-                jsonObject.put(CHILDREN, array);
+//                final List<Task> children = taskDAO.getTasksByParent(category);
+//                JSONArray array = new JSONArray();
+//                for (Task task : children){
+//                    System.out.println(task.getTitle());
+//                    array.add(task.toJson());
+//                }
+//                jsonObject.put(CHILDREN, array);
             }
             write(resp, jsonObject);
         }

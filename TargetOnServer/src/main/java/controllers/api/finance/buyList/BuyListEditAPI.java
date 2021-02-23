@@ -39,7 +39,7 @@ public class BuyListEditAPI extends API {
                 list.setOwner(getUser(req));
             }
             final String title = body.getString(TITLE);
-            list.setTitle(title);
+//            list.setTitle(title);
 
             final HashMap<Integer, BuyListItem> items = new HashMap<>();
             for (BuyListItem item : list.getItemSet()){

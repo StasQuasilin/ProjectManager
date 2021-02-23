@@ -7,16 +7,17 @@
 <script>
     treeView.api.getItems = '${treeBuilder}';
     treeView.api.taskEdit = '${taskEdit}';
+    treeView.props.edit = '${taskEdit}';
     treeView.on = function(id){
         treeView.onClick(id)
     };
-    subscriber.subscribe('${goalSubscribe}', treeView.handler);
+    subscriber.subscribe('${treeSubscribe}', treeView.handler);
 </script>
-<div id="treeView">
+<div id="treeView" style="padding: 8pt">
     <div>
         !{{title}}
     </div>
     <div class="tree-view">
-        <tree-item :item="tree" :onclick="onClick"></tree-item>
+        <tree-item :item="tree" :onclick="onClick" :props="props"></tree-item>
     </div>
 </div>

@@ -13,23 +13,28 @@
 .goal-item:hover{
     box-shadow: 0 0 4px 2px gray;
 }
-.goal-title{
-    display: block;
-    width: 100%;
-    text-align: center;
+.goal-header{
     font-size: 14pt;
     font-weight: bold;
     background-color: #3788d8;
+}
+.goal-header *{
     color: whitesmoke;
+}
+.goal-title{
+    display: flex;
+    /*width: 100%;*/
+    text-align: center;
 }
 .goal-content{
     padding: 0 8px;
 }
-.goal-title span{
-    color: gray;
+.goal-header span{
+    /*color: gray;*/
     background-color: transparent;
 }
 .goal-title-buttons{
+    /*position: absolute;*/
     display: inline-block;
     float: right;
     padding: 0 4px;

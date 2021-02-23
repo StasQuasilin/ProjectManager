@@ -1,5 +1,12 @@
 package utils;
 
+import controllers.api.tree.TreeBuildAPI;
+import entity.finance.category.AbstractTitle;
+import entity.finance.category.Header;
+import utils.db.hibernate.HibernateSessionFactory;
+import utils.db.hibernate.Hibernator;
+import utils.tree.TreeUtil;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,13 +23,11 @@ public class Validator {
     static Validator validator = new Validator();
 
     public static void main(String[] args) {
-        System.out.println("U3RhczUzNzIxNDU2".hashCode());
-//        checkName("");
-//        checkName("<script>alert('O kurwa !');</script>");
-//        checkName("ійа");
-//        checkName("іволіваіsdfsdfs");
-//        checkName("0SDFSDFdfsgdfgdfgd@");
-//        checkName("DFSDFdfsgdfgdfgd0@sdfsdf.com.ua");
+        Hibernator hibernator =Hibernator.getInstance();
+        TreeUtil treeUtil = new TreeUtil();
+        final Header header = hibernator.get(Header.class, "parent", null);
+        System.out.println(treeUtil.buildTree(header));
+        HibernateSessionFactory.shutdown();
     }
 
     private static void checkEmail(String s) {

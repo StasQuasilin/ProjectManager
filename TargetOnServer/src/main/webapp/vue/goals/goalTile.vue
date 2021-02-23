@@ -1,18 +1,28 @@
 goalTile = {
     props:{
         goal:Object,
-        props:Object
+        props:Object,
+        openTree:Function
     },
     components:{
         'progress-bar':progressBar
     },
+    methods:{
+        onClick:function () {
+            console.log(typeof this.props.tree);
+            if(typeof this.props.tree === "function"){
+                this.props.tree(this.goal.titleId);
+            } else {
+                console.warn('---');
+            }
+        }
+    },
     template:'<div>' +
-            '<div class="goal-title">' +
-                '{{goal.title}}' +
+            '<div class="goal-header">' +
+                '<span class="goal-title" v-on:click="onClick">' +
+                    '{{goal.title}}' +
+                '</span>' +
                 '<div class="goal-title-buttons">' +
-                    '<span class="text-button" v-on:click="props.tree(goal.category)">' +
-                        '&#127795;' +
-                    '</span>' +
                     '<span class="text-button" v-on:click="props.edit(goal.id)">' +
                         '&#10000;' +
                     '</span>' +
@@ -21,7 +31,7 @@ goalTile = {
                     '</span> ' +
                 '</div>' +
             '</div>' +
-            '<div class="goal-content">' +
+            '<div class="goal-content" v-on:click="onClick">' +
                 '<div v-if="goal.begin">' +
                     '{{props.dateBegin}}: ' +
                     '<span>' +

@@ -4,7 +4,6 @@ import entity.calendar.CalendarItem;
 import entity.calendar.ExecutionStatus;
 import entity.task.Task;
 import entity.task.TaskStatus;
-import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.daoService;
@@ -18,12 +17,12 @@ public class CalendarSaver {
     public void save(CalendarItem item){
         calendarDAO.saveCalendarItem(item);
 //        updater.update(Subscribe.calendar, item, item.getOwner());
-        final Task task = taskDAO.getTaskByCategory(item.getCategory());
-        if (task != null){
-            final ExecutionStatus status = item.getStatus();
-            if (status == ExecutionStatus.done){
-                task.setStatus(TaskStatus.done);
-            }
-        }
+//        final Task task = taskDAO.getTaskByHeader(item.getCategory());
+//        if (task != null){
+//            final ExecutionStatus status = item.getStatus();
+//            if (status == ExecutionStatus.done){
+//                task.setStatus(TaskStatus.done);
+//            }
+//        }
     }
 }

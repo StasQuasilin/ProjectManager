@@ -2,7 +2,7 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <div id="titleContent" class="title-content">
-    <button onclick="loadModal('${edit}')">
+    <button onclick="loadModal('${goalEdit}')">
         <fmt:message key="button.goal.add"/>
     </button>
 </div>

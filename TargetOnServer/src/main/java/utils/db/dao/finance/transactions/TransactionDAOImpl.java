@@ -5,10 +5,8 @@ import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
-import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
-import utils.finances.TransactionUtil;
 
 import java.util.Collection;
 import java.util.List;
@@ -22,7 +20,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 
     @Override
     public List<Transaction> getUserTransactions(User user) {
-        return hibernator.query(Transaction.class, TASK_OWNER, user, LIMIT);
+        return hibernator.query(Transaction.class, TITLE_OWNER, user, LIMIT);
     }
 
     @Override

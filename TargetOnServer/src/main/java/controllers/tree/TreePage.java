@@ -38,7 +38,6 @@ public class TreePage extends Page {
             }
         }
         User user = getUser(req);
-        req.setAttribute(GOALS, goalDAO.getGoals(user));
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
         req.setAttribute(STATUS, TaskStatus.values());
@@ -48,6 +47,7 @@ public class TreePage extends Page {
         req.setAttribute(TREE_BUILDER, ApiLinks.TREE_BUILDER);
         req.setAttribute(TASK_TIMER, UrlLinks.TASK_TIMER);
         req.setAttribute(GOAL_SUBSCRIBE, Subscribe.goal);
+        req.setAttribute(GOAL_EDIT, UrlLinks.GOAL_EDIT);
         req.setAttribute(TREE_SUBSCRIBE, Subscribe.tree);
         show(req, resp);
     }

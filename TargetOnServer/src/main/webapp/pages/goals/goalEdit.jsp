@@ -10,9 +10,9 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<script type="application/javascript" src="${context}/vue/templates/inputWithSearch.vue"></script>
-<script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue"></script>
-<script type="application/javascript" src="${context}/vue/goals/goalEdit.vue"></script>
+<script type="application/javascript" src="${context}/vue/templates/inputWithSearch.vue?v=${now}"></script>
+<script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue?v=${now}"></script>
+<script type="application/javascript" src="${context}/vue/goals/goalEdit.vue?v=${now}"></script>
 <script>
   goalEdit.api.save = '${save}';
   goalEdit.api.goalMembers = '${goalMembers}';
@@ -148,6 +148,11 @@
             {{c}}
           </option>
         </select>
+        <span class="tips">
+          <span class="tips-content">
+            <fmt:message key="goal.budget.tips"/>
+          </span>
+        </span>
       </td>
     </tr>
     <tr v-if="!useBuyList">
@@ -184,6 +189,11 @@
       <td colspan="2" style="text-align: right">
         <span class="text-button" v-on:click="memberList()">
           <fmt:message key="goal.members"/>: {{(members.length + 1).toLocaleString()}}
+        </span>
+        <span class="tips">
+          <span class="tips-content">
+            <fmt:message key="goal.members.tips"/>
+          </span>
         </span>
       </td>
     </tr>

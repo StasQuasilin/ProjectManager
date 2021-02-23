@@ -40,7 +40,9 @@ public class daoService {
     private static final UserAccessDAO  userAccessDAO = new UserAccessDAOImpl();
     private static final UserDAO        userDAO = new UserDAOImpl();
     private static final DemoAccessDAO  demoDAO = new DemoAccessDAOImpl();
-    private static final FriendshipDAO friendshipDAO = new FriendshipDAOHibernate();
+    private static final FriendshipDAO  friendshipDAO = new FriendshipDAOHibernate();
+    private static final TitleDAO       titleDAO = new TitleDAOHibernate();
+
     static {
         accountDao = new AccountDAOImpl();
         categoryDAO = new CategoryDAOImpl();
@@ -93,5 +95,9 @@ public class daoService {
 
     public static FriendshipDAO getFriendshipDAO() {
         return friendshipDAO;
+    }
+
+    public static TitleDAO getTitleDAO() {
+        return titleDAO;
     }
 }

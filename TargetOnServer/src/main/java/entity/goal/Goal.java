@@ -1,7 +1,6 @@
 package entity.goal;
 
-import entity.finance.category.Category;
-import entity.finance.category.Header;
+import entity.Title;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -15,7 +14,7 @@ import static constants.Keys.*;
 @Table(name = "goals")
 public class Goal extends JsonAble {
     private int id;
-    private Header header;
+    private Title title;
     private int buyList;
     private Date begin;
     private Date end;
@@ -33,12 +32,12 @@ public class Goal extends JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = "_header")
-    public Header getHeader() {
-        return header;
+    @JoinColumn(name = "_title")
+    public Title getTitle() {
+        return title;
     }
-    public void setHeader(Header header) {
-        this.header = header;
+    public void setTitle(Title header) {
+        this.title = header;
     }
 
     @Basic
@@ -90,8 +89,8 @@ public class Goal extends JsonAble {
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
-        jsonObject.put(HEADER, header.getId());
-        jsonObject.put(TITLE, header.getTitle());
+        jsonObject.put(TITLE_ID, title.getId());
+        jsonObject.put(TITLE, title.getValue());
         return jsonObject;
     }
 
@@ -115,6 +114,11 @@ public class Goal extends JsonAble {
 
     @Transient
     public User getOwner() {
-        return header.getOwner();
+        return title.getOwner();
+    }
+
+    @Override
+    public String toString() {
+        return "Goal '" + title.getValue() + "'";
     }
 }

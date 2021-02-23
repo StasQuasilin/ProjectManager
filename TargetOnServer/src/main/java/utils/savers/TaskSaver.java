@@ -1,6 +1,7 @@
 package utils.savers;
 
 import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.task.Task;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -16,9 +17,9 @@ public class TaskSaver {
 
     public void save(Task task){
         taskDAO.saveTask(task);
-//        Category category = task.getHeader();
+//        final Header category = task.getHeader();
 //        categoryStatisticUtil.calculateChildren(category, taskDAO);
 //        categoryStatisticUtil.updateStatistic(category);
-        updater.update(Subscribe.tree, task, task.getOwner());
+//        updater.update(Subscribe.tree, task, task.getOwner());
     }
 }

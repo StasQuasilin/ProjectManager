@@ -21,13 +21,14 @@ public class GoalDAOImpl implements GoalDAO{
 
     @Override
     public List<Goal> getGoals(User user) {
+
         HashMap<String, Object> params = new HashMap<>();
-        params.put(TASK_OWNER, user);
-
-        List<Goal> goals = hibernator.query(Goal.class, params);
-
+        params.put(TITLE_OWNER, user);
+        //My own goals
+        List<Goal> goals = hibernator.query(Goal.class, null);
         params.clear();
         params.put(MEMBER, user);
+        //Goals where i am member
         for (GoalMember member : hibernator.query(GoalMember.class, params)){
             goals.add(member.getGoal());
         }
@@ -41,7 +42,7 @@ public class GoalDAOImpl implements GoalDAO{
 
     @Override
     public void saveGoal(Goal goal) {
-        hibernator.save(goal.getHeader());
+        hibernator.save(goal.getTitle());
         hibernator.save(goal);
         updater.update(Subscribe.goal, goal, goal.getOwner());
     }

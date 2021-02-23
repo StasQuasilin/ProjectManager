@@ -1,11 +1,12 @@
 package utils.db.dao.tree;
 
-import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.task.Task;
 import entity.task.TaskDependency;
 import entity.task.TaskStatus;
 import entity.task.TimeLog;
 import entity.user.User;
+import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
 
@@ -20,9 +21,9 @@ public class TaskDAOImpl implements TaskDAO {
     private final Updater updater = new Updater();
 
     @Override
-    public List<Task> getTasksByParent(Category parent) {
+    public List<Task> getTasksByParent(Header parent) {
         final HashMap<String, Object> params = new HashMap<>();
-        params.put("category/parent", parent);
+        params.put("header/parent", parent);
         return hibernator.query(Task.class, params);
     }
 
@@ -38,23 +39,23 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public void saveTask(Task task) {
-//        final Category category = task.getHeader();
-//        hibernator.save(category);
-//        hibernator.save(task);
-//        updater.update(Subscribe.tree, task, task.getOwner());
+        final Header header = task.getHeader();
+        hibernator.save(header);
+        hibernator.save(task);
+        updater.update(Subscribe.tree, task, task.getOwner());
     }
 
     @Override
     public List<Task> getTaskByStatus(User user, TaskStatus status) {
         HashMap<String,Object> param = new HashMap<>();
-        param.put(TASK_OWNER, user);
+        param.put(TITLE_OWNER, user);
         param.put(STATUS, status);
         return hibernator.query(Task.class, param);
     }
 
     @Override
-    public Task getTaskByCategory(Category category) {
-        return hibernator.get(Task.class, CATEGORY, category);
+    public Task getTaskByHeader(Header header) {
+        return hibernator.get(Task.class, HEADER, header);
     }
 
     @Override

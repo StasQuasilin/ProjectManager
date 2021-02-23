@@ -18,6 +18,7 @@
         <mapping class="entity.user.User"/>
         <mapping class="entity.user.UserAccess"/>
         <mapping class="entity.user.UserSettings"/>
+        <mapping class="entity.Title"/>
         <mapping class="entity.finance.category.Header"/>
 <!--        <mapping class="entity.user.UserCurrency"/>-->
         <mapping class="entity.finance.category.Category"/>

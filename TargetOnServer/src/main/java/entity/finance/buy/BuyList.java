@@ -1,5 +1,6 @@
 package entity.finance.buy;
 
+import entity.Title;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -17,7 +18,7 @@ import static constants.Keys.TITLE;
 @Table(name = "buy_list")
 public class BuyList extends JsonAble {
     private int id;
-    private String title;
+    private Title title;
     private User owner;
     private Set<BuyListItem> itemSet = new HashSet<>();
 
@@ -30,12 +31,12 @@ public class BuyList extends JsonAble {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "title")
-    public String getTitle() {
+    @OneToOne
+    @JoinColumn(name = "title")
+    public Title getTitle() {
         return title;
     }
-    public void setTitle(String title) {
+    public void setTitle(Title title) {
         this.title = title;
     }
 

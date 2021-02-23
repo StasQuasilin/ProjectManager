@@ -28,10 +28,10 @@ public class BuyListChecker {
             list.addItem(itemByCategory);
             buyListDAO.saveList(list);
         }
-        final Task taskByCategory = taskDAO.getTaskByCategory(category);
-        if (taskByCategory != null) {
-            taskByCategory.setStatus(TaskStatus.done);
-            taskSaver.save(taskByCategory);
-        }
+//        final Task taskByCategory = taskDAO.getTaskByHeader(category);
+//        if (taskByCategory != null) {
+//            taskByCategory.setStatus(TaskStatus.done);
+//            taskSaver.save(taskByCategory);
+//        }
     }
 }

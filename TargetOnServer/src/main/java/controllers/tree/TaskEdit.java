@@ -6,9 +6,11 @@ import controllers.ModalWindow;
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
 import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.goal.Goal;
 import entity.task.Task;
 import entity.task.TaskStatus;
+import utils.db.dao.TitleDAO;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.buy.BuyListDAO;
@@ -33,6 +35,7 @@ public class TaskEdit extends ModalWindow {
     private final TaskDAO taskDAO = daoService.getTaskDAO();
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
     private final BuyListDAO buyListDAO = daoService.getBuyListDAO();
+    private final TitleDAO titleDAO = daoService.getTitleDAO();
     private final TaskStatus[] statuses = {TaskStatus.active, TaskStatus.progressing, TaskStatus.done};
 
     @Override
@@ -42,20 +45,20 @@ public class TaskEdit extends ModalWindow {
             System.out.println(body);
             final Task task = taskDAO.getTask(body.get(ID));
 
-            Category parent = null;
+            Header parent = null;
             BuyList buyList = null;
 
             if (task != null){
                 req.setAttribute(TASK, task);
-//                final Category category = task.getHeader();
+                final Header header = task.getHeader();
 //                final BuyListItem buyListItem = buyListDAO.getItemByCategory(category);
 //                if (buyListItem != null) {
 //                    buyList = buyListItem.getList();
 //                    req.setAttribute(BUY_LIST, buyList);
 //                }
-//                parent = category.getParent();
+                parent = header.getParent();
             } else if (body.containKey(PARENT)){
-                parent = categoryDAO.getCategory(body.get(PARENT));
+                parent = titleDAO.getHeader(body.get(PARENT));
             }
 
             req.setAttribute(PARENT, parent);
