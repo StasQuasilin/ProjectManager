@@ -38,11 +38,11 @@ public class TransactionDetailUtil {
                 category = categoryDAO.getCategory(jsonObject.get(CATEGORY));
                 if (category == null){
                     category = new Category();
-                    category.setParent(transaction.getCategory());
+//                    category.setParent(transaction.getCategory());
                 }
                 detail.setCategory(category);
             }
-            category.setTitle(jsonObject.getString(TITLE));
+//            category.setTitle(jsonObject.getString(TITLE));
             detail.setAmount(jsonObject.getFloat(AMOUNT));
             detail.setPrice(jsonObject.getFloat(PRICE));
 

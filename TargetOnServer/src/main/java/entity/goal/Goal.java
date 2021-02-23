@@ -1,8 +1,7 @@
 package entity.goal;
 
-import entity.finance.buy.BuyList;
 import entity.finance.category.Category;
-import entity.task.TaskStatistic;
+import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -16,7 +15,7 @@ import static constants.Keys.*;
 @Table(name = "goals")
 public class Goal extends JsonAble {
     private int id;
-    private Category category;
+    private Header header;
     private int buyList;
     private Date begin;
     private Date end;
@@ -24,6 +23,7 @@ public class Goal extends JsonAble {
     private GoalStatus status = GoalStatus.active;
 
     @Id
+    @Column(name = "_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
@@ -33,16 +33,16 @@ public class Goal extends JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = "_category")
-    public Category getCategory() {
-        return category;
+    @JoinColumn(name = "_header")
+    public Header getHeader() {
+        return header;
     }
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Basic
-    @Column(name = "buy_list")
+    @Column(name = "_buy_list")
     public int getBuyList() {
         return buyList;
     }
@@ -69,7 +69,7 @@ public class Goal extends JsonAble {
     }
 
     @Basic
-    @Column(name = "budget")
+    @Column(name = "_budget")
     public float getBudget() {
         return budget;
     }
@@ -90,8 +90,8 @@ public class Goal extends JsonAble {
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
-        jsonObject.put(CATEGORY, category.getId());
-        jsonObject.put(TITLE, category.getTitle());
+        jsonObject.put(HEADER, header.getId());
+        jsonObject.put(TITLE, header.getTitle());
         return jsonObject;
     }
 
@@ -107,11 +107,7 @@ public class Goal extends JsonAble {
             jsonObject.put(END, end.toString());
         }
 
-        if (category.getStatistic() != null){
-            jsonObject.put(STATISTIC, category.getStatistic().toJson());
-        }
         jsonObject.put(BUDGET, budget);
-        jsonObject.put(CURRENCY, category.getCurrency());
         jsonObject.put(STATUS, status.toString());
 
         return jsonObject;
@@ -119,6 +115,6 @@ public class Goal extends JsonAble {
 
     @Transient
     public User getOwner() {
-        return category.getOwner();
+        return header.getOwner();
     }
 }

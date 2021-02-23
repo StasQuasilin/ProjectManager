@@ -50,7 +50,7 @@ goalTile = {
                         ' / ' +
                     '</span>' +
                     '<span>' +
-                        '{{goal.budget.toLocaleString()}} {{goal.currency}}' +
+                        '{{goal.budget.toLocaleString()}}' +
                     '</span>' +
                     '<progress-bar v-if="goal.budget && goal.statistic" :size="goal.budget" ' +
                         ':value="goal.statistic.minus + goal.statistic.plus"></progress-bar>' +

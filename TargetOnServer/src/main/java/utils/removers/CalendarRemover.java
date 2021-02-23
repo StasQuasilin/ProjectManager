@@ -28,6 +28,6 @@ public class CalendarRemover {
         hibernator.remove(item);
         categoryRemover.remove(item.getCategory());
 
-        updater.remove(Subscribe.calendar, item.getId(), item.getOwner());
+//        updater.remove(Subscribe.calendar, item.getId(), item.getOwner());
     }
 }

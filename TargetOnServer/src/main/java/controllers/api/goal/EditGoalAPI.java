@@ -1,10 +1,10 @@
 package controllers.api.goal;
 
-import constants.Keys;
 import controllers.api.API;
 import constants.ApiLinks;
 import entity.finance.buy.BuyList;
 import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.goal.Goal;
 import entity.user.User;
 import utils.answers.Answer;
@@ -42,20 +42,18 @@ public class EditGoalAPI extends API {
             User user = getUser(req);
 
             final float budget = body.getFloat(BUDGET);
-            final String currency = body.getString(CURRENCY);
 
-            Category category = goal.getCategory();
-            if (category == null){
-                category = new Category();
-                category.setOwner(user);
-                goal.setCategory(category);
+            Header header = goal.getHeader();
+            if (header == null){
+                header = new Header();
+                header.setOwner(user);
+                goal.setHeader(header);
             }
 
             goal.setBudget(budget);
-            category.setCurrency(currency);
 
             String title = body.getString(TITLE);
-            category.setTitle(title);
+            header.setTitle(title);
 
             if (body.containKey(BEGIN)){
                 Date dateBegin = Date.valueOf(body.getString(BEGIN));
@@ -82,7 +80,7 @@ public class EditGoalAPI extends API {
                 }
 
                 if (buyListJson.getBoolean(SEPARATED)){
-                    buyList.setTitle(category.getTitle());
+                    buyList.setTitle(header.getTitle());
                 } else {
                     buyList.setTitle(buyListJson.getString(TITLE));
                 }

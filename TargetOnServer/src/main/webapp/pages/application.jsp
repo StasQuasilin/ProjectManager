@@ -39,6 +39,7 @@
             }
             SUBSCRIBE_API = '${subscribe}';
             subscriber.connect();
+
         </script>
     </head>
     <body>

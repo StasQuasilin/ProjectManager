@@ -44,7 +44,7 @@ public class TreeBuildAPI extends API {
 
         JSONArray array = new JSONArray();
         for (Task task : children) {
-            array.add(buildTree(task, task.getCategory()));
+//            array.add(buildTree(task, task.getHeader()));
         }
         jsonObject.put(CHILDREN, array);
         return jsonObject;

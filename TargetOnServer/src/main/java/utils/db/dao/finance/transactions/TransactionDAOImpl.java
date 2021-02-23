@@ -37,7 +37,7 @@ public class TransactionDAOImpl implements TransactionDAO {
             hibernator.save();
         }
         hibernator.save(transaction);
-        updater.update(Subscribe.transactions, transaction, transaction.getOwner());
+//        updater.update(Subscribe.transactions, transaction, transaction.getOwner());
 
     }
 

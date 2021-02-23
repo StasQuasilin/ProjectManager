@@ -1,27 +1,24 @@
 package entity.finance.category;
 
-import entity.task.TaskStatistic;
-import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
-import static constants.Keys.*;
+import static constants.Keys.ID;
+import static constants.Keys.TITLE;
 
 @Entity
 @Table(name = "categories")
-public class Category extends JsonAble {
+public class Category extends JsonAble implements Serializable {
     private int id;
-    private String title;
-    private Category parent;
+    private Header header;
     private boolean hidden;
-    private User owner;
-    private String currency;
-    private TaskStatistic statistic;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -29,28 +26,13 @@ public class Category extends JsonAble {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "title")
-    public String getTitle() {
-        return title;
-    }
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     @OneToOne
-    @JoinColumn(name = "parent")
-    public Category getParent() {
-        return parent;
+    @JoinColumn(name = "_header")
+    public Header getHeader() {
+        return header;
     }
-    public void setParent(Category parent) {
-        if (parent != null){
-            final String currency = parent.getCurrency();
-            if (currency != null){
-                this.currency = currency;
-            }
-        }
-        this.parent = parent;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Basic
@@ -62,51 +44,17 @@ public class Category extends JsonAble {
         this.hidden = hidden;
     }
 
-    @OneToOne
-    @JoinColumn(name = "_owner")
-    public User getOwner() {
-        return owner;
-    }
-    public void setOwner(User owner) {
-        this.owner = owner;
-    }
-
-    @Basic
-    @Column(name = "currency")
-    public String getCurrency() {
-        return currency;
-    }
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
-    @OneToOne(fetch = FetchType.EAGER, mappedBy = "category", cascade = CascadeType.ALL)
-    public TaskStatistic getStatistic() {
-        return statistic;
-    }
-    public void setStatistic(TaskStatistic statistic) {
-        this.statistic = statistic;
-    }
-
     @Override
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
-        jsonObject.put(TITLE, title);
-        if (currency != null) {
-            jsonObject.put(CURRENCY, currency);
-        }
-        if (parent != null){
-            jsonObject.put(PARENT, parent.shortJson());
-        }
+        jsonObject.put(TITLE, header.getTitle());
         return jsonObject;
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = shortJson();
-
-        jsonObject.put(OWNER, owner.toJson());
         return jsonObject;
     }
 

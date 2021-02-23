@@ -123,9 +123,4 @@ public class CalendarItem extends JsonAble {
         }
         return 0;
     }
-
-    @Transient
-    public User getOwner() {
-        return category.getOwner();
-    }
 }

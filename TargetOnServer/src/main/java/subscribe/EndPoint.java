@@ -37,13 +37,24 @@ public class EndPoint {
                 }
                 if (parse.containKey(ACTION)) {
                     SubscribeAction action = SubscribeAction.valueOf(parse.getString(ACTION));
-                    Subscribe subscribe = Subscribe.valueOf(parse.getString(SUBSCRIBE));
-                    switch (action) {
-                        case subscribe:
-                            subscriber.subscribe(user, subscribe, session);
+                    final String string = parse.getString(SUBSCRIBE);
+                    Subscribe subscribe = null;
+                    for (Subscribe s : Subscribe.values()){
+                        if(s.toString().equals(string)){
+                            subscribe = s;
                             break;
-                        case unsubscribe:
-                            subscriber.unsubscribe(session, subscribe);
+                        }
+                    }
+                    if (subscribe != null) {
+                        switch (action) {
+                            case subscribe:
+                                subscriber.subscribe(user, subscribe, session);
+                                break;
+                            case unsubscribe:
+                                subscriber.unsubscribe(session, subscribe);
+                        }
+                    } else {
+                        System.err.println("Wrong subscribe '" + string + "'");
                     }
                 }
             }

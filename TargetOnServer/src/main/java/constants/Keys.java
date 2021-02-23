@@ -28,13 +28,16 @@ public interface Keys {
     String PERSONAL = "personal";
     String YEAR = "year";
     String CATEGORY = "category";
+    String HEADER = "header";
     String TASK = "task";
-    String TASK_OWNER = CATEGORY + SLASH + "owner";
+    String TASK_OWNER = HEADER + SLASH + "owner";
     String GOAL_OWNER = TASK + SLASH + TASK_OWNER;
     String OWNER = "owner";
     String _OWNER = "_owner";
     String MEMBER = "member";
     String TITLE = "title";
+    String DEPENDENT = "dependent";
+    String PRINCIPAL = "principal";
     String ITEM = "item";
     String ITEMS = "items";
     String ROOT = "root";
@@ -58,6 +61,7 @@ public interface Keys {
     String USER = "user";
     String AVATAR = "avatar";
     String EDIT = "edit";
+    String TASK_EDIT = "taskEdit";
     String SAVE = "save";
     String TRANSACTION_EDIT = "transactionEdit";
     String TRANSACTION = "transaction";
@@ -131,6 +135,7 @@ public interface Keys {
     String FIND_TASK = "findTask";
     String TIMER_STOP = "timerStop";
     String TIMER_SUBSCRIBE = "timerSubscribe";
+    String USER_COUNT_SUBSCRIBE = "userCountSubscribe";
     String DELETE = "delete";
     String TRANSACTION_LIMIT = "transactionLimit";
     String SHOW = "show";
@@ -159,4 +164,5 @@ public interface Keys {
     String MEMBERS = "members";
     String MEMBER_LIST = "memberList";
     String NOW = "now";
+    String PATH = "path";
 }

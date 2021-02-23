@@ -15,26 +15,26 @@ public class TaskToBuyListUtil {
     private final BuyListDAO buyListDAO = daoService.getBuyListDAO();
 
     public void taskToBuyList(Task task, JsonObject buyList){
-        BuyListItem item = buyListDAO.getItemByCategory(task.getCategory());
-        if (item == null){
-            item = new BuyListItem();
-            item.setCategory(task.getCategory());
-            BuyList list = buyListDAO.getList(buyList.get(ID));
-            if (list == null){
-                list = new BuyList();
-                list.setOwner(task.getOwner());
-                list.setTitle(buyList.getString(TITLE));
-            }
-            item.setList(list);
-            list.addItem(item);
-            buyListDAO.saveList(list);
-        }
+//        BuyListItem item = buyListDAO.getItemByCategory(task.getHeader());
+//        if (item == null){
+//            item = new BuyListItem();
+//            item.setCategory(task.getHeader());
+//            BuyList list = buyListDAO.getList(buyList.get(ID));
+//            if (list == null){
+//                list = new BuyList();
+//                list.setOwner(task.getOwner());
+//                list.setTitle(buyList.getString(TITLE));
+//            }
+//            item.setList(list);
+//            list.addItem(item);
+//            buyListDAO.saveList(list);
+//        }
     }
 
     public void remove(Task task) {
-        final BuyListItem item = buyListDAO.getItemByCategory(task.getCategory());
-        if (item != null){
-            buyListDAO.removeItem(item);
-        }
+//        final BuyListItem item = buyListDAO.getItemByCategory(task.getHeader());
+//        if (item != null){
+//            buyListDAO.removeItem(item);
+//        }
     }
 }

@@ -16,8 +16,8 @@ public class TaskSaver {
 
     public void save(Task task){
         taskDAO.saveTask(task);
-        Category category = task.getCategory();
-        categoryStatisticUtil.calculateChildren(category, taskDAO);
+//        Category category = task.getHeader();
+//        categoryStatisticUtil.calculateChildren(category, taskDAO);
 //        categoryStatisticUtil.updateStatistic(category);
         updater.update(Subscribe.tree, task, task.getOwner());
     }

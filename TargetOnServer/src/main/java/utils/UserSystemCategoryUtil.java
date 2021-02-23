@@ -51,8 +51,8 @@ public class UserSystemCategoryUtil {
 
     private Category createCategory(String title, User owner) {
         Category category = new Category();
-        category.setTitle(title);
-        category.setOwner(owner);
+//        category.setTitle(title);
+//        category.setOwner(owner);
         category.setHidden(true);
         return category;
     }

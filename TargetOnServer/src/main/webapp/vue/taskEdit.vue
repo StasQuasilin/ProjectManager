@@ -39,12 +39,21 @@ taskEdit = new Vue({
             put:function (date) {
                 taskEdit.task.deadline = date;
             }
-        }
+        },
+        dependencyProps:{
+            put:function (item) {
+                taskEdit.dependent.push(item);
+                taskEdit.addDependency = false;
+            }
+        },
+        dependent:[],
+        principal:[],
+        dependency:{},
+        addDependency:false
     },
     methods:{
         save:function () {
             let task = Object.assign({}, this.task);
-            console.log(this.addToBuyList);
             if (!this.useDate){
                 delete task.date;
             }
@@ -64,5 +73,4 @@ taskEdit = new Vue({
             })
         }
     }
-
 });

@@ -2,14 +2,12 @@ package utils.db.dao.tree;
 
 import entity.finance.category.Category;
 import entity.task.Task;
+import entity.task.TaskDependency;
 import entity.task.TaskStatus;
 import entity.task.TimeLog;
 import entity.user.User;
-import subscribe.Subscribe;
-import utils.CategoryUtil;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
-import utils.finances.CategoryStatisticUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,9 +38,9 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public void saveTask(Task task) {
-        final Category category = task.getCategory();
-        hibernator.save(category);
-        hibernator.save(task);
+//        final Category category = task.getHeader();
+//        hibernator.save(category);
+//        hibernator.save(task);
 //        updater.update(Subscribe.tree, task, task.getOwner());
     }
 
@@ -80,5 +78,15 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public void removeTasks(User user) {
         hibernator.remove(Task.class, "category/owner", user);
+    }
+
+    @Override
+    public List<TaskDependency> getDependency(Task task) {
+        return hibernator.query(TaskDependency.class, "dependent", task);
+    }
+
+    @Override
+    public List<TaskDependency> getPrincipal(Task task) {
+        return hibernator.query(TaskDependency.class, "principal", task);
     }
 }

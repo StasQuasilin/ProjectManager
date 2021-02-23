@@ -7,12 +7,10 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
     <div style="display: flex; width: 100%; height: 100%">
-        <div>
+        <div style="width: 100%">
             <jsp:include page="../goals/goalsList.jsp"/>
         </div>
-        <div>
-            <jsp:include page="treeView.jsp"/>
-        </div>
+        <jsp:include page="treeView.jsp"/>
     </div>
 <script>
     goalList.treeView = treeView;

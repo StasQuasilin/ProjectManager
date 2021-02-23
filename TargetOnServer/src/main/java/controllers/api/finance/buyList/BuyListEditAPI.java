@@ -57,10 +57,10 @@ public class BuyListEditAPI extends API {
                 Category category = remove.getCategory();
                 if (category == null){
                     category = new Category();
-                    category.setOwner(user);
+//                    category.setOwner(user);
                     remove.setCategory(category);
                 }
-                category.setTitle(item.getString(TITLE));
+//                category.setTitle(item.getString(TITLE));
                 remove.setCount(item.getFloat(COUNT));
                 remove.setPrice(item.getFloat(PRICE));
                 list.addItem(remove);

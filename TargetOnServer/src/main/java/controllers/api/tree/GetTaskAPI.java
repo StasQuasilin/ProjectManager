@@ -51,9 +51,9 @@ public class GetTaskAPI extends API {
     }
 
     private Category getRoot(Category category) {
-        while (category.getParent() != null){
-            category = category.getParent();
-        }
+//        while (category.getParent() != null){
+//            category = category.getParent();
+//        }
         return category;
     }
 }

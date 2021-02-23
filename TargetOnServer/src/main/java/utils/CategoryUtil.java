@@ -17,15 +17,15 @@ public class CategoryUtil {
 
         if (category == null){
             category = new Category();
-            category.setOwner(owner);
+//            category.setOwner(owner);
         }
 
         String title = data.getString(TITLE);
-        if (title.length() > 0){
-            category.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1).toLowerCase());
-        } else {
-            category.setTitle(title);
-        }
+//        if (title.length() > 0){
+//            category.setTitle(title.substring(0, 1).toUpperCase() + title.substring(1).toLowerCase());
+//        } else {
+//            category.setTitle(title);
+//        }
 
         hibernator.save(category);
 

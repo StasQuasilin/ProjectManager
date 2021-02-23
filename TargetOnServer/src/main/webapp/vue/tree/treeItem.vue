@@ -1,10 +1,20 @@
 treeItem = {
     props:{
-        item:Object
+        item:Object,
+        onclick:Function
     },
     data:function(){
         return {
             show:true
+        }
+    },
+    methods:{
+        click:function () {
+            if(typeof this.onclick !== "function"){
+                console.warn('Function \'onClick\' now allowed!');
+            } else {
+                this.onclick(this.item.id);
+            }
         }
     },
     template:'<div>' +
@@ -21,9 +31,9 @@ treeItem = {
                     '<span v-if="item.status === \'done\'">' +
                         '&checkmark; ' +
                     '</span>' +
-                    '<span>' +
-                        '{{item.title}} ( {{item.status}} )' +
-                    '</span>' +
+                    '<a v-on:click="click()">' +
+                        '{{item.title}}' +
+                    '</a>' +
                     '<div class="tree-menu">' +
                         '<span class="tree-menu-button">' +
                             '&#43;' +
@@ -43,9 +53,7 @@ treeItem = {
                     '</div>' +
                 '</div>' +
                 '<div v-if="item.children && item.children.length > 0 && show" class="tree-children">' +
-                    // '<div v-for="child in item.children">{{child}}</div>' +
-                    // '{{item.children}}' +
-                    '<tree-item v-for="child in item.children" :key="child.id" :item="child"></tree-item>' +
+                    '<tree-item v-for="child in item.children" :onclick="onclick" :key="child.id" :item="child"></tree-item>' +
                 '</div>' +
             '</template>' +
         '</div>'

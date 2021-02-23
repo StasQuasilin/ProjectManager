@@ -8,9 +8,7 @@ import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
 import static constants.Keys.*;
@@ -23,7 +21,6 @@ public class GoalDAOImpl implements GoalDAO{
 
     @Override
     public List<Goal> getGoals(User user) {
-        System.out.println("get goals for " + user);
         HashMap<String, Object> params = new HashMap<>();
         params.put(TASK_OWNER, user);
 
@@ -44,7 +41,7 @@ public class GoalDAOImpl implements GoalDAO{
 
     @Override
     public void saveGoal(Goal goal) {
-        hibernator.save(goal.getCategory());
+        hibernator.save(goal.getHeader());
         hibernator.save(goal);
         updater.update(Subscribe.goal, goal, goal.getOwner());
     }

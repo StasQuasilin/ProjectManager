@@ -17,7 +17,7 @@ public class CalendarSaver {
     private final Updater updater = new Updater();
     public void save(CalendarItem item){
         calendarDAO.saveCalendarItem(item);
-        updater.update(Subscribe.calendar, item, item.getOwner());
+//        updater.update(Subscribe.calendar, item, item.getOwner());
         final Task task = taskDAO.getTaskByCategory(item.getCategory());
         if (task != null){
             final ExecutionStatus status = item.getStatus();

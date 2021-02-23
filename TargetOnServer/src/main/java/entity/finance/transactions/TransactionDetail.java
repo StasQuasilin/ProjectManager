@@ -76,7 +76,7 @@ public class TransactionDetail extends JsonAble {
         final JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
         jsonObject.put(CATEGORY, category.getId());
-        jsonObject.put(TITLE, category.getTitle());
+//        jsonObject.put(TITLE, category.getTitle());
         jsonObject.put(AMOUNT, amount);
         jsonObject.put(PRICE, price);
         jsonObject.put(COMMENT, comment);

@@ -37,6 +37,7 @@ public class Application extends HttpServlet {
         req.setAttribute(Keys.ACCOUNT_REMOVE, ApiLinks.ACCOUNT_REMOVE);
         req.setAttribute(SUBSCRIBE, ApiLinks.SUBSCRIBE);
         req.setAttribute(TIMER_SUBSCRIBE, Subscribe.timer);
+        req.setAttribute(USER_COUNT_SUBSCRIBE, Subscribe.users);
         req.setAttribute(TIMER_STOP, ApiLinks.TIMER_STOP);
         req.setAttribute(YEAR, LocalDate.now().getYear());
         req.getRequestDispatcher(PAGE).forward(req, resp);

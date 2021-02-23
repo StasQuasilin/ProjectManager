@@ -1,6 +1,7 @@
 package entity.task;
 
 import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -8,6 +9,7 @@ import utils.json.JsonAble;
 import javax.persistence.*;
 
 import java.sql.Date;
+import java.util.Set;
 
 import static constants.Keys.*;
 
@@ -16,10 +18,12 @@ import static constants.Keys.*;
 public class Task extends JsonAble {
     private int id;
     private String uid;
+    private Header header;
+    private TaskStatus status;
+    private Set<TaskDependency> dependencies;
+    private Set<TaskDependency> principals;
     private Date date;
     private Date deadline;
-    private Category category;
-    private TaskStatus status;
     private User doer;
     private String result;
     private TaskPriority priority;
@@ -43,6 +47,22 @@ public class Task extends JsonAble {
         this.uid = uid;
     }
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy="dependent", cascade = CascadeType.ALL)
+    public Set<TaskDependency> getDependencies() {
+        return dependencies;
+    }
+    public void setDependencies(Set<TaskDependency> dependencies) {
+        this.dependencies = dependencies;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "principal", cascade = CascadeType.ALL)
+    public Set<TaskDependency> getPrincipals() {
+        return principals;
+    }
+    public void setPrincipals(Set<TaskDependency> principals) {
+        this.principals = principals;
+    }
+
     @Basic
     @Column(name = "_date")
     public Date getDate() {
@@ -62,12 +82,12 @@ public class Task extends JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = "_category")
-    public Category getCategory() {
-        return category;
+    @JoinColumn(name = "_header")
+    public Header getHeader() {
+        return header;
     }
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Basic
@@ -120,8 +140,8 @@ public class Task extends JsonAble {
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
-        jsonObject.put(CATEGORY, category.getId());
-        jsonObject.put(TITLE, category.getTitle());
+        jsonObject.put(CATEGORY, header.getId());
+        jsonObject.put(TITLE, header.getTitle());
         jsonObject.put(STATUS, status.toString());
         return jsonObject;
     }
@@ -129,7 +149,7 @@ public class Task extends JsonAble {
     @Override
     public JSONObject toJson() {
         final JSONObject jsonObject = shortJson();
-        jsonObject.put(PARENT, category.getParent().toJson());
+        jsonObject.put(PARENT, header.getParent());
         jsonObject.put(UID, uid);
         if (date != null){
             jsonObject.put(DATE, date.toString());
@@ -149,11 +169,11 @@ public class Task extends JsonAble {
 
     @Transient
     public User getOwner() {
-        return category.getOwner();
+        return header.getOwner();
     }
 
     @Transient
     public String getTitle() {
-        return category.getTitle();
+        return header.getTitle();
     }
 }

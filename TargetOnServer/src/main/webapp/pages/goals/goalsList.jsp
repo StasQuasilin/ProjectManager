@@ -9,11 +9,11 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <html>
-    <link rel="stylesheet" href="${context}/css/goals.css"/>
-    <link rel="stylesheet" href="${context}/css/progressBar.css">
-    <script type="application/javascript" src="${context}/vue/templates/progressBar.vue"></script>
-    <script type="application/javascript" src="${context}/vue/goals/goalTile.vue"></script>
-    <script type="application/javascript" src="${context}/vue/goalList.vue"></script>
+    <link rel="stylesheet" href="${context}/css/goals.css?v=${now}"/>
+    <link rel="stylesheet" href="${context}/css/progressBar.css?v=${now}">
+    <script type="application/javascript" src="${context}/vue/templates/progressBar.vue?v=${now}"></script>
+    <script type="application/javascript" src="${context}/vue/goals/goalTile.vue?v=${now}"></script>
+    <script type="application/javascript" src="${context}/vue/goalList.vue?v=${now}"></script>
     <script>
         goalList.api.edit = '${edit}';
         goalList.api.tree = '${tree}';
@@ -24,7 +24,7 @@
         goalList.props.activeTasks = '<fmt:message key="goal.active.tasks"/>';
         goalList.props.progressingTasks = '<fmt:message key="goal.progressing.task"/>';
         goalList.props.doneTasks = '<fmt:message key="goal.done.tasks"/>';
-        subscriber.subscribe('${subscribe}', goalList.handler);
+        subscriber.subscribe('${goalSubscribe}', goalList.handler);
     </script>
     <jsp:include page="goalHeader.jsp"/>
     <body>

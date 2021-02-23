@@ -140,9 +140,4 @@ public class Transaction extends JsonAble {
 
         return jsonObject;
     }
-
-    @Transient
-    public User getOwner() {
-        return category.getOwner();
-    }
 }

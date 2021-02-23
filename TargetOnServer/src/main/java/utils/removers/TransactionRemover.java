@@ -22,7 +22,7 @@ public class TransactionRemover {
 
     public void removeTransaction(Transaction transaction){
         hibernator.remove(transaction);
-        updater.remove(Subscribe.transactions, transaction.getId(), transaction.getOwner());
+//        updater.remove(Subscribe.transactions, transaction.getId(), transaction.getOwner());
 
         final Date date = transaction.getDate();
 

@@ -29,53 +29,53 @@ public class CategoryRemover {
 
     public boolean remove(Category category){
         boolean removeCategory = true;
-        System.out.println("Try remove category '" + category.getTitle() + "'");
-        for (Category child : categoryDAO.getChildren(category)){
-            if (!remove(child)){
-                removeCategory = false;
-                System.out.println("\tCategory locked of children '" + child.getTitle() + "'");
-            }
-        }
-        if (removeCategory) {
-            final Goal goal = goalDAO.getGoalByCategory(category);
-            if (goal != null) {
-                removeCategory = false;
-                System.out.println("\tCategory locked of goal '" + goal.getId() + "'");
-            } else {
-                final Task task = taskDAO.getTaskByCategory(category);
-                if (task != null) {
-                    if (task.getStatus() == TaskStatus.progressing) {
-                        task.setStatus(TaskStatus.active);
-                        taskSaver.save(task);
-                    }
-                    removeCategory = false;
-                    System.out.println("\tCategory locked of task " + task.getId());
-                } else {
-                    final List<Transaction> transactions = transactionDAO.getTransactionsByCategory(category, 1);
-                    if (transactions.size() > 0) {
-                        removeCategory = false;
-                        System.out.println("\tCategory locked " + transactions.size() + " transactions");
-                    }
-                }
-            }
-            if (removeCategory) {
-                System.out.println("\tRemove success");
-                hibernator.remove(category);
-            }
-        }
+//        System.out.println("Try remove category '" + category.getTitle() + "'");
+//        for (Category child : categoryDAO.getChildren(category)){
+//            if (!remove(child)){
+//                removeCategory = false;
+//                System.out.println("\tCategory locked of children '" + child.getTitle() + "'");
+//            }
+//        }
+//        if (removeCategory) {
+//            final Goal goal = goalDAO.getGoalByCategory(category);
+//            if (goal != null) {
+//                removeCategory = false;
+//                System.out.println("\tCategory locked of goal '" + goal.getId() + "'");
+//            } else {
+//                final Task task = taskDAO.getTaskByCategory(category);
+//                if (task != null) {
+//                    if (task.getStatus() == TaskStatus.progressing) {
+//                        task.setStatus(TaskStatus.active);
+//                        taskSaver.save(task);
+//                    }
+//                    removeCategory = false;
+//                    System.out.println("\tCategory locked of task " + task.getId());
+//                } else {
+//                    final List<Transaction> transactions = transactionDAO.getTransactionsByCategory(category, 1);
+//                    if (transactions.size() > 0) {
+//                        removeCategory = false;
+//                        System.out.println("\tCategory locked " + transactions.size() + " transactions");
+//                    }
+//                }
+//            }
+//            if (removeCategory) {
+//                System.out.println("\tRemove success");
+//                hibernator.remove(category);
+//            }
+//        }
         return removeCategory;
     }
     public void removeGoal(Goal goal){
         hibernator.remove(goal);
-        for (Task child : taskDAO.getTasksByParent(goal.getCategory())){
-            removeTask(child);
-        }
+//        for (Task child : taskDAO.getTasksByParent(goal.getHeader())){
+//            removeTask(child);
+//        }
     }
     public void removeTask(Task task){
         hibernator.remove(task);
-        for (Task child : taskDAO.getTasksByParent(task.getCategory())){
-            removeTask(child);
-        }
+//        for (Task child : taskDAO.getTasksByParent(task.getHeader())){
+//            removeTask(child);
+//        }
     }
     public void removeCalendar(CalendarItem item){
 

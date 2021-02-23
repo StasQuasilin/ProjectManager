@@ -47,13 +47,13 @@ public class TaskEdit extends ModalWindow {
 
             if (task != null){
                 req.setAttribute(TASK, task);
-                final Category category = task.getCategory();
-                final BuyListItem buyListItem = buyListDAO.getItemByCategory(category);
-                if (buyListItem != null) {
-                    buyList = buyListItem.getList();
-                    req.setAttribute(BUY_LIST, buyList);
-                }
-                parent = category.getParent();
+//                final Category category = task.getHeader();
+//                final BuyListItem buyListItem = buyListDAO.getItemByCategory(category);
+//                if (buyListItem != null) {
+//                    buyList = buyListItem.getList();
+//                    req.setAttribute(BUY_LIST, buyList);
+//                }
+//                parent = category.getParent();
             } else if (body.containKey(PARENT)){
                 parent = categoryDAO.getCategory(body.get(PARENT));
             }
@@ -61,21 +61,23 @@ public class TaskEdit extends ModalWindow {
             req.setAttribute(PARENT, parent);
 
             if (buyList == null && parent != null){
-                Category root = parent.getParent();
-                if (root != null) {
-                    while (root.getParent() != null) {
-                        root = root.getParent();
-                    }
-                } else {
-                    root = parent;
-                }
-                final Goal goal = goalDAO.getGoalByCategory(root);
-                final int buyListId = goal.getBuyList();
-                if (buyListId > 0){
-                    final BuyList list = buyListDAO.getList(buyListId);
-                    req.setAttribute(ROOT_BUY_LIST, list);
-                }
+//                Category root = parent.getParent();
+//                if (root != null) {
+//                    while (root.getParent() != null) {
+//                        root = root.getParent();
+//                    }
+//                } else {
+//                    root = parent;
+//                }
+//                final Goal goal = goalDAO.getGoalByCategory(root);
+//                final int buyListId = goal.getBuyList();
+//                if (buyListId > 0){
+//                    final BuyList list = buyListDAO.getList(buyListId);
+//                    req.setAttribute(ROOT_BUY_LIST, list);
+//                }
             }
+            req.setAttribute(DEPENDENT, taskDAO.getDependency(task));
+            req.setAttribute(PRINCIPAL, taskDAO.getPrincipal(task));
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);

@@ -3,10 +3,10 @@ package controllers.api.tree;
 import constants.ApiLinks;
 import controllers.api.API;
 import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.user.User;
-import utils.CategoryUtil;
 import utils.TaskToBuyListUtil;
 import utils.TaskUtil;
 import utils.db.dao.category.CategoryDAO;
@@ -62,16 +62,16 @@ public class EditTaskAPI extends API {
             task.setDoneIfChildren(doneIf);
 
             final User user = getUser(req);
-            Category category = task.getCategory();
-            if (category == null){
-                category = new Category();
-                category.setOwner(user);
-                task.setCategory(category);
+            Header header = task.getHeader();
+            if (header == null){
+                header = new Header();
+                header.setOwner(user);
+                task.setHeader(header);
             }
 
             if (body.containKey(PARENT)){
                 final Category parent = categoryDAO.getCategory(body.get(PARENT));
-                category.setParent(parent);
+//                header.setParent(parent);
                 final Task parentTask = taskDAO.getTaskByCategory(parent);
                 if (parentTask != null) {
                     taskDAO.saveTask(task);
@@ -79,19 +79,19 @@ public class EditTaskAPI extends API {
                     taskSaver.save(parentTask);
                 }
             } else {
-                final Category parent = category.getParent();
-                category.setParent(null);
+//                final Category parent = header.getParent();
+                header.setParent(null);
                 taskDAO.saveTask(task);
-                if (parent != null){
-                    final Task parentTask = taskDAO.getTaskByCategory(parent);
-                    taskDAO.saveTask(task);
-                    taskUtil.checkPossibility(parentTask);
-                    taskSaver.save(parentTask);
-                }
+//                if (parent != null){
+//                    final Task parentTask = taskDAO.getTaskByCategory(parent);
+//                    taskDAO.saveTask(task);
+//                    taskUtil.checkPossibility(parentTask);
+//                    taskSaver.save(parentTask);
+//                }
             }
 
             final String title = body.getString(TITLE);
-            category.setTitle(title);
+            header.setTitle(title);
 
             write(resp, SUCCESS_ANSWER);
             taskSaver.save(task);

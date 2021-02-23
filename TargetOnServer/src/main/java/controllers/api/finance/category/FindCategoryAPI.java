@@ -30,6 +30,7 @@ public class FindCategoryAPI extends API {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
         if (body != null){
+            System.out.println(body);
             final String key = body.getString(KEY);
             final User user = getUser(req);
             Answer answer;

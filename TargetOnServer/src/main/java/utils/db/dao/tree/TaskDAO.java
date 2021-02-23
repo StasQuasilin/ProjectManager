@@ -2,6 +2,7 @@ package utils.db.dao.tree;
 
 import entity.finance.category.Category;
 import entity.task.Task;
+import entity.task.TaskDependency;
 import entity.task.TaskStatus;
 import entity.task.TimeLog;
 import entity.user.User;
@@ -24,4 +25,7 @@ public interface TaskDAO {
     void saveTimeLog(TimeLog timeLog);
 
     void removeTasks(User user);
+
+    List<TaskDependency> getDependency(Task task);
+    List<TaskDependency> getPrincipal(Task task);
 }

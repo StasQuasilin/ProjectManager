@@ -33,36 +33,36 @@ public class CategoryStatisticUtil {
     }
 
     public void updateStatistic(Category category) {
-        final Category parent = category.getParent();
-        if (parent != null){
-            final TaskStatistic statistic = getStatistic(parent);
-            statistic.clean();
-
-            for (Category child : categoryDAO.getChildren(parent)) {
-                final TaskStatistic childrenStat = getStatistic(child, false);
-                statistic.add(childrenStat);
-            }
-
-            hibernator.save(statistic);
-            updateStatistic(parent);
-        }
+//        final Category parent = category.getParent();
+//        if (parent != null){
+//            final TaskStatistic statistic = getStatistic(parent);
+//            statistic.clean();
+//
+//            for (Category child : categoryDAO.getChildren(parent)) {
+//                final TaskStatistic childrenStat = getStatistic(child, false);
+//                statistic.add(childrenStat);
+//            }
+//
+//            hibernator.save(statistic);
+//            updateStatistic(parent);
+//        }
     }
 
     public void calculateChildren(Category category, TaskDAO taskDAO){
-        final Category parent = category.getParent();
-        if (parent != null){
-            final TaskStatistic statistic = getStatistic(parent);
-            statistic.setActiveChildren(0);
-            statistic.setProgressingChildren(0);
-            statistic.setDoneChildren(0);
-
-            for (Task task : taskDAO.getTasksByParent(parent)){
-                final Category children = task.getCategory();
-                TaskStatistic childrenStat = getStatistic(children, false);
-                statistic.add(task.getStatus(), childrenStat);
-            }
-            hibernator.save(statistic);
-            calculateChildren(parent, taskDAO);
-        }
+//        final Category parent = category.getParent();
+//        if (parent != null){
+//            final TaskStatistic statistic = getStatistic(parent);
+//            statistic.setActiveChildren(0);
+//            statistic.setProgressingChildren(0);
+//            statistic.setDoneChildren(0);
+//
+//            for (Task task : taskDAO.getTasksByParent(parent)){
+//                final Category children = task.getHeader();
+//                TaskStatistic childrenStat = getStatistic(children, false);
+//                statistic.add(task.getStatus(), childrenStat);
+//            }
+//            hibernator.save(statistic);
+//            calculateChildren(parent, taskDAO);
+//        }
     }
 }
