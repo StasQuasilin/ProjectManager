@@ -16,15 +16,13 @@ import static constants.Keys.*;
 @Table(name = "transactions")
 public class Transaction extends JsonAble {
     private int id;
+    private String description;
     private Date date;
-    private Category category;
     private Account accountFrom;
     private Account accountTo;
-    private float amount;
-    private float rate;
-    private String currency;
     private Counterparty counterparty;
     private TransactionType transactionType;
+    private User owner;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,21 +34,21 @@ public class Transaction extends JsonAble {
     }
 
     @Basic
+    @Column(name = "_description")
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    @Basic
     @Column(name = "_date")
     public Date getDate() {
         return date;
     }
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    @OneToOne
-    @JoinColumn(name = "_category")
-    public Category getCategory() {
-        return category;
-    }
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     @OneToOne
@@ -69,33 +67,6 @@ public class Transaction extends JsonAble {
     }
     public void setAccountTo(Account account2) {
         this.accountTo = account2;
-    }
-
-    @Basic
-    @Column(name = "amount")
-    public float getAmount() {
-        return amount;
-    }
-    public void setAmount(float amount) {
-        this.amount = amount;
-    }
-
-    @Basic
-    @Column(name = "rate")
-    public float getRate() {
-        return rate;
-    }
-    public void setRate(float rate) {
-        this.rate = rate;
-    }
-
-    @Basic
-    @Column(name = "currency")
-    public String getCurrency() {
-        return currency;
-    }
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
 //    @OneToOne
@@ -117,12 +88,20 @@ public class Transaction extends JsonAble {
         this.transactionType = transactionType;
     }
 
+    @OneToOne
+    @JoinColumn(name = "_owner")
+    public User getOwner() {
+        return owner;
+    }
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
         jsonObject.put(DATE, date.toString());
-        jsonObject.put(CATEGORY, category.shortJson());
 
         if (accountFrom != null){
             jsonObject.put(ACCOUNT_FROM, accountFrom.shortJson());
@@ -134,9 +113,6 @@ public class Transaction extends JsonAble {
             jsonObject.put(COUNTERPARTY, counterparty.shortJson());
         }
         jsonObject.put(TYPE, transactionType.toString());
-        jsonObject.put(AMOUNT, amount);
-        jsonObject.put(CURRENCY, currency);
-        jsonObject.put(RATE, rate);
 
         return jsonObject;
     }

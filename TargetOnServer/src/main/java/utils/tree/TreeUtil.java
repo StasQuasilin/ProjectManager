@@ -9,7 +9,6 @@ import utils.db.dao.tree.TaskDAO;
 import java.util.List;
 
 import static constants.Keys.CHILDREN;
-import static constants.Keys.LENGTH;
 
 public class TreeUtil {
 

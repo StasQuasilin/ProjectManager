@@ -52,6 +52,6 @@ public abstract class AbstractTitle extends JsonAble {
 
     @Override
     public String toString() {
-        return "Title '" + value + "'";
+        return value;
     }
 }

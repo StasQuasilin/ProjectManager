@@ -185,7 +185,14 @@
         </tr>
     </table>
     <div>
-        <fmt:message key="dependency"/>
+        <div style="width: 100%; text-align: center">
+            <fmt:message key="dependency"/>
+            <span class="tips">
+                <span class="tips-content">
+                    <fmt:message key="task.dependency.tips"/>
+                </span>
+            </span>
+        </div>
         <div v-for="d in dependent">
             {{d.title}}
         </div>

@@ -23,11 +23,6 @@ public class AccountUtil {
         System.out.println("Update sum " + amount + " for account '" + account.getTitle() + "'");
         if (amount != 0) {
             Transaction transaction = new Transaction();
-            final UserSystemCategory cat = uscu.getCategories(account.getOwner());
-            Category category = isNew ? cat.getCreateAccount() : cat.getAccountCorrection();
-            transaction.setCategory(category);
-
-            transaction.setAmount(amount);
 
             if (amount > 0){
                 transaction.setTransactionType(TransactionType.income);
@@ -37,8 +32,6 @@ public class AccountUtil {
                 transaction.setAccountFrom(account);
             }
             transaction.setDate(Date.valueOf(LocalDate.now()));
-            transaction.setCurrency(account.getCurrency());
-            transaction.setRate(1);
             saver.save(transaction);
         }
     }

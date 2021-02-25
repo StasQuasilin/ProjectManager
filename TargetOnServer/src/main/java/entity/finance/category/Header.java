@@ -30,6 +30,7 @@ public class Header extends AbstractTitle {
     @Override
     public JSONObject toJson() {
         final JSONObject jsonObject = super.toJson();
+        jsonObject.put(Keys.HEADER, getId());
         jsonObject.put(Keys.PATH, buildPath());
         return jsonObject;
     }

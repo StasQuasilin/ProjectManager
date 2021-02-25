@@ -90,4 +90,9 @@ public class TaskDAOImpl implements TaskDAO {
     public List<TaskDependency> getPrincipal(Task task) {
         return hibernator.query(TaskDependency.class, "principal", task);
     }
+
+    @Override
+    public void removeTask(Task task) {
+        hibernator.remove(task);
+    }
 }

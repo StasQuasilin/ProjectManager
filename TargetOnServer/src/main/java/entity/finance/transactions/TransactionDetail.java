@@ -15,6 +15,7 @@ public class TransactionDetail extends JsonAble {
     private Category category;
     private float amount;
     private float price;
+    private float rate;
     private String comment;
 
     @Id
@@ -60,6 +61,15 @@ public class TransactionDetail extends JsonAble {
     }
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    @Basic
+    @Column(name = "_rate")
+    public float getRate() {
+        return rate;
+    }
+    public void setRate(float rate) {
+        this.rate = rate;
     }
 
     @Basic

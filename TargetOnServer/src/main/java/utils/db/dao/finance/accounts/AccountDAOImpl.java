@@ -21,7 +21,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<Account> getUserAccounts(User user) {
-        final List<Account> accounts = hibernator.query(Account.class, OWNER, user);
+        final List<Account> accounts = hibernator.query(Account.class, TITLE_OWNER, user);
         for (AccountMember member : hibernator.query(AccountMember.class, MEMBER, user)){
             accounts.add(member.getAccount());
         }
@@ -35,6 +35,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void saveAccount(Account account) {
+        hibernator.save(account.getTitle());
         hibernator.save(account);
         updater.update(Subscribe.accounts, account, account.getOwner());
     }

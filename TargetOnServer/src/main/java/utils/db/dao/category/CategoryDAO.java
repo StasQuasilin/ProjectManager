@@ -1,6 +1,7 @@
 package utils.db.dao.category;
 
 import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.task.TaskStatistic;
 import entity.user.User;
 
@@ -29,4 +30,6 @@ public abstract class CategoryDAO {
     public abstract void removeCategories(User user);
 
     public abstract List<Category> getCategories(User owner, Category parent);
+
+    public abstract List<Category> getCategoryByHeader(Header header, int limit);
 }

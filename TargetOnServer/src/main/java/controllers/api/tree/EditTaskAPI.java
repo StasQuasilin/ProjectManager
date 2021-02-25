@@ -83,7 +83,7 @@ public class EditTaskAPI extends API {
             } else {
 //                final Header parent = header.getParent();
                 header.setParent(null);
-                taskDAO.saveTask(task);
+//                taskDAO.saveTask(task);
 //                if (parent != null){
 //                    final Task parentTask = taskDAO.getTaskByCategory(parent);
 //                    taskDAO.saveTask(task);

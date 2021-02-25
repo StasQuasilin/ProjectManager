@@ -30,7 +30,7 @@
     <div id="goalList" class="goal-page item-container">
 <%--        <template v-if="itemsCount > 0">--%>
             <goal-tile v-for="goal in getItems()"
-                   :openTree="openTree" :key="goal.id" :goal="goal" :props="props"
+                   :tree="openTree" :key="goal.id" :goal="goal" :props="props"
                        class="goal-item"></goal-tile>
 <%--        </template>--%>
 <%--        <p v-else>--%>

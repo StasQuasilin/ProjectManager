@@ -38,6 +38,7 @@ inputSearch = {
                     const self = this;
                     this.timer = setTimeout(function () {
                         PostApi(self.props.findCategory, {key: input}, function (a) {
+                            console.log(a);
                             if (a.status === 'success'){
                                 self.items = a.result;
                             }

@@ -5,30 +5,19 @@ treeView = new Vue({
         tree:{},
         isSelected:false,
         title:null,
-        props:{}
+        props:{},
+        currentItem:-1
     },
     methods:{
-        handler:function(a){
-            console.log(a);
-            if (a.update){
-                let update = a.update;
-                let p = update.parent;
-
-                let parent = this.tree;
-                for (let pi in p.path){
-                    if (p.path.hasOwnProperty(pi)){
-                        let pId = p.path[pi].id;
-                        parent = parent.children[pId];
-                    }
-                }
-                parent.children[update.id] = update;
-                this.$forceUpdate();
-            }
+        handler:function(){
+            console.log('-->');
+            this.openTree(this.currentItem);
         },
         onClick:function(itemId){
             loadModal(this.api.taskEdit, {id:itemId});
         },
         openTree:function (itemId) {
+            this.currentItem = itemId;
             this.isSelected = true;
             const self = this;
             PostApi(this.api.getItems, {id:itemId}, function (a) {

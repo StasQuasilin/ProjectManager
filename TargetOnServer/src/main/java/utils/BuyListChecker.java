@@ -17,17 +17,17 @@ public class BuyListChecker {
     private final TaskSaver taskSaver = new TaskSaver();
 
     public void check(Transaction transaction) {
-        final Category category = transaction.getCategory();
-        final BuyListItem itemByCategory = buyListDAO.getItemByCategory(category);
-        if (itemByCategory != null){
-            itemByCategory.setPrice(transaction.getAmount());
-            itemByCategory.setCurrency(transaction.getCurrency());
-
-            itemByCategory.setDone(true);
-            final BuyList list = itemByCategory.getList();
-            list.addItem(itemByCategory);
-            buyListDAO.saveList(list);
-        }
+//        final Category category = transaction.getCategory();
+//        final BuyListItem itemByCategory = buyListDAO.getItemByCategory(category);
+//        if (itemByCategory != null){
+//            itemByCategory.setPrice(transaction.getAmount());
+//            itemByCategory.setCurrency(transaction.getCurrency());
+//
+//            itemByCategory.setDone(true);
+//            final BuyList list = itemByCategory.getList();
+//            list.addItem(itemByCategory);
+//            buyListDAO.saveList(list);
+//        }
 //        final Task taskByCategory = taskDAO.getTaskByHeader(category);
 //        if (taskByCategory != null) {
 //            taskByCategory.setStatus(TaskStatus.done);

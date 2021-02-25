@@ -16,15 +16,11 @@ public interface TaskDAO {
     void saveTask(Task task);
     List<Task> getTaskByStatus(User user, TaskStatus active);
     Task getTaskByHeader(Header category);
-
     TimeLog getTimeLogByUser(User user);
-
     TimeLog getTimeLog(Object o);
-
     void saveTimeLog(TimeLog timeLog);
-
     void removeTasks(User user);
-
     List<TaskDependency> getDependency(Task task);
     List<TaskDependency> getPrincipal(Task task);
+    void removeTask(Task task);
 }

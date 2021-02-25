@@ -149,7 +149,10 @@ public class Task extends JsonAble {
     @Override
     public JSONObject toJson() {
         final JSONObject jsonObject = shortJson();
-        jsonObject.put(PARENT, header.getParent().toJson());
+        if (header != null && header.getParent() != null){
+            jsonObject.put(PARENT, header.getParent().toJson());
+        }
+
         jsonObject.put(UID, uid);
         if (date != null){
             jsonObject.put(DATE, date.toString());

@@ -72,28 +72,12 @@ public class EditTransactionAPI extends API {
                 transaction.setAccountTo(null);
             }
 
-            float amount = body.getFloat(AMOUNT);
-            transaction.setAmount(amount);
-
-            String currency = body.getString(CURRENCY);
-            transaction.setCurrency(currency);
-
-            float rate = body.getFloat(RATE);
-            if (rate == 0){
-                rate = 1;
-            }
-            transaction.setRate(rate);
             final User user = getUser(req);
-            Category prevCategory = transaction.getCategory();
 
             if (type == TransactionType.income || type == TransactionType.spending) {
-                final Category category = categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), user);
-                transaction.setCategory(category);
 
             } else if (type == TransactionType.transfer){
                 final UserSystemCategory categories = uscu.getCategories(user);
-                final Category category = categories.getTransferTransaction();
-                transaction.setCategory(category);
             }
             write(resp, SUCCESS_ANSWER);
             transactionSaver.save(transaction);
@@ -110,9 +94,7 @@ public class EditTransactionAPI extends API {
 //                }
 //            }
             if (prevDate != null && !prevDate.equals(transaction.getDate())){
-                if(prevCategory != null) {
-                    transactionUtil.updateCategory(prevCategory, prevDate);
-                }
+
                 if (prevAccountFrom != null){
                     transactionUtil.removeTransactionPoint(prevAccountFrom, transaction.getId(), prevDate);
                 }
@@ -121,10 +103,6 @@ public class EditTransactionAPI extends API {
                 }
 //                transactionUtil.updateCategory(transaction.getCategory(), prevDate);
             }
-            if (prevCategory != null){
-                transactionUtil.updateCategory(prevCategory, transaction.getDate());
-            }
-
             if (prevAccountFrom != null && prevAccountFrom.getId() != transaction.getAccountFrom().getId()){
                 transactionUtil.removeTransactionPoint(prevAccountFrom, transaction.getId(), transaction.getDate());
             }

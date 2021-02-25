@@ -9,6 +9,7 @@ transactionEdit = new Vue({
         accounts:[],
         currency:[],
         useDetails:false,
+        manyDetails:false,
         editCounterparty:false,
         transaction:{
             id:-1,
@@ -29,10 +30,12 @@ transactionEdit = new Vue({
         },
         props:{
             put:function(category){
-                transactionEdit.transaction.category = category;
-                if (category.currency && !transactionEdit.transaction.currency){
-                    transactionEdit.transaction.currency = category.currency;
-                }
+                transactionEdit.transaction.details.push({
+                   id:-1,
+                   category:category,
+                    amount:1,
+                    price:0
+                });
             }
         },
         detailProps:{
@@ -135,6 +138,9 @@ transactionEdit = new Vue({
                 // }
             }
             this.transaction.type = type;
+        },
+        removeDetail:function(idx){
+            this.transaction.details.splice(idx, 1);
         },
         getAccountsWithout:function(account){
             let accounts = this.accounts.filter(function (item) {

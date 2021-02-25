@@ -9,11 +9,10 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
-<link rel="stylesheet" href="${context}/css/transactionEdit.css">
-<script src="${context}/vue/templates/inputWithSearch.vue"></script>
-<script src="${context}/vue/finances/transactions/transactionEdit.vue"></script>
+<link rel="stylesheet" href="${context}/css/transactionEdit.css?v=${now}">
+<script src="${context}/vue/templates/inputWithSearch.vue?v=${now}"></script>
+<script src="${context}/vue/finances/transactions/transactionEdit.vue?v=${now}"></script>
 <script>
-
   transactionEdit.api.findCounterparty = '${findCounterparty}';
   transactionEdit.api.save = '${save}';
   transactionEdit.api.remove = '${remove}';
@@ -90,15 +89,56 @@
         </template>
       </div>
       <div>
-        <table class="full-size">
-          <tr v-if="transaction.type ==='spending' || transaction.type === 'income'">
-            <td>
-              <fmt:message key="transaction.category"/>
-            </td>
-            <td>
-              <input-search :object="transaction.category" :props="props" :width="'200pt'"></input-search>
-            </td>
-          </tr>
+        <table class="full-size" border="1">
+          <template v-if="transaction.type ==='spending' || transaction.type === 'income'">
+            <tr v-if="transaction.details.length == 0 || manyDetails">
+              <td>
+                <fmt:message key="transaction.category"/>
+              </td>
+              <td>
+                <input-search :object="transaction.category" :props="props" :width="'200pt'"></input-search>
+              </td>
+            </tr>
+            <tr v-else>
+              <td colspan="2">
+                <span v-on:click="manyDetails = true">
+                  <fmt:message key="transaction.add.detail"/>
+                </span>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div v-for="(d, idx) in transaction.details">
+                  <template v-if="transaction.details.length > 1">
+                    <span class="mini-button" v-on:click="removeDetail(idx)">
+                      &times;
+                    </span>
+                    <span>
+                      {{(idx + 1).toLocaleString()}}.
+                    </span>
+                  </template>
+                  <span>
+                    {{d.category.title}}
+                  </span>
+                  <span v-on:click="d.amount--">
+                    <
+                  </span>
+                  <span>
+                    {{d.amount}}
+                  </span>
+                  <span v-on:click="d.amount++">
+                    >
+                  </span>
+                  &times;
+                  <input v-model="d.price" onfocus="this.select()" autocomplete="off" style="width: 30pt">
+                  <span v-if="d.amount > 1">
+                    = {{(d.amount * d.price).toLocaleString()}}
+                  </span>
+                </div>
+              </td>
+            </tr>
+          </template>
+
           <tr v-if="transaction.type === 'spending' || transaction.type === 'transfer'">
             <td>
               <label for="accountFrom">
@@ -180,17 +220,9 @@
           </tr>
           <tr v-if="!editNote || !useDetail || !editCounterparty">
             <td colspan="2" style="text-align: center; font-size: 10pt">
-              <span class="text-button" v-if="!editCounterparty" v-on:click="editCounterparty=true">
-                <fmt:message key="counterparty.add"/>
-              </span>
               <span class="text-button" v-if="!editNote">
                 <fmt:message key="note.add"/>
               </span>
-              <template v-if="(transaction.type === 'spending' || transaction.type === 'income') && !useDetails">
-                <span class="text-button" v-on:click="useDetails = true">
-                  <fmt:message key="transaction.details.add"/>
-                </span>
-              </template>
             </td>
           </tr>
         </table>

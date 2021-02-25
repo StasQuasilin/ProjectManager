@@ -8,6 +8,7 @@
     treeView.api.getItems = '${treeBuilder}';
     treeView.api.taskEdit = '${taskEdit}';
     treeView.props.edit = '${taskEdit}';
+    treeView.props.delete = '${taskDelete}';
     treeView.on = function(id){
         treeView.onClick(id)
     };

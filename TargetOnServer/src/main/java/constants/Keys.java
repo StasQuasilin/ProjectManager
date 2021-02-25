@@ -34,6 +34,7 @@ public interface Keys {
     String TITLE = "title";
     String TITLE_OWNER = TITLE + SLASH + "owner";
     String OWNER = "owner";
+    String CATEGORY_OWNER = HEADER + SLASH + OWNER;
     String _OWNER = "_owner";
     String MEMBER = "member";
 
@@ -137,7 +138,7 @@ public interface Keys {
     String TIMER_STOP = "timerStop";
     String TIMER_SUBSCRIBE = "timerSubscribe";
     String USER_COUNT_SUBSCRIBE = "userCountSubscribe";
-    String DELETE = "delete";
+    String TASK_DELETE = "taskDelete";
     String TRANSACTION_LIMIT = "transactionLimit";
     String SHOW = "show";
     String DEPOSIT_SETTINGS = "depositSettings";
@@ -169,4 +170,8 @@ public interface Keys {
     String EMPTY_BODY = "Empty req body";
     String EMPTY_TITLE = "Title is empty";
     String TITLE_ID = "titleId";
+    String DELETE = "delete";
+    String VALUE = "value";
+    String HEADER_VALUE = HEADER + SLASH + VALUE;
+
 }

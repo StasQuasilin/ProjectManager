@@ -21,7 +21,7 @@ public class BuyListDAOImpl implements BuyListDAO {
 
     @Override
     public List<BuyList> getUserList(User user) {
-        return hibernator.query(BuyList.class, OWNER, user);
+        return hibernator.query(BuyList.class, TITLE_OWNER, user);
     }
 
     @Override

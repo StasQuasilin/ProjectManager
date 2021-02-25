@@ -36,7 +36,7 @@ public class Category extends JsonAble implements Serializable {
     }
 
     @Basic
-    @Column(name = "hidden")
+    @Column(name = "_hidden")
     public boolean isHidden() {
         return hidden;
     }

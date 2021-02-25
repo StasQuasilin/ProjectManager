@@ -5,6 +5,7 @@ import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
+import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
 
@@ -20,7 +21,7 @@ public class TransactionDAOImpl implements TransactionDAO {
 
     @Override
     public List<Transaction> getUserTransactions(User user) {
-        return hibernator.query(Transaction.class, TITLE_OWNER, user, LIMIT);
+        return hibernator.query(Transaction.class, OWNER, user, LIMIT);
     }
 
     @Override
@@ -30,12 +31,8 @@ public class TransactionDAOImpl implements TransactionDAO {
 
     @Override
     public void saveTransaction(Transaction transaction) {
-        final Category category = transaction.getCategory();
-        if (category != null) {
-            hibernator.save();
-        }
         hibernator.save(transaction);
-//        updater.update(Subscribe.transactions, transaction, transaction.getOwner());
+        updater.update(Subscribe.transactions, transaction, transaction.getOwner());
 
     }
 

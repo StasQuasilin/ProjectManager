@@ -1,6 +1,7 @@
 package utils.db.dao.category;
 
 import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.task.TaskStatistic;
 import entity.user.User;
 import utils.db.hibernate.Hibernator;
@@ -17,10 +18,10 @@ public class CategoryDAOImpl extends CategoryDAO {
     @Override
     public List<Category> findCategory(String name, User user) {
         final HashMap<String, Object> params = new HashMap<>();
-        params.put(OWNER, user);
+        params.put(CATEGORY_OWNER, user);
         params.put(HIDDEN, false);
 
-        return hibernator.find(Category.class, params, TITLE, name);
+        return hibernator.find(Category.class, params, HEADER_VALUE, name);
     }
 
     @Override
@@ -55,5 +56,10 @@ public class CategoryDAOImpl extends CategoryDAO {
         params.put("parent", parent);
         params.put("hidden", false);
         return hibernator.query(Category.class, params);
+    }
+
+    @Override
+    public List<Category> getCategoryByHeader(Header header, int limit) {
+        return hibernator.query(Category.class, HEADER, header, limit);
     }
 }

@@ -2,16 +2,15 @@ goalTile = {
     props:{
         goal:Object,
         props:Object,
-        openTree:Function
+        tree:Function
     },
     components:{
         'progress-bar':progressBar
     },
     methods:{
         onClick:function () {
-            console.log(typeof this.props.tree);
-            if(typeof this.props.tree === "function"){
-                this.props.tree(this.goal.titleId);
+            if(typeof this.tree === "function"){
+                this.tree(this.goal.titleId);
             } else {
                 console.warn('---');
             }

@@ -26,6 +26,14 @@ treeItem = {
         },
         addItem:function () {
             loadModal(this.props.edit, {parent:this.item.header});
+        },
+        deleteItem:function () {
+            loadModal(this.props.delete, {id:this.item.id});
+        },
+        sortedChildren:function () {
+            return Object.values(this.item.children).sort(function (a, b) {
+                return a.title.localeCompare(b.title);
+            })
         }
     },
     template:'<div>' +
@@ -38,7 +46,7 @@ treeItem = {
                         '<template v-else>' +
                             '+' +
                         '</template>' +
-                    '</span>' +
+                    '</span> ' +
                     '<span v-if="item.status === \'done\'">' +
                         '&checkmark; ' +
                     '</span>' +
@@ -58,13 +66,13 @@ treeItem = {
                         '<span class="tree-menu-button">' +
                             '&#9208;' +
                         '</span>' +
-                        '<span class="tree-menu-button">' +
+                        '<span class="tree-menu-button" v-on:click="deleteItem()">' +
                             '&times;' +
                         '</span>' +
                     '</div>' +
                 '</div>' +
                 '<div v-if="childrenCount > 0 && show" class="tree-children">' +
-                    '<tree-item v-for="child in item.children" :onclick="onclick" :key="child.id" :item="child" :props="props"></tree-item>' +
+                    '<tree-item v-for="child in sortedChildren()" :onclick="onclick" :key="child.id" :item="child" :props="props"></tree-item>' +
                 '</div>' +
             '</template>' +
         '</div>'
