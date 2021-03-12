@@ -173,5 +173,9 @@ public interface Keys {
     String DELETE = "delete";
     String VALUE = "value";
     String HEADER_VALUE = HEADER + SLASH + VALUE;
+    String HEADER_OWNER = HEADER + SLASH + OWNER;
+    char COMMA = ',';
 
+    String DESCRIPTION = "description";
+    String FIND_CURRENCY = "findCurrency";
 }

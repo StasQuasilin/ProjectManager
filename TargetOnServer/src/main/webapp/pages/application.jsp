@@ -15,9 +15,9 @@
         <title><fmt:message key="application.title"/></title>
         <link rel="icon" href="${context}/images/icon.svg">
         <link rel="stylesheet" href="${context}/css/main.css?v=${now}">
-        <link rel="stylesheet" href="${context}/css/application.css">
-        <link rel="stylesheet" href="${context}/css/modalLayer.css">
-        <link rel="stylesheet" href="${context}/css/datePicker.css">
+        <link rel="stylesheet" href="${context}/css/application.css?v=${now}">
+        <link rel="stylesheet" href="${context}/css/modalLayer.css?v=${now}">
+        <link rel="stylesheet" href="${context}/css/datePicker.css?v=${now}">
         <script type="application/javascript" src="${context}/external/jquery.min.js"></script>
         <script type="application/javascript" src="${context}/external/vue.js"></script>
         <script type="application/javascript" src="${context}/external/vuetify.js"></script>

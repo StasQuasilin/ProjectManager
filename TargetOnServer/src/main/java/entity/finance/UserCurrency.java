@@ -1,6 +1,6 @@
-package entity.user;
+package entity.finance;
 
-import entity.finance.Currency;
+import entity.user.User;
 
 import javax.persistence.*;
 
@@ -9,9 +9,10 @@ import javax.persistence.*;
 public class UserCurrency {
     private int id;
     private User user;
-    private String currency;
+    private Currency currency;
 
     @Id
+    @Column(name = "_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
@@ -21,7 +22,7 @@ public class UserCurrency {
     }
 
     @OneToOne
-    @JoinColumn(name = "user")
+    @JoinColumn(name = "_user")
     public User getUser() {
         return user;
     }
@@ -29,12 +30,12 @@ public class UserCurrency {
         this.user = user;
     }
 
-    @Basic
-    @Column(name = "currency")
-    public String getCurrency() {
+    @OneToOne
+    @JoinColumn(name = "_currency")
+    public Currency getCurrency() {
         return currency;
     }
-    public void setCurrency(String currency) {
+    public void setCurrency(Currency currency) {
         this.currency = currency;
     }
 }

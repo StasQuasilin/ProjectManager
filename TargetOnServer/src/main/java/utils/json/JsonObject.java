@@ -78,4 +78,8 @@ public class JsonObject {
         }
         return null;
     }
+
+    public JsonObject getJsonObject(String key) {
+        return new JsonObject(get(key));
+    }
 }

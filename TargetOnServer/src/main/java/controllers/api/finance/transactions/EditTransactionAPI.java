@@ -1,11 +1,15 @@
 package controllers.api.finance.transactions;
 
 import constants.ApiLinks;
+import constants.Keys;
 import controllers.api.API;
 import entity.UserSystemCategory;
+import entity.finance.Currency;
+import entity.finance.UserCurrency;
 import entity.finance.accounts.Account;
 import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
+import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionType;
 import entity.user.User;
 import org.json.simple.JSONArray;
@@ -13,6 +17,7 @@ import utils.CategoryUtil;
 import utils.UserSystemCategoryUtil;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.accounts.AccountDAO;
+import utils.db.dao.finance.currency.CurrencyDAO;
 import utils.db.dao.finance.transactions.TransactionDAO;
 import utils.finances.TransactionUtil;
 import utils.json.JsonObject;
@@ -24,12 +29,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.LinkedList;
 
 import static constants.Keys.*;
 
 @WebServlet(ApiLinks.TRANSACTION_SAVE)
 public class EditTransactionAPI extends API {
 
+    private static final int TITLE_LIMIT = 30;
     private final AccountDAO accountDAO = daoService.getAccountDAO();
     private final TransactionSaver transactionSaver = new TransactionSaver();
     private final TransactionDAO transactionDAO = daoService.getTransactionDAO();
@@ -37,15 +44,18 @@ public class EditTransactionAPI extends API {
     private final TransactionUtil transactionUtil = new TransactionUtil();
     private final UserSystemCategoryUtil uscu = new UserSystemCategoryUtil();
     private final TransactionDetailUtil tdu = new TransactionDetailUtil();
+    private final CurrencyDAO currencyDAO = daoService.getCurrencyDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
+            final User user = getUser(req);
             Transaction transaction = transactionDAO.getTransaction(body.get(ID));
             if (transaction == null){
                 transaction = new Transaction();
+                transaction.setOwner(user);
             }
 
             TransactionType type = TransactionType.valueOf(body.getString(TYPE));
@@ -54,6 +64,17 @@ public class EditTransactionAPI extends API {
             Date prevDate = transaction.getDate();
             Date date = Date.valueOf(body.getString(DATE));
             transaction.setDate(date);
+
+            String currencyName = body.getString(CURRENCY);
+            final Currency currency = currencyDAO.getCurrency(currencyName);
+            transaction.setCurrency(currency);
+            UserCurrency userCurrency = currencyDAO.getUserCurrency(currency, user);
+            if (userCurrency == null){
+                userCurrency = new UserCurrency();
+                userCurrency.setUser(user);
+                userCurrency.setCurrency(currency);
+                currencyDAO.saveUserCurrency(userCurrency);
+            }
 
             Account prevAccountFrom = null;
             if (body.containKey(ACCOUNT_FROM)){
@@ -72,18 +93,32 @@ public class EditTransactionAPI extends API {
                 transaction.setAccountTo(null);
             }
 
-            final User user = getUser(req);
-
-            if (type == TransactionType.income || type == TransactionType.spending) {
-
-            } else if (type == TransactionType.transfer){
-                final UserSystemCategory categories = uscu.getCategories(user);
-            }
             write(resp, SUCCESS_ANSWER);
             transactionSaver.save(transaction);
 
             if(body.containKey(DETAILS)) {
-                tdu.saveDetails(transaction, (JSONArray) body.get(DETAILS));
+                final LinkedList<TransactionDetail> list = tdu.saveDetails(transaction, (JSONArray) body.get(DETAILS), user);
+                StringBuilder builder = new StringBuilder();
+                int totalCost = 0;
+                int addedItems = 0;
+                for (TransactionDetail detail : list){
+                    final String title = detail.getCategory().getTitle();
+                    if (builder.length() + title.length() < TITLE_LIMIT){
+                        if (builder.length() > 0){
+                            builder.append(Keys.COMMA).append(SPACE);
+                        }
+                        builder.append(title);
+                        addedItems++;
+                    }
+                    totalCost += detail.getPrice() * detail.getAmount();
+                }
+                int others = list.size() - addedItems;
+                if (others > 0){
+                    builder.append(PLUS).append(others);
+                }
+                transaction.setDescription(builder.toString());
+                transaction.setAmount(totalCost);
+                transactionSaver.save(transaction);
             } else {
                 tdu.removeDetails(transaction);
             }

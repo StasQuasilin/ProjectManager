@@ -1,5 +1,7 @@
 package utils.db.dao.finance.currency;
 
+import entity.finance.Currency;
+import entity.finance.UserCurrency;
 import entity.user.User;
 
 import java.util.ArrayList;
@@ -18,5 +20,25 @@ public class CurrencyDAOPlug implements CurrencyDAO {
     @Override
     public List<String> getUserCurrency(User user) {
         return currency;
+    }
+
+    @Override
+    public List<String> findCurrency(String key, User user) {
+        return null;
+    }
+
+    @Override
+    public UserCurrency getUserCurrency(Currency currency, User user) {
+        return null;
+    }
+
+    @Override
+    public Currency getCurrency(String name) {
+        return null;
+    }
+
+    @Override
+    public void saveUserCurrency(UserCurrency userCurrency) {
+
     }
 }

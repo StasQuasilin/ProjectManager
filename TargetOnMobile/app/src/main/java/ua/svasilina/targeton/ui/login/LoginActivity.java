@@ -94,13 +94,18 @@ public class LoginActivity extends Activity {
     private void googleSignIn() {
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.server_client_sha))
+//                .requestIdToken(getString(R.string.server_client_sha))
                 .requestEmail()
                 .build();
 
         final GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
+
+        final GoogleSignInClient client = GoogleSignIn.getClient(this, gso);
+        System.out.println(client.getApiOptions().getAccount().toString());
+
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+
         startActivityForResult(signInIntent, RC_GOOGLE_SIGN_IN);
     }
 

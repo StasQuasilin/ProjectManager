@@ -47,6 +47,9 @@ input[type=checkbox], input[type=radio]{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+.text-button{
+    color: #41b883;
+}
 .text-button:hover{
     text-shadow: 0 0 6px #282828;
 }

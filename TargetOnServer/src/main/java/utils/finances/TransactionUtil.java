@@ -23,21 +23,21 @@ public class TransactionUtil {
     private final CategoryStatisticUtil categoryStatisticUtil = new CategoryStatisticUtil();
 
     public void updateAccounts(Transaction transaction) {
-//        final float amount = transaction.getAmount();
-//        if (amount != 0){
-//            final float rate = transaction.getRate();
-//            final TransactionType type = transaction.getTransactionType();
+        final float amount = transaction.getAmount();
+        if (amount != 0){
+            final float rate = transaction.getRate();
+            final TransactionType type = transaction.getTransactionType();
 //
-//            final Account accountFrom = transaction.getAccountFrom();
-//            if (accountFrom != null) {
-//                updatePoint(transaction, accountFrom, type != TransactionType.transfer ? -amount * rate: -amount);
-//            }
-//            final Account accountTo = transaction.getAccountTo();
-//            if (accountTo != null){
-//                updatePoint(transaction, accountTo, type != TransactionType.transfer ? amount / rate: amount);
-//            }
+            final Account accountFrom = transaction.getAccountFrom();
+            if (accountFrom != null) {
+                updatePoint(transaction, accountFrom, type != TransactionType.transfer ? -amount * rate: -amount);
+            }
+            final Account accountTo = transaction.getAccountTo();
+            if (accountTo != null){
+                updatePoint(transaction, accountTo, type != TransactionType.transfer ? amount / rate: amount);
+            }
 //            updateCategory(transaction.getCategory(), transaction.getDate());
-//        }
+        }
     }
 
     public void updateCategory(Category category, Date date) {
@@ -96,8 +96,8 @@ public class TransactionUtil {
 //        }
         point.setDate(transaction.getDate());
         point.setAmount(amount);
-//        point.setRate(transaction.getRate());
-//        point.setCurrency(transaction.getCurrency());
+        point.setRate(transaction.getRate());
+        point.setCurrency(transaction.getCurrency().getName());
         transactionPointUtil.save(point);
 
         calculateAccountDay(account, transaction.getDate());

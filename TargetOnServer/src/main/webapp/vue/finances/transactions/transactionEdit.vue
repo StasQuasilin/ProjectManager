@@ -11,11 +11,14 @@ transactionEdit = new Vue({
         useDetails:false,
         manyDetails:false,
         editCounterparty:false,
+        addCurrency:false,
+        newCurrency:{
+            title:''
+        },
         transaction:{
             id:-1,
             type:null,
             date:new Date().toISOString().substring(0, 10),
-            category:{id:-1, title:''},
             accountFrom:-1,
             accountTo:-1,
             counterparty:{
@@ -28,15 +31,46 @@ transactionEdit = new Vue({
             comment:'',
             details:[]
         },
-        props:{
-            put:function(category){
-                transactionEdit.transaction.details.push({
-                   id:-1,
-                   category:category,
-                    amount:1,
-                    price:0
-                });
+        currentDetail:-1,
+        category:{
+            id:-1,
+            title:''
+        },
+        newCurrencyProps:{
+            put:function (currency) {
+                transactionEdit.addCurrency = false;
+                transactionEdit.newCurrency.title = '';
+                transactionEdit.currency.push(currency);
+                transactionEdit.transaction.currency = currency;
             }
+        },
+        props:{
+            put:function(header){
+                let detail;
+                if (transactionEdit.currentDetail === -1){
+                    detail = {
+                        id:-1,
+                        header:header,
+                        amount:1,
+                        price:0
+                    };
+                    transactionEdit.transaction.details.push(detail);
+                } else {
+                    detail = transactionEdit.transaction.details[transactionEdit.currentDetail];
+                    detail.header = header;
+                }
+                transactionEdit.currentDetail = -1;
+            }
+        },
+        totalSum:function(){
+            let sum = 0;
+            for (let i in this.transaction.details){
+                if (this.transaction.details.hasOwnProperty(i)){
+                    let detail = this.transaction.details[i];
+                    sum += detail.amount * detail.price;
+                }
+            }
+            return sum;
         },
         detailProps:{
             put:function (item) {
@@ -182,9 +216,11 @@ transactionEdit = new Vue({
             this.transaction.details.splice(index, 1);
             this.calculateTotal();
         },
-        editDetail:function(detail, index){
-            this.detail = detail;
-            this.detailIndex = index;
+        editDetail:function(idx){
+            console.log('Edit detail ' + idx);
+            this.currentDetail = idx;
+            let detail = this.transaction.details[idx];
+            this.category = detail.category;
         },
         addDetail:function(){
             let detail = Object.assign({}, this.detail);

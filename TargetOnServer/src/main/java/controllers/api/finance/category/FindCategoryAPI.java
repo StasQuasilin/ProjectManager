@@ -2,6 +2,7 @@ package controllers.api.finance.category;
 
 import constants.ApiLinks;
 import controllers.api.API;
+import entity.finance.category.Category;
 import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONArray;
@@ -9,6 +10,7 @@ import utils.answers.Answer;
 import utils.answers.ErrorAnswer;
 import utils.answers.SuccessAnswer;
 import utils.db.dao.TitleDAO;
+import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
 import utils.json.JsonObject;
 
@@ -24,7 +26,7 @@ import static constants.Keys.RESULT;
 @WebServlet(ApiLinks.FIND_CATEGORY)
 public class FindCategoryAPI extends API {
 
-    private final TitleDAO titleDAO = daoService.getTitleDAO();
+    private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,7 +37,7 @@ public class FindCategoryAPI extends API {
             Answer answer;
             if (user != null){
                 JSONArray array = new JSONArray();
-                for (Header category : titleDAO.findHeader(key, user)){
+                for(Category category : categoryDAO.findCategory(key, user)){
                     array.add(category.shortJson());
                 }
                 answer = new SuccessAnswer();

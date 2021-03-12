@@ -16,6 +16,6 @@ public class TransactionSaver {
     public void save(Transaction transaction){
         transactionDAO.saveTransaction(transaction);
         transactionUtil.updateAccounts(transaction);
-        buyListChecker.check(transaction);
+//        buyListChecker.check(transaction);
     }
 }

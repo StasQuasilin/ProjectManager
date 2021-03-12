@@ -67,4 +67,9 @@ public class Category extends JsonAble implements Serializable {
     public boolean equals(Object obj) {
         return getClass().equals(obj.getClass()) && hashCode() == obj.hashCode();
     }
+
+    @Transient
+    public String getTitle() {
+        return header.getTitle();
+    }
 }

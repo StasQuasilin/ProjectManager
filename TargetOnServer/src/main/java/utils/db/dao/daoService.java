@@ -8,6 +8,7 @@ import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.calendar.CalendarDAOImpl;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.category.CategoryDAOImpl;
+import utils.db.dao.finance.CurrencyDAOPImpl;
 import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.finance.accounts.AccountDAOImpl;
 import utils.db.dao.finance.buy.BuyListDAO;
@@ -30,7 +31,7 @@ import utils.db.dao.user.UserDAOImpl;
  */
 public class daoService {
     private static final AccountDAO     accountDao;
-    private static final CurrencyDAO    currencyDAO = new CurrencyDAOPlug();
+    private static final CurrencyDAO    currencyDAO = new CurrencyDAOPImpl();
     private static final TransactionDAO transactionDAO = new TransactionDAOImpl();
     private static final GoalDAO        goalDAO = new GoalDAOImpl();
     private static final CategoryDAO    categoryDAO;

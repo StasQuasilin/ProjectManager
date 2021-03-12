@@ -23,8 +23,11 @@
                             {{item.id}}:{{item.type}}
                         </div>
                         <div>
-                            <span v-if="item.category.title">
+                            <span v-if="item.category && item.category.title">
                                 {{item.category.title}}
+                            </span>
+                            <span v-else-if="item.description">
+                                {{item.description}}
                             </span>
                             <span v-else style="color: gray">
                                 <fmt:message key="transaction.without.category"/>

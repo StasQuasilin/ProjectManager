@@ -1,6 +1,8 @@
 package entity.finance.transactions;
 
+import constants.Keys;
 import entity.finance.Counterparty;
+import entity.finance.Currency;
 import entity.finance.accounts.Account;
 import entity.finance.category.Category;
 import entity.user.User;
@@ -17,6 +19,9 @@ import static constants.Keys.*;
 public class Transaction extends JsonAble {
     private int id;
     private String description;
+    private int amount;
+    private Currency currency;
+    private float rate = 1;
     private Date date;
     private Account accountFrom;
     private Account accountTo;
@@ -40,6 +45,33 @@ public class Transaction extends JsonAble {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "_amount")
+    public int getAmount() {
+        return amount;
+    }
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "_currency")
+    public Currency getCurrency() {
+        return currency;
+    }
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    @Basic
+    @Column(name = "_rate")
+    public float getRate() {
+        return rate;
+    }
+    public void setRate(float rate) {
+        this.rate = rate;
     }
 
     @Basic
@@ -113,6 +145,8 @@ public class Transaction extends JsonAble {
             jsonObject.put(COUNTERPARTY, counterparty.shortJson());
         }
         jsonObject.put(TYPE, transactionType.toString());
+        jsonObject.put(Keys.DESCRIPTION, description);
+        jsonObject.put(AMOUNT, amount);
 
         return jsonObject;
     }

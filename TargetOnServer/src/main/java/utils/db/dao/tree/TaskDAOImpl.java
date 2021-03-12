@@ -48,7 +48,7 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public List<Task> getTaskByStatus(User user, TaskStatus status) {
         HashMap<String,Object> param = new HashMap<>();
-        param.put(TITLE_OWNER, user);
+        param.put(HEADER_OWNER, user);
         param.put(STATUS, status);
         return hibernator.query(Task.class, param);
     }
