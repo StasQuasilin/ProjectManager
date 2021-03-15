@@ -11,8 +11,8 @@ import java.util.List;
  * Created by DELL on 10.07.2020.
  */
 public abstract class CategoryDAO {
-    public abstract List<Category> findCategory(String name, User user);
-    public abstract Category getCategory(Object id);
+    public abstract List<Header> findCategory(String name, User user);
+    public abstract Header getCategory(Object id);
     public void saveCategory(Category category){
         save(category);
     }
@@ -29,7 +29,6 @@ public abstract class CategoryDAO {
 
     public abstract void removeCategories(User user);
 
-    public abstract List<Category> getCategories(User owner, Category parent);
+    public abstract List<Header> getCategories(User owner, Header parent);
 
-    public abstract List<Category> getCategoryByHeader(Header header, int limit);
 }

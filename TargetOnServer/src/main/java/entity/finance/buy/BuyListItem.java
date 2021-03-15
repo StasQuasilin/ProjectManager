@@ -1,6 +1,6 @@
 package entity.finance.buy;
 
-import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.task.Unit;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -14,7 +14,7 @@ import static constants.Keys.*;
 public class BuyListItem extends JsonAble {
     private int id;
     private BuyList list;
-    private Category category;
+    private Header header;
     private float count;
     private Unit unit;
     private float price;
@@ -40,12 +40,12 @@ public class BuyListItem extends JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = "_category")
-    public Category getCategory() {
-        return category;
+    @JoinColumn(name = "_header")
+    public Header getHeader() {
+        return header;
     }
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Basic
@@ -96,9 +96,9 @@ public class BuyListItem extends JsonAble {
 
     @Override
     public JSONObject toJson() {
-        JSONObject json = category.shortJson();
+        JSONObject json = header.shortJson();
         json.put(ID, id);
-        json.put(CATEGORY, category.getId());
+        json.put(CATEGORY, header.getId());
 
         json.put(COUNT, count);
         if (unit != null) {

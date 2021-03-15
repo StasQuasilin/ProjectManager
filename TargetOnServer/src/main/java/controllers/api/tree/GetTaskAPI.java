@@ -3,21 +3,17 @@ package controllers.api.tree;
 import constants.ApiLinks;
 import controllers.api.API;
 import entity.finance.category.Category;
-import entity.task.Task;
-import org.json.simple.JSONArray;
+import entity.finance.category.Header;
 import org.json.simple.JSONObject;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
-import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 import static constants.Keys.*;
 
@@ -32,12 +28,12 @@ public class GetTaskAPI extends API {
         JsonObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
-            final Category category = categoryDAO.getCategory(body.get(PARENT));
+            final Header category = categoryDAO.getCategory(body.get(PARENT));
 
             JSONObject jsonObject = new JSONObject();
             if (category != null){
-                jsonObject.put(ITEM, category.toJson());
-                jsonObject.put(ROOT, getRoot(category).getId());
+//                jsonObject.put(ITEM, category.toJson());
+//                jsonObject.put(ROOT, getRoot(category).getId());
 //                final List<Task> children = taskDAO.getTasksByParent(category);
 //                JSONArray array = new JSONArray();
 //                for (Task task : children){

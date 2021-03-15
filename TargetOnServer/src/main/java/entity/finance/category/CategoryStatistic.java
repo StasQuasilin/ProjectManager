@@ -6,18 +6,18 @@ import java.io.Serializable;
 @Entity
 @Table(name = "category_statistic")
 public class CategoryStatistic implements Serializable {
-    private Category category;
+    private Header header;
     private float plus;
     private float minus;
 
     @Id
     @OneToOne
     @JoinColumn(name = "_category")
-    public Category getCategory() {
-        return category;
+    public Header getHeader() {
+        return header;
     }
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Basic

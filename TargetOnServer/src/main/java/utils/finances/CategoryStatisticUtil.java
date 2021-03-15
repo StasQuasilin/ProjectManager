@@ -1,7 +1,6 @@
 package utils.finances;
 
 import entity.finance.category.Category;
-import entity.task.Task;
 import entity.task.TaskStatistic;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;

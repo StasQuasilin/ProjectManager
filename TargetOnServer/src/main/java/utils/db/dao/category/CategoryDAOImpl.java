@@ -2,8 +2,10 @@ package utils.db.dao.category;
 
 import entity.finance.category.Category;
 import entity.finance.category.Header;
+import entity.finance.category.HeaderType;
 import entity.task.TaskStatistic;
 import entity.user.User;
+import utils.db.hibernate.DateContainers.OR;
 import utils.db.hibernate.Hibernator;
 
 import static constants.Keys.*;
@@ -16,17 +18,17 @@ public class CategoryDAOImpl extends CategoryDAO {
     private final Hibernator hibernator = Hibernator.getInstance();
 
     @Override
-    public List<Category> findCategory(String name, User user) {
+    public List<Header> findCategory(String name, User user) {
         final HashMap<String, Object> params = new HashMap<>();
-        params.put(CATEGORY_OWNER, user);
-        params.put(HIDDEN, false);
+        params.put(OWNER, user);
+        params.put(TYPE, new OR(HeaderType.task, HeaderType.category));
 
-        return hibernator.find(Category.class, params, HEADER_VALUE, name);
+        return hibernator.find(Header.class, params, VALUE, name);
     }
 
     @Override
-    public Category getCategory(Object id) {
-        return hibernator.get(Category.class, ID, id);
+    public Header getCategory(Object id) {
+        return hibernator.get(Header.class, ID, id);
     }
 
     @Override
@@ -50,16 +52,11 @@ public class CategoryDAOImpl extends CategoryDAO {
     }
 
     @Override
-    public List<Category> getCategories(User owner, Category parent) {
+    public List<Header> getCategories(User owner, Header parent) {
         final HashMap<String, Object> params = new HashMap<>();
         params.put("owner", owner);
         params.put("parent", parent);
         params.put("hidden", false);
-        return hibernator.query(Category.class, params);
-    }
-
-    @Override
-    public List<Category> getCategoryByHeader(Header header, int limit) {
-        return hibernator.query(Category.class, HEADER, header, limit);
+        return hibernator.query(Header.class, params);
     }
 }

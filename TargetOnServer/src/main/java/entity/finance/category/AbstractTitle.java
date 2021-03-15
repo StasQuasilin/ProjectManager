@@ -11,6 +11,7 @@ import javax.persistence.*;
 public abstract class AbstractTitle extends JsonAble {
     private int id;
     private String value;
+    private HeaderType type;
     private User owner;
 
     @Id
@@ -30,6 +31,15 @@ public abstract class AbstractTitle extends JsonAble {
     }
     public void setValue(String value) {
         this.value = value;
+    }
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "_type")
+    public HeaderType getType() {
+        return type;
+    }
+    public void setType(HeaderType type) {
+        this.type = type;
     }
 
     @OneToOne

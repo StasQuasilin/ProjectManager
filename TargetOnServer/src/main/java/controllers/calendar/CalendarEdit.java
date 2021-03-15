@@ -4,7 +4,7 @@ import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
 import entity.calendar.CalendarItem;
-import entity.finance.category.Category;
+import entity.finance.category.Header;
 import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
@@ -32,9 +32,9 @@ public class CalendarEdit extends ModalWindow {
             System.out.println(body);
             CalendarItem item = calendarDAO.getCalendarItem(body.get(ID));
             if (item == null && body.containKey(CATEGORY)){
-                final Category category = categoryDAO.getCategory(body.get(CATEGORY));
+                final Header category = categoryDAO.getCategory(body.get(CATEGORY));
                 item = new CalendarItem();
-                item.setCategory(category);
+                item.setHeader(category);
             }
             req.setAttribute(ITEM, item);
         }

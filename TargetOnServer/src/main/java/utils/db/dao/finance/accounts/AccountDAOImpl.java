@@ -2,6 +2,7 @@ package utils.db.dao.finance.accounts;
 
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountMember;
+import entity.finance.accounts.CardSettings;
 import entity.finance.accounts.DepositSettings;
 import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
@@ -86,5 +87,20 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public void removeMember(AccountMember member) {
         hibernator.remove(member);
+    }
+
+    @Override
+    public CardSettings getCardSettings(Account account) {
+        return hibernator.get(CardSettings.class, ACCOUNT, account);
+    }
+
+    @Override
+    public void saveCardSettings(CardSettings cardSettings) {
+        hibernator.save(cardSettings);
+    }
+
+    @Override
+    public void removeSettings(CardSettings cardSettings) {
+        hibernator.remove(cardSettings);
     }
 }

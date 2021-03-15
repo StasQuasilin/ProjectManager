@@ -3,7 +3,7 @@ package controllers.api.finance.categories;
 import constants.ApiLinks;
 import constants.Keys;
 import controllers.api.API;
-import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import utils.answers.Answer;
@@ -16,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.*;
 import java.io.IOException;
 
 @WebServlet(ApiLinks.GET_CATEGORIES)
@@ -27,7 +26,7 @@ public class GetCategoryApi extends API {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final User user = getUser(req);
-        Category parent = null;
+        Header parent = null;
         final JsonObject body = parseBody(req);
         if (body != null){
             if (body.containKey(Keys.PARENT)){
@@ -35,7 +34,7 @@ public class GetCategoryApi extends API {
             }
         }
         final JSONArray array = new JSONArray();
-        for (Category category : categoryDAO.getCategories(user, parent)){
+        for (Header category : categoryDAO.getCategories(user, parent)){
             array.add(category.toJson());
         }
         Answer answer = new SuccessAnswer();

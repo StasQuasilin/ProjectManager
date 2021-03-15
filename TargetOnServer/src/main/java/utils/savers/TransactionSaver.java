@@ -1,6 +1,5 @@
 package utils.savers;
 
-import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import utils.BuyListChecker;
 import utils.db.dao.daoService;

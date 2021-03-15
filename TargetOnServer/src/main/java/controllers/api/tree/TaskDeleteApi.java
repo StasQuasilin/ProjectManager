@@ -3,7 +3,6 @@ package controllers.api.tree;
 import constants.ApiLinks;
 import constants.Keys;
 import controllers.api.API;
-import entity.finance.category.Category;
 import entity.finance.category.Header;
 import entity.task.Task;
 import subscribe.Subscribe;
@@ -11,7 +10,6 @@ import utils.Updater;
 import utils.db.dao.TitleDAO;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
-import utils.db.dao.finance.transactions.TransactionDAO;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
 
@@ -39,10 +37,6 @@ public class TaskDeleteApi extends API {
             write(resp, SUCCESS_ANSWER);
             updater.remove(Subscribe.tree, task.getId(), task.getOwner());
             final Header header = task.getHeader();
-            final List<Category> categories = categoryDAO.getCategoryByHeader(header, 1);
-            if (categories.size() == 0){
-                titleDAO.removeTitle(header);
-            }
         }
 
     }

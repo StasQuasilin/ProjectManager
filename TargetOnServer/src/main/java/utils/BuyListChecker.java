@@ -1,11 +1,6 @@
 package utils;
 
-import entity.finance.buy.BuyList;
-import entity.finance.buy.BuyListItem;
-import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
-import entity.task.Task;
-import entity.task.TaskStatus;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.buy.BuyListDAO;
 import utils.db.dao.tree.TaskDAO;

@@ -1,6 +1,7 @@
 package utils.savers;
 
 import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
 import entity.user.User;
@@ -42,8 +43,8 @@ public class TransactionDetailUtil {
             //todo get category by id
             //todo if category id -1 - create new category
             //todo if new category not equals detail category - change it
-            final Category category = categoryUtil.getCategory(jsonObject.getJsonObject(HEADER), owner);
-            detail.setCategory(category);
+            final Header header = categoryUtil.getCategory(jsonObject.getInt(HEADER), jsonObject.getString(TITLE), owner);
+            detail.setHeader(header);
 
             detail.setAmount(jsonObject.getFloat(AMOUNT));
             detail.setPrice(jsonObject.getFloat(PRICE));

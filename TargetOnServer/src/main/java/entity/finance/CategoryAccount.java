@@ -1,10 +1,10 @@
 package entity.finance;
 
 import entity.finance.accounts.Account;
-import entity.finance.category.Category;
+import entity.finance.category.Header;
 
 public class CategoryAccount {
     private int id;
-    private Category category;
+    private Header category;
     private Account account;
 }

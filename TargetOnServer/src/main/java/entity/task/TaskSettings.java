@@ -1,7 +1,7 @@
 package entity.task;
 
 import entity.finance.accounts.PointScale;
-import entity.finance.category.Category;
+import entity.finance.category.Header;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -10,7 +10,7 @@ import java.sql.Date;
 @Table(name = "task_settings")
 public class TaskSettings {
     private int id;
-    private Category category;
+    private Header header;
     private PointScale repeatEach;
     private Date nextRepeat;
     private int repeatCount;
@@ -30,11 +30,11 @@ public class TaskSettings {
 
     @OneToOne
     @JoinColumn(name = "_category")
-    public Category getCategory() {
-        return category;
+    public Header getHeader() {
+        return header;
     }
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Basic

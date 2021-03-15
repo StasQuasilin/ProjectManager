@@ -92,56 +92,58 @@
       <div>
         <table class="full-size" border="1">
           <template v-if="transaction.type ==='spending' || transaction.type === 'income'">
-            <tr v-if="transaction.details.length == 0 || manyDetails || currentDetail != -1">
+            <tr>
               <td>
                 <fmt:message key="transaction.category"/>
               </td>
               <td>
                 <div style="display: inline-block">
-                  <input-search :object="category" :props="props" ></input-search>
+                  <input-search :object="category" :props="props" :show="'title'"></input-search>
                 </div>
                   <span class="text-button">
                     &checkmark;
                   </span>
               </td>
             </tr>
-            <tr v-else>
-              <td colspan="2">
-                <span v-on:click="manyDetails = true" style="font-size: 10pt">
-                  <fmt:message key="transaction.add.detail"/>
-                </span>
-              </td>
-            </tr>
+<%--            <tr v-else>--%>
+<%--              <td colspan="2">--%>
+<%--                <span v-on:click="manyDetails = true" style="font-size: 10pt">--%>
+<%--                  <fmt:message key="transaction.add.detail"/>--%>
+<%--                </span>--%>
+<%--              </td>--%>
+<%--            </tr>--%>
             <tr>
               <td colspan="2">
-                <div v-for="(d, idx) in transaction.details">
-                  <template v-if="transaction.details.length > 1">
+                <div style="max-height: 100pt; overflow-y: scroll">
+                  <div v-for="(d, idx) in transaction.details">
+                    <template v-if="transaction.details.length > 1">
                     <span class="mini-button" v-on:click="removeDetail(idx)">
                       &times;
                     </span>
-                    <span>
+                      <span>
                       {{(idx + 1).toLocaleString()}}.
                     </span>
-                  </template>
-                  <span style="display: inline-block; width: 200pt" v-on:click="editDetail(idx)">
-                    {{d.header.title}}
+                    </template>
+                    <span style="display: inline-block; width: 100pt" v-on:click="editDetail(idx)">
+                    {{d.title}}
                   </span>
-                  <span style="display: inline-block; width: 40pt">
-                    <span v-on:click="d.amount--">
-                      <
+                    <span style="display: inline-block; width: 40pt">
+                    <span v-on:click="changeAmount(idx, -1)">
+                      &#9204;
                     </span>
                     <span>
                       {{d.amount}}
                     </span>
-                    <span v-on:click="d.amount++">
-                      >
+                    <span v-on:click="changeAmount(idx, 1)">
+                      &#9205;
                     </span>
                   </span>
-                  &times;
-                  <input v-model="d.price" onfocus="this.select()" autocomplete="off" style="width: 30pt">
-                  <span v-if="d.amount > 1">
+                    &times;
+                    <input v-model="d.price" onfocus="this.select()" v-on:change="updateView()" autocomplete="off" style="width: 30pt">
+                    <span v-if="d.amount > 1">
                     = {{(d.amount * d.price).toLocaleString()}}
                   </span>
+                  </div>
                 </div>
               </td>
             </tr>
@@ -241,52 +243,6 @@
           </tr>
         </table>
       </div>
-    </td>
-    <td>
-      <template v-if="(transaction.type === 'spending' || transaction.type === 'income') && useDetails">
-        <div class="detail-header">
-          <fmt:message key="transaction.details"/>
-        </div>
-        <div class="detail-list">
-          <div v-for="(d, dIndex) in transaction.details" :key="d.id" class="detail-item" :class="{edited : dIndex === detailIndex}">
-            <div class="detail-title">
-              {{d.title}}
-              <div class="detail-menu">
-                <span class="text-button" v-on:click="deleteDetail(dIndex)">
-                  &times;
-                </span>
-                <span class="text-button" v-on:click="editDetail(d, dIndex)">
-                  &#9999;
-                </span>
-              </div>
-            </div>
-            <div style="font-size: 10pt; color: gray; padding-left: 16pt">
-              {{d.amount}}&times;{{d.price}}
-              <span v-if="d.amount > 1 && d.price > 0">
-                = {{(d.amount * d.price).toLocaleString()}}
-              </span>
-              {{transaction.currency}}
-            </div>
-          </div>
-        </div>
-        <div style="font-size: 10pt">
-          <input-search :object="detail" :props="detailProps" ></input-search>
-          <label for="detailAmount">
-            <fmt:message key="amount"/>
-          </label>
-          <input id="detailAmount" style="width: 40pt" v-model="detail.amount" v-on:keyup.enter="addDetail()"
-                 autocomplete="off" onfocus="this.select()">
-          <label for="price">
-            <fmt:message key="transaction.price"/>
-          </label>
-          <input id="price" style="width: 50pt" v-model="detail.price" autocomplete="off"
-                 onfocus="this.select()" v-on:keyup.enter="addDetail()">
-
-          <button v-on:click="addDetail()">
-            <fmt:message key="button.add"/>
-          </button>
-        </div>
-      </template>
     </td>
   </tr>
   <tr>

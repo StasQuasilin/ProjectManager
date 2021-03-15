@@ -3,7 +3,7 @@ package controllers.finances;
 import constants.ApiLinks;
 import constants.UrlLinks;
 import controllers.ModalWindow;
-import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionType;
@@ -50,7 +50,7 @@ public class TransactionEdit extends ModalWindow {
                 req.setAttribute(DETAILS, details);
             } else {
                 if (body.containKey(CATEGORY)){
-                    final Category category = categoryDAO.getCategory(body.get(CATEGORY));
+                    final Header category = categoryDAO.getCategory(body.get(CATEGORY));
                     req.setAttribute(CATEGORY, category);
                 }
             }

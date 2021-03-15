@@ -1,6 +1,5 @@
 package entity.task;
 
-import entity.finance.category.Category;
 import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONObject;

@@ -2,14 +2,12 @@ package controllers.api.finance.category;
 
 import constants.ApiLinks;
 import controllers.api.API;
-import entity.finance.category.Category;
 import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import utils.answers.Answer;
 import utils.answers.ErrorAnswer;
 import utils.answers.SuccessAnswer;
-import utils.db.dao.TitleDAO;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
 import utils.json.JsonObject;
@@ -37,7 +35,7 @@ public class FindCategoryAPI extends API {
             Answer answer;
             if (user != null){
                 JSONArray array = new JSONArray();
-                for(Category category : categoryDAO.findCategory(key, user)){
+                for(Header category : categoryDAO.findCategory(key, user)){
                     array.add(category.shortJson());
                 }
                 answer = new SuccessAnswer();

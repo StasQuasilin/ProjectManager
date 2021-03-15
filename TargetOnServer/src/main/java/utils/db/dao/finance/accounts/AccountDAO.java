@@ -2,6 +2,7 @@ package utils.db.dao.finance.accounts;
 
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountMember;
+import entity.finance.accounts.CardSettings;
 import entity.finance.accounts.DepositSettings;
 import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
@@ -35,4 +36,10 @@ public interface AccountDAO {
     void saveMember(AccountMember member);
 
     void removeMember(AccountMember member);
+
+    CardSettings getCardSettings(Account account);
+
+    void saveCardSettings(CardSettings cardSettings);
+
+    void removeSettings(CardSettings cardSettings);
 }

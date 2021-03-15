@@ -1,7 +1,7 @@
 package utils;
 
-import entity.finance.category.Category;
 import entity.finance.category.Header;
+import entity.finance.category.HeaderType;
 import entity.user.User;
 import utils.db.hibernate.Hibernator;
 import utils.json.JsonObject;
@@ -14,30 +14,17 @@ public class CategoryUtil {
     private final Hibernator hibernator = Hibernator.getInstance();
     private final TitleUtil titleUtil = new TitleUtil();
 
-    public Category getCategory(JsonObject data, User owner){
-        Category category = hibernator.get(Category.class, ID, data.get(ID));
+    public Header getCategory(int headerId, String title, User owner){
+        Header header = hibernator.get(Header.class, ID, headerId);
 
-        if (category == null){
-
-            final Header header = new Header();
+        if (header == null){
+            header = new Header();
+            header.setType(HeaderType.category);
             header.setOwner(owner);
-            titleUtil.setHeaderName(header, data.getString(TITLE), owner);
-            category = createCategory(header);
-
-            hibernator.save(category);
+            titleUtil.setHeaderName(header, title, owner);
+            hibernator.save(header);
         }
 
-        return category;
-    }
-
-    private Category createCategory(Header header) {
-        Category category = new Category();
-        category.setHeader(header);
-        hibernator.save(category);
-        final Header parent = header.getParent();
-        if (parent != null){
-            createCategory(parent);
-        }
-        return category;
+        return header;
     }
 }

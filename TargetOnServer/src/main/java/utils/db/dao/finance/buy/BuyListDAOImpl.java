@@ -32,7 +32,7 @@ public class BuyListDAOImpl implements BuyListDAO {
     @Override
     public void saveList(BuyList list) {
         for (BuyListItem item : list.getItemSet()){
-            hibernator.save(item.getCategory());
+            hibernator.save(item.getHeader());
             hibernator.save(item);
         }
         hibernator.save(list);

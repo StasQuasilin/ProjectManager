@@ -29,7 +29,7 @@ public class CalendarDAOImpl implements CalendarDAO {
 
     @Override
     public void saveCalendarItem(CalendarItem item) {
-        hibernator.save(item.getCategory());
+        hibernator.save(item.getHeader());
         hibernator.save(item);
     }
 

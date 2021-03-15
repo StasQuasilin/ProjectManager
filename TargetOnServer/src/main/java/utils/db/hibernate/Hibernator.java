@@ -56,35 +56,47 @@ public class Hibernator {
 
                 Path<Date> path = parsePath(root, entry.getKey());
 
+
+                final Object value = entry.getValue();
                 if (entry.getValue() == null || entry.getValue().equals(State.isNull)){
                     predicates[i] = criteriaBuilder.isNull(path);
-                } else if(entry.getValue().equals(State.notNull)) {
+                } else if(value.equals(State.notNull)) {
                     predicates[i] = criteriaBuilder.isNotNull(path);
-                } else if (entry.getValue() instanceof EQ){
-                    EQ eq = (EQ) entry.getValue();
+                } else if (value instanceof EQ){
+                    EQ eq = (EQ) value;
                     predicates[i] = criteriaBuilder.greaterThanOrEqualTo(path, eq.getDate());
-                }else if (entry.getValue() instanceof NOT) {
-                    NOT not = (NOT) entry.getValue();
+                }else if (value instanceof NOT) {
+                    NOT not = (NOT) value;
                     predicates[i] = criteriaBuilder.notEqual(path, not.getObject());
-                } else if (entry.getValue() instanceof BETWEEN){
-                    BETWEEN between = (BETWEEN) entry.getValue();
+                } else if (value instanceof BETWEEN){
+                    BETWEEN between = (BETWEEN) value;
                     predicates[i] = criteriaBuilder.between(path, between.getFrom(), between.getTo());
-                }else if (entry.getValue() instanceof GE) {
+                }else if (value instanceof GE) {
                     GE ge = (GE) entry.getValue();
                     predicates[i] = criteriaBuilder.greaterThanOrEqualTo(path, ge.getDate());
                     query.orderBy(criteriaBuilder.asc(path));
-                }else if (entry.getValue() instanceof GT) {
-                    GT gt = (GT) entry.getValue();
+                }else if (value instanceof GT) {
+                    GT gt = (GT) value;
                     predicates[i] = criteriaBuilder.greaterThan(path, gt.getDate());
                     query.orderBy(criteriaBuilder.asc(path));
-                } else if (entry.getValue() instanceof LE) {
-                    LE le = (LE) entry.getValue();
+                } else if (value instanceof LE) {
+                    LE le = (LE) value;
                     predicates[i] = criteriaBuilder.lessThanOrEqualTo(path, le.getDate());
                     query.orderBy(criteriaBuilder.desc(path));
-                } else if (entry.getValue() instanceof LT) {
-                    LT lt = (LT) entry.getValue();
+                } else if (value instanceof LT) {
+                    LT lt = (LT) value;
                     predicates[i] = criteriaBuilder.lessThan(path, lt.getDate());
                     query.orderBy(criteriaBuilder.desc(path));
+                } else if (value instanceof OR){
+                    OR or = (OR) value;
+                    final Object[] objects = or.getObjects();
+                    final int length = objects.length;
+                    Predicate[] orPredicates = new Predicate[length];
+                    for(int j = 0; j < length; j++){
+                        orPredicates[j] = criteriaBuilder.equal(path, objects[j]);
+                    }
+                    predicates[i] = criteriaBuilder.or(orPredicates);
+
                 } else {
                     predicates[i] = criteriaBuilder.equal(path, entry.getValue());
                 }

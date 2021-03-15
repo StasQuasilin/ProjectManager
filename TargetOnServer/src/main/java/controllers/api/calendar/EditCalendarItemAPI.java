@@ -4,7 +4,6 @@ import constants.ApiLinks;
 import controllers.api.API;
 import entity.calendar.CalendarItem;
 import entity.calendar.Repeat;
-import entity.finance.category.Category;
 import entity.user.User;
 import utils.CategoryUtil;
 import utils.db.dao.calendar.CalendarDAO;
@@ -12,17 +11,13 @@ import utils.db.dao.daoService;
 import utils.json.JsonObject;
 import utils.savers.CalendarSaver;
 
-import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import static constants.Keys.*;
 
@@ -44,7 +39,7 @@ public class EditCalendarItemAPI extends API {
             }
 
             final User user = getUser(req);
-            item.setCategory(categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), user));
+//            item.setHeader(categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), user));
 
             if (body.containKey(DATE)){
                 Date date = Date.valueOf(body.getString(DATE));

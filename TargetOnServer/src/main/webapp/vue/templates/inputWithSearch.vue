@@ -4,13 +4,14 @@ inputSearch = {
         props:Object,
         width:String,
         enable:Boolean,
-        show:'title',
+        show:String,
         create:true
     },
     data:function (){
         return{
             items:[],
             timer:-1,
+            addTimer:-1,
             oldObject:{},
             canAdd:false
         }
@@ -33,7 +34,11 @@ inputSearch = {
             this.clear();
         },
         putNew:function(){
-            this.putValue(Object.assign({}, this.object));
+            if(this.items.length === 1){
+                this.putValue(this.items[0]);
+            } else if (this.items.length === 0 && this.create) {
+                this.putValue(Object.assign({}, this.object));
+            }
         },
         find:function(){
             if (event.keyCode !== 27 ) {
@@ -41,7 +46,9 @@ inputSearch = {
                 this.canAdd = false;
                 clearTimeout(this.timer);
                 let input = this.object.title;
+
                 if (input && input.length >= 1) {
+                    console.log('search: ' + input);
                     this.object.id = -1;
                     const self = this;
                     this.timer = setTimeout(function () {
@@ -49,9 +56,11 @@ inputSearch = {
                             console.log(a);
                             if (a.status === 'success'){
                                 self.items = a.result;
-                                setTimeout(function () {
-                                    self.canAdd = true;
-                                }, 3000);
+                                if (self.create) {
+                                    self.addTimer = setTimeout(function () {
+                                        self.canAdd = true;
+                                    }, 3000);
+                                }
                             }
                         })
                     }, 500);
@@ -61,6 +70,9 @@ inputSearch = {
         clear:function () {
             this.object = this.oldObject;
             this.items = [];
+            this.canAdd = false;
+            clearTimeout(this.timer);
+            clearTimeout(this.addTimer);
         },
         inputStyle:function () {
             let style = {};
@@ -76,8 +88,8 @@ inputSearch = {
                     'v-on:keyup="find()" onfocus="this.select()">' +
             '<div class="custom-data-list" v-if="items.length > 0 || canAdd">' +
                 '<div class="custom-data-list-item" v-for="item in items" v-on:click="putValue(item)">' +
-                    '<span v-if="show != null">' +
-                        '{{item.title}}' +
+                    '<span v-if="show !== null">' +
+                        '->{{item[show]}}<-' +
                     '</span>' +
                     '<span v-else>' +
                         '{{item}}' +

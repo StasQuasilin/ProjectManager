@@ -178,4 +178,6 @@ public interface Keys {
 
     String DESCRIPTION = "description";
     String FIND_CURRENCY = "findCurrency";
+    String REMEMBER = "remember";
+    String EXEMPTION = "exemption";
 }

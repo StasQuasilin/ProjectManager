@@ -2,6 +2,7 @@ package utils;
 
 import constants.Keys;
 import entity.finance.category.Header;
+import entity.finance.category.HeaderType;
 import entity.user.User;
 import utils.db.dao.TitleDAO;
 import utils.db.dao.daoService;
@@ -24,6 +25,7 @@ public class TitleUtil {
             }
             if (parent == null){
                 parent = new Header();
+                parent.setType(HeaderType.category);
                 parent.setOwner(owner);
             }
             parent.setValue(s);

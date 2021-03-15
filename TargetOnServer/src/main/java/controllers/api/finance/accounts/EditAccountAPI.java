@@ -5,7 +5,9 @@ import controllers.api.API;
 import entity.Title;
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountType;
+import entity.finance.accounts.CardSettings;
 import entity.finance.accounts.DepositSettings;
+import entity.finance.category.HeaderType;
 import entity.user.User;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.accounts.AccountDAO;
@@ -38,6 +40,7 @@ public class EditAccountAPI extends API {
             if(account == null){
                 account = new Account();
                 Title title = new Title();
+                title.setType(HeaderType.account);
                 title.setOwner(user);
                 account.setTitle(title);
                 newAccount = true;
@@ -77,6 +80,20 @@ public class EditAccountAPI extends API {
                 if (depositSettings != null){
                     accountDAO.removeSettings(depositSettings);
                 }
+            }
+
+            CardSettings cardSettings = accountDAO.getCardSettings(account);
+            if (type == AccountType.card){
+                if (cardSettings == null){
+                    cardSettings = new CardSettings();
+                    cardSettings.setAccount(account);
+                }
+                final JsonObject settings = new JsonObject(body.get(SETTINGS));
+                cardSettings.setExemption(settings.getInt(EXEMPTION));
+                cardSettings.setRemember(settings.getBoolean(REMEMBER));
+                accountDAO.saveCardSettings(cardSettings);
+            } else if (cardSettings != null){
+                accountDAO.removeSettings(cardSettings);
             }
 
             final float sum = body.getFloat(SUM);

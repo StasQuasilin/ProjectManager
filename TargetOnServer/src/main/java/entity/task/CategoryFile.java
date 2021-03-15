@@ -1,8 +1,8 @@
 package entity.task;
 
-import entity.finance.category.Category;
+import entity.finance.category.Header;
 
 public class CategoryFile {
     private int id;
-    private Category category;
+    private Header category;
 }

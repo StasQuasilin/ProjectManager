@@ -6,11 +6,12 @@
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
-<script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue"></script>
-<script type="application/javascript" src="${context}/vue/finances/accountEdit.vue"></script>
+<script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue?v=${now}"></script>
+<script type="application/javascript" src="${context}/vue/finances/accountEdit.vue?v=${now}"></script>
 <script type="application/javascript">
   accountEdit.api.save = '${save}';
   accountEdit.api.memberList = '${memberList}';
@@ -30,12 +31,16 @@
   <c:if test="${not empty depositSettings}">
   accountEdit.account.settings = ${depositSettings.toJson()}
   </c:if>
+  <c:if test="${not empty settings}">
+  accountEdit.account.settings = ${settings.toJson()}
+  </c:if>
   </c:when>
   <c:otherwise>
   accountEdit.account.type = accountEdit.types[0];
   accountEdit.account.currency = accountEdit.currency[0];
   </c:otherwise>
   </c:choose>
+
   if(accountEdit.account.type === 'deposit'){
     if (!accountEdit.account.settings){
       accountEdit.account.settings = {

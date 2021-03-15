@@ -77,10 +77,10 @@ public class TransactionUtil {
     private void calculateCategory(Category category) {
         float plus = 0;
         float minus = 0;
-        for (AccountPoint point : accountPointUtil.getPoints(category.getId())){
-            plus += point.getPlus();
-            minus += point.getMinus();
-        }
+//        for (AccountPoint point : accountPointUtil.getPoints(category.getId())){
+//            plus += point.getPlus();
+//            minus += point.getMinus();
+//        }
         final TaskStatistic statistic = categoryStatisticUtil.getStatistic(category);
         statistic.setPlus(plus);
         statistic.setMinus(minus);

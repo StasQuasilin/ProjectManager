@@ -53,7 +53,7 @@ public class UserSystemCategoryUtil {
         Category category = new Category();
 //        category.setTitle(title);
 //        category.setOwner(owner);
-        category.setHidden(true);
+//        category.setHidden(true);
         return category;
     }
 }

@@ -50,16 +50,21 @@ transactionEdit = new Vue({
                 if (transactionEdit.currentDetail === -1){
                     detail = {
                         id:-1,
-                        header:header,
+                        header:header.id,
+                        title:header.title,
                         amount:1,
                         price:0
                     };
                     transactionEdit.transaction.details.push(detail);
                 } else {
                     detail = transactionEdit.transaction.details[transactionEdit.currentDetail];
-                    detail.header = header;
+                    detail.header = header.id;
+                    detail.title = header.title;
                 }
                 transactionEdit.currentDetail = -1;
+                transactionEdit.category.id = -1;
+                transactionEdit.category.title ='';
+                transactionEdit.updateView();
             }
         },
         totalSum:function(){
@@ -126,6 +131,13 @@ transactionEdit = new Vue({
         }
     },
     methods:{
+        changeAmount:function(idx, amount){
+            this.transaction.details[idx].amount+=amount;
+            this.updateView();
+        },
+        updateView:function(){
+            this.$forceUpdate();
+        },
         save:function(){
             let transaction = Object.assign({}, this.transaction);
 
@@ -175,6 +187,7 @@ transactionEdit = new Vue({
         },
         removeDetail:function(idx){
             this.transaction.details.splice(idx, 1);
+            this.updateView();
         },
         getAccountsWithout:function(account){
             let accounts = this.accounts.filter(function (item) {
@@ -186,7 +199,6 @@ transactionEdit = new Vue({
                 return accounts;
             }
         },
-
         parseFloat:function(val){
             return parseFloat(val.replaceAll(',', '.'));
         },

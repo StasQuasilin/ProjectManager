@@ -1,10 +1,8 @@
 package entity.finance.transactions;
 
-import constants.Keys;
 import entity.finance.Counterparty;
 import entity.finance.Currency;
 import entity.finance.accounts.Account;
-import entity.finance.category.Category;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -145,7 +143,9 @@ public class Transaction extends JsonAble {
             jsonObject.put(COUNTERPARTY, counterparty.shortJson());
         }
         jsonObject.put(TYPE, transactionType.toString());
-        jsonObject.put(Keys.DESCRIPTION, description);
+        jsonObject.put(CURRENCY, currency.getName());
+        jsonObject.put(RATE, rate);
+        jsonObject.put(DESCRIPTION, description);
         jsonObject.put(AMOUNT, amount);
 
         return jsonObject;

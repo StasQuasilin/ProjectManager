@@ -3,7 +3,6 @@ package controllers.api.finance.buyList;
 import constants.ApiLinks;
 import controllers.api.API;
 import entity.finance.buy.BuyList;
-import entity.finance.category.Category;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import utils.db.dao.daoService;

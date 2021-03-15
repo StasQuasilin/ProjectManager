@@ -2,8 +2,8 @@ package controllers.api.tree;
 
 import constants.ApiLinks;
 import controllers.api.API;
-import entity.finance.category.Category;
 import entity.finance.category.Header;
+import entity.finance.category.HeaderType;
 import entity.task.Task;
 import entity.task.TaskStatus;
 import entity.user.User;
@@ -67,6 +67,7 @@ public class EditTaskAPI extends API {
             Header header = task.getHeader();
             if (header == null){
                 header = new Header();
+                header.setType(HeaderType.task);
                 header.setOwner(user);
                 task.setHeader(header);
             }

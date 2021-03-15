@@ -1,6 +1,5 @@
 package entity.finance.transactions;
 
-import entity.finance.category.Category;
 import entity.finance.category.Header;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -13,7 +12,7 @@ import static constants.Keys.*;
 public class TransactionDetail extends JsonAble {
     private int id;
     private Transaction transaction;
-    private Category category;
+    private Header header;
     private float amount;
     private float price;
     private float rate;
@@ -38,12 +37,12 @@ public class TransactionDetail extends JsonAble {
     }
 
     @OneToOne
-    @JoinColumn(name = "_category")
-    public Category getCategory() {
-        return category;
+    @JoinColumn(name = "_header")
+    public Header getHeader() {
+        return header;
     }
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Basic
@@ -86,8 +85,8 @@ public class TransactionDetail extends JsonAble {
     public JSONObject toJson() {
         final JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
-        jsonObject.put(HEADER, category.getId());
-        jsonObject.put(TITLE, category.getTitle());
+        jsonObject.put(HEADER, header.getId());
+        jsonObject.put(TITLE, header.getTitle());
         jsonObject.put(AMOUNT, amount);
         jsonObject.put(PRICE, price);
         jsonObject.put(COMMENT, comment);

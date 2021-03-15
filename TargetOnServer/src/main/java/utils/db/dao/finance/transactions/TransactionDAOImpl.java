@@ -1,6 +1,5 @@
 package utils.db.dao.finance.transactions;
 
-import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionPoint;
@@ -37,18 +36,13 @@ public class TransactionDAOImpl implements TransactionDAO {
     }
 
     @Override
-    public List<Transaction> getTransactionsByCategory(Category category, int limit) {
-        return hibernator.query(Transaction.class, CATEGORY, category);
-    }
-
-    @Override
     public List<TransactionDetail> getDetails(Object transactionId) {
         return hibernator.query(TransactionDetail.class, TRANSACTION, transactionId);
     }
 
     @Override
     public void saveDetail(TransactionDetail detail) {
-        hibernator.save(detail.getCategory());
+        hibernator.save(detail.getHeader());
         hibernator.save(detail);
     }
 

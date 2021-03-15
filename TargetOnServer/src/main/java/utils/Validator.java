@@ -1,8 +1,11 @@
 package utils;
 
+import constants.Keys;
 import controllers.api.tree.TreeBuildAPI;
 import entity.finance.category.AbstractTitle;
 import entity.finance.category.Header;
+import entity.finance.category.HeaderType;
+import utils.db.hibernate.DateContainers.OR;
 import utils.db.hibernate.HibernateSessionFactory;
 import utils.db.hibernate.Hibernator;
 import utils.tree.TreeUtil;
@@ -24,9 +27,9 @@ public class Validator {
 
     public static void main(String[] args) {
         Hibernator hibernator =Hibernator.getInstance();
-        TreeUtil treeUtil = new TreeUtil();
-        final Header header = hibernator.get(Header.class, "parent", null);
-        System.out.println(treeUtil.buildTree(header));
+        for (Header header : hibernator.query(Header.class, Keys.TYPE, new OR(HeaderType.task, HeaderType.account))){
+            System.out.println(header.getTitle());
+        }
         HibernateSessionFactory.shutdown();
     }
 

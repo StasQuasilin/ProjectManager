@@ -5,6 +5,7 @@ import constants.ApiLinks;
 import entity.Title;
 import entity.finance.buy.BuyList;
 import entity.finance.category.Header;
+import entity.finance.category.HeaderType;
 import entity.goal.Goal;
 import entity.user.User;
 import utils.answers.Answer;
@@ -46,6 +47,7 @@ public class EditGoalAPI extends API {
             Title title = goal.getTitle();
             if (title == null){
                 title = new Title();
+                title.setType(HeaderType.goal);
                 title.setOwner(user);
                 goal.setTitle(title);
             }

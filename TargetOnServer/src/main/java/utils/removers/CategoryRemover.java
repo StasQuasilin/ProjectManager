@@ -5,7 +5,6 @@ import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import entity.goal.Goal;
 import entity.task.Task;
-import entity.task.TaskStatus;
 import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
@@ -14,8 +13,6 @@ import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.tree.TaskDAO;
 import utils.db.hibernate.Hibernator;
 import utils.savers.TaskSaver;
-
-import java.util.List;
 
 public class CategoryRemover {
 
@@ -81,10 +78,10 @@ public class CategoryRemover {
 
     }
     public void  removeCalendar(Category category){
-        final CalendarItem item = calendarDAO.getCalendarItemByCategory(category.getId());
-        if (item != null){
-            removeCalendar(item);
-        }
+//        final CalendarItem item = calendarDAO.getCalendarItemByCategory(category.getId());
+//        if (item != null){
+//            removeCalendar(item);
+//        }
     }
     public void removeTransaction(Transaction transaction){
 

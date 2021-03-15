@@ -3,11 +3,9 @@ package controllers.api.finance.transactions;
 import constants.ApiLinks;
 import constants.Keys;
 import controllers.api.API;
-import entity.UserSystemCategory;
 import entity.finance.Currency;
 import entity.finance.UserCurrency;
 import entity.finance.accounts.Account;
-import entity.finance.category.Category;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionType;
@@ -40,7 +38,6 @@ public class EditTransactionAPI extends API {
     private final AccountDAO accountDAO = daoService.getAccountDAO();
     private final TransactionSaver transactionSaver = new TransactionSaver();
     private final TransactionDAO transactionDAO = daoService.getTransactionDAO();
-    private final CategoryUtil categoryUtil = new CategoryUtil();
     private final TransactionUtil transactionUtil = new TransactionUtil();
     private final UserSystemCategoryUtil uscu = new UserSystemCategoryUtil();
     private final TransactionDetailUtil tdu = new TransactionDetailUtil();
@@ -102,7 +99,7 @@ public class EditTransactionAPI extends API {
                 int totalCost = 0;
                 int addedItems = 0;
                 for (TransactionDetail detail : list){
-                    final String title = detail.getCategory().getTitle();
+                    final String title = detail.getHeader().getTitle();
                     if (builder.length() + title.length() < TITLE_LIMIT){
                         if (builder.length() > 0){
                             builder.append(Keys.COMMA).append(SPACE);

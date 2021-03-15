@@ -1,7 +1,6 @@
 package entity.calendar;
 
-import entity.finance.category.Category;
-import entity.user.User;
+import entity.finance.category.Header;
 import org.json.simple.JSONObject;
 import utils.Math;
 import utils.json.JsonAble;
@@ -21,7 +20,7 @@ public class CalendarItem extends JsonAble {
     private Time time;
     private Date endDate;
     private Time endTime;
-    private Category category;
+    private Header header;
     private ExecutionStatus status;
     private Repeat repeat = Repeat.none;
 
@@ -81,11 +80,11 @@ public class CalendarItem extends JsonAble {
 
     @OneToOne
     @JoinColumn(name = "_category")
-    public Category getCategory() {
-        return category;
+    public Header getHeader() {
+        return header;
     }
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Enumerated(EnumType.ORDINAL)
@@ -99,9 +98,9 @@ public class CalendarItem extends JsonAble {
 
     @Override
     public JSONObject toJson() {
-        final JSONObject json = category.toJson();
+        final JSONObject json = header.toJson();
         json.put(ID, id);
-        json.put(CATEGORY, category.shortJson());
+        json.put(CATEGORY, header.shortJson());
         if (date != null){
             json.put(DATE, date.toString());
             if (time != null){

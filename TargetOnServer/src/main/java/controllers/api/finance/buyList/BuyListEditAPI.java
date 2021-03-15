@@ -4,12 +4,9 @@ import constants.ApiLinks;
 import controllers.api.API;
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
-import entity.finance.category.Category;
+import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import subscribe.Subscribe;
-import utils.Updater;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.buy.BuyListDAO;
 import utils.json.JsonObject;
@@ -54,11 +51,11 @@ public class BuyListEditAPI extends API {
                     remove = new BuyListItem();
                     remove.setList(list);
                 }
-                Category category = remove.getCategory();
-                if (category == null){
-                    category = new Category();
-//                    category.setOwner(user);
-                    remove.setCategory(category);
+                Header header = remove.getHeader();
+                if (header == null){
+                    header = new Header();
+                    header.setOwner(user);
+                    remove.setHeader(header);
                 }
 //                category.setTitle(item.getString(TITLE));
                 remove.setCount(item.getFloat(COUNT));
