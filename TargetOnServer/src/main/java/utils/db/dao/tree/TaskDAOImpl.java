@@ -1,10 +1,7 @@
 package utils.db.dao.tree;
 
 import entity.finance.category.Header;
-import entity.task.Task;
-import entity.task.TaskDependency;
-import entity.task.TaskStatus;
-import entity.task.TimeLog;
+import entity.task.*;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -54,7 +51,7 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public Task getTaskByHeader(Header header) {
+    public Task getTaskByHeader(Object header) {
         return hibernator.get(Task.class, HEADER, header);
     }
 
@@ -83,16 +80,56 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public List<TaskDependency> getDependency(Task task) {
-        return hibernator.query(TaskDependency.class, "dependent", task);
+        return hibernator.query(TaskDependency.class, TASK, task);
     }
 
     @Override
     public List<TaskDependency> getPrincipal(Task task) {
-        return hibernator.query(TaskDependency.class, "principal", task);
+        return hibernator.query(TaskDependency.class, DEPENDENCY, task);
     }
 
     @Override
     public void removeTask(Task task) {
         hibernator.remove(task);
+    }
+
+    @Override
+    public void saveDependency(TaskDependency dependency) {
+        hibernator.save(dependency);
+    }
+
+    @Override
+    public void removeDependency(TaskDependency dependency) {
+        hibernator.remove(dependency);
+    }
+
+    @Override
+    public TaskStatistic getStatistic(Header header) {
+        TaskStatistic statistic = hibernator.get(TaskStatistic.class, HEADER, header);
+        if (statistic == null){
+            statistic = new TaskStatistic();
+            statistic.setHeader(header);
+        }
+        return statistic;
+    }
+
+    @Override
+    public void saveStatistic(TaskStatistic statistic) {
+        hibernator.save(statistic);
+    }
+
+    @Override
+    public void removeStatistic(TaskStatistic statistic) {
+        hibernator.remove(statistic);
+    }
+
+    @Override
+    public TaskStatistic getStatisticOrCreate(Header header) {
+        TaskStatistic statistic = getStatistic(header);
+        if (statistic == null){
+            statistic = new TaskStatistic();
+            statistic.setHeader(header);
+        }
+        return statistic;
     }
 }

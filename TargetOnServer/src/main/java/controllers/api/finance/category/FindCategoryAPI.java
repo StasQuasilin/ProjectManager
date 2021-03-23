@@ -40,7 +40,6 @@ public class FindCategoryAPI extends API {
                 }
                 answer = new SuccessAnswer();
                 answer.addAttribute(RESULT, array);
-
             } else {
                 answer = new ErrorAnswer("No user data");
             }

@@ -1,6 +1,7 @@
 package utils.db.dao.category;
 
 import entity.finance.category.Category;
+import entity.finance.category.CategoryStatistic;
 import entity.finance.category.Header;
 import entity.finance.category.HeaderType;
 import entity.task.TaskStatistic;
@@ -42,8 +43,8 @@ public class CategoryDAOImpl extends CategoryDAO {
     }
 
     @Override
-    public TaskStatistic getStatistic(Category category) {
-        return null;
+    public TaskStatistic getStatistic(Header header) {
+        return hibernator.get(TaskStatistic.class, HEADER, header);
     }
 
     @Override
@@ -58,5 +59,15 @@ public class CategoryDAOImpl extends CategoryDAO {
         params.put("parent", parent);
         params.put("hidden", false);
         return hibernator.query(Header.class, params);
+    }
+
+    @Override
+    public List<Header> getUserCategory(User user) {
+        return hibernator.query(Header.class, OWNER, user);
+    }
+
+    @Override
+    public CategoryStatistic getCategoryStatistic(Header header) {
+        return hibernator.get(CategoryStatistic.class, HEADER, header);
     }
 }

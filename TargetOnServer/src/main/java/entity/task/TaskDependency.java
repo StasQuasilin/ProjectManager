@@ -10,9 +10,9 @@ import javax.persistence.*;
 @Table(name = "task_dependency")
 public class TaskDependency extends JsonAble {
     private int id;
-    private Task dependent;
-    private Task principal;
-    private TaskStatus principalStatus;
+    private Task task;
+    private Task dependency;
+    private TaskStatus dependencyStatus;
 
     @Id
     @Column(name = "_id")
@@ -26,38 +26,40 @@ public class TaskDependency extends JsonAble {
 
     @ManyToOne
     @JoinColumn(name = "_dependent")
-    public Task getDependent() {
-        return dependent;
+    public Task getTask() {
+        return task;
     }
-    public void setDependent(Task dependent) {
-        this.dependent = dependent;
+    public void setTask(Task dependent) {
+        this.task = dependent;
     }
 
     @ManyToOne
     @JoinColumn(name = "_principal")
-    public Task getPrincipal() {
-        return principal;
+    public Task getDependency() {
+        return dependency;
     }
-    public void setPrincipal(Task principal) {
-        this.principal = principal;
+    public void setDependency(Task principal) {
+        this.dependency = principal;
     }
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "_principal_status")
-    public TaskStatus getPrincipalStatus() {
-        return principalStatus;
+    public TaskStatus getDependencyStatus() {
+        return dependencyStatus;
     }
-    public void setPrincipalStatus(TaskStatus principalStatus) {
-        this.principalStatus = principalStatus;
+    public void setDependencyStatus(TaskStatus principalStatus) {
+        this.dependencyStatus = principalStatus;
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put(Keys.ID, id);
-        json.put(Keys.DEPENDENT, dependent.toJson());
-        json.put(Keys.PRINCIPAL, principal.toJson());
-        json.put(Keys.STATUS, principalStatus.toString());
+        json.put(Keys.DEPENDENT, task.toJson());
+        json.put(Keys.PRINCIPAL, dependency.toJson());
+        if (dependencyStatus != null) {
+            json.put(Keys.STATUS, dependencyStatus.toString());
+        }
         return json;
     }
 }

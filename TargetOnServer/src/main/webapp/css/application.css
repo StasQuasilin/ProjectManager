@@ -74,3 +74,30 @@
     background-color: #c9c9c9;
     border-bottom: solid orange 2px;
 }
+.control-menu{
+    position: relative;
+    display: inline-block;
+}
+.control-menu:hover{
+    background-color: lightblue;
+}
+.down-menu::after{
+    content: '\25BC';
+}
+.control-menu:hover .control-menu-content{
+    display: block;
+}
+.control-menu-content{
+    position: absolute;
+    display: none;
+    min-width: 100%;
+    background-color: white;
+}
+.control-menu-item{
+    padding: 4pt;
+    border-bottom: dashed gray 1pt;
+}
+.control-menu-item:hover{
+    background-color: lightblue;
+}
+

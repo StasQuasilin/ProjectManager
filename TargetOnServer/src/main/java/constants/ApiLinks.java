@@ -35,4 +35,6 @@ public interface ApiLinks {
     String SAVE_ACCOUNT_MEMBERS = API + "/account/members/save";
     String TASK_DELETE = API + "/task/delete";
     String FIND_CURRENCY = API + "/find/currency";
+    String BUILD_MONTH_REPORT = API + "/build/month/report";
+    String FIND_DEPENDENCY = API + "/find/dependency";
 }

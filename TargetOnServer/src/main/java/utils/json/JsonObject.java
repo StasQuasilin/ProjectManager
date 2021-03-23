@@ -1,5 +1,6 @@
 package utils.json;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.sql.Date;
@@ -81,5 +82,15 @@ public class JsonObject {
 
     public JsonObject getJsonObject(String key) {
         return new JsonObject(get(key));
+    }
+
+    public void remove(String key) {
+        if (containKey(key)){
+            json.remove(key);
+        }
+    }
+
+    public JSONArray getJsonArray(String key) {
+        return (JSONArray) get(key);
     }
 }

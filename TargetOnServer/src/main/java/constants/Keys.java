@@ -30,6 +30,7 @@ public interface Keys {
     String YEAR = "year";
     String CATEGORY = "category";
     String HEADER = "header";
+
     String TASK = "task";
     String TITLE = "title";
     String TITLE_OWNER = TITLE + SLASH + "owner";
@@ -47,6 +48,7 @@ public interface Keys {
     String DATE_BEGIN = "dateBegin";
     String DATE_END = "dateEnd";
     String PARENT = "parent";
+    String HEADER_PARENT = HEADER + SLASH + PARENT;
     String SURNAME = "surname";
     String FORENAME = "forename";
     String STATUS = "status";
@@ -67,6 +69,7 @@ public interface Keys {
     String SAVE = "save";
     String TRANSACTION_EDIT = "transactionEdit";
     String TRANSACTION = "transaction";
+    String TRANSACTION_DATE = TRANSACTION + SLASH + DATE;
     String FAST_TRANSACTION_EDIT = "fastTransactionEdit";
     String ACCOUNT_EDIT = "accountEdit";
     String ACCOUNT_EXTRACT = "accountExtract";
@@ -85,6 +88,7 @@ public interface Keys {
     String DETAILS = "details";
     String COMMENT = "comment";
     String FIND_CATEGORY = "findCategory";
+    String FIND_DEPENDENCY = "findDependency";
     String FIND_COUNTERPARTY = "findCounterparty";
     String TRANSACTION_SUBSCRIBE = "transactionSubscribe";
     String ACCOUNT_SUBSCRIBE = "accountSubscribe";
@@ -180,4 +184,7 @@ public interface Keys {
     String FIND_CURRENCY = "findCurrency";
     String REMEMBER = "remember";
     String EXEMPTION = "exemption";
+    String REPORT_OF_MONTH = "reportOfMonth";
+    String REPORT_BUILD_API = "reportBuildApi";
+    String DEPENDENCY = "dependency";
 }

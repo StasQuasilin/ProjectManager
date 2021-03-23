@@ -24,10 +24,6 @@ public class CategoryStatisticUtil {
 
     private TaskStatistic getStatistic(Category category, boolean createIfNull){
         TaskStatistic statistic = hibernator.get(TaskStatistic.class, CATEGORY, category);
-        if (statistic == null && createIfNull){
-            statistic = new TaskStatistic();
-            statistic.setCategory(category);
-        }
         return statistic;
     }
 

@@ -48,4 +48,13 @@ public class Header extends AbstractTitle {
     public String getTitle() {
         return getValue();
     }
+
+    @Override
+    public String toString() {
+        return "Header{" +
+                "\tid:" + getId() + ",\n" +
+                "\ttitle:" + getTitle() + ",\n" +
+                "\tparent=" + parent +
+                '}';
+    }
 }

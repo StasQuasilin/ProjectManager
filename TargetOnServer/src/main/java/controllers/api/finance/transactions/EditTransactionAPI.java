@@ -6,12 +6,12 @@ import controllers.api.API;
 import entity.finance.Currency;
 import entity.finance.UserCurrency;
 import entity.finance.accounts.Account;
+import entity.finance.category.Header;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
 import entity.finance.transactions.TransactionType;
 import entity.user.User;
 import org.json.simple.JSONArray;
-import utils.CategoryUtil;
 import utils.UserSystemCategoryUtil;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.accounts.AccountDAO;
@@ -90,6 +90,12 @@ public class EditTransactionAPI extends API {
                 transaction.setAccountTo(null);
             }
 
+            if (type == TransactionType.transfer){
+                int amount = body.getInt(AMOUNT);
+                transaction.setAmount(amount);
+                body.remove(DETAILS);
+            }
+
             write(resp, SUCCESS_ANSWER);
             transactionSaver.save(transaction);
 
@@ -98,8 +104,13 @@ public class EditTransactionAPI extends API {
                 StringBuilder builder = new StringBuilder();
                 int totalCost = 0;
                 int addedItems = 0;
+                LinkedList<Header> headers = new LinkedList<>();
                 for (TransactionDetail detail : list){
-                    final String title = detail.getHeader().getTitle();
+                    final Header header = detail.getHeader();
+                    if(!headers.contains(header)){
+                        headers.add(header);
+                    }
+                    final String title = header.getTitle();
                     if (builder.length() + title.length() < TITLE_LIMIT){
                         if (builder.length() > 0){
                             builder.append(Keys.COMMA).append(SPACE);
@@ -113,9 +124,20 @@ public class EditTransactionAPI extends API {
                 if (others > 0){
                     builder.append(PLUS).append(others);
                 }
-                transaction.setDescription(builder.toString());
-                transaction.setAmount(totalCost);
-                transactionSaver.save(transaction);
+                final String description = builder.toString();
+                boolean saveIt = false;
+                if (transaction.getDescription() == null || !transaction.getDescription().equals(description)){
+                    transaction.setDescription(description);
+                    saveIt = true;
+                }
+                if (transaction.getAmount() != totalCost){
+                    transaction.setAmount(totalCost);
+                    saveIt = true;
+                }
+                if(saveIt){
+                    transactionSaver.save(transaction);
+                    updateHeadersCoasts(headers, date);
+                }
             } else {
                 tdu.removeDetails(transaction);
             }
@@ -147,6 +169,21 @@ public class EditTransactionAPI extends API {
 //            if (prevAccountTo != null && !prevAccountTo.equals(transaction.getAccountTo())){
 //                transactionUtil.removePoint(transaction, prevAccountTo);
 //            }
+        }
+    }
+
+    private void updateHeadersCoasts(LinkedList<Header> headers, Date date) {
+        LinkedList<Header> parents = new LinkedList<>();
+        for (Header header : headers){
+            System.out.println(header);
+            transactionUtil.updateCategoryDay(header, date);
+            final Header parent = header.getParent();
+            if (parent != null && !parents.contains(parent)){
+                parents.add(parent);
+            }
+        }
+        if (parents.size() > 0) {
+            updateHeadersCoasts(parents, date);
         }
     }
 }

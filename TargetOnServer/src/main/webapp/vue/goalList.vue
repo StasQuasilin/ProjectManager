@@ -21,7 +21,6 @@ goalList = new Vue({
         }
     },
     mounted:function(){
-
         let items = this.getItems();
         for (let i in items){
             if (items.hasOwnProperty(i)){

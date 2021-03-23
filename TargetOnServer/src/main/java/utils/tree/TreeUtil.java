@@ -16,7 +16,7 @@ public class TreeUtil {
 
     public JSONObject buildTree(Task parent, Header header) {
 
-        JSONObject jsonObject = parent != null ? parent.shortJson() : header.shortJson();
+        JSONObject jsonObject = parent != null ? parent.toJson() : header.shortJson();
 
         final List<Task> children = taskDAO.getTasksByParent(header);
 

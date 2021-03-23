@@ -42,7 +42,11 @@ taskEdit = new Vue({
         },
         dependencyProps:{
             put:function (item) {
-                taskEdit.dependent.push(item);
+                taskEdit.task.dependency.push({
+                    id:item.id,
+                    title:item.title,
+                    status:taskEdit.status[0]
+                });
                 taskEdit.addDependency = false;
             }
         },
@@ -51,7 +55,16 @@ taskEdit = new Vue({
         dependency:{},
         addDependency:false
     },
+    computed:{
+        additionally:function () {
+            return {task : this.task.id}
+        }
+    },
     methods:{
+        removeDependency:function(idx){
+            this.task.dependency.splice(idx, 1);
+            this.$forceUpdate();
+        },
         save:function () {
             let task = Object.assign({}, this.task);
             if (!this.useDate){

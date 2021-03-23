@@ -1,12 +1,11 @@
 package utils.removers;
 
 import entity.finance.accounts.Account;
-import entity.finance.accounts.PointScale;
 import entity.finance.transactions.Transaction;
-import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
-import utils.finances.AccountPointUtil;
+import utils.finances.CategoryPointUtil;
+import utils.finances.PointUtil;
 import utils.finances.TransactionPointUtil;
 import utils.finances.TransactionUtil;
 
@@ -17,7 +16,7 @@ public class TransactionRemover {
     private final Hibernator hibernator = Hibernator.getInstance();
     private final TransactionUtil transactionUtil = new TransactionUtil();
     private final TransactionPointUtil transactionPointUtil = new TransactionPointUtil();
-    private final AccountPointUtil accountPointUtil = new AccountPointUtil();
+    private final PointUtil accountPointUtil = new CategoryPointUtil();
     private final Updater updater = new Updater();
 
     public void removeTransaction(Transaction transaction){

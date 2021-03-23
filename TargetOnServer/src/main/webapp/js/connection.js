@@ -48,13 +48,13 @@ function PostApi(url, parameters, onSuccess, onError, debug){
                     }
 
                 } catch (e) {
-                    console.error('[ Application Core ] Can\'t parse \'' + answer + '\'')
+                    console.error('[ Application Core ] Can\'t parse \'' + answer + '\'');
                     if (onError) {
                         onError(answer);
                     }
                 }
             } else{
-                console.log('[ Application Core ] Empty answer body');
+                console.log('[ Application Core ] Empty answer body from ' + url);
             }
         }
     }, function(err){

@@ -51,7 +51,22 @@ treeItem = {
                         '&checkmark; ' +
                     '</span>' +
                     '<a v-on:click="click()">' +
+                        '<template v-if="item.status === \'active\'">' +
+                            '>' +
+                        '</template>' +
+                        '<template v-else-if="item.status === \'progressing\'">' +
+                            '-' +
+                        '</template>' +
+                        '<template v-else-if="item.status === \'done\'">' +
+                            '&checkmark;' +
+                        '</template>' +
+                        '<span v-else :title="item.status">' +
+                            '?' +
+                        '</span>' +
                         '{{item.title}}' +
+                        '<span v-if="item.deadline">' +
+                            'Deadline: {{new Date(item.deadline).toLocaleDateString()}}' +
+                        '</span>' +
                     '</a>' +
                     '<div class="tree-menu">' +
                         '<span class="tree-menu-button" v-on:click="addItem()">' +

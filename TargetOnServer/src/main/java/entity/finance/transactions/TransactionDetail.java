@@ -102,4 +102,9 @@ public class TransactionDetail extends JsonAble {
     public boolean equals(Object obj) {
         return obj.getClass() == getClass() && obj.hashCode() == hashCode();
     }
+
+    @Transient
+    public float getTotalPrice(){
+        return amount * price;
+    }
 }

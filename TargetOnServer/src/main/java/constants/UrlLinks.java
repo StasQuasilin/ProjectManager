@@ -29,4 +29,5 @@ public interface UrlLinks {
     String CATEGORY_PAGE = "/categories" + SUFFIX;
     String GOAL_MEMBERS = "/goa/members" + SUFFIX;
     String ACCOUNT_MEMBERS = "/account/members" + SUFFIX;
+    String REPORT_OF_MONTH = "/month/report" + SUFFIX;
 }

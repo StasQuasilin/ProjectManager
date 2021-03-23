@@ -17,10 +17,10 @@
     taskEdit.api.save = '${save}';
     taskEdit.props.findCategory = '${findCategory}';
     taskEdit.buyListProps.findCategory = '${findBuyList}';
-    taskEdit.dependencyProps.findCategory = '${findCategory}';
+    taskEdit.dependencyProps.findCategory = '${findDependency}';
     <c:forEach items="${status}" var="s">
     taskEdit.status.push('${s}');
-    taskEdit.statusNames['${s}'] = '<fmt:message key="task.${s}"/>';
+    taskEdit.statusNames['${s}'] = '<fmt:message key="${s}"/>';
     </c:forEach>
     <c:if test="${not empty parent}">
     taskEdit.task.parent = ${parent.toJson()}
@@ -52,8 +52,11 @@
     if (!taskEdit.task.deadline){
         taskEdit.task.deadline = new Date().toISOString().substring(0, 10);
     }
+    if(typeof taskEdit.task.dependency === "undefined"){
+        taskEdit.task.dependency = [];
+    }
     <c:forEach items="${dependent}" var="d">
-    taskEdit.dependent.push(${d.toJson()});
+    taskEdit.task.dependency.push(${d.toJson()});
     </c:forEach>
 </script>
 <div id="taskEdit" style="display: flex">
@@ -184,25 +187,40 @@
             </td>
         </tr>
     </table>
-    <div>
-        <div style="width: 100%; text-align: center">
-            <fmt:message key="dependency"/>
-            <span class="tips">
+    <c:if test="${task.id gt 0}">
+        <div>
+            <div style="width: 100%; text-align: center">
+                <fmt:message key="dependency"/>
+                <span class="tips">
                 <span class="tips-content">
                     <fmt:message key="task.dependency.tips"/>
                 </span>
             </span>
-        </div>
-        <div v-for="d in dependent">
-            {{d.title}}
-        </div>
-        <div>
+            </div>
+            <div v-for="(d, dIdx) in task.dependency" style="font-size: 10pt">
+            <span class="text-button" v-on:click="removeDependency(dIdx)">
+                &times;
+            </span>
+                <label :for="dIdx + '_status'">
+                <span>
+                {{d.title}}
+            </span>
+                </label>
+                <select :id="dIdx + '_status'" v-model="d.status">
+                    <option v-for="s in status" :value="s">
+                        {{statusNames[s]}}
+                    </option>
+                </select>
+            </div>
+            <div>
             <span v-if="!addDependency" v-on:click="addDependency = true">
                 <fmt:message key="dependency.add"/>
             </span>
-            <div v-else>
-                <find-input :object="dependency" :props="dependencyProps"></find-input>
+                <div v-else>
+                    <find-input :object="dependency" :props="dependencyProps" :show="'title'" :additionally="additionally"></find-input>
+                </div>
             </div>
         </div>
-    </div>
+    </c:if>
+
 </div>

@@ -1,11 +1,11 @@
 package utils;
 
+import entity.finance.category.Header;
 import entity.task.Task;
+import entity.task.TaskStatistic;
 import entity.task.TaskStatus;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
-
-import java.util.List;
 
 public class TaskUtil {
 
@@ -26,5 +26,36 @@ public class TaskUtil {
     }
 
     public void calculateSpendTime(Task task) {
+    }
+
+    public void updateStatistic(Header header) {
+        TaskStatistic statistic = taskDAO.getStatisticOrCreate(header);
+
+        statistic.cleanChildren();
+        for (Task task :  taskDAO.getTasksByParent(header)){
+            final TaskStatistic childStatistic = taskDAO.getStatistic(task.getHeader());
+            if (childStatistic != null){
+                statistic.add(childStatistic);
+            }
+            final TaskStatus status = task.getStatus();
+            if (status == TaskStatus.active){
+                statistic.plusActiveChild();
+            } else if(status == TaskStatus.progressing){
+                statistic.plusProgressingChild();
+            } else if (status == TaskStatus.done){
+                statistic.plusDoneChildren();
+            }
+        }
+
+        if (statistic.any()){
+            taskDAO.saveStatistic(statistic);
+        }else if(statistic.getId() > 0){
+            taskDAO.removeStatistic(statistic);
+        }
+
+        final Header parent = header.getParent();
+        if(parent != null){
+            updateStatistic(parent);
+        }
     }
 }

@@ -39,21 +39,23 @@ public class AccountEdit extends ModalWindow {
         JsonObject body = parseBody(req);
         if (body != null){
             Account account = accountDAO.getAccount(body.get(ID));
-            req.setAttribute(ACCOUNT, account);
+            if (account != null) {
+                req.setAttribute(ACCOUNT, account);
 
-            final AccountType type = account.getType();
-            if (type == AccountType.deposit) {
-                final DepositSettings depositSettings = accountDAO.getDepositSettings(account);
-                if (depositSettings != null) {
-                    req.setAttribute(SETTINGS, depositSettings);
+                final AccountType type = account.getType();
+                if (type == AccountType.deposit) {
+                    final DepositSettings depositSettings = accountDAO.getDepositSettings(account);
+                    if (depositSettings != null) {
+                        req.setAttribute(SETTINGS, depositSettings);
+                    }
+                } else if (type == AccountType.card) {
+                    final CardSettings cardSettings = accountDAO.getCardSettings(account);
+                    if (cardSettings != null) {
+                        req.setAttribute(SETTINGS, cardSettings);
+                    }
                 }
-            } else if (type == AccountType.card){
-                final CardSettings cardSettings = accountDAO.getCardSettings(account);
-                if (cardSettings != null){
-                    req.setAttribute(SETTINGS, cardSettings);
-                }
+                req.setAttribute(MEMBERS, accountDAO.getMembers(account));
             }
-            req.setAttribute(MEMBERS, accountDAO.getMembers(account));
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);

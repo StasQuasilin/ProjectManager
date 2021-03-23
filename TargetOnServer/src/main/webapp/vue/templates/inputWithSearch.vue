@@ -5,7 +5,8 @@ inputSearch = {
         width:String,
         enable:Boolean,
         show:String,
-        create:true
+        create:true,
+        additionally:Object
     },
     data:function (){
         return{
@@ -48,11 +49,14 @@ inputSearch = {
                 let input = this.object.title;
 
                 if (input && input.length >= 1) {
-                    console.log('search: ' + input);
                     this.object.id = -1;
                     const self = this;
                     this.timer = setTimeout(function () {
-                        PostApi(self.props.findCategory, {key: input}, function (a) {
+                        let data = Object.assign({},self.additionally !== null ? self.additionally : {});
+                        console.log(data);
+
+                        data.key = input;
+                        PostApi(self.props.findCategory, data, function (a) {
                             console.log(a);
                             if (a.status === 'success'){
                                 self.items = a.result;

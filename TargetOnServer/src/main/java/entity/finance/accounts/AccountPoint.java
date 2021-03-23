@@ -1,5 +1,7 @@
 package entity.finance.accounts;
 
+import entity.user.User;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -10,6 +12,8 @@ public class AccountPoint {
     private Date date;
     private PointScale scale;
     private int account;
+    private PointType type;
+    private User owner;
     private float plus;
     private float minus;
     private float rate;
@@ -50,6 +54,24 @@ public class AccountPoint {
     }
     public void setAccount(int account) {
         this.account = account;
+    }
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "_type")
+    public PointType getType() {
+        return type;
+    }
+    public void setType(PointType scaleType) {
+        this.type = scaleType;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "_owner")
+    public User getOwner() {
+        return owner;
+    }
+    public void setOwner(User scaleOwner) {
+        this.owner = scaleOwner;
     }
 
     @Basic

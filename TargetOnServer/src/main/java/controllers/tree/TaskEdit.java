@@ -6,6 +6,7 @@ import controllers.ModalWindow;
 import entity.finance.buy.BuyList;
 import entity.finance.category.Header;
 import entity.task.Task;
+import entity.task.TaskDependency;
 import entity.task.TaskStatus;
 import utils.db.dao.TitleDAO;
 import utils.db.dao.category.CategoryDAO;
@@ -20,6 +21,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import static constants.Keys.*;
 
@@ -76,12 +78,17 @@ public class TaskEdit extends ModalWindow {
 //                    req.setAttribute(ROOT_BUY_LIST, list);
 //                }
             }
-            req.setAttribute(DEPENDENT, taskDAO.getDependency(task));
+            LinkedList<Task> dependency = new LinkedList<>();
+            for(TaskDependency t : taskDAO.getDependency(task)){
+                dependency.add(t.getDependency());
+            }
+            req.setAttribute(DEPENDENT, dependency);
             req.setAttribute(PRINCIPAL, taskDAO.getPrincipal(task));
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
         req.setAttribute(STATUS, statuses);
+        req.setAttribute(FIND_DEPENDENCY, ApiLinks.FIND_DEPENDENCY);
         req.setAttribute(FIND_CATEGORY, ApiLinks.FIND_CATEGORY);
         req.setAttribute(FIND_BUY_LIST, ApiLinks.FIND_BUY_LIST);
         req.setAttribute(SAVE, ApiLinks.TASK_EDIT);

@@ -11,4 +11,5 @@ public abstract class JsonAble {
     public JSONObject shortJson() {
         return toJson();
     }
+
 }

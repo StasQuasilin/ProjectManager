@@ -23,14 +23,19 @@
                             {{item.id}}:{{item.type}}
                         </div>
                         <div>
-                            <span v-if="item.category && item.category.title">
-                                {{item.category.title}}
-                            </span>
-                            <span v-else-if="item.description">
-                                {{item.description}}
-                            </span>
-                            <span v-else style="color: gray">
-                                <fmt:message key="transaction.without.category"/>
+                            <template v-if="item.type === 'income' || item.type === 'spending'">
+                                <span v-if="item.category && item.category.title">
+                                    {{item.category.title}}
+                                </span>
+                                <span v-else-if="item.description">
+                                    {{item.description}}
+                                </span>
+                                <span v-else style="color: gray">
+                                    <fmt:message key="transaction.without.category"/>
+                                </span>
+                            </template>
+                            <span v-else-if="item.type === 'transfer'">
+                                <fmt:message key="transaction.transfer"/>
                             </span>
                         </div>
                         <div>

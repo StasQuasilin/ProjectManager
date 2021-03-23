@@ -98,7 +98,7 @@
               </td>
               <td>
                 <div style="display: inline-block">
-                  <input-search :object="category" :props="props" :show="'title'"></input-search>
+                  <input-search :object="category" :props="props" :show="'title'" :create="true"></input-search>
                 </div>
                   <span class="text-button">
                     &checkmark;
@@ -189,9 +189,10 @@
                   +
                 </span>
               </template>
-              <span>
+              <span v-if="transaction.type === 'income' || transaction.type === 'spending'">
                 {{totalSum().toLocaleString()}}
               </span>
+              <input type="number" v-else v-model="transaction.amount" autocomplete="off" onfocus="this.select()" style="width: 60pt">
               <template v-if="transaction.type === 'income' || transaction.type === 'spending'">
                 <select v-model="transaction.currency" v-if="currency.length > 0">
                   <option v-for="c in currency" :value="c">

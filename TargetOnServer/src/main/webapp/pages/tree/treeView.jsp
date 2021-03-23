@@ -1,4 +1,4 @@
-<script src="${context}/vue/tree/treeItem.vue"></script>
+<script src="${context}/vue/tree/treeItem.vue?v=${now}"></script>
 <script>
     Vue.component('tree-item', treeItem);
 </script>
@@ -15,9 +15,6 @@
     subscriber.subscribe('${treeSubscribe}', treeView.handler);
 </script>
 <div id="treeView" style="padding: 8pt">
-    <div>
-        !{{title}}
-    </div>
     <div class="tree-view">
         <tree-item :item="tree" :onclick="onClick" :props="props"></tree-item>
     </div>

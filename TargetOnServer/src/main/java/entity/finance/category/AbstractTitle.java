@@ -6,6 +6,7 @@ import org.json.simple.JSONObject;
 import utils.json.JsonAble;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @MappedSuperclass
 public abstract class AbstractTitle extends JsonAble {
@@ -64,4 +65,19 @@ public abstract class AbstractTitle extends JsonAble {
     public String toString() {
         return value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AbstractTitle that = (AbstractTitle) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+
 }

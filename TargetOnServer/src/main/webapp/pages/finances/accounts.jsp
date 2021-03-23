@@ -10,6 +10,10 @@
             </button>
         </div>
     </div>
+    <div>
+        <fmt:message key="total.balance"/>:{{totalBalance.toLocaleString()}}
+        <fmt:message key="personal.balance"/>:{{personalBalance.toLocaleString()}}
+    </div>
     <div class="full-size item-container">
         <div class="item-container-wrapper">
             <div v-for="item in getItems()" class="account-item" :class="item.type">

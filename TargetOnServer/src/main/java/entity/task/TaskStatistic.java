@@ -1,7 +1,9 @@
 package entity.task;
 
 import entity.finance.category.Category;
+import entity.finance.category.Header;
 import org.json.simple.JSONObject;
+import utils.finances.PlusMinus;
 import utils.json.JsonAble;
 
 import javax.persistence.*;
@@ -12,7 +14,7 @@ import static constants.Keys.*;
 @Table(name = "task_statistic")
 public class TaskStatistic extends JsonAble {
     private int id;
-    private Category category;
+    private Header header;
     private float plus;
     private float minus;
     private long spendTime;
@@ -31,11 +33,11 @@ public class TaskStatistic extends JsonAble {
 
     @OneToOne
     @JoinColumn(name = "_category")
-    public Category getCategory() {
-        return category;
+    public Header getHeader() {
+        return header;
     }
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Transient
@@ -101,19 +103,17 @@ public class TaskStatistic extends JsonAble {
         plus = 0;
         minus = 0;
         spendTime = 0;
-        activeChildren = 0;
-        progressingChildren = 0;
-        doneChildren = 0;
+
     }
 
-    public void add(TaskStatistic childrenStat) {
-        if (childrenStat != null){
-            plus += childrenStat.getPlus();
-            minus += childrenStat.getMinus();
-            spendTime += childrenStat.getSpendTime();
-            activeChildren += childrenStat.getActiveChildren();
-            progressingChildren += childrenStat.getProgressingChildren();
-            doneChildren += childrenStat.getDoneChildren();
+    public void add(TaskStatistic statistic) {
+        if (statistic != null){
+            plus += statistic.getPlus();
+            minus += statistic.getMinus();
+            spendTime += statistic.getSpendTime();
+            activeChildren += statistic.getActiveChildren();
+            progressingChildren += statistic.getProgressingChildren();
+            doneChildren += statistic.getDoneChildren();
         }
     }
 
@@ -142,5 +142,32 @@ public class TaskStatistic extends JsonAble {
         jsonObject.put(PROGRESSING, progressingChildren);
         jsonObject.put(DONE, doneChildren);
         return jsonObject;
+    }
+
+    public void cleanChildren() {
+        activeChildren = 0;
+        progressingChildren = 0;
+        doneChildren = 0;
+    }
+
+    public void plusActiveChild() {
+        activeChildren++;
+    }
+
+    public void plusProgressingChild() {
+        progressingChildren++;
+    }
+
+    public void plusDoneChildren() {
+        doneChildren++;
+    }
+
+    public boolean any() {
+        return plus != 0 || minus != 0 || spendTime != 0 || activeChildren != 0 || progressingChildren != 0 || doneChildren != 0;
+    }
+
+    public void add(PlusMinus plusMinus) {
+        plus += plusMinus.plus;
+        minus += plusMinus.minus;
     }
 }

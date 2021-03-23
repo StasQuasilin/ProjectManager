@@ -35,6 +35,14 @@
   <span class="text-button" onclick="loadPage('${categories}')">
     <fmt:message key="menu.categories"/>
   </span>
+  <div class="control-menu down-menu">
+    <fmt:message key="menu"/>
+    <div class="control-menu-content">
+      <div class="control-menu-item" onclick="loadModal('${reportOfMonth}')">
+        <fmt:message key="report.of.month"/>
+      </div>
+    </div>
+  </div>
 </div>
 <div class="full-size finance-page">
   <div class="colon">

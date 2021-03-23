@@ -5,8 +5,10 @@ import controllers.api.API;
 import entity.finance.category.Header;
 import entity.finance.category.HeaderType;
 import entity.task.Task;
+import entity.task.TaskDependency;
 import entity.task.TaskStatus;
 import entity.user.User;
+import org.json.simple.JSONArray;
 import utils.TaskToBuyListUtil;
 import utils.TaskUtil;
 import utils.db.dao.TitleDAO;
@@ -21,6 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.UUID;
 
 import static constants.Keys.*;
@@ -72,8 +76,10 @@ public class EditTaskAPI extends API {
                 task.setHeader(header);
             }
 
+            final Header oldParent = header.getParent();
+            Header parent = null;
             if (body.containKey(PARENT)){
-                final Header parent = titleDAO.getHeader(body.get(PARENT));
+                parent = titleDAO.getHeader(body.get(PARENT));
                 header.setParent(parent);
 //                final Task parentTask = taskDAO.getTaskByHeader(parent);
 //                if (parentTask != null) {
@@ -99,11 +105,50 @@ public class EditTaskAPI extends API {
             write(resp, SUCCESS_ANSWER);
             taskSaver.save(task);
 
+            if (parent != null){
+                taskUtil.updateStatistic(parent);
+            }
+            if(oldParent != null && !oldParent.equals(parent)){
+                taskUtil.updateStatistic(oldParent);
+            }
+
+            saveDependency(task, body.getJsonArray(DEPENDENCY));
+
             if (body.containKey(BUY_LIST)){
                 buyListUtil.taskToBuyList(task, new JsonObject(body.get(BUY_LIST)));
             } else {
                 buyListUtil.remove(task);
             }
         }
+    }
+
+    private void saveDependency(Task task, JSONArray dependency) {
+        final HashMap<Integer, TaskDependency> dependencyMap = buildDependencyMap(task);
+        for (Object o : dependency){
+            JsonObject object = new JsonObject(o);
+            final int id = object.getInt(ID);
+            TaskDependency remove = dependencyMap.remove(id);
+            if (remove == null){
+                remove = new TaskDependency();
+                remove.setTask(task);
+                remove.setDependency(taskDAO.getTaskByHeader(id));
+
+            }
+            TaskStatus status = TaskStatus.valueOf(object.getString(STATUS));
+            remove.setDependencyStatus(status);
+            taskDAO.saveDependency(remove);
+        }
+        for (TaskDependency taskDependency : dependencyMap.values()){
+            taskDAO.removeDependency(taskDependency);
+        }
+    }
+
+    private HashMap<Integer, TaskDependency> buildDependencyMap(Task task) {
+        final HashMap<Integer, TaskDependency> map = new HashMap<>();
+        for (TaskDependency dependency : taskDAO.getDependency(task)){
+            final Task d = dependency.getDependency();
+            map.put(d.getId(), dependency);
+        }
+        return map;
     }
 }

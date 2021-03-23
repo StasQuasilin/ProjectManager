@@ -8,6 +8,7 @@ import utils.json.JsonAble;
 import javax.persistence.*;
 
 import java.sql.Date;
+import java.util.Objects;
 import java.util.Set;
 
 import static constants.Keys.*;
@@ -46,7 +47,7 @@ public class Task extends JsonAble {
         this.uid = uid;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy="dependent", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy= "task", cascade = CascadeType.ALL)
     public Set<TaskDependency> getDependencies() {
         return dependencies;
     }
@@ -54,7 +55,7 @@ public class Task extends JsonAble {
         this.dependencies = dependencies;
     }
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "principal", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "dependency", cascade = CascadeType.ALL)
     public Set<TaskDependency> getPrincipals() {
         return principals;
     }
@@ -177,5 +178,18 @@ public class Task extends JsonAble {
     @Transient
     public String getTitle() {
         return header.getTitle();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return id == task.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
