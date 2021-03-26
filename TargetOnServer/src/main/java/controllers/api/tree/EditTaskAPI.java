@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import static constants.Keys.*;
@@ -112,7 +112,9 @@ public class EditTaskAPI extends API {
                 taskUtil.updateStatistic(oldParent);
             }
 
-            saveDependency(task, body.getJsonArray(DEPENDENCY));
+            if(saveDependency(task, body.getJsonArray(DEPENDENCY)) != 0){
+                taskSaver.update(task);
+            }
 
             if (body.containKey(BUY_LIST)){
                 buyListUtil.taskToBuyList(task, new JsonObject(body.get(BUY_LIST)));
@@ -122,8 +124,11 @@ public class EditTaskAPI extends API {
         }
     }
 
-    private void saveDependency(Task task, JSONArray dependency) {
+    private int saveDependency(Task task, JSONArray dependency) {
         final HashMap<Integer, TaskDependency> dependencyMap = buildDependencyMap(task);
+        int update = dependencyMap.size() - dependency.size();
+        final Set<TaskDependency> dependencies = task.getDependencies();
+        dependencies.clear();
         for (Object o : dependency){
             JsonObject object = new JsonObject(o);
             final int id = object.getInt(ID);
@@ -134,13 +139,13 @@ public class EditTaskAPI extends API {
                 remove.setDependency(taskDAO.getTaskByHeader(id));
 
             }
-            TaskStatus status = TaskStatus.valueOf(object.getString(STATUS));
-            remove.setDependencyStatus(status);
             taskDAO.saveDependency(remove);
+            dependencies.add(remove);
         }
         for (TaskDependency taskDependency : dependencyMap.values()){
             taskDAO.removeDependency(taskDependency);
         }
+        return update;
     }
 
     private HashMap<Integer, TaskDependency> buildDependencyMap(Task task) {

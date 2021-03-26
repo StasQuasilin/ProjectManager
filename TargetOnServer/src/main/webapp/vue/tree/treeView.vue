@@ -9,9 +9,40 @@ treeView = new Vue({
         currentItem:-1
     },
     methods:{
-        handler:function(){
-            console.log('-->');
-            this.openTree(this.currentItem);
+        handler:function(a){
+            // console.log(a);
+            if(a.update){
+                let u = a.update;
+                if(!this.update(this.tree, u)){
+                    for (let i in this.tree.children){
+                        if (this.tree.children.hasOwnProperty(i)){
+                            let item = this.tree.children[i];
+                            if(this.update(item, u)){
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            // this.openTree(this.currentItem);
+        },
+        update:function(item, u){
+            if(item.id === u.id){
+                Object.assign(item, u);
+                this.$forceUpdate();
+                return true;
+            } else {
+                if(item.children) {
+                    for (let i in item.children) {
+                        if (item.children.hasOwnProperty(i)){
+                            let child = item.children[i];
+                            if(this.update(child, u)){
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
         },
         onClick:function(itemId){
             loadModal(this.api.taskEdit, {id:itemId});

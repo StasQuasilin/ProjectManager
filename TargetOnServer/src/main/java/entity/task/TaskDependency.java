@@ -12,7 +12,6 @@ public class TaskDependency extends JsonAble {
     private int id;
     private Task task;
     private Task dependency;
-    private TaskStatus dependencyStatus;
 
     @Id
     @Column(name = "_id")
@@ -42,24 +41,13 @@ public class TaskDependency extends JsonAble {
         this.dependency = principal;
     }
 
-    @Enumerated(EnumType.ORDINAL)
-    @Column(name = "_principal_status")
-    public TaskStatus getDependencyStatus() {
-        return dependencyStatus;
-    }
-    public void setDependencyStatus(TaskStatus principalStatus) {
-        this.dependencyStatus = principalStatus;
-    }
-
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put(Keys.ID, id);
         json.put(Keys.DEPENDENT, task.toJson());
         json.put(Keys.PRINCIPAL, dependency.toJson());
-        if (dependencyStatus != null) {
-            json.put(Keys.STATUS, dependencyStatus.toString());
-        }
+
         return json;
     }
 }

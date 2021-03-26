@@ -22,7 +22,7 @@
     color: whitesmoke;
 }
 .goal-title{
-    display: flex;
+    /*display: flex;*/
     /*width: 100%;*/
     text-align: center;
 }
@@ -38,4 +38,5 @@
     display: inline-block;
     float: right;
     padding: 0 4px;
+    background: transparent;
 }

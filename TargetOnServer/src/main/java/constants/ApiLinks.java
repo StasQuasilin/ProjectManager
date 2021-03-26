@@ -37,4 +37,6 @@ public interface ApiLinks {
     String FIND_CURRENCY = API + "/find/currency";
     String BUILD_MONTH_REPORT = API + "/build/month/report";
     String FIND_DEPENDENCY = API + "/find/dependency";
+    String DEPENDENCY_LIST = API + "/dependency/list";
+    String RUN_TIMER = API + "/run/timer";
 }

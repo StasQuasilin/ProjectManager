@@ -198,19 +198,12 @@
             </span>
             </div>
             <div v-for="(d, dIdx) in task.dependency" style="font-size: 10pt">
-            <span class="text-button" v-on:click="removeDependency(dIdx)">
-                &times;
-            </span>
-                <label :for="dIdx + '_status'">
+                <span class="text-button" v-on:click="removeDependency(dIdx)">
+                    &times;
+                </span>
                 <span>
-                {{d.title}}
-            </span>
-                </label>
-                <select :id="dIdx + '_status'" v-model="d.status">
-                    <option v-for="s in status" :value="s">
-                        {{statusNames[s]}}
-                    </option>
-                </select>
+                    {{d.title}}
+                </span>
             </div>
             <div>
             <span v-if="!addDependency" v-on:click="addDependency = true">

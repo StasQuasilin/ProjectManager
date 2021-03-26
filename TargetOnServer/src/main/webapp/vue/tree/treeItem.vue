@@ -13,7 +13,9 @@ treeItem = {
     },
     data:function(){
         return {
-            show:true
+            show:true,
+            dependencyList:[],
+            showDependency:false
         }
     },
     methods:{
@@ -24,6 +26,11 @@ treeItem = {
                 this.onclick(this.item.id);
             }
         },
+        runTimer:function(){
+            PostApi(this.props.runTimer, {task:this.item.id}, function (a) {
+                console.log(a);
+            })
+        },
         addItem:function () {
             loadModal(this.props.edit, {parent:this.item.header});
         },
@@ -33,6 +40,15 @@ treeItem = {
         sortedChildren:function () {
             return Object.values(this.item.children).sort(function (a, b) {
                 return a.title.localeCompare(b.title);
+            })
+        },
+        showDependencyList:function () {
+            const self = this;
+            PostApi(this.props.dependencyList, {id:this.item.id}, function (a) {
+                if(a.status === 'success'){
+                    self.dependencyList = a.result;
+                    self.showDependency = true;
+                }
             })
         }
     },
@@ -63,6 +79,23 @@ treeItem = {
                         '<span v-else :title="item.status">' +
                             '?' +
                         '</span>' +
+                        '<span style="position: relative" v-if="item.dependencyCount" @mouseover="showDependencyList()" @mouseleave="showDependency=false">' +
+                            '{{item.dependencyCount}} ' +
+                            '<div class="tooltip" v-if="showDependency">' +
+                                '{{item.title}} depend from :' +
+                                '<ul>'+
+                                    '<li v-for="d in dependencyList">' +
+                                        '<template v-if="d.status === \'done\'">' +
+                                            '&checkmark;' +
+                                        '</template>' +
+                                        '<template v-else>' +
+                                            '-' +
+                                        '</template>' +
+                                        '{{d.title}}' +
+                                    '</li>' +
+                                '</ul>' +
+                            '</div>' +
+                        '</span>' +
                         '{{item.title}}' +
                         '<span v-if="item.deadline">' +
                             'Deadline: {{new Date(item.deadline).toLocaleDateString()}}' +
@@ -71,6 +104,9 @@ treeItem = {
                     '<div class="tree-menu">' +
                         '<span class="tree-menu-button" v-on:click="addItem()">' +
                             '&#43;' +
+                        '</span>' +
+                        '<span class="tree-menu-button" v-on:click="runTimer()">' +
+                            '&#9202;' +
                         '</span>' +
                         '<span v-if="item.status !== \'done\'" class="tree-menu-button">' +
                             '&check;' +

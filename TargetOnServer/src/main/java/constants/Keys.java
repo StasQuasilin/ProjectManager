@@ -99,6 +99,7 @@ public interface Keys {
     String GET_TASK = "getTask";
     String TREE_BUILDER = "treeBuilder";
     String TASK_TIMER = "taskTimer";
+    String RUNT_TIMER = "runTimer";
     String GET_CALENDAR = "getCalendar";
     String REPEAT = "repeat";
     String USE_DATE = "useDate";
@@ -187,4 +188,7 @@ public interface Keys {
     String REPORT_OF_MONTH = "reportOfMonth";
     String REPORT_BUILD_API = "reportBuildApi";
     String DEPENDENCY = "dependency";
+    String DEPENDENCY_LIST = "dependencyList";
+    String DEPENDENCY_COUNT = "dependencyCount";
+    String RUN_TIMER = "runTimer";
 }

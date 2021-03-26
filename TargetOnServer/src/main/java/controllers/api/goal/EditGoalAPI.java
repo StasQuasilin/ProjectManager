@@ -104,7 +104,7 @@ public class EditGoalAPI extends API {
                 answer.addAttribute(ID, goal.getId());
             }
         } else {
-            answer = new ErrorAnswer(EMPTY_BODY);
+            answer = EMPTY_BODY;
         }
         write(resp, answer);
     }

@@ -143,6 +143,9 @@ public class Task extends JsonAble {
         jsonObject.put(HEADER, header.getId());
         jsonObject.put(TITLE, header.getTitle());
         jsonObject.put(STATUS, status.toString());
+        if(dependencies != null) {
+            jsonObject.put(DEPENDENCY_COUNT, dependencies.size());
+        }
         return jsonObject;
     }
 

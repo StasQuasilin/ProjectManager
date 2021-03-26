@@ -100,4 +100,22 @@
 .control-menu-item:hover{
     background-color: lightblue;
 }
+.tooltip{
+    background-color: #3788d8;
+    color: white;
+    position: absolute;
+    top: 100%;
+    padding: 4pt;
+    width: 120pt;
+    overflow: hidden;
+}
 
+.tooltip ul, li{
+    background-color: transparent;
+}
+.tooltip ul{
+    padding: 0;
+}
+.tooltip li{
+    list-style: none;
+}

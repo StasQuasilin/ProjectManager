@@ -7,6 +7,8 @@ import entity.task.TimeLog;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
+import utils.answers.Answer;
+import utils.answers.ErrorAnswer;
 import utils.answers.SuccessAnswer;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
@@ -31,29 +33,35 @@ public class TaskTimerStartAPI extends API {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
+        Answer answer;
         if(body != null){
             System.out.println(body);
-            TimeLog timeLog;
-            if (body.containKey(ID)){
-                timeLog = taskDAO.getTimeLog(body.get(ID));
-            } else if (body.containKey(TASK)){
-                final User user = getUser(req);
+
+            final User user = getUser(req);
+            TimeLog timeLog = taskDAO.getActiveTimeLog(user);
+            if (timeLog != null){
+                answer = new ErrorAnswer("User have active timer already");
+            } else {
                 timeLog = new TimeLog();
                 final Task task = taskDAO.getTask(body.get(TASK));
-                timeLog.setTask(task);
-                Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-                timeLog.setBegin(timestamp);
-                timeLog.setOwner(user);
-                taskDAO.saveTimeLog(timeLog);
-                final SuccessAnswer successAnswer = new SuccessAnswer();
-                successAnswer.addAttribute(ID, timeLog.getId());
-                successAnswer.addAttribute(BEGIN, timestamp.toString());
-                write(resp, successAnswer);
-                updater.update(Subscribe.timer, timeLog, user);
+                if (task != null) {
+                    timeLog.setHeader(task.getHeader());
+                    Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+                    timeLog.setBegin(timestamp);
+                    timeLog.setOwner(user);
+                    taskDAO.saveTimeLog(timeLog);
+                    answer = new SuccessAnswer();
+                    answer.addAttribute(ID, timeLog.getId());
+                    answer.addAttribute(BEGIN, timestamp.toString());
+                    updater.update(Subscribe.timer, timeLog, user);
+                } else {
+                    answer = new ErrorAnswer("Attribute 'task' required!");
+                }
             }
         } else {
-            write(resp, SUCCESS_ANSWER);
+            answer = EMPTY_BODY;
         }
+        write(resp, answer);
 
     }
 }

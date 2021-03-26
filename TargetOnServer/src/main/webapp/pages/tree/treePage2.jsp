@@ -12,7 +12,9 @@
         </div>
         <jsp:include page="treeView.jsp"/>
     </div>
-<script>
-    goalList.treeView = treeView;
-</script>
+    <script>
+        goalList.treeView = treeView;
+        subscriber.subscribe('${goalSubscribe}', goalList.handler);
+        subscriber.subscribe('${treeSubscribe}', treeView.handler);
+    </script>
 </html>

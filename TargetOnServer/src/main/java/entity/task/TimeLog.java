@@ -1,5 +1,6 @@
 package entity.task;
 
+import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -13,7 +14,7 @@ import static constants.Keys.*;
 @Table(name = "time_log")
 public class TimeLog extends JsonAble {
     private int id;
-    private Task task;
+    private Header header;
     private Timestamp begin;
     private long length;
     private LogType logType = LogType.log;
@@ -30,11 +31,11 @@ public class TimeLog extends JsonAble {
 
     @OneToOne
     @JoinColumn(name = "_task")
-    public Task getTask() {
-        return task;
+    public Header getHeader() {
+        return header;
     }
-    public void setTask(Task task) {
-        this.task = task;
+    public void setHeader(Header header) {
+        this.header = header;
     }
 
     @Basic
@@ -77,7 +78,7 @@ public class TimeLog extends JsonAble {
     public JSONObject toJson() {
         final JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
-        jsonObject.put(TASK, task.shortJson());
+        jsonObject.put(TASK, header.shortJson());
         jsonObject.put(BEGIN, begin.toString());
         jsonObject.put(LENGTH, length);
         jsonObject.put(TYPE, logType.toString());

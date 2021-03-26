@@ -9,10 +9,12 @@
     treeView.api.taskEdit = '${taskEdit}';
     treeView.props.edit = '${taskEdit}';
     treeView.props.delete = '${taskDelete}';
+    treeView.props.dependencyList = '${dependencyList}';
+    treeView.props.runTimer = '${runTimer}';
     treeView.on = function(id){
         treeView.onClick(id)
     };
-    subscriber.subscribe('${treeSubscribe}', treeView.handler);
+
 </script>
 <div id="treeView" style="padding: 8pt">
     <div class="tree-view">

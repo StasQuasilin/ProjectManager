@@ -4,6 +4,7 @@ import entity.finance.category.Header;
 import entity.task.Task;
 import entity.task.TaskStatistic;
 import entity.task.TaskStatus;
+import entity.task.TimeLog;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
 
@@ -25,7 +26,27 @@ public class TaskUtil {
 //        task.setStatus(status);
     }
 
-    public void calculateSpendTime(Task task) {
+    public void calculateSpendTime(Header header) {
+        System.out.println("Calculate time for " + header.getTitle());
+        long time = 0;
+        for (TimeLog log : taskDAO.getTimeLogList(header)){
+            time += log.getLength();
+            System.out.println("\t+ " + log.getLength());
+        }
+        System.out.println("Children statistic:");
+        for (TaskStatistic statistic : taskDAO.getChildrenStatistic(header)){
+            time += statistic.getSpendTime();
+            System.out.println("\t+" + statistic.getHeader().getTitle() + ":" + statistic.getSpendTime());
+        }
+        final TaskStatistic statistic = taskDAO.getStatisticOrCreate(header);
+        statistic.setSpendTime(time);
+        taskDAO.saveStatistic(statistic);
+
+        final Header parent = header.getParent();
+        if (parent != null){
+            calculateSpendTime(parent);
+        }
+
     }
 
     public void updateStatistic(Header header) {
@@ -33,7 +54,7 @@ public class TaskUtil {
 
         statistic.cleanChildren();
         for (Task task :  taskDAO.getTasksByParent(header)){
-            final TaskStatistic childStatistic = taskDAO.getStatistic(task.getHeader());
+            final TaskStatistic childStatistic = taskDAO.getStatistic(task.getHeader().getId());
             if (childStatistic != null){
                 statistic.add(childStatistic);
             }

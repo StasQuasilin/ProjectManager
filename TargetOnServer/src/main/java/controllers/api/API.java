@@ -2,6 +2,9 @@ package controllers.api;
 
 import controllers.Servlet;
 import org.json.simple.JSONObject;
+import utils.answers.Answer;
+import utils.answers.ErrorAnswer;
+import utils.answers.SuccessAnswer;
 import utils.json.JsonAble;
 
 import javax.servlet.http.HttpServletResponse;
@@ -11,7 +14,8 @@ import static constants.Keys.ENCODING;
 
 public abstract class API extends Servlet {
 
-    public static final String SUCCESS_ANSWER = "{\"status\":\"success\"}";
+    public static final Answer SUCCESS_ANSWER = new SuccessAnswer();
+    public static final Answer EMPTY_BODY = new ErrorAnswer("No req body");
 
     public void write(HttpServletResponse resp, JSONObject json) throws IOException {
         write(resp, json.toJSONString());

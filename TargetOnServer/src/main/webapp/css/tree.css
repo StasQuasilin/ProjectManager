@@ -28,7 +28,7 @@
 .tree-item:hover .tree-menu{
     display: block;
 }
-.tree-item *{
+.tree-item a, span, .tree-menu{
     background-color: transparent;
 }
 

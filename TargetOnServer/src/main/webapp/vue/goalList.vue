@@ -6,6 +6,7 @@ goalList = new Vue({
     mixins:[list],
     data:function(){
         return {
+            openNow:-1,
             treeView:null,
             props:{
                 edit:function (id) {
@@ -21,18 +22,24 @@ goalList = new Vue({
         }
     },
     mounted:function(){
-        let items = this.getItems();
-        for (let i in items){
-            if (items.hasOwnProperty(i)){
-                let item = items[i];
-                this.openTree(item.titleId);
-                break;
-            }
-        }
+
     },
     methods:{
         openTree:function(itemId){
+            this.openNow = itemId;
             treeView.openTree(itemId);
+        },
+        afterHandle:function () {
+            if (this.openNow === -1) {
+                let items = this.getItems();
+                for (let i in items) {
+                    if (items.hasOwnProperty(i)) {
+                        let item = items[i];
+                        this.openTree(item.titleId);
+                        break;
+                    }
+                }
+            }
         }
     }
 });

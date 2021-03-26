@@ -49,6 +49,8 @@ public class TreePage extends Page {
         req.setAttribute(GOAL_SUBSCRIBE, Subscribe.goal);
         req.setAttribute(GOAL_EDIT, UrlLinks.GOAL_EDIT);
         req.setAttribute(TREE_SUBSCRIBE, Subscribe.tree);
+        req.setAttribute(DEPENDENCY_LIST, ApiLinks.DEPENDENCY_LIST);
+        req.setAttribute(RUN_TIMER, ApiLinks.TIMER_START);
         show(req, resp);
     }
 }

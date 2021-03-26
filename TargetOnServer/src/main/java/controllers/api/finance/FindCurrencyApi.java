@@ -37,7 +37,7 @@ public class FindCurrencyApi extends API {
             answer = new SuccessAnswer();
             answer.addAttribute(RESULT, array);
         } else {
-            answer = new ErrorAnswer(EMPTY_BODY);
+            answer = EMPTY_BODY;
         }
         write(resp, answer);
     }

@@ -79,7 +79,7 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public List<TaskDependency> getDependency(Task task) {
+    public List<TaskDependency> getDependency(Object task) {
         return hibernator.query(TaskDependency.class, TASK, task);
     }
 
@@ -104,13 +104,8 @@ public class TaskDAOImpl implements TaskDAO {
     }
 
     @Override
-    public TaskStatistic getStatistic(Header header) {
-        TaskStatistic statistic = hibernator.get(TaskStatistic.class, HEADER, header);
-        if (statistic == null){
-            statistic = new TaskStatistic();
-            statistic.setHeader(header);
-        }
-        return statistic;
+    public TaskStatistic getStatistic(int header) {
+        return hibernator.get(TaskStatistic.class, HEADER, header);
     }
 
     @Override
@@ -125,11 +120,34 @@ public class TaskDAOImpl implements TaskDAO {
 
     @Override
     public TaskStatistic getStatisticOrCreate(Header header) {
-        TaskStatistic statistic = getStatistic(header);
+        TaskStatistic statistic = getStatistic(header.getId());
         if (statistic == null){
             statistic = new TaskStatistic();
             statistic.setHeader(header);
         }
         return statistic;
+    }
+
+    @Override
+    public TimeLog getActiveTimeLog(Object o) {
+        final HashMap<String, Object> args = new HashMap<>();
+        args.put(OWNER, o);
+        args.put(LENGTH, 0);
+        return hibernator.get(TimeLog.class, args);
+    }
+
+    @Override
+    public List<TimeLog> getTimeLogList(Header task) {
+        return hibernator.query(TimeLog.class, HEADER, task);
+    }
+
+    @Override
+    public List<TaskStatistic> getChildrenStatistic(Header header) {
+        return hibernator.query(TaskStatistic.class, HEADER_PARENT, header);
+    }
+
+    @Override
+    public void removeTimeLog(TimeLog timeLog) {
+        hibernator.remove(timeLog);
     }
 }

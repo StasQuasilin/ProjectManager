@@ -102,15 +102,12 @@ public class TaskStatistic extends JsonAble {
     public void clean() {
         plus = 0;
         minus = 0;
-        spendTime = 0;
-
     }
 
     public void add(TaskStatistic statistic) {
         if (statistic != null){
             plus += statistic.getPlus();
             minus += statistic.getMinus();
-            spendTime += statistic.getSpendTime();
             activeChildren += statistic.getActiveChildren();
             progressingChildren += statistic.getProgressingChildren();
             doneChildren += statistic.getDoneChildren();

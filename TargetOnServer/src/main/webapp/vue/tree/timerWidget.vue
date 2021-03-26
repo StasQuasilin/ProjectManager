@@ -8,12 +8,17 @@ timerWidget = new Vue({
     },
     methods:{
        handler:function(data){
-           if (data.add){
+           console.log(data);
+           if(data.update){
+               data.add = data.update;
+           }
+           if (data.add) {
                this.timer = data.add;
                this.updateLength();
            } else if (data.remove){
                this.timer.begin = null;
            }
+           this.$forceUpdate();
        }
     }
 });

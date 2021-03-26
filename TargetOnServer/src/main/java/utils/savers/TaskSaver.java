@@ -1,6 +1,7 @@
 package utils.savers;
 
 import entity.task.Task;
+import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
@@ -17,6 +18,10 @@ public class TaskSaver {
 //        final Header category = task.getHeader();
 //        categoryStatisticUtil.calculateChildren(category, taskDAO);
 //        categoryStatisticUtil.updateStatistic(category);
-//        updater.update(Subscribe.tree, task, task.getOwner());
+        update(task);
+    }
+
+    public void update(Task task) {
+        updater.update(Subscribe.tree, task, task.getOwner());
     }
 }

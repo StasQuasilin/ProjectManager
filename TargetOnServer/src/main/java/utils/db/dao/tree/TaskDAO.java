@@ -17,7 +17,7 @@ public interface TaskDAO {
     TimeLog getTimeLog(Object o);
     void saveTimeLog(TimeLog timeLog);
     void removeTasks(User user);
-    List<TaskDependency> getDependency(Task task);
+    List<TaskDependency> getDependency(Object task);
     List<TaskDependency> getPrincipal(Task task);
     void removeTask(Task task);
 
@@ -25,11 +25,20 @@ public interface TaskDAO {
 
     void removeDependency(TaskDependency dependency);
 
-    TaskStatistic getStatistic(Header header);
+    TaskStatistic getStatistic(int header);
 
     void saveStatistic(TaskStatistic statistic);
 
     void removeStatistic(TaskStatistic statistic);
 
     TaskStatistic getStatisticOrCreate(Header header);
+
+    TimeLog getActiveTimeLog(Object o);
+
+    List<TimeLog> getTimeLogList(Header task);
+
+    void removeTimeLog(TimeLog timeLog);
+
+    List<TaskStatistic> getChildrenStatistic(Header header);
 }
+

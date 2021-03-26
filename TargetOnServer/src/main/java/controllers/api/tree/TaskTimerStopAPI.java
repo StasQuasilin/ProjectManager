@@ -6,6 +6,7 @@ import entity.task.TimeLog;
 import subscribe.Subscribe;
 import utils.TaskUtil;
 import utils.Updater;
+import utils.answers.Answer;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
@@ -30,14 +31,24 @@ public class TaskTimerStopAPI extends API {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
+        Answer answer;
         if (body != null){
             final TimeLog timeLog = taskDAO.getTimeLog(body.get(ID));
             Timestamp end = Timestamp.valueOf(LocalDateTime.now());
             timeLog.setEnd(end);
-            taskDAO.saveTimeLog(timeLog);
-            taskUtil.calculateSpendTime(timeLog.getTask());
-            write(resp, SUCCESS_ANSWER);
+            final long length = timeLog.getLength();
+            if(length > 0){
+                taskDAO.saveTimeLog(timeLog);
+                taskUtil.calculateSpendTime(timeLog.getHeader());
+            } else {
+                taskDAO.removeTimeLog(timeLog);
+            }
+
             updater.remove(Subscribe.timer, timeLog.getId(), timeLog.getOwner());
+            answer = SUCCESS_ANSWER;
+        } else {
+            answer = EMPTY_BODY;
         }
+        write(resp, answer);
     }
 }
