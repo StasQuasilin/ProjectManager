@@ -1,6 +1,7 @@
 package utils.savers;
 
 import entity.task.Task;
+import entity.task.TaskStatistic;
 import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.dao.daoService;
@@ -22,6 +23,12 @@ public class TaskSaver {
     }
 
     public void update(Task task) {
+        if(task.isDoneIfChildren()){
+            final TaskStatistic statistic = taskDAO.getStatistic(task.getHeader().getId());
+            task.setStatistic(statistic);
+        } else {
+            task.setStatistic(null);
+        }
         updater.update(Subscribe.tree, task, task.getOwner());
     }
 }

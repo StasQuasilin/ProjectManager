@@ -108,6 +108,7 @@
     padding: 4pt;
     width: 120pt;
     overflow: hidden;
+    z-index: 999;
 }
 
 .tooltip ul, li{

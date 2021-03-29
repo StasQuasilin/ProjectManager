@@ -39,4 +39,5 @@ public interface ApiLinks {
     String FIND_DEPENDENCY = API + "/find/dependency";
     String DEPENDENCY_LIST = API + "/dependency/list";
     String RUN_TIMER = API + "/run/timer";
+    String TASK_STATUS = API + "/task/status";
 }

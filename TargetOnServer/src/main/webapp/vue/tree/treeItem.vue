@@ -4,6 +4,9 @@ treeItem = {
         onclick:Function,
         props:Object
     },
+    components:{
+        'progress-bar':progressBar
+    },
     computed:{
         childrenCount:function () {
             if (this.item.children){
@@ -20,16 +23,21 @@ treeItem = {
     },
     methods:{
         click:function () {
-            if(typeof this.onclick !== "function"){
-                console.warn('Function \'onClick\' now allowed!');
-            } else {
-                this.onclick(this.item.id);
+            if(this.item.id !== this.item.title){
+                if(typeof this.onclick !== "function"){
+                    console.warn('Function \'onClick\' now allowed!');
+                } else {
+                    this.onclick(this.item.id);
+                }
             }
         },
         runTimer:function(){
             PostApi(this.props.runTimer, {task:this.item.id}, function (a) {
                 console.log(a);
             })
+        },
+        changeStatus:function(status){
+            PostApi(this.props.taskStatus, {status:status, task:this.item.id});
         },
         addItem:function () {
             loadModal(this.props.edit, {parent:this.item.header});
@@ -63,19 +71,16 @@ treeItem = {
                             '+' +
                         '</template>' +
                     '</span> ' +
-                    '<span v-if="item.status === \'done\'">' +
-                        '&checkmark; ' +
-                    '</span>' +
                     '<a v-on:click="click()">' +
                         '<template v-if="item.status === \'active\'">' +
-                            '>' +
+                            ' ' +
                         '</template>' +
-                        '<template v-else-if="item.status === \'progressing\'">' +
-                            '-' +
-                        '</template>' +
-                        '<template v-else-if="item.status === \'done\'">' +
+                        '<span v-else-if="item.status === \'progressing\'" style="color: forestgreen">' +
+                            '&#9654;' +
+                        '</span>' +
+                        '<span v-else-if="item.status === \'done\'" style="color: forestgreen">' +
                             '&checkmark;' +
-                        '</template>' +
+                        '</span>' +
                         '<span v-else :title="item.status">' +
                             '?' +
                         '</span>' +
@@ -96,7 +101,9 @@ treeItem = {
                                 '</ul>' +
                             '</div>' +
                         '</span>' +
-                        '{{item.title}}' +
+                        '<span :class="{\'task-done\' : item.status === \'done\'}">' +
+                            '{{item.title}}' +
+                        '</span>' +
                         '<span v-if="item.deadline">' +
                             'Deadline: {{new Date(item.deadline).toLocaleDateString()}}' +
                         '</span>' +
@@ -105,22 +112,27 @@ treeItem = {
                         '<span class="tree-menu-button" v-on:click="addItem()">' +
                             '&#43;' +
                         '</span>' +
-                        '<span class="tree-menu-button" v-on:click="runTimer()">' +
-                            '&#9202;' +
-                        '</span>' +
-                        '<span v-if="item.status !== \'done\'" class="tree-menu-button">' +
-                            '&check;' +
-                        '</span>' +
-                        '<span v-else class="tree-menu-button">' +
+                        '<template v-if="item.status !== \'done\'" >' +
+                            '<span class="tree-menu-button" v-on:click="runTimer()">' +
+                                '&#9202;' +
+                            '</span>' +
+                            '<span class="tree-menu-button" v-on:click="changeStatus(\'done\')">' +
+                                '&check;' +
+                            '</span>' +
+                        '</template>' +
+                        '<span v-else class="tree-menu-button" v-on:click="changeStatus(\'active\')">' +
                             '&#9205;' +
                         '</span>' +
-                        '<span class="tree-menu-button">' +
+                        '<span class="tree-menu-button" v-on:click="changeStatus(\'pause\')">' +
                             '&#9208;' +
                         '</span>' +
                         '<span class="tree-menu-button" v-on:click="deleteItem()">' +
                             '&times;' +
                         '</span>' +
                     '</div>' +
+                    '<br>' +
+                    '<progress-bar  v-if="item.doneIf && item.statistic" :size="item.statistic.active+item.statistic.progressing+item.statistic.done" ' +
+                        ':value="item.statistic.done" :color="\'green\'"></progress-bar>' +
                 '</div>' +
                 '<div v-if="childrenCount > 0 && show" class="tree-children">' +
                     '<tree-item v-for="child in sortedChildren()" :onclick="onclick" :key="child.id" :item="child" :props="props"></tree-item>' +

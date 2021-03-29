@@ -44,7 +44,7 @@ public class BuyListDAOImpl implements BuyListDAO {
         final HashMap<String, Object> params = new HashMap<>();
         params.put(OWNER, user);
 
-        return hibernator.find(BuyList.class, params, TITLE, key);
+        return hibernator.find(BuyList.class, params, HEADER, key);
     }
 
     @Override

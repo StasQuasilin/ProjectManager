@@ -58,10 +58,11 @@ goalEdit = new Vue({
     },
     methods:{
         memberList:function(){
+            const self = this;
             this.saveData(function (a) {
                 console.log(a);
                 if (a.status === 'success'){
-                    loadModal(this.api.goalMembers, {id:this.goal.id}, function (a) {
+                    loadModal(self.api.goalMembers, {id:self.goal.id}, function (a) {
                         console.log(a)
                     })
                 }

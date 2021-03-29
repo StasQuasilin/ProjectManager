@@ -11,6 +11,7 @@
     treeView.props.delete = '${taskDelete}';
     treeView.props.dependencyList = '${dependencyList}';
     treeView.props.runTimer = '${runTimer}';
+    treeView.props.taskStatus = '${taskStatus}';
     treeView.on = function(id){
         treeView.onClick(id)
     };

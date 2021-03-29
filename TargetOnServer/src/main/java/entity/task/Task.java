@@ -8,6 +8,7 @@ import utils.json.JsonAble;
 import javax.persistence.*;
 
 import java.sql.Date;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -20,8 +21,9 @@ public class Task extends JsonAble {
     private String uid;
     private Header header;
     private TaskStatus status;
-    private Set<TaskDependency> dependencies;
+    private Set<TaskDependency> dependencies = new HashSet<>();
     private Set<TaskDependency> principals;
+    private TaskStatistic statistic;
     private Date date;
     private Date deadline;
     private User doer;
@@ -61,6 +63,14 @@ public class Task extends JsonAble {
     }
     public void setPrincipals(Set<TaskDependency> principals) {
         this.principals = principals;
+    }
+
+    @Transient
+    public TaskStatistic getStatistic() {
+        return statistic;
+    }
+    public void setStatistic(TaskStatistic statistic) {
+        this.statistic = statistic;
     }
 
     @Basic
@@ -145,6 +155,9 @@ public class Task extends JsonAble {
         jsonObject.put(STATUS, status.toString());
         if(dependencies != null) {
             jsonObject.put(DEPENDENCY_COUNT, dependencies.size());
+        }
+        if(statistic != null){
+            jsonObject.put(STATISTIC, statistic.toJson());
         }
         return jsonObject;
     }

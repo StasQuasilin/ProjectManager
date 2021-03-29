@@ -2,6 +2,8 @@ package controllers.api.tree;
 
 import constants.ApiLinks;
 import controllers.api.API;
+import entity.task.Task;
+import entity.task.TaskStatus;
 import entity.task.TimeLog;
 import subscribe.Subscribe;
 import utils.TaskUtil;
@@ -46,6 +48,9 @@ public class TaskTimerStopAPI extends API {
 
             updater.remove(Subscribe.timer, timeLog.getId(), timeLog.getOwner());
             answer = SUCCESS_ANSWER;
+            final Task task = taskDAO.getTaskByHeader(timeLog.getHeader());
+            task.setStatus(TaskStatus.active);
+            taskDAO.saveTask(task);
         } else {
             answer = EMPTY_BODY;
         }

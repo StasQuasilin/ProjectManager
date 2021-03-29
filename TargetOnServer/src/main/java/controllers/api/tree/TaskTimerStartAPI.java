@@ -3,9 +3,11 @@ package controllers.api.tree;
 import constants.ApiLinks;
 import controllers.api.API;
 import entity.task.Task;
+import entity.task.TaskStatus;
 import entity.task.TimeLog;
 import entity.user.User;
 import subscribe.Subscribe;
+import utils.TaskUtil;
 import utils.Updater;
 import utils.answers.Answer;
 import utils.answers.ErrorAnswer;
@@ -28,6 +30,7 @@ import static constants.Keys.*;
 public class TaskTimerStartAPI extends API {
 
     private final TaskDAO taskDAO = daoService.getTaskDAO();
+    private final TaskUtil taskUtil = new TaskUtil();
     private final Updater updater = new Updater();
 
     @Override
@@ -45,15 +48,22 @@ public class TaskTimerStartAPI extends API {
                 timeLog = new TimeLog();
                 final Task task = taskDAO.getTask(body.get(TASK));
                 if (task != null) {
-                    timeLog.setHeader(task.getHeader());
-                    Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
-                    timeLog.setBegin(timestamp);
-                    timeLog.setOwner(user);
-                    taskDAO.saveTimeLog(timeLog);
-                    answer = new SuccessAnswer();
-                    answer.addAttribute(ID, timeLog.getId());
-                    answer.addAttribute(BEGIN, timestamp.toString());
-                    updater.update(Subscribe.timer, timeLog, user);
+                    if (task.getStatus() == TaskStatus.active) {
+                        timeLog.setHeader(task.getHeader());
+                        Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
+                        timeLog.setBegin(timestamp);
+                        timeLog.setOwner(user);
+                        taskDAO.saveTimeLog(timeLog);
+                        answer = new SuccessAnswer();
+                        answer.addAttribute(ID, timeLog.getId());
+                        answer.addAttribute(BEGIN, timestamp.toString());
+                        updater.update(Subscribe.timer, timeLog, user);
+                        task.setStatus(TaskStatus.progressing);
+                        taskDAO.saveTask(task);
+                        taskUtil.updateStatistic(task.getHeader());
+                    } else {
+                        answer = new ErrorAnswer("Task status is " + task.getStatus().toString());
+                    }
                 } else {
                     answer = new ErrorAnswer("Attribute 'task' required!");
                 }

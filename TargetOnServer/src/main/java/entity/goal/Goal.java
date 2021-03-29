@@ -1,6 +1,7 @@
 package entity.goal;
 
 import entity.Title;
+import entity.task.TaskStatistic;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -20,6 +21,7 @@ public class Goal extends JsonAble {
     private Date end;
     private float budget;
     private GoalStatus status = GoalStatus.active;
+    private TaskStatistic statistic;
 
     @Id
     @Column(name = "_id")
@@ -85,12 +87,23 @@ public class Goal extends JsonAble {
         this.status = status;
     }
 
+    @Transient
+    public TaskStatistic getStatistic() {
+        return statistic;
+    }
+    public void setStatistic(TaskStatistic statistic) {
+        this.statistic = statistic;
+    }
+
     @Override
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
         jsonObject.put(TITLE_ID, title.getId());
         jsonObject.put(TITLE, title.getValue());
+        if(statistic != null){
+            jsonObject.put(STATISTIC, statistic.toJson());
+        }
         return jsonObject;
     }
 

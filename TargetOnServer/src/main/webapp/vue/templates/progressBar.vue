@@ -29,9 +29,12 @@ progressBar = {
                 style.backgroundColor = 'black';
             }
             return style;
+        },
+        title:function () {
+            return this.value.toLocaleString() + ' / ' + this.size.toLocaleString();
         }
     },
-    template:'<div class="progress-bar-body" :style="style()">' +
+    template:'<div :title="title()" class="progress-bar-body" :style="style()">' +
             '<div class="progress-bar" :style="progressBar()"></div>' +
         '</div>'
 };

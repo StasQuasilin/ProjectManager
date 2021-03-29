@@ -68,7 +68,7 @@ public class BuyList extends JsonAble {
     public JSONObject shortJson() {
         JSONObject json  = getJsonObject();
         json.put(ID, id);
-        json.put(TITLE, title);
+        json.put(TITLE, title.getValue());
         return json;
     }
 

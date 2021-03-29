@@ -1,5 +1,6 @@
 treeView = new Vue({
     el:'#treeView',
+
     data:{
         api:{},
         tree:{},
@@ -11,6 +12,7 @@ treeView = new Vue({
     methods:{
         handler:function(a){
             // console.log(a);
+            let f= false;
             if(a.update){
                 let u = a.update;
                 if(!this.update(this.tree, u)){
@@ -18,18 +20,25 @@ treeView = new Vue({
                         if (this.tree.children.hasOwnProperty(i)){
                             let item = this.tree.children[i];
                             if(this.update(item, u)){
+                                f = true;
                                 break;
                             }
                         }
                     }
                 }
             }
-            // this.openTree(this.currentItem);
+            if (!f){
+                this.openTree(this.currentItem);
+            }
         },
         update:function(item, u){
             if(item.id === u.id){
                 Object.assign(item, u);
-                this.$forceUpdate();
+                const self = this;
+                setTimeout(function () {
+                    self.$forceUpdate();
+                }, 100);
+
                 return true;
             } else {
                 if(item.children) {

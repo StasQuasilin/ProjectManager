@@ -9,7 +9,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "headers")
 public class Title extends AbstractTitle {
-    @Override
     @Id
     public int getId() {
         return super.getId();

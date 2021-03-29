@@ -191,4 +191,5 @@ public interface Keys {
     String DEPENDENCY_LIST = "dependencyList";
     String DEPENDENCY_COUNT = "dependencyCount";
     String RUN_TIMER = "runTimer";
+    String TASK_STATUS = "taskStatus";
 }

@@ -3,9 +3,12 @@ package utils.db.dao.goal;
 import entity.finance.category.Category;
 import entity.goal.Goal;
 import entity.goal.GoalMember;
+import entity.task.TaskStatistic;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
+import utils.db.dao.daoService;
+import utils.db.dao.tree.TaskDAO;
 import utils.db.hibernate.Hibernator;
 
 import java.util.HashMap;
@@ -18,6 +21,7 @@ public class GoalDAOImpl implements GoalDAO{
 
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
+    private TaskDAO taskDAO = daoService.getTaskDAO();
 
     @Override
     public List<Goal> getGoals(User user) {
@@ -44,6 +48,7 @@ public class GoalDAOImpl implements GoalDAO{
     public void saveGoal(Goal goal) {
         hibernator.save(goal.getTitle());
         hibernator.save(goal);
+        goal.setStatistic(taskDAO.getStatistic(goal.getTitle().getId()));
         updater.update(Subscribe.goal, goal, goal.getOwner());
     }
 
