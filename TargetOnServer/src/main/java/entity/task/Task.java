@@ -21,6 +21,7 @@ public class Task extends JsonAble {
     private String uid;
     private Header header;
     private TaskStatus status;
+    private TaskType type;
     private Set<TaskDependency> dependencies = new HashSet<>();
     private Set<TaskDependency> principals;
     private TaskStatistic statistic;
@@ -110,6 +111,16 @@ public class Task extends JsonAble {
         this.status = status;
     }
 
+    @Basic
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "_type")
+    public TaskType getType() {
+        return type;
+    }
+    public void setType(TaskType type) {
+        this.type = type;
+    }
+
     @OneToOne
     @JoinColumn(name = "doer")
     public User getDoer() {
@@ -153,6 +164,7 @@ public class Task extends JsonAble {
         jsonObject.put(HEADER, header.getId());
         jsonObject.put(TITLE, header.getTitle());
         jsonObject.put(STATUS, status.toString());
+        jsonObject.put(TYPE, type.toString());
         if(dependencies != null) {
             jsonObject.put(DEPENDENCY_COUNT, dependencies.size());
         }

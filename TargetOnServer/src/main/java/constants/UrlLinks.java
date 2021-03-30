@@ -30,4 +30,5 @@ public interface UrlLinks {
     String GOAL_MEMBERS = "/goa/members" + SUFFIX;
     String ACCOUNT_MEMBERS = "/account/members" + SUFFIX;
     String REPORT_OF_MONTH = "/month/report" + SUFFIX;
+    String BUY_LIST_REMOVE = "/buy/list/remove" + SUFFIX;
 }

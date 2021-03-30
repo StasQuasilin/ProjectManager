@@ -22,6 +22,10 @@
     taskEdit.status.push('${s}');
     taskEdit.statusNames['${s}'] = '<fmt:message key="${s}"/>';
     </c:forEach>
+    <c:forEach items="${types}" var="t">
+    taskEdit.types.push('${t}');
+    taskEdit.typeNames['${t}'] = '<fmt:message key="${t}"/>';
+    </c:forEach>
     <c:if test="${not empty parent}">
     taskEdit.task.parent = ${parent.toJson()}
     </c:if>
@@ -35,11 +39,11 @@
     <c:otherwise>
     taskEdit.task.title = '<fmt:message key="task.title.default"/>';
     taskEdit.task.status = 'active';
+    taskEdit.task.type = taskEdit.types[1];
     </c:otherwise>
     </c:choose>
     <c:choose>
     <c:when test="${not empty buyList}">
-    taskEdit.addToBuyList = true;
     taskEdit.task.buyList = ${buyList.toJson()}
     </c:when>
     <c:when test="${not empty rootBuyList}">
@@ -58,6 +62,9 @@
     <c:forEach items="${dependent}" var="d">
     taskEdit.task.dependency.push(${d.toJson()});
     </c:forEach>
+    <c:if test="${not empty buyList}">
+    taskEdit.buyList = ${buyList.shortJson()}
+    </c:if>
 </script>
 <div id="taskEdit" style="display: flex">
     <table>
@@ -83,6 +90,20 @@
                 <select id="status" v-model="task.status">
                     <option v-for="s in status" :value="s">
                         {{statusNames[s]}}
+                    </option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+               <label for="type">
+                   <fmt:message key="task.type"/>
+               </label>
+            </td>
+            <td>
+                <select id="type" v-model="task.type">
+                    <option v-for="t in types" :value="t">
+                        {{typeNames[t]}}
                     </option>
                 </select>
             </td>
@@ -155,9 +176,9 @@
         </template>
         <tr v-if="!addToBuyList">
             <td colspan="2">
-            <span class="text-button" v-on:click="addToBuyList=true">
-                <fmt:message key="task.to.buy.list"/>
-            </span>
+                <span class="text-button" v-on:click="enableBuyList()">
+                    <fmt:message key="task.to.buy.list"/>
+                </span>
             </td>
         </tr>
         <template v-else>
@@ -215,5 +236,7 @@
             </div>
         </div>
     </c:if>
-
+    <div>
+        Description
+    </div>
 </div>

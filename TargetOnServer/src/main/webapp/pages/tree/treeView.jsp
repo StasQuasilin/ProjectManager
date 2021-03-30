@@ -10,6 +10,7 @@
     treeView.props.edit = '${taskEdit}';
     treeView.props.delete = '${taskDelete}';
     treeView.props.dependencyList = '${dependencyList}';
+    treeView.props.taskTimer = '${taskTimer}';
     treeView.props.runTimer = '${runTimer}';
     treeView.props.taskStatus = '${taskStatus}';
     treeView.on = function(id){

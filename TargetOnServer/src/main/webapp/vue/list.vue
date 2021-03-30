@@ -9,6 +9,8 @@ let list = {
         remove:function(id){
             if (this.api.remove && id){
                 loadModal(this.api.remove, {id:id})
+            } else {
+                console.warn(this.$el.id + '.api.remove link required!');
             }
         },
         edit:function(id, params){
@@ -21,6 +23,7 @@ let list = {
             }
         },
         handler:function(items){
+            console.log(items);
             if(items) {
                 for (let a in items.add) {
                     if (items.add.hasOwnProperty(a)) {

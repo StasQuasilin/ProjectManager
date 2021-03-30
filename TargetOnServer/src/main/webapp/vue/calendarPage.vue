@@ -113,6 +113,7 @@ calendar = new Vue({
             return calendar;
         },
         calendarHandler:function(data){
+            console.log(data);
             if (data.update){
                 let update = data.update;
                 let date = update.date;

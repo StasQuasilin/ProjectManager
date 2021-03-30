@@ -2,7 +2,8 @@ package utils.db.dao.finance.buy;
 
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
-import entity.finance.category.Category;
+import entity.finance.category.Header;
+import entity.task.Task;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -35,7 +36,9 @@ public class BuyListDAOImpl implements BuyListDAO {
             hibernator.save(item.getHeader());
             hibernator.save(item);
         }
+        hibernator.save(list.getTitle());
         hibernator.save(list);
+
         updater.update(Subscribe.buy, list, list.getOwner());
     }
 
@@ -48,10 +51,9 @@ public class BuyListDAOImpl implements BuyListDAO {
     }
 
     @Override
-    public BuyListItem getItemByCategory(Category category) {
+    public BuyListItem getItemByHeader(Header header) {
         final HashMap<String, Object> params = new HashMap<>();
-        params.put(CATEGORY, category);
-
+        params.put(HEADER, header);
         return hibernator.get(BuyListItem.class, params);
     }
 
@@ -71,5 +73,24 @@ public class BuyListDAOImpl implements BuyListDAO {
     public void removeList(BuyList list) {
         removeItems(list.getItemSet());
         hibernator.remove(list);
+    }
+
+    @Override
+    public BuyList getBaseList(Task task) {
+        Header parent = null;
+        Header p = task.getHeader();
+        while (p != null){
+            parent = p;
+            p = p.getParent();
+        }
+        if (parent != null){
+            return getListByHeader(parent.getId());
+        } else {
+            return null;
+        }
+    }
+
+    private BuyList getListByHeader(int id) {
+        return hibernator.get(BuyList.class, TITLE, id);
     }
 }

@@ -1,4 +1,4 @@
-package controllers.finances;
+package controllers.finances.buy.list;
 
 import constants.ApiLinks;
 import constants.UrlLinks;

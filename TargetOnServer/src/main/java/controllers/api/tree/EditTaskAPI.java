@@ -7,6 +7,7 @@ import entity.finance.category.HeaderType;
 import entity.task.Task;
 import entity.task.TaskDependency;
 import entity.task.TaskStatus;
+import entity.task.TaskType;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import utils.TaskToBuyListUtil;
@@ -55,6 +56,13 @@ public class EditTaskAPI extends API {
                 task.setStatus(status);
             } else {
                 task.setStatus(TaskStatus.active);
+            }
+
+            if(body.containKey(TYPE)){
+                TaskType type = TaskType.valueOf(body.getString(TYPE));
+                task.setType(type);
+            } else {
+                task.setType(TaskType.accumulative);
             }
 
             if (body.containKey(DEADLINE)){

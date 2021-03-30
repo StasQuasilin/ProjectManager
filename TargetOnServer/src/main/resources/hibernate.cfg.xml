@@ -20,6 +20,7 @@
         <mapping class="entity.user.UserSettings"/>
         <mapping class="entity.Title"/>
         <mapping class="entity.finance.category.Header"/>
+        <mapping class="entity.task.TaskDiscussion"/>
 <!--        <mapping class="entity.user.UserCurrency"/>-->
         <mapping class="entity.finance.category.Category"/>
         <mapping class="entity.finance.category.CategoryStatistic"/>

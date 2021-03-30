@@ -8,6 +8,7 @@ import entity.finance.category.Header;
 import entity.task.Task;
 import entity.task.TaskDependency;
 import entity.task.TaskStatus;
+import entity.task.TaskType;
 import utils.db.dao.TitleDAO;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
@@ -41,7 +42,6 @@ public class TaskEdit extends ModalWindow {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
         if (body != null){
-            System.out.println(body);
             final Task task = taskDAO.getTask(body.get(ID));
 
             Header parent = null;
@@ -49,6 +49,7 @@ public class TaskEdit extends ModalWindow {
 
             if (task != null){
                 req.setAttribute(TASK, task);
+                req.setAttribute(BUY_LIST, buyListDAO.getBaseList(task));
                 final Header header = task.getHeader();
 //                final BuyListItem buyListItem = buyListDAO.getItemByCategory(category);
 //                if (buyListItem != null) {
@@ -88,6 +89,8 @@ public class TaskEdit extends ModalWindow {
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
         req.setAttribute(STATUS, statuses);
+        req.setAttribute(TYPES, TaskType.values());
+
         req.setAttribute(FIND_DEPENDENCY, ApiLinks.FIND_DEPENDENCY);
         req.setAttribute(FIND_CATEGORY, ApiLinks.FIND_CATEGORY);
         req.setAttribute(FIND_BUY_LIST, ApiLinks.FIND_BUY_LIST);

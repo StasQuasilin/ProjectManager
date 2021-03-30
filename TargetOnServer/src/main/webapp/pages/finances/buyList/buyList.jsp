@@ -13,6 +13,9 @@
     <div class="full-size item-container">
         <div class="item-container-wrapper">
             <div v-for="item in getItems()">
+                <span class="text-button" v-on:click="remove(item.id)">
+                    &times;
+                </span>
             <span>
                 {{item.title}}
                 <span class="text-button edit-button" v-on:click="edit(item.id)"></span>

@@ -9,8 +9,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
-<link rel="stylesheet" href="${context}/css/finances/financePage.css">
-<script src="${context}/vue/pathBuilder.vue"></script>
+<link rel="stylesheet" href="${context}/css/finances/financePage.css?v=${now}">
+<script src="${context}/vue/pathBuilder.vue?v=${now}"></script>
 <script src="${context}/vue/finances/transactions/transactionsList.vue?v=${now}"></script>
 <script src="${context}/vue/finances/fastTransactions.vue?v=${now}"></script>
 <script src="${context}/vue/finances/accounts.vue?v=${now}"></script>
@@ -23,6 +23,8 @@
   accounts.api.extract = '${accountExtract}';
   buyList.api.edit = '${buyListEdit}';
   buyList.api.changeStatus = '${transactionEdit}';
+  buyList.api.remove = '${buyListRemove}';
+
   <c:forEach items="${units}" var="unit">
   buyList.unitNames['${unit}'] = '<fmt:message key="unit.${unit}"/>';
   </c:forEach>

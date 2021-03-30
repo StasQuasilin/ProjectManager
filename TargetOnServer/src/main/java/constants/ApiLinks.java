@@ -40,4 +40,5 @@ public interface ApiLinks {
     String DEPENDENCY_LIST = API + "/dependency/list";
     String RUN_TIMER = API + "/run/timer";
     String TASK_STATUS = API + "/task/status";
+    String BUY_LIST_REMOVE = API + "/buy/list/remove";
 }

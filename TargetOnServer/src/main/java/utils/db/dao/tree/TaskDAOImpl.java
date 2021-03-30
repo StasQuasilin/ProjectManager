@@ -47,6 +47,7 @@ public class TaskDAOImpl implements TaskDAO {
         HashMap<String,Object> param = new HashMap<>();
         param.put(HEADER_OWNER, user);
         param.put(STATUS, status);
+        param.put(TYPE, TaskType.accumulative);
         return hibernator.query(Task.class, param);
     }
 

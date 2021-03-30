@@ -38,6 +38,7 @@ public class FinancePage extends Page {
         req.setAttribute(ACCOUNT_SUBSCRIBE, Subscribe.accounts);
         req.setAttribute(Keys.CATEGORIES, UrlLinks.CATEGORY_PAGE);
         req.setAttribute(BUY_LIST_SUBSCRIBE, Subscribe.buy);
+        req.setAttribute(REMOVE_BUY_LIST, UrlLinks.BUY_LIST_REMOVE);
         req.setAttribute(Keys.REPORT_OF_MONTH, UrlLinks.REPORT_OF_MONTH);
         req.setAttribute(UNITS, Unit.values());
         show(req, resp);

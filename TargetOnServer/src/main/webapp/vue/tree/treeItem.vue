@@ -32,9 +32,11 @@ treeItem = {
             }
         },
         runTimer:function(){
-            PostApi(this.props.runTimer, {task:this.item.id}, function (a) {
-                console.log(a);
-            })
+            PostApi(this.props.runTimer, {task:this.item.id});
+        },
+        taskTimer:function(){
+            loadModal(this.props.taskTimer, {task:this.item.id});
+            event.preventDefault();
         },
         changeStatus:function(status){
             PostApi(this.props.taskStatus, {status:status, task:this.item.id});
@@ -113,7 +115,7 @@ treeItem = {
                             '&#43;' +
                         '</span>' +
                         '<template v-if="item.status !== \'done\'" >' +
-                            '<span class="tree-menu-button" v-on:click="runTimer()">' +
+                            '<span class="tree-menu-button" v-on:click="runTimer()" v-on:click.right="taskTimer()">' +
                                 '&#9202;' +
                             '</span>' +
                             '<span class="tree-menu-button" v-on:click="changeStatus(\'done\')">' +

@@ -47,7 +47,6 @@ public class TaskTimerEdit extends ModalWindow {
         }
         req.setAttribute(TITLE, _TITLE);
         req.setAttribute(CONTENT, _CONTENT);
-        req.setAttribute(FIND_TASK, ApiLinks.FIND_TASK);
         req.setAttribute(TIMER_START, ApiLinks.TIMER_START);
         req.setAttribute(TIMER_STOP, ApiLinks.TIMER_STOP);
         show(req, resp);

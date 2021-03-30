@@ -1,9 +1,7 @@
 package utils.db.dao.goal;
 
-import entity.finance.category.Category;
 import entity.goal.Goal;
 import entity.goal.GoalMember;
-import entity.task.TaskStatistic;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -53,8 +51,8 @@ public class GoalDAOImpl implements GoalDAO{
     }
 
     @Override
-    public Goal getGoalByCategory(Category category) {
-        return hibernator.get(Goal.class, CATEGORY, category);
+    public Goal getGoalByCategory(int title) {
+        return hibernator.get(Goal.class, TITLE, title);
     }
 
     @Override

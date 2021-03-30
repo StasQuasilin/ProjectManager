@@ -31,7 +31,7 @@ progressBar = {
             return style;
         },
         title:function () {
-            return this.value.toLocaleString() + ' / ' + this.size.toLocaleString();
+            return this.value.toLocaleString() + ' / ' + this.size.toLocaleString() + ' ( ' + (this.value / this.size * 100).toLocaleString() + '% )' ;
         }
     },
     template:'<div :title="title()" class="progress-bar-body" :style="style()">' +

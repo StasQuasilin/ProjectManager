@@ -17,7 +17,7 @@ public class CalendarDAOImpl implements CalendarDAO {
     @Override
     public List<CalendarItem> getCalendarItems(Date date, User user) {
         final HashMap<String, Object> params = new HashMap<>();
-        params.put(TITLE_OWNER, user);
+        params.put(HEADER_OWNER, user);
         params.put(DATE, date);
         return hibernator.query(CalendarItem.class, params);
     }

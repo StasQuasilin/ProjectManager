@@ -18,7 +18,9 @@ taskEdit = new Vue({
             buyList:{}
         },
         status:[],
+        types:[],
         statusNames:{},
+        typeNames:{},
         props:{
             put:function(parent){
                 taskEdit.task.parent = parent;
@@ -61,6 +63,20 @@ taskEdit = new Vue({
         }
     },
     methods:{
+        enableBuyList:function(){
+            this.addToBuyList=true;
+            if (typeof this.task.buyList === "undefined"){
+                if(typeof this.buyList === "undefined"){
+                    this.task.buyList = {
+                        id:-1,
+                        title:''
+                    }
+                } else {
+                    this.task.buyList = Object.assign({}, this.buyList);
+                }
+
+            }
+        },
         removeDependency:function(idx){
             this.task.dependency.splice(idx, 1);
             this.$forceUpdate();
