@@ -70,6 +70,8 @@ public class TaskUtil {
                 statistic.plusProgressingChild();
             } else if (status == TaskStatus.done){
                 statistic.plusDoneChildren();
+            } else {
+                statistic.plusOtherChild();
             }
         }
 

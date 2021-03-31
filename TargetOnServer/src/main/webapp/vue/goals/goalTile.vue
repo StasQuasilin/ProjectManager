@@ -4,8 +4,14 @@ goalTile = {
         props:Object,
         tree:Function
     },
+    mixins:[timeUtil],
     components:{
         'progress-bar':progressBar
+    },
+    mounted:function(){
+        if(this.goal.statistic && this.goal.statistic.spend > 0) {
+            this.time = this.goal.statistic.spend;
+        }
     },
     methods:{
         onClick:function () {
@@ -47,7 +53,7 @@ goalTile = {
                     '<progress-bar v-if="goal.begin && goal.end" :size="(new Date(goal.end) - new Date(goal.begin))" ' +
                         ':value="(new Date() - new Date(goal.begin))" :color="\'green\'"></progress-bar>' +
                     '<progress-bar v-if="goal.statistic" ' +
-                        ':size="goal.statistic.active + goal.statistic.progressing + goal.statistic.done" ' +
+                        ':size="goal.statistic.active + goal.statistic.progressing + goal.statistic.done + goal.statistic.other" ' +
                         ':value="goal.statistic.done" :color="\'orange\'"></progress-bar>' +
                 '</div>' +
                 '<div v-if="goal.statistic && (goal.budget || goal.statistic.minus || goal.statistic.plus)">' +
@@ -64,20 +70,35 @@ goalTile = {
                     '<progress-bar v-if="goal.budget && goal.statistic" :size="goal.budget" ' +
                         ':value="goal.statistic.minus + goal.statistic.plus"></progress-bar>' +
                 '</div>' +
-                '<div v-if="goal.statistic">' +
-                    '<div>' +
+                '<div v-if="goal.statistic && (goal.statistic.active + goal.statistic.progressing + goal.statistic.done + goal.statistic.other) > 0" style="font-size: 10pt">' +
+                    '<div v-if="goal.statistic.active > 0">' +
                         '{{props.activeTasks}}: ' +
-                        '{{goal.statistic.active}}' +
+                        '{{goal.statistic.active.toLocaleString()}}' +
                     '</div>' +
-                    '<div>' +
+                    '<div v-if="goal.statistic.progressing > 0">' +
                         '{{props.progressingTasks}}: ' +
-                        '{{goal.statistic.progressing}}' +
+                        '{{goal.statistic.progressing.toLocaleString()}}' +
                     '</div>' +
-                    '<div>' +
+                    '<div v-if="goal.statistic.done > 0">' +
                         '{{props.doneTasks}}: ' +
-                        '{{goal.statistic.done}}' +
+                        '{{goal.statistic.done.toLocaleString()}}' +
                     '</div>' +
-
+                    '<div v-if="goal.statistic.other > 0">' +
+                        '{{props.otherTasks}}: ' +
+                        '{{goal.statistic.other.toLocaleString()}}' +
+                    '</div>' +
+                '</div>' +
+                '<div v-if="goal.statistic.spend > 0">' +
+                    '{{props.spendTime}}:' +
+                        '<template v-if="timeLength.hours > 0">' +
+                            ' {{prettyNumber(timeLength.hours)}} hr' +
+                        '</template>' +
+                        '<template v-if="timeLength.min > 0">' +
+                            ' {{prettyNumber(timeLength.min)}} min' +
+                        '</template>' +
+                        '<template v-if="timeLength.sec > 0">' +
+                            ' {{prettyNumber(timeLength.sec)}} sec' +
+                        '</template>' +
                 '</div>' +
                 '<div style="font-size: 8pt; color: gray">' +
                     '{{goal.statistic}}' +

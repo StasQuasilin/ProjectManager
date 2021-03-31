@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="${context}/css/goals.css?v=${now}"/>
     <link rel="stylesheet" href="${context}/css/progressBar.css?v=${now}">
     <script type="application/javascript" src="${context}/vue/templates/progressBar.vue?v=${now}"></script>
+    <script type="application/javascript" src="${context}/vue/utils/timeUtil.vue"></script>
     <script type="application/javascript" src="${context}/vue/goals/goalTile.vue?v=${now}"></script>
     <script type="application/javascript" src="${context}/vue/goalList.vue?v=${now}"></script>
     <script>
@@ -24,6 +25,8 @@
         goalList.props.activeTasks = '<fmt:message key="goal.active.tasks"/>';
         goalList.props.progressingTasks = '<fmt:message key="goal.progressing.task"/>';
         goalList.props.doneTasks = '<fmt:message key="goal.done.tasks"/>';
+        goalList.props.otherTasks = '<fmt:message key="goal.other.tasks"/>';
+        goalList.props.spendTime = '<fmt:message key="goal.spend.time"/>';
 
     </script>
     <jsp:include page="goalHeader.jsp"/>

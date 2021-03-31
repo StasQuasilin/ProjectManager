@@ -21,6 +21,7 @@ public class TaskStatistic extends JsonAble {
     private int activeChildren;
     private int progressingChildren;
     private int doneChildren;
+    private int otherChildren;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -99,6 +100,15 @@ public class TaskStatistic extends JsonAble {
         this.doneChildren = doneChildren;
     }
 
+    @Basic
+    @Column(name = "_other")
+    public int getOtherChildren() {
+        return otherChildren;
+    }
+    public void setOtherChildren(int otherChildren) {
+        this.otherChildren = otherChildren;
+    }
+
     public void clean() {
         plus = 0;
         minus = 0;
@@ -111,6 +121,7 @@ public class TaskStatistic extends JsonAble {
             activeChildren += statistic.getActiveChildren();
             progressingChildren += statistic.getProgressingChildren();
             doneChildren += statistic.getDoneChildren();
+            otherChildren += statistic.getOtherChildren();
         }
     }
 
@@ -121,6 +132,8 @@ public class TaskStatistic extends JsonAble {
             progressingChildren++;
         } else if (status == TaskStatus.done){
             doneChildren++;
+        } else {
+            otherChildren++;
         }
         if (statistic != null) {
             activeChildren += statistic.getActiveChildren();
@@ -138,6 +151,7 @@ public class TaskStatistic extends JsonAble {
         jsonObject.put(ACTIVE, activeChildren);
         jsonObject.put(PROGRESSING, progressingChildren);
         jsonObject.put(DONE, doneChildren);
+        jsonObject.put(OTHER, otherChildren);
         return jsonObject;
     }
 
@@ -145,6 +159,7 @@ public class TaskStatistic extends JsonAble {
         activeChildren = 0;
         progressingChildren = 0;
         doneChildren = 0;
+        otherChildren = 0;
     }
 
     public void plusActiveChild() {
@@ -160,11 +175,15 @@ public class TaskStatistic extends JsonAble {
     }
 
     public boolean any() {
-        return plus != 0 || minus != 0 || spendTime != 0 || activeChildren != 0 || progressingChildren != 0 || doneChildren != 0;
+        return plus != 0 || minus != 0 || (spendTime + activeChildren + progressingChildren + doneChildren + otherChildren) > 0;
     }
 
     public void add(PlusMinus plusMinus) {
         plus += plusMinus.plus;
         minus += plusMinus.minus;
+    }
+
+    public void plusOtherChild() {
+        otherChildren++;
     }
 }

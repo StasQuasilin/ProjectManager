@@ -25,7 +25,7 @@ public class TaskDiscussion {
         this.id = id;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "_task")
     public Task getTask() {
         return task;

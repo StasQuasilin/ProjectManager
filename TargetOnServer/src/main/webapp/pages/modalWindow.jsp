@@ -9,10 +9,10 @@
   Time: 22:03
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<script src="${context}/js/modalWindow.js"></script>
 <div class="modal-holder">
     <div class="modal-window">
         <div class="modal-title">
-            &nbsp;
             <c:if test="${not empty title}">
                 <fmt:message key="${title}"/>
             </c:if>

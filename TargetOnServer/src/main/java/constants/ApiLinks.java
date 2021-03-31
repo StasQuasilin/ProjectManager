@@ -41,4 +41,5 @@ public interface ApiLinks {
     String RUN_TIMER = API + "/run/timer";
     String TASK_STATUS = API + "/task/status";
     String BUY_LIST_REMOVE = API + "/buy/list/remove";
+    String DISCUSSION_EDIT = API + "/discussion/edit";
 }

@@ -193,4 +193,6 @@ public interface Keys {
     String RUN_TIMER = "runTimer";
     String TASK_STATUS = "taskStatus";
     String REMOVE_BUY_LIST = "buyListRemove";
+    String OTHER = "other";
+    String DISCUSSION_EDIT = "discussionEdit";
 }

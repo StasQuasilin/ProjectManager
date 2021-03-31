@@ -1,6 +1,5 @@
-let timer = {
+timer = {
     data:{
-
         timer:{
             id:-1,
             task:{

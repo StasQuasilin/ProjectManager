@@ -53,13 +53,15 @@ treeItem = {
             })
         },
         showDependencyList:function () {
-            const self = this;
-            PostApi(this.props.dependencyList, {id:this.item.id}, function (a) {
-                if(a.status === 'success'){
-                    self.dependencyList = a.result;
-                    self.showDependency = true;
-                }
-            })
+            if(this.item.dependencyCount > 0) {
+                this.showDependency = true;
+                const self = this;
+                PostApi(this.props.dependencyList, {id: this.item.id}, function (a) {
+                    if (a.status === 'success') {
+                        self.dependencyList = a.result;
+                    }
+                })
+            }
         }
     },
     template:'<div>' +
@@ -73,35 +75,37 @@ treeItem = {
                             '+' +
                         '</template>' +
                     '</span> ' +
-                    '<a v-on:click="click()">' +
-                        '<template v-if="item.status === \'active\'">' +
-                            ' ' +
-                        '</template>' +
-                        '<span v-else-if="item.status === \'progressing\'" style="color: forestgreen">' +
-                            '&#9654;' +
-                        '</span>' +
-                        '<span v-else-if="item.status === \'done\'" style="color: forestgreen">' +
-                            '&checkmark;' +
-                        '</span>' +
-                        '<span v-else :title="item.status">' +
-                            '?' +
-                        '</span>' +
-                        '<span style="position: relative" v-if="item.dependencyCount" @mouseover="showDependencyList()" @mouseleave="showDependency=false">' +
-                            '{{item.dependencyCount}} ' +
-                            '<div class="tooltip" v-if="showDependency">' +
-                                '{{item.title}} depend from :' +
-                                '<ul>'+
-                                    '<li v-for="d in dependencyList">' +
-                                        '<template v-if="d.status === \'done\'">' +
-                                            '&checkmark;' +
-                                        '</template>' +
-                                        '<template v-else>' +
-                                            '-' +
-                                        '</template>' +
-                                        '{{d.title}}' +
-                                    '</li>' +
-                                '</ul>' +
-                            '</div>' +
+                    '<a v-on:click="click()" style="position: relative" :class="{\'task-impossible\' : item.status === \'impossible\'}" @mouseover="showDependencyList()" @mouseleave="showDependency=false">' +
+                        '<div v-if="item.dependencyCount > 0 && dependencyList.length > 0 && showDependency"  class="tooltip">' +
+                            '{{item.title}} depend from :' +
+                            '<ul>'+
+                                '<li v-for="d in dependencyList">' +
+                                    '<template v-if="d.status === \'done\'">' +
+                                        '&checkmark; ' +
+                                    '</template>' +
+                                    '<template v-else>' +
+                                        '- ' +
+                                    '</template>' +
+                                    '{{d.title}}' +
+                                '</li>' +
+                            '</ul>' +
+                        '</div>' +
+                        '<span style="padding-left: 4pt; display: inline-block; width: 10pt">' +
+                            '<template v-if="item.status === \'active\'">' +
+                                ' ' +
+                            '</template>' +
+                            '<span v-else-if="item.status === \'progressing\'" style="color: forestgreen">' +
+                                '&#9654;' +
+                            '</span>' +
+                            '<span v-else-if="item.status === \'done\'" style="color: forestgreen">' +
+                                '&checkmark;' +
+                            '</span>' +
+                            '<span v-else-if="item.status === \'impossible\'">' +
+                                '&times; ' +
+                            '</span>' +
+                            '<span v-else :title="item.status">' +
+                                '?' +
+                            '</span>' +
                         '</span>' +
                         '<span :class="{\'task-done\' : item.status === \'done\'}">' +
                             '{{item.title}}' +
@@ -133,7 +137,7 @@ treeItem = {
                         '</span>' +
                     '</div>' +
                     '<br>' +
-                    '<progress-bar  v-if="item.doneIf && item.statistic" :size="item.statistic.active+item.statistic.progressing+item.statistic.done" ' +
+                    '<progress-bar  v-if="item.doneIf && item.statistic" :size="item.statistic.active+item.statistic.progressing+item.statistic.done+item.statistic.other" ' +
                         ':value="item.statistic.done" :color="\'green\'"></progress-bar>' +
                 '</div>' +
                 '<div v-if="childrenCount > 0 && show" class="tree-children">' +

@@ -55,7 +55,8 @@ taskEdit = new Vue({
         dependent:[],
         principal:[],
         dependency:{},
-        addDependency:false
+        addDependency:false,
+        addDiscussion:false
     },
     computed:{
         additionally:function () {
@@ -80,6 +81,11 @@ taskEdit = new Vue({
         removeDependency:function(idx){
             this.task.dependency.splice(idx, 1);
             this.$forceUpdate();
+        },
+        createDiscussion:function(){
+            loadModal(this.api.discussionEdit,{task: this.task.id}, function (a) {
+                console.log(a);
+            })
         },
         save:function () {
             let task = Object.assign({}, this.task);

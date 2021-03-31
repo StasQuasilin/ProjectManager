@@ -2,6 +2,7 @@ package controllers.api.finance.buyList;
 
 import constants.ApiLinks;
 import controllers.api.API;
+import entity.Title;
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
 import entity.finance.category.Header;
@@ -31,12 +32,17 @@ public class BuyListEditAPI extends API {
         if (body != null){
             System.out.println(body);
             BuyList list = buyListDAO.getList(body.get(ID));
+            Title title;
             if (list == null){
                 list = new BuyList();
                 list.setOwner(getUser(req));
+                title = new Title();
+                list.setTitle(title);
+            } else {
+                title = list.getTitle();
             }
-            final String title = body.getString(TITLE);
-//            list.setTitle(title);
+
+            title.setValue(body.getString(TITLE));
 
             final HashMap<Integer, BuyListItem> items = new HashMap<>();
             for (BuyListItem item : list.getItemSet()){

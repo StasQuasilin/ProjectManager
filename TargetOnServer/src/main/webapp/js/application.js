@@ -49,18 +49,37 @@ function loadPage(url, params) {
         })
     }
 }
-function loadModal(url, parameters){
+function loadModal(url, parameters, onSave){
     PostReq(url, parameters, function (answer) {
-        $(modal).html(answer);
-        modal.style.display = 'block';
+        addModal(answer, onSave);
     })
+}
+function addModal(m, onSave){
+    modal.style.display='block';
+    let div = document.createElement('div');
+    div.style.visibility='hidden';
+    $(div).html(m);
+    $(modal).append(div);
+    modals.push(div);
+    if (typeof addOnSaveEvent !== 'undefined') {
+        addOnSaveEvent(onSave);
+    }
+    addOnCloseEvent(function () {
+        let d = modals[modals.length - 1];
+        modals.splice(modals.length - 1, 1);
+        $(d).remove();
+        if(modals.length === 0){
+            hideModalLayer();
+        }
+    });
+    div.style.visibility='visible';
 }
 function hideModalLayer() {
     modal.style.display = 'none';
 }
-function closeModal(){
-    hideModalLayer();
-}
+// function closeModal(){
+//     hideModalLayer();
+// }
 function logout() {
     PostReq(logoutUrl, null, function (a) {
         subscriber.shutdown();

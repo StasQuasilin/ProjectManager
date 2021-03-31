@@ -24,6 +24,7 @@
         <script type="application/javascript" src="${context}/js/constants.js"></script>
         <script type="application/javascript" src="${context}/js/connection.js"></script>
         <script type="application/javascript" src="${context}/js/subscriber.js"></script>
+
         <script type="application/javascript" src="${context}/js/application.js"></script>
         <script type="application/javascript" src="${context}/js/utils.js"></script>
         <script type="application/javascript" src="${context}/vue/list.vue?v=${now}"></script>

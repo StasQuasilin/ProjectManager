@@ -15,6 +15,7 @@
 <script src="${context}/vue/taskEdit.vue?v=${now}"></script>
 <script>
     taskEdit.api.save = '${save}';
+    taskEdit.api.discussionEdit = '${discussionEdit}';
     taskEdit.props.findCategory = '${findCategory}';
     taskEdit.buyListProps.findCategory = '${findBuyList}';
     taskEdit.dependencyProps.findCategory = '${findDependency}';
@@ -58,6 +59,9 @@
     }
     if(typeof taskEdit.task.dependency === "undefined"){
         taskEdit.task.dependency = [];
+    }
+    if (typeof taskEdit.task.discussions === "undefined"){
+        taskEdit.task.discussions = [];
     }
     <c:forEach items="${dependent}" var="d">
     taskEdit.task.dependency.push(${d.toJson()});
@@ -199,6 +203,18 @@
         </tr>
         <tr>
             <td colspan="2" style="text-align: center">
+                <span class="text-button" v-on:click="addDependency = true"
+                      v-if="task.dependency.length === 0 && !addDependency">
+                    <fmt:message key="dependency.add"/>
+                </span>
+                <span class="text-button"  v-on:click="createDiscussion()"
+                    v-if="task.discussions.length === 0">
+                    <fmt:message key="task.discussion.add"/>
+                </span>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align: center">
                 <button onclick="closeModal()">
                     <fmt:message key="button.cancel"/>
                 </button>
@@ -209,7 +225,7 @@
         </tr>
     </table>
     <c:if test="${task.id gt 0}">
-        <div>
+        <div v-if="(task.dependency && task.dependency.length > 0) || addDependency">
             <div style="width: 100%; text-align: center">
                 <fmt:message key="dependency"/>
                 <span class="tips">
@@ -232,11 +248,21 @@
             </span>
                 <div v-else>
                     <find-input :object="dependency" :props="dependencyProps" :show="'title'" :additionally="additionally"></find-input>
+                    <span class="text-button" v-on:click="addDependency = false">
+                        &times;
+                    </span>
                 </div>
             </div>
         </div>
+        <div v-if="task.discussions.length > 0">
+            <fmt:message key="task.discussion"/>
+            <span class="text-button" style="font-size: 10pt" v-on:click="createDiscussion()">
+                +<fmt:message key="button.add"/>
+            </span>
+            <div v-for="d in task.discussions">
+                {{d}}
+            </div>
+        </div>
     </c:if>
-    <div>
-        Description
-    </div>
+
 </div>

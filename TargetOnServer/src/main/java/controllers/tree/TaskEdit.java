@@ -94,6 +94,7 @@ public class TaskEdit extends ModalWindow {
         req.setAttribute(FIND_DEPENDENCY, ApiLinks.FIND_DEPENDENCY);
         req.setAttribute(FIND_CATEGORY, ApiLinks.FIND_CATEGORY);
         req.setAttribute(FIND_BUY_LIST, ApiLinks.FIND_BUY_LIST);
+        req.setAttribute(DISCUSSION_EDIT, UrlLinks.DISCUSSION_EDIT);
         req.setAttribute(SAVE, ApiLinks.TASK_EDIT);
         show(req, resp);
     }

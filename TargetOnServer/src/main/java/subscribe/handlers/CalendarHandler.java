@@ -20,7 +20,9 @@ public class CalendarHandler extends SubscribeHandler {
     Object getItems(User user) {
         JSONArray array = new JSONArray();
         for (Task task : taskDAO.getTaskByStatus(user, TaskStatus.active)){
-            array.add(task.toJson());
+            if (!task.isDoneIfChildren()) {
+                array.add(task.toJson());
+            }
         }
         return array;
     }

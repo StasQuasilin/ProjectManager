@@ -51,6 +51,7 @@ public class TaskTimerStopAPI extends API {
             final Task task = taskDAO.getTaskByHeader(timeLog.getHeader());
             task.setStatus(TaskStatus.active);
             taskDAO.saveTask(task);
+            taskUtil.updateStatistic(task.getHeader());
 
         } else {
             answer = EMPTY_BODY;

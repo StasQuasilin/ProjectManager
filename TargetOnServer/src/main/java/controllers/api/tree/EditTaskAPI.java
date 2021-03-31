@@ -34,7 +34,6 @@ import static constants.Keys.*;
 public class EditTaskAPI extends API {
 
     private final TaskDAO taskDAO = daoService.getTaskDAO();
-    private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
     private final TaskSaver taskSaver = new TaskSaver();
     private final TaskToBuyListUtil buyListUtil = new TaskToBuyListUtil();
     private final TaskUtil taskUtil = new TaskUtil();
@@ -137,6 +136,7 @@ public class EditTaskAPI extends API {
         int update = dependencyMap.size() - dependency.size();
         final Set<TaskDependency> dependencies = task.getDependencies();
         dependencies.clear();
+        int activeDep = 0;
         for (Object o : dependency){
             JsonObject object = new JsonObject(o);
             final int id = object.getInt(ID);
@@ -145,15 +145,40 @@ public class EditTaskAPI extends API {
                 remove = new TaskDependency();
                 remove.setTask(task);
                 remove.setDependency(taskDAO.getTaskByHeader(id));
-
+                taskDAO.saveDependency(remove);
             }
-            taskDAO.saveDependency(remove);
+
+            final Task dep = remove.getDependency();
+            if (dep.getStatus() == TaskStatus.active){
+                activeDep++;
+            }
             dependencies.add(remove);
+        }
+
+        if (dependencies.size() > 0 && activeDep > 0) {
+            if (task.getStatus() != TaskStatus.impossible) {
+                task.setStatus(TaskStatus.impossible);
+                saveTask(task);
+                update = 0;
+            }
+        } else {
+            if (task.getStatus() != TaskStatus.done) {
+                if (task.getStatus() != TaskStatus.active) {
+                    task.setStatus(TaskStatus.active);
+                    saveTask(task);
+                    update = 0;
+                }
+            }
         }
         for (TaskDependency taskDependency : dependencyMap.values()){
             taskDAO.removeDependency(taskDependency);
         }
         return update;
+    }
+
+    private void saveTask(Task task){
+        taskDAO.saveTask(task);
+        taskUtil.updateStatistic(task.getHeader());
     }
 
     private HashMap<Integer, TaskDependency> buildDependencyMap(Task task) {

@@ -24,6 +24,7 @@ public class Task extends JsonAble {
     private TaskType type;
     private Set<TaskDependency> dependencies = new HashSet<>();
     private Set<TaskDependency> principals;
+    private Set<TaskDiscussion> discussions;
     private TaskStatistic statistic;
     private Date date;
     private Date deadline;
@@ -56,6 +57,14 @@ public class Task extends JsonAble {
     }
     public void setDependencies(Set<TaskDependency> dependencies) {
         this.dependencies = dependencies;
+    }
+
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "task", cascade = CascadeType.ALL)
+    public Set<TaskDiscussion> getDiscussions() {
+        return discussions;
+    }
+    public void setDiscussions(Set<TaskDiscussion> discussions) {
+        this.discussions = discussions;
     }
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "dependency", cascade = CascadeType.ALL)
@@ -168,9 +177,11 @@ public class Task extends JsonAble {
         if(dependencies != null) {
             jsonObject.put(DEPENDENCY_COUNT, dependencies.size());
         }
+
         if(statistic != null){
             jsonObject.put(STATISTIC, statistic.toJson());
         }
+
         return jsonObject;
     }
 

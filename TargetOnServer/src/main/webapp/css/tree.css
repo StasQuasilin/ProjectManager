@@ -34,15 +34,18 @@
 }
 
 .tree-children{
-    padding-left: 12pt;
+    margin-left: 12pt;
     padding-bottom: 2pt;
     border-left: dashed gray 1px;
     border-bottom: dashed gray 1px;
 }
-.task-done::before, .task-done::after{
+.task-done::before ::after{
     content: '  ';
 }
 .task-done{
     color: gray;
     text-decoration: line-through;
+}
+.task-impossible{
+    color: #dce0b9;
 }
