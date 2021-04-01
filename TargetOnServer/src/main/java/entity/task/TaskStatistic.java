@@ -1,5 +1,6 @@
 package entity.task;
 
+import constants.Keys;
 import entity.finance.category.Category;
 import entity.finance.category.Header;
 import org.json.simple.JSONObject;
@@ -17,6 +18,7 @@ public class TaskStatistic extends JsonAble {
     private Header header;
     private float plus;
     private float minus;
+    private float coast;
     private long spendTime;
     private int activeChildren;
     private int progressingChildren;
@@ -62,6 +64,15 @@ public class TaskStatistic extends JsonAble {
     }
     public void setMinus(float minus) {
         this.minus = minus;
+    }
+
+    @Basic
+    @Column(name = "_coast")
+    public float getCoast() {
+        return coast;
+    }
+    public void setCoast(float coast) {
+        this.coast = coast;
     }
 
     @Basic
@@ -112,12 +123,14 @@ public class TaskStatistic extends JsonAble {
     public void clean() {
         plus = 0;
         minus = 0;
+        coast = 0;
     }
 
     public void add(TaskStatistic statistic) {
         if (statistic != null){
             plus += statistic.getPlus();
             minus += statistic.getMinus();
+            coast += statistic.getCoast();
             activeChildren += statistic.getActiveChildren();
             progressingChildren += statistic.getProgressingChildren();
             doneChildren += statistic.getDoneChildren();
@@ -147,6 +160,7 @@ public class TaskStatistic extends JsonAble {
         final JSONObject jsonObject = getJsonObject();
         jsonObject.put(PLUS, plus);
         jsonObject.put(MINUS, minus);
+        jsonObject.put(COAST, coast);
         jsonObject.put(SPEND, spendTime);
         jsonObject.put(ACTIVE, activeChildren);
         jsonObject.put(PROGRESSING, progressingChildren);
@@ -175,7 +189,7 @@ public class TaskStatistic extends JsonAble {
     }
 
     public boolean any() {
-        return plus != 0 || minus != 0 || (spendTime + activeChildren + progressingChildren + doneChildren + otherChildren) > 0;
+        return plus != 0 || minus != 0 || coast != 0 || (spendTime + activeChildren + progressingChildren + doneChildren + otherChildren) > 0;
     }
 
     public void add(PlusMinus plusMinus) {

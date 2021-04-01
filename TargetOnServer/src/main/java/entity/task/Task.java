@@ -1,5 +1,6 @@
 package entity.task;
 
+import constants.Keys;
 import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONObject;
@@ -22,6 +23,9 @@ public class Task extends JsonAble {
     private Header header;
     private TaskStatus status;
     private TaskType type;
+    private float progress;
+    private float target;
+    private float coast;
     private Set<TaskDependency> dependencies = new HashSet<>();
     private Set<TaskDependency> principals;
     private Set<TaskDiscussion> discussions;
@@ -73,6 +77,33 @@ public class Task extends JsonAble {
     }
     public void setPrincipals(Set<TaskDependency> principals) {
         this.principals = principals;
+    }
+
+    @Basic
+    @Column(name = "_progress")
+    public float getProgress() {
+        return progress;
+    }
+    public void setProgress(float progress) {
+        this.progress = progress;
+    }
+
+    @Basic
+    @Column(name = "_target")
+    public float getTarget() {
+        return target;
+    }
+    public void setTarget(float target) {
+        this.target = target;
+    }
+
+    @Basic
+    @Column(name = "_coast")
+    public float getCoast() {
+        return coast;
+    }
+    public void setCoast(float coast) {
+        this.coast = coast;
     }
 
     @Transient
@@ -174,6 +205,8 @@ public class Task extends JsonAble {
         jsonObject.put(TITLE, header.getTitle());
         jsonObject.put(STATUS, status.toString());
         jsonObject.put(TYPE, type.toString());
+        jsonObject.put(PROGRESS, progress);
+        jsonObject.put(TARGET, target);
         if(dependencies != null) {
             jsonObject.put(DEPENDENCY_COUNT, dependencies.size());
         }

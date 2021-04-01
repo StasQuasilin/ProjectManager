@@ -19,6 +19,8 @@ import utils.db.dao.finance.transactions.TransactionDAO;
 import utils.db.dao.finance.transactions.TransactionDAOImpl;
 import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.goal.GoalDAOImpl;
+import utils.db.dao.tree.DiscussionDao;
+import utils.db.dao.tree.DiscussionDaoImpl;
 import utils.db.dao.tree.TaskDAO;
 import utils.db.dao.tree.TaskDAOImpl;
 import utils.db.dao.user.FriendshipDAO;
@@ -43,6 +45,7 @@ public class daoService {
     private static final DemoAccessDAO  demoDAO = new DemoAccessDAOImpl();
     private static final FriendshipDAO  friendshipDAO = new FriendshipDAOHibernate();
     private static final TitleDAO       titleDAO = new TitleDAOHibernate();
+    private static final DiscussionDao discussionDao = new DiscussionDaoImpl();
 
     static {
         accountDao = new AccountDAOImpl();
@@ -100,5 +103,9 @@ public class daoService {
 
     public static TitleDAO getTitleDAO() {
         return titleDAO;
+    }
+
+    public static DiscussionDao getDiscussionDao() {
+        return discussionDao;
     }
 }

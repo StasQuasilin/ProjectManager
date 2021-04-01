@@ -53,6 +53,9 @@ input[type=checkbox], input[type=radio]{
 .text-button:hover{
     text-shadow: 0 0 6px #282828;
 }
+.mini-text-button{
+    font-size: 8pt;
+}
 .edit-button{
     background-image: url("../images/buttons/edit.svg");
     background-size: 10px;
@@ -136,6 +139,7 @@ button{
     padding: 4px;
     color: white;
     left: 0;
+    z-index: 99;
 }
 .tips:hover .tips-content{
     display: block;

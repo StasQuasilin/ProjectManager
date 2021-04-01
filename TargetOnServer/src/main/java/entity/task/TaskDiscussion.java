@@ -1,13 +1,16 @@
 package entity.task;
 
+import constants.Keys;
 import entity.user.User;
+import org.json.simple.JSONObject;
+import utils.json.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
 @Table(name = "task_discussions")
-public class TaskDiscussion {
+public class TaskDiscussion extends JsonAble {
     private int id;
     private Task task;
     private Timestamp time;
@@ -68,5 +71,18 @@ public class TaskDiscussion {
     }
     public void setText(String text) {
         this.text = text;
+    }
+
+    @Override
+    public JSONObject toJson() {
+        final JSONObject object = new JSONObject();
+        object.put(Keys.ID, id);
+        object.put(Keys.TIME, time.toString());
+        object.put(Keys.AUTHOR, author.toJson());
+        if(parent != null) {
+            object.put(Keys.PARENT, parent.getId());
+        }
+        object.put(Keys.TEXT, text);
+        return object;
     }
 }

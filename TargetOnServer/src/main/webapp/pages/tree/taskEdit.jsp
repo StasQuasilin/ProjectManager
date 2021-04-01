@@ -26,6 +26,7 @@
     <c:forEach items="${types}" var="t">
     taskEdit.types.push('${t}');
     taskEdit.typeNames['${t}'] = '<fmt:message key="${t}"/>';
+    taskEdit.typeDescriptions['${t}'] = '<fmt:message key="${t}.description"/>';
     </c:forEach>
     <c:if test="${not empty parent}">
     taskEdit.task.parent = ${parent.toJson()}
@@ -63,6 +64,9 @@
     if (typeof taskEdit.task.discussions === "undefined"){
         taskEdit.task.discussions = [];
     }
+    <c:forEach items="${discussions}" var="d">
+    taskEdit.task.discussions.push(${d.toJson()});
+    </c:forEach>
     <c:forEach items="${dependent}" var="d">
     taskEdit.task.dependency.push(${d.toJson()});
     </c:forEach>
@@ -110,8 +114,35 @@
                         {{typeNames[t]}}
                     </option>
                 </select>
+                <span class="tips">
+                    <span class="tips-content">
+                        {{typeDescriptions[task.type]}}
+                    </span>
+                </span>
             </td>
         </tr>
+        <template v-if="task.type === 'accumulative'">
+            <tr>
+                <td>
+                    <label for="taskTarget">
+                        <fmt:message key="task.accumulative.target"/>
+                    </label>
+                </td>
+                <td>
+                    <input id="taskTarget" v-model="task.target" autocomplete="off" onfocus="this.select()">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="taskProgress">
+                        <fmt:message key="task.accumulative.progress"/>
+                    </label>
+                </td>
+                <td>
+                    <input id="taskProgress" v-model="task.progress" autocomplete="off" onfocus="this.select()">
+                </td>
+            </tr>
+        </template>
         <tr>
             <td>
 
@@ -194,6 +225,16 @@
                     <find-input :object="task.buyList" :props="buyListProps"></find-input>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <label for="coast">
+                        <fmt:message key="task.coast"/>
+                    </label>
+                </td>
+                <td>
+                    <input id="coast" v-model="task.coast" onfocus="this.select()" autocomplete="off">
+                </td>
+            </tr>
         </template>
         <tr>
             <td colspan="2">
@@ -211,16 +252,6 @@
                     v-if="task.discussions.length === 0">
                     <fmt:message key="task.discussion.add"/>
                 </span>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align: center">
-                <button onclick="closeModal()">
-                    <fmt:message key="button.cancel"/>
-                </button>
-                <button v-on:click="save">
-                    <fmt:message key="button.save"/>
-                </button>
             </td>
         </tr>
     </table>
@@ -260,9 +291,21 @@
                 +<fmt:message key="button.add"/>
             </span>
             <div v-for="d in task.discussions">
-                {{d}}
+                <span v-html="d.text"></span>
+                <br>
+                <span style="font-size: 8pt">
+                    {{new Date(d.time).toLocaleString()}}
+                    {{d.author.surname}} {{d.author.forename}}
+                </span>
             </div>
         </div>
     </c:if>
-
+    <div class="modal-buttons">
+        <button onclick="closeModal()">
+            <fmt:message key="button.cancel"/>
+        </button>
+        <button v-on:click="save">
+            <fmt:message key="button.save"/>
+        </button>
+    </div>
 </div>

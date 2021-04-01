@@ -53,6 +53,7 @@ public class TreePage extends Page {
         req.setAttribute(DEPENDENCY_LIST, ApiLinks.DEPENDENCY_LIST);
         req.setAttribute(RUN_TIMER, ApiLinks.TIMER_START);
         req.setAttribute(TASK_STATUS, ApiLinks.TASK_STATUS);
+        req.setAttribute(SAVE_TASK_PROGRESS, ApiLinks.SAVE_TASK_PROGRESS);
         show(req, resp);
     }
 }

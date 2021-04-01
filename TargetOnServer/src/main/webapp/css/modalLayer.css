@@ -21,6 +21,10 @@
     background-color: darkgoldenrod;
     width: 100%;
 }
+.modal-title-content{
+    display: block;
+    padding: 0 8pt;
+}
 .modal-title * {
     background-color: transparent;
 }

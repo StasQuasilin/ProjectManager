@@ -5,7 +5,7 @@
     height: 100%;
 }
 .tree-item{
-
+    padding: 4pt 0;
 }
 .tree-parent{
     background-color: #3498db;
@@ -19,15 +19,18 @@
 }
 .tree-menu{
     border: solid 1px;
-    float: right;
     border-radius: 8pt;
     padding: 0 4pt 0 4pt;
+    height: 22px;
 }
 .tree-item .tree-menu{
     display: none;
 }
+.tree-item:hover{
+background: linear-gradient( 87deg, cornflowerblue, transparent);
+}
 .tree-item:hover .tree-menu{
-    display: block;
+    display: inline;
 }
 .tree-item a, span, .tree-menu{
     background-color: transparent;

@@ -13,12 +13,14 @@
 <div class="modal-holder">
     <div class="modal-window">
         <div class="modal-title">
-            <c:if test="${not empty title}">
-                <fmt:message key="${title}"/>
-            </c:if>
-            <span class="close-modal-button text-button" onclick="closeModal()">
-                &times;
-            </span>
+            <div class="modal-title-content">
+                <c:if test="${not empty title}">
+                    <fmt:message key="${title}"/>
+                </c:if>
+                <span class="close-modal-button text-button" onclick="closeModal()">
+                    &times;
+                </span>
+            </div>
         </div>
         <div class="modal-content">
             <jsp:include page="${content}"/>

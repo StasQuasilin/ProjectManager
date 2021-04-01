@@ -1,6 +1,7 @@
 package controllers.api.tree;
 
 import constants.ApiLinks;
+import constants.Keys;
 import controllers.api.API;
 import entity.finance.category.Header;
 import entity.finance.category.HeaderType;
@@ -49,20 +50,29 @@ public class EditTaskAPI extends API {
                 task = new Task();
                 task.setUid(UUID.randomUUID().toString());
             }
-
-            if (body.containKey(STATUS)){
-                TaskStatus status = TaskStatus.valueOf(body.getString(STATUS));
-                task.setStatus(status);
-            } else {
-                task.setStatus(TaskStatus.active);
-            }
-
             if(body.containKey(TYPE)){
                 TaskType type = TaskType.valueOf(body.getString(TYPE));
                 task.setType(type);
             } else {
-                task.setType(TaskType.accumulative);
+                task.setType(TaskType.handmade);
             }
+            final TaskType type = task.getType();
+            if (type != TaskType.accumulative) {
+                if (body.containKey(STATUS)) {
+                    TaskStatus status = TaskStatus.valueOf(body.getString(STATUS));
+                    task.setStatus(status);
+                } else {
+                    task.setStatus(TaskStatus.active);
+                }
+            } else {
+                float progress = body.getFloat(PROGRESS);
+                float target = body.getFloat(TARGET);
+                task.setProgress(progress);
+                task.setTarget(target);
+                task.setStatus(progress >= target ? TaskStatus.done : TaskStatus.active);
+            }
+
+
 
             if (body.containKey(DEADLINE)){
                 Date deadline = body.getDate(DEADLINE);

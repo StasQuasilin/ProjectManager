@@ -13,6 +13,7 @@
     treeView.props.taskTimer = '${taskTimer}';
     treeView.props.runTimer = '${runTimer}';
     treeView.props.taskStatus = '${taskStatus}';
+    treeView.props.taskProgress = '${saveTaskProgress}';
     treeView.on = function(id){
         treeView.onClick(id)
     };

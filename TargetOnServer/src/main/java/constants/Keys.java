@@ -195,4 +195,11 @@ public interface Keys {
     String REMOVE_BUY_LIST = "buyListRemove";
     String OTHER = "other";
     String DISCUSSION_EDIT = "discussionEdit";
+    String TEXT = "text";
+    String AUTHOR = "author";
+    String DISCUSSIONS = "discussions";
+    String PROGRESS = "progress";
+    String TARGET = "target";
+    String SAVE_TASK_PROGRESS = "saveTaskProgress";
+    String COAST = "coast";
 }

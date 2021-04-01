@@ -120,3 +120,8 @@
 .tooltip li{
     list-style: none;
 }
+.modal-buttons{
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+}

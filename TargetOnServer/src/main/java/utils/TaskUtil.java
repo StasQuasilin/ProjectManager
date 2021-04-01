@@ -56,8 +56,8 @@ public class TaskUtil {
 
     public void updateStatistic(Header header) {
         TaskStatistic statistic = taskDAO.getStatisticOrCreate(header);
-
         statistic.cleanChildren();
+
         for (Task task :  taskDAO.getTasksByParent(header)){
             final TaskStatistic childStatistic = taskDAO.getStatistic(task.getHeader().getId());
             if (childStatistic != null){

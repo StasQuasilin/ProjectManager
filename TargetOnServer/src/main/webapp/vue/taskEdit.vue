@@ -21,6 +21,7 @@ taskEdit = new Vue({
         types:[],
         statusNames:{},
         typeNames:{},
+        typeDescriptions:{},
         props:{
             put:function(parent){
                 taskEdit.task.parent = parent;
@@ -83,7 +84,13 @@ taskEdit = new Vue({
             this.$forceUpdate();
         },
         createDiscussion:function(){
+            const self = this;
             loadModal(this.api.discussionEdit,{task: this.task.id}, function (a) {
+                if(a.status === 'success'){
+                    if (a.result){
+                        self.task.discussions.push(a.result);
+                    }
+                }
                 console.log(a);
             })
         },

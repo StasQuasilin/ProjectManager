@@ -18,7 +18,8 @@ treeItem = {
         return {
             show:true,
             dependencyList:[],
-            showDependency:false
+            showDependency:false,
+            saveProgressTimer:-1,
         }
     },
     methods:{
@@ -52,6 +53,21 @@ treeItem = {
                 return a.title.localeCompare(b.title);
             })
         },
+        changeProgress:function(val){
+            let p = this.item.progress = parseFloat(this.item.progress)+val;
+            this.saveProgress(p);
+        },
+        saveProgress:function(val){
+            clearTimeout(this.saveProgressTimer);
+            const self = this;
+            this.saveProgressTimer = setTimeout(function () {
+                PostApi(self.props.taskProgress, {task:self.item.id,progress:val},function (a) {
+                    if(a.status === 'success'){
+                        self.item.progress = a.result;
+                    }
+                })
+            }, 1500);
+        },
         showDependencyList:function () {
             if(this.item.dependencyCount > 0) {
                 this.showDependency = true;
@@ -61,6 +77,11 @@ treeItem = {
                         self.dependencyList = a.result;
                     }
                 })
+            }
+        },
+        taskProgressInputStyle:function () {
+            return {
+                width:(this.item.progress.toString().length + 1) * 6 + 'px'
             }
         }
     },
@@ -75,7 +96,7 @@ treeItem = {
                             '+' +
                         '</template>' +
                     '</span> ' +
-                    '<a v-on:click="click()" style="position: relative" :class="{\'task-impossible\' : item.status === \'impossible\'}" @mouseover="showDependencyList()" @mouseleave="showDependency=false">' +
+                    '<a style="position: relative" :class="{\'task-impossible\' : item.status === \'impossible\'}" @mouseover="showDependencyList()" @mouseleave="showDependency=false">' +
                         '<div v-if="item.dependencyCount > 0 && dependencyList.length > 0 && showDependency"  class="tooltip">' +
                             '{{item.title}} depend from :' +
                             '<ul>'+
@@ -107,9 +128,26 @@ treeItem = {
                                 '?' +
                             '</span>' +
                         '</span>' +
-                        '<span :class="{\'task-done\' : item.status === \'done\'}">' +
+                        '<span :class="{\'task-done\' : item.status === \'done\'}" v-on:click="click()">' +
                             '{{item.title}}' +
                         '</span>' +
+                        '<template v-if="item.type === \'accumulative\'">' +
+                            ' ( ' +
+                                '<template v-if="item.status !== \'done\'">' +
+                                    '<span class="text-button mini-text-button" v-on:click="changeProgress(-1)">' +
+                                        '-' +
+                                    '</span>' +
+                                    ' <input style="width: 0" :style="taskProgressInputStyle()" v-on:change="changeProgress(0)" onfocus="this.select()" ondblclick="this.select()" ' +
+                                        'v-model="item.progress" autocompete="off"> ' +
+                                    '<span class="text-button mini-text-button" v-on:click="changeProgress(1)">' +
+                                        '+' +
+                                    '</span>' +
+                                '</template>' +
+                                '<template v-else>' +
+                                    '{{item.progress.toLocaleString()}}' +
+                                '</template>' +
+                            ' / {{item.target.toLocaleString()}} )' +
+                        '</template>' +
                         '<span v-if="item.deadline">' +
                             'Deadline: {{new Date(item.deadline).toLocaleDateString()}}' +
                         '</span>' +

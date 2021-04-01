@@ -14,7 +14,7 @@ public interface UrlLinks {
     String FAST_TRANSACTION_EDIT = "/fast/transaction/edit" + SUFFIX;
     String ACCOUNT_EDIT = "/account/edit" + SUFFIX;
     String BUY_LIST_EDIT = "/buy/list/edit" + SUFFIX;
-    String TASK_EDIT = "/task/edit/" + SUFFIX;
+    String TASK_EDIT = "/task/edit" + SUFFIX;
     String CALENDAR_EDIT = "/calendar/edit" + SUFFIX;
     String PERSONAL = "/personal" + SUFFIX;
     String TRANSACTION_REMOVE = "/transaction/remove" + SUFFIX;

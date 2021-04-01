@@ -7,12 +7,14 @@ ed = {
     },
     methods:{
         save:function () {
-            PostApi(this.api.save, {item:this.item}, function (a) {
+            PostApi(this.api.save, this.item, function (a) {
                 if (a.status === 'success'){
                     if (a.result){
                         saveModal(a.result);
                     }
                     closeModal();
+                } else {
+                    console.log(a);
                 }
             })
         }
