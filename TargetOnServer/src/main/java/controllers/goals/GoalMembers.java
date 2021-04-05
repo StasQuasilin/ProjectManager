@@ -29,10 +29,16 @@ public class GoalMembers extends ModalWindow {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
         if (body != null){
-            final User user = getUser(req);
-            req.setAttribute(Keys.FRIENDS, friendshipDAO.getFriends(user));
+            System.out.println(body);
             final Goal goal = goalDAO.getGoal(body.get(Keys.ID));
+
+            final User user = getUser(req);
+            if(goal.getTitle().getOwner().equals(user)) {
+                req.setAttribute(Keys.FRIENDS, friendshipDAO.getFriends(user));
+            }
+
             req.setAttribute(Keys.ITEM, goal.getId());
+            req.setAttribute(Keys.GOAL, goal);
             req.setAttribute(Keys.MEMBERS, goalDAO.getGoalMembers(goal));
             req.setAttribute(Keys.SAVE, ApiLinks.SAVE_GOAL_MEMBERS);
             req.setAttribute(Keys.TITLE, _TITLE);

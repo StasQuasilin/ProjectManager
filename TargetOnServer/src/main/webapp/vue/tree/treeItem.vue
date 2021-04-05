@@ -177,6 +177,12 @@ treeItem = {
                     '<br>' +
                     '<progress-bar  v-if="item.doneIf && item.statistic" :size="item.statistic.active+item.statistic.progressing+item.statistic.done+item.statistic.other" ' +
                         ':value="item.statistic.done" :color="\'green\'"></progress-bar>' +
+                    '<div class="doer-bar" v-if="item.doers">' +
+                        'Doers: {{item.doers.length.toLocaleString()}}' +
+                        '<span class="doer-icon" v-for="doer in item.doers" :title="doer.surname + \' \' + doer.forename">' +
+                            '{{doer.surname.substring(0,1)}}{{doer.forename.substring(0,1)}}' +
+                        '</span>' +
+                    '</div>' +
                 '</div>' +
                 '<div v-if="childrenCount > 0 && show" class="tree-children">' +
                     '<tree-item v-for="child in sortedChildren()" :onclick="onclick" :key="child.id" :item="child" :props="props"></tree-item>' +

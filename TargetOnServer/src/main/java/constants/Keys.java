@@ -1,5 +1,7 @@
 package constants;
 
+import java.util.HashMap;
+
 public interface Keys {
     String ENCODING = "UTF-8";
     String CONTEXT = "context";
@@ -202,4 +204,6 @@ public interface Keys {
     String TARGET = "target";
     String SAVE_TASK_PROGRESS = "saveTaskProgress";
     String COAST = "coast";
+    String FRIEND = "friend";
+    String DOERS = "doers";
 }

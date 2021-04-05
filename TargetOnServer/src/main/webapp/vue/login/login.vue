@@ -20,7 +20,7 @@ loginApp = new Vue({
             let login = this.login;
             let errors = this.errors;
             let valid = true;
-            if(login.email.length < 5){
+            if(login.email.length < 3){
                 errors.email = true;
                 valid = false;
             }

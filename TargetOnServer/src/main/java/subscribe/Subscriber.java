@@ -79,7 +79,9 @@ public final class Subscriber {
 
     public void onClose(User user, Session session){
         final ArrayList<Session> remove = sessions.remove(user);
-        remove.remove(session);
+        if(remove != null){
+            remove.remove(session);
+        }
         subscribes.remove(session);
     }
 

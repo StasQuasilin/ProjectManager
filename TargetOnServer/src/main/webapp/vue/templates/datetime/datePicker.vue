@@ -28,7 +28,7 @@ datePicker = {
             }
         }
     },
-    template:'<div style="position: relative; display: inline-block; background-color: transparent">' +
+    template:'<div style="display: inline-block; background-color: transparent">' +
             '<div class="text-button" style="background-color: transparent" v-on:click="show=!show">' +
                 '{{new Date(date).toLocaleDateString()}}' +
             '</div>' +
@@ -40,7 +40,7 @@ datePicker = {
                     ':first-day-of-week="1" ' +
                     '@input="put"' +
                     'v-model="_date">' +
-                '      </v-date-picker>' +
+                    '</v-date-picker>' +
             '</div>' +
 
         '</div>'

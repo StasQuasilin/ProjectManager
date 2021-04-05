@@ -52,6 +52,7 @@ public class TaskTimerStopAPI extends API {
             task.setStatus(TaskStatus.active);
             taskDAO.saveTask(task);
             taskUtil.updateStatistic(task.getHeader());
+            taskDAO.removeTaskDoer(task, timeLog.getOwner());
 
         } else {
             answer = EMPTY_BODY;

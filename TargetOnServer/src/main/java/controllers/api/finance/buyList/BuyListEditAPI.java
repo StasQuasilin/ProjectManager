@@ -63,9 +63,10 @@ public class BuyListEditAPI extends API {
                     header.setOwner(user);
                     remove.setHeader(header);
                 }
-//                category.setTitle(item.getString(TITLE));
+                header.setValue(item.getString(TITLE));
                 remove.setCount(item.getFloat(COUNT));
                 remove.setPrice(item.getFloat(PRICE));
+                remove.setDate(item.getDate(DATE));
                 list.addItem(remove);
             }
             buyListDAO.saveList(list);

@@ -20,14 +20,25 @@ goalTile = {
             } else {
                 console.warn('---');
             }
+        },
+        openMemberList:function () {
+            console.log(this.props.memberList);
+            if(this.props.memberList){
+                loadModal(this.props.memberList, {id:this.goal.id})
+            }
         }
     },
-    template:'<div>' +
+    template:'<div style="display: flex">' +
+        '<div v-if="goal.active" class="active-goal"></div>' +
+        '<div style="width: 100%">' +
             '<div class="goal-header">' +
                 '<span class="goal-title" v-on:click="onClick">' +
-                    '{{goal.title}}' +
+                    '{{goal.title}} by {{goal.owner.surname}} {{goal.owner.forename}}' +
                 '</span>' +
                 '<div class="goal-title-buttons">' +
+                    '<span title="Goal members" v-on:click="openMemberList()">' +
+                        '<img style="background: transparent; width: 8pt" :src="props.memberIcon" alt="M">1' +
+                    '</span>' +
                     '<span class="text-button" v-on:click="props.edit(goal.id)">' +
                         '&#10000;' +
                     '</span>' +
@@ -105,5 +116,6 @@ goalTile = {
                 '</div>' +
 
             '</div>' +
-        '</div>'
+        '</div>' +
+    '</div>'
 };

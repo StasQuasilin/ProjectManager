@@ -7,6 +7,8 @@ import utils.json.JsonAble;
 
 import javax.persistence.*;
 
+import java.sql.Date;
+
 import static constants.Keys.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class BuyListItem extends JsonAble {
     private int id;
     private BuyList list;
     private Header header;
+    private Date date;
     private float count;
     private Unit unit;
     private float price;
@@ -46,6 +49,15 @@ public class BuyListItem extends JsonAble {
     }
     public void setHeader(Header header) {
         this.header = header;
+    }
+
+    @Basic
+    @Column(name = "_date")
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Basic
@@ -99,6 +111,9 @@ public class BuyListItem extends JsonAble {
         JSONObject json = header.shortJson();
         json.put(ID, id);
         json.put(CATEGORY, header.getId());
+        if(date != null){
+            json.put(DATE, date.toString());
+        }
 
         json.put(COUNT, count);
         if (unit != null) {

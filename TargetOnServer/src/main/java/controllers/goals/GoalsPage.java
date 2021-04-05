@@ -1,6 +1,5 @@
 package controllers.goals;
 
-import constants.Keys;
 import constants.UrlLinks;
 import controllers.Page;
 import subscribe.Subscribe;
@@ -25,6 +24,7 @@ public class GoalsPage extends Page {
         req.setAttribute(EDIT, UrlLinks.GOAL_EDIT);
         req.setAttribute(TREE, UrlLinks.TREE);
         req.setAttribute(REMOVE, UrlLinks.GOAL_REMOVE);
+        req.setAttribute(MEMBER_LIST, UrlLinks.GOAL_MEMBERS);
         req.setAttribute(SUBSCRIBE, Subscribe.goal);
         show(req, resp);
     }

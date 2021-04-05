@@ -2,10 +2,8 @@ package utils;
 
 import entity.finance.category.Header;
 import entity.goal.Goal;
-import entity.task.Task;
-import entity.task.TaskStatistic;
-import entity.task.TaskStatus;
-import entity.task.TimeLog;
+import entity.task.*;
+import entity.user.User;
 import subscribe.Subscribe;
 import utils.db.dao.daoService;
 import utils.db.dao.goal.GoalDAO;
@@ -89,6 +87,16 @@ public class TaskUtil {
         final Header parent = header.getParent();
         if(parent != null){
             updateStatistic(parent);
+        }
+    }
+
+    public void addTaskDoer(Task task, User user) {
+        TaskDoer pair = taskDAO.getTaskDoerPair(task, user);
+        if(pair == null){
+            pair = new TaskDoer();
+            pair.setTask(task);
+            pair.setDoer(user);
+            taskDAO.saveTaskDoer(pair);
         }
     }
 }

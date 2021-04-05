@@ -52,3 +52,16 @@ background: linear-gradient( 87deg, cornflowerblue, transparent);
 .task-impossible{
     color: #dce0b9;
 }
+.doer-bar{
+    background: transparent;
+    margin-left: 24pt;
+}
+.doer-icon{
+    background-color: pink;
+    border-radius: 10pt;
+    padding: 4px 2pt;
+    width: 18pt;
+    display: inline-block;
+    text-align: center;
+    margin: 0 1pt;
+}

@@ -1,5 +1,7 @@
 package utils.db.dao.goal;
 
+import entity.finance.category.Header;
+import entity.goal.ActiveGoal;
 import entity.goal.Goal;
 import entity.goal.GoalMember;
 import entity.user.User;
@@ -27,7 +29,7 @@ public class GoalDAOImpl implements GoalDAO{
         HashMap<String, Object> params = new HashMap<>();
         params.put(TITLE_OWNER, user);
         //My own goals
-        List<Goal> goals = hibernator.query(Goal.class, null);
+        List<Goal> goals = hibernator.query(Goal.class, params);
         params.clear();
         params.put(MEMBER, user);
         //Goals where i am member
@@ -73,5 +75,21 @@ public class GoalDAOImpl implements GoalDAO{
     @Override
     public void removeMember(GoalMember member) {
         hibernator.remove(member);
+    }
+
+    @Override
+    public void changeActiveGoal(Header header, User user) {
+        ActiveGoal activeGoal = getActiveGoal(user);
+        if (activeGoal == null){
+            activeGoal = new ActiveGoal();
+            activeGoal.setUser(user);
+        }
+        activeGoal.setHeader(header);
+        hibernator.save(activeGoal);
+    }
+
+    @Override
+    public ActiveGoal getActiveGoal(User user) {
+        return hibernator.get(ActiveGoal.class, USER, user);
     }
 }

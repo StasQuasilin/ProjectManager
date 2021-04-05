@@ -9,7 +9,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
-<script src="${context}/vue/buyListEdit.vue"></script>
+<script src="${context}/vue/templates/datetime/datePicker.vue?v=${now}"></script>
+<script src="${context}/vue/buyListEdit.vue?v=${now}"></script>
 <script>
     buyListEdit.api.save = '${save}';
     <c:if test="${not empty list}">
@@ -32,9 +33,6 @@
     <tr>
         <td style="font-size: 10pt">
             <fmt:message key="buy.list"/>
-            <span v-if="!edit" class="text-button" v-on:click="editItem()">
-                <fmt:message key="buy.list.add"/>
-            </span>
         </td>
     </tr>
     <tr>
@@ -45,25 +43,33 @@
                         <div>
                             <input v-model="newItem.title" autocomplete="off" onfocus="this.select()">
                         </div>
-                        <div>
+                        <div style="display: flex">
+                            <fmt:message key="buy.date"/>
+                            <template v-if="newItem.date">
+                                <date-picker :date="newItem.date" :props="dateProps"></date-picker>
+                                <span class="text-button" v-on:click="removeDate()">
+                                    &times;
+                                </span>
+                            </template>
+                            <template v-else>
+                                <span class="text-button" v-on:click="addDate()">
+                                    <fmt:message key="date.add"/>
+                                </span>
+                            </template>
+                        </div>
+                        <div style="display: flex">
                             <label for="count">
                                 <fmt:message key="buy.list.count"/>
                             </label>
-                            <input id="count" v-model="newItem.count" autocomplete="off" onfocus="this.select()">
-                        </div>
-                        <div>
+                            <input id="count" v-model="newItem.count" autocomplete="off" onfocus="this.select()" style="width: 40pt">
                             <label for="price">
                                 <fmt:message key="transaction.price"/>
                             </label>
-                            <input id="price" v-model="newItem.price" autocomplete="off" onfocus="this.select()">
+                            <input id="price" v-model="newItem.price" autocomplete="off" onfocus="this.select()" style="width: 40pt">
                         </div>
                         <div style="width: 100%; text-align: center">
-                            <span class="text-button" v-on:click="addItem()">
-                                &check;
-                            </span>
-                            <span class="text-button" v-on:click="edit = false">
-                                &times;
-                            </span>
+                            <span class="text-button" v-on:click="addItem()">&check;</span>
+                            <span class="text-button" v-on:click="clearAdd()">&times;</span>
                         </div>
                     </div>
                     <div v-else>
@@ -83,17 +89,12 @@
                     </span>
                     </div>
                 </template>
-
             </div>
-            <div v-if="!edit">
-                <input id="itemName" v-model="newItem.title" autocomplete="off"
-                       onfocus="this.select()" style="width: auto">
-                <span class="text-button" v-on:click="addItem()">
-                    &check;
-                </span>
-                <span class="text-button" v-on:click="edit = false">
-                    &times;
-                </span>
+            <div style="display: flex" v-if="!edit">
+                <input id="itemName" v-model="newItem.title" autocomplete="off" v-on:keyup.enter="addItem()"
+                       v-on:keyup.escape="clearAdd()" onfocus="this.select()" style="width: 100%">
+                <span class="text-button" v-on:click="addItem()" style="padding-left: 4pt">&check;</span>
+                <span class="text-button" v-on:click="clearAdd()" style="padding-left: 4pt">&times;</span>
             </div>
         </td>
     </tr>

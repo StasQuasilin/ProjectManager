@@ -1,6 +1,7 @@
 package subscribe.handlers;
 
 import constants.Keys;
+import entity.goal.ActiveGoal;
 import entity.goal.Goal;
 import entity.task.TaskStatistic;
 import entity.user.User;
@@ -24,7 +25,11 @@ public class GoalHandler extends SubscribeHandler{
     @Override
     Object getItems(User user) {
         JSONArray array = new JSONArray();
+        final ActiveGoal activeGoal = goalDAO.getActiveGoal(user);
         for (Goal goal : goalDAO.getGoals(user)){
+            if(activeGoal != null) {
+                goal.setActive(goal.getTitle().getId() == activeGoal.getHeader().getId());
+            }
             final JSONObject object = goal.toJson();
             final TaskStatistic statistic = taskDAO.getStatistic(goal.getTitle().getId());
             if (statistic != null){

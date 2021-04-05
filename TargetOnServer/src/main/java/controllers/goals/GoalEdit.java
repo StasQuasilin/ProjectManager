@@ -46,7 +46,6 @@ public class GoalEdit extends ModalWindow {
         final User user = getUser(req);
         req.setAttribute(CURRENCY, currencyDAO.getUserCurrency(user));
         req.setAttribute(FIND_BUY_LIST, ApiLinks.FIND_BUY_LIST);
-        req.setAttribute(Keys.GOAL_MEMBERS, UrlLinks.GOAL_MEMBERS);
         req.setAttribute(SAVE, ApiLinks.GOAL_SAVE);
         show(req, resp);
     }

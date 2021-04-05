@@ -5,6 +5,7 @@ import entity.task.*;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
+import utils.db.hibernate.DateContainers.OR;
 import utils.db.hibernate.Hibernator;
 
 import java.util.HashMap;
@@ -18,7 +19,7 @@ public class TaskDAOImpl implements TaskDAO {
     private final Updater updater = new Updater();
 
     @Override
-    public List<Task> getTasksByParent(Header parent) {
+    public List<Task> getTasksByParent(Object parent) {
         final HashMap<String, Object> params = new HashMap<>();
         params.put("header/parent", parent);
         return hibernator.query(Task.class, params);
@@ -47,7 +48,7 @@ public class TaskDAOImpl implements TaskDAO {
         HashMap<String,Object> param = new HashMap<>();
         param.put(HEADER_OWNER, user);
         param.put(STATUS, status);
-        param.put(TYPE, TaskType.accumulative);
+        param.put(TYPE, new OR(TaskType.handmade, TaskType.accumulative));
         return hibernator.query(Task.class, param);
     }
 
@@ -145,6 +146,27 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public List<TaskStatistic> getChildrenStatistic(Header header) {
         return hibernator.query(TaskStatistic.class, HEADER_PARENT, header);
+    }
+
+    @Override
+    public TaskDoer getTaskDoerPair(Task task, User user) {
+        HashMap<String, Object> args = new HashMap<>();
+        args.put(TASK, task);
+        args.put(DOER, user);
+        return hibernator.get(TaskDoer.class, args);
+    }
+
+    @Override
+    public void saveTaskDoer(TaskDoer pair) {
+        hibernator.save(pair);
+    }
+
+    @Override
+    public void removeTaskDoer(Task task, User user) {
+        final TaskDoer doer = getTaskDoerPair(task, user);
+        if(doer != null){
+            hibernator.remove(doer);
+        }
     }
 
     @Override

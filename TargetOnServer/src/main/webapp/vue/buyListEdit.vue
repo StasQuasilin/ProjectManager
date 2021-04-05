@@ -1,5 +1,8 @@
 buyListEdit = new Vue({
     el:'#buyListEdit',
+    components:{
+        'date-picker':datePicker
+    },
     data:{
         api:{},
         edit:false,
@@ -9,36 +12,51 @@ buyListEdit = new Vue({
             id:-1,
             title:'',
             items:[]
+        },
+        detailMode:false,
+        dateProps:{
+            put:function (date) {
+                buyListEdit.newItem.date = date;
+                buyListEdit.$forceUpdate();
+            }
         }
     },
     methods:{
         editItem:function(index){
-            if (index){
-                this.newItem = Object.assign({}, this.list.items[index]);
-                this.editableIndex = index;
-            } else {
-                this.newItem = {
-                    id:-1,
-                    title:'',
-                    count:1,
-                    price:0
-                };
-                this.editableIndex = -1;
-            }
+            this.newItem = Object.assign({}, this.list.items[index]);
+            this.editableIndex = index;
             this.edit= true;
+        },
+        addDate:function(){
+            this.newItem.date = new Date().toISOString().substring(0, 10);
+            this.$forceUpdate();
+        },
+        removeDate:function(){
+            delete this.newItem.date;
+            this.$forceUpdate();
         },
         addItem:function(){
             let item = Object.assign({}, this.newItem);
-            if (this.editableIndex === -1){
-                this.list.items.push(item);
-            } else {
-                this.list.items.splice(this.editableIndex, 1, item);
-            }
+            if (item.title.length > 0) {
+                if (this.editableIndex === -1) {
+                    this.list.items.push(item);
+                } else {
+                    this.list.items.splice(this.editableIndex, 1, item);
+                }
 
-            this.edit = false;
+                this.clearAdd();
+            }
+        },
+        clearAdd:function(){
+            this.newItem.title='';
+            this.edit=false;
+            this.editableIndex=-1;
         },
         removeItem:function(idx){
             this.list.items.splice(idx, 1);
+        },
+        selectDateFor:function(){
+            datePicker.shwo
         },
         save:function(){
             if (this.edit){

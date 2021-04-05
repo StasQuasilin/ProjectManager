@@ -22,6 +22,7 @@ public class Goal extends JsonAble {
     private float budget;
     private GoalStatus status = GoalStatus.active;
     private TaskStatistic statistic;
+    private boolean active;
 
     @Id
     @Column(name = "_id")
@@ -95,6 +96,15 @@ public class Goal extends JsonAble {
         this.statistic = statistic;
     }
 
+    @Transient
+    public boolean getActive() {
+    return active;
+}
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+
     @Override
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
@@ -104,6 +114,8 @@ public class Goal extends JsonAble {
         if(statistic != null){
             jsonObject.put(STATISTIC, statistic.toJson());
         }
+        jsonObject.put(ACTIVE, active);
+        jsonObject.put(OWNER, title.getOwner().toJson());
         return jsonObject;
     }
 

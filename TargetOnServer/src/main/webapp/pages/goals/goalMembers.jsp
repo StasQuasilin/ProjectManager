@@ -14,7 +14,7 @@
     <script>
         goalMembers.api.save = '${save}';
         goalMembers.item = ${item};
-        goalMembers.owner = ${user.toJson()}
+        goalMembers.owner = ${goal.title.owner.toJson()}
         friends = {};
         <c:forEach items="${friends}" var="friend">
         friend = ${friend.toJson()};
@@ -34,20 +34,30 @@
         </c:forEach>
             goalMembers.friends = (Object.values(friends));
     </script>
+    <c:set var="editable" value="${goal.title.owner.id eq user.id}"/>
     <div id="memberList">
-        <div>
-            {{owner.surname}} {{owner.forename}} ( <fmt:message key="owner"/> )
+        <div style="width: 280pt; max-height: 200pt; overflow-y: scroll">
+            <div>
+                {{owner.surname}} {{owner.forename}} ( <fmt:message key="owner"/> )
+            </div>
+            <div v-for="friend in friends">
+                <c:if test="${editable}">
+                    <input :id="friend.id" type="checkbox" v-model="friend.member">
+                </c:if>
+                <label :for="friend.id">
+                    {{friend.surname}} {{friend.forename}}
+                </label>
+            </div>
         </div>
-        <div v-for="friend in friends">
-            <input :id="friend.id" type="checkbox" v-model="friend.member">
-            <label :for="friend.id">
-                {{friend.surname}} {{friend.forename}}
-            </label>
-        </div>
-        <div>
-            <button v-on:click="save()">
-                <fmt:message key="button.save"/>
+        <div class="modal-buttons">
+            <button onclick="closeModal()">
+                <fmt:message key="button.close"/>
             </button>
+            <c:if test="${editable}">
+                <button v-on:click="save()">
+                    <fmt:message key="button.save"/>
+                </button>
+            </c:if>
         </div>
     </div>
 </html>

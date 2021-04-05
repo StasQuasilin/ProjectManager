@@ -16,7 +16,10 @@
 .goal-header{
     font-size: 14pt;
     font-weight: bold;
+}
+.active-goal, .goal-header{
     background-color: #3788d8;
+    padding-left: 4pt;
 }
 .goal-header *{
     color: whitesmoke;

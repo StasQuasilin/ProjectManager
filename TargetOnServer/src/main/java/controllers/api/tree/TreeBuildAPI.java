@@ -4,11 +4,13 @@ import constants.ApiLinks;
 import controllers.api.API;
 import entity.finance.category.Header;
 import entity.task.Task;
+import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.db.dao.TitleDAO;
 import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
+import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
 import utils.tree.TreeUtil;
@@ -27,6 +29,7 @@ public class TreeBuildAPI extends API {
 
     private final TitleDAO titleDAO = daoService.getTitleDAO();
     private final TreeUtil treeUtil = new TreeUtil();
+    private final GoalDAO goalDAO = daoService.getGoalDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,6 +38,8 @@ public class TreeBuildAPI extends API {
             System.out.println(body);
             Header root = titleDAO.getHeader(body.get(ID));
             write(resp, treeUtil.buildTree(root));
+            final User user = getUser(req);
+            goalDAO.changeActiveGoal(root, user);
         }
     }
 

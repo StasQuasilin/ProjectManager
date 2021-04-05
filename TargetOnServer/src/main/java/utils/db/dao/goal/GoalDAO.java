@@ -1,5 +1,7 @@
 package utils.db.dao.goal;
 
+import entity.finance.category.Header;
+import entity.goal.ActiveGoal;
 import entity.goal.Goal;
 import entity.goal.GoalMember;
 import entity.user.User;
@@ -18,4 +20,8 @@ public interface GoalDAO {
     void saveMember(GoalMember goalMember);
 
     void removeMember(GoalMember member);
+
+    void changeActiveGoal(Header header, User user);
+
+    ActiveGoal getActiveGoal(User user);
 }

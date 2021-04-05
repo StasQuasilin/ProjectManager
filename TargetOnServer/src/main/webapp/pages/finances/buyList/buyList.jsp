@@ -32,19 +32,24 @@
                                 </template>
                                 <b>{{i.title}}</b>
                             </div>
-                            <div v-if="i.count !== 0 || i.price !== 0" style="color: gray">
-                                <span v-if="i.count !== 0">
-                                    {{i.count.toLocaleString()}} {{unitNames[i.unit]}}
+                            <div style="color: gray">
+                                <span v-if="i.date">
+                                    {{new Date(i.date).toLocaleString().substring(0, 10)}}
                                 </span>
-                                <span v-if="i.count !== 0 && i.price !== 0">
-                                    &times;
-                                </span>
-                                <span v-if="i.price !== 0">
-                                    {{i.price.toLocaleString()}} {{i.currency}}
-                                </span>
-                                <span v-if="i.count > 1 && i.price !== 0">
-                                    = {{(i.count * i.price).toLocaleString()}} {{i.currency}}
-                            </span>
+                                <template v-if="i.count !== 0 || i.price !== 0">
+                                    <span v-if="i.count !== 0">
+                                        {{i.count.toLocaleString()}} {{unitNames[i.unit]}}
+                                    </span>
+                                        <span v-if="i.count !== 0 && i.price !== 0">
+                                        &times;
+                                    </span>
+                                        <span v-if="i.price !== 0">
+                                        {{i.price.toLocaleString()}} {{i.currency}}
+                                    </span>
+                                        <span v-if="i.count > 1 && i.price !== 0">
+                                        = {{(i.count * i.price).toLocaleString()}} {{i.currency}}
+                                    </span>
+                                </template>
                             </div>
                         </div>
                     </div>

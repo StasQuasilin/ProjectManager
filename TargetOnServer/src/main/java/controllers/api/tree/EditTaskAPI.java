@@ -45,6 +45,7 @@ public class EditTaskAPI extends API {
         final JsonObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
+            final User user = getUser(req);
             Task task = taskDAO.getTask(body.get(ID));
             if (task == null){
                 task = new Task();
@@ -60,7 +61,13 @@ public class EditTaskAPI extends API {
             if (type != TaskType.accumulative) {
                 if (body.containKey(STATUS)) {
                     TaskStatus status = TaskStatus.valueOf(body.getString(STATUS));
+                    final TaskStatus oldStatus = task.getStatus();
                     task.setStatus(status);
+                    if(oldStatus == TaskStatus.progressing){
+                        taskDAO.removeTaskDoer(task, getUser(req));
+                    } else if(status == TaskStatus.progressing){
+                        taskUtil.addTaskDoer(task, user);
+                    }
                 } else {
                     task.setStatus(TaskStatus.active);
                 }
@@ -72,8 +79,6 @@ public class EditTaskAPI extends API {
                 task.setStatus(progress >= target ? TaskStatus.done : TaskStatus.active);
             }
 
-
-
             if (body.containKey(DEADLINE)){
                 Date deadline = body.getDate(DEADLINE);
                 task.setDeadline(deadline);
@@ -84,7 +89,7 @@ public class EditTaskAPI extends API {
             boolean doneIf = body.getBoolean(DONE_IF);
             task.setDoneIfChildren(doneIf);
 
-            final User user = getUser(req);
+
             Header header = task.getHeader();
             if (header == null){
                 header = new Header();
@@ -118,6 +123,9 @@ public class EditTaskAPI extends API {
 
             final String title = body.getString(TITLE);
             header.setValue(title);
+
+            final float coast = body.getFloat(COAST);
+            task.setCoast(coast);
 
             write(resp, SUCCESS_ANSWER);
             taskSaver.save(task);

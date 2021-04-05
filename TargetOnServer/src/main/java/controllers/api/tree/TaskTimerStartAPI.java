@@ -38,7 +38,6 @@ public class TaskTimerStartAPI extends API {
         final JsonObject body = parseBody(req);
         Answer answer;
         if(body != null){
-            System.out.println(body);
 
             final User user = getUser(req);
             TimeLog timeLog = taskDAO.getActiveTimeLog(user);
@@ -48,7 +47,8 @@ public class TaskTimerStartAPI extends API {
                 timeLog = new TimeLog();
                 final Task task = taskDAO.getTask(body.get(TASK));
                 if (task != null) {
-                    if (task.getStatus() == TaskStatus.active) {
+                    final TaskStatus status = task.getStatus();
+                    if (status == TaskStatus.active || status == TaskStatus.progressing) {
                         timeLog.setHeader(task.getHeader());
                         Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
                         timeLog.setBegin(timestamp);
@@ -61,6 +61,7 @@ public class TaskTimerStartAPI extends API {
                         task.setStatus(TaskStatus.progressing);
                         taskDAO.saveTask(task);
                         taskUtil.updateStatistic(task.getHeader());
+                        taskUtil.addTaskDoer(task, user);
                     } else {
                         answer = new ErrorAnswer("Task status is " + task.getStatus().toString());
                     }

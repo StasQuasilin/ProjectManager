@@ -7,7 +7,7 @@ import entity.user.User;
 import java.util.List;
 
 public interface TaskDAO {
-    List<Task> getTasksByParent(Header parent);
+    List<Task> getTasksByParent(Object parent);
     List<Task> getTaskByOwner(User owner);
     Task getTask(Object id);
     void saveTask(Task task);
@@ -40,5 +40,11 @@ public interface TaskDAO {
     void removeTimeLog(TimeLog timeLog);
 
     List<TaskStatistic> getChildrenStatistic(Header header);
+
+    TaskDoer getTaskDoerPair(Task task, User user);
+
+    void saveTaskDoer(TaskDoer pair);
+
+    void removeTaskDoer(Task task, User user);
 }
 

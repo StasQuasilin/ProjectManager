@@ -3,6 +3,7 @@ package entity.task;
 import constants.Keys;
 import entity.finance.category.Header;
 import entity.user.User;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
 
@@ -32,7 +33,7 @@ public class Task extends JsonAble {
     private TaskStatistic statistic;
     private Date date;
     private Date deadline;
-    private User doer;
+    private Set<TaskDoer> doers;
     private String result;
     private TaskPriority priority;
     private boolean doneIfChildren;
@@ -161,13 +162,12 @@ public class Task extends JsonAble {
         this.type = type;
     }
 
-    @OneToOne
-    @JoinColumn(name = "doer")
-    public User getDoer() {
-        return doer;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = TASK, cascade = CascadeType.ALL)
+    public Set<TaskDoer> getDoers() {
+        return doers;
     }
-    public void setDoer(User doer) {
-        this.doer = doer;
+    public void setDoers(Set<TaskDoer> doers) {
+        this.doers = doers;
     }
 
     @Basic
@@ -207,6 +207,7 @@ public class Task extends JsonAble {
         jsonObject.put(TYPE, type.toString());
         jsonObject.put(PROGRESS, progress);
         jsonObject.put(TARGET, target);
+        jsonObject.put(COAST, coast);
         if(dependencies != null) {
             jsonObject.put(DEPENDENCY_COUNT, dependencies.size());
         }
@@ -232,14 +233,22 @@ public class Task extends JsonAble {
         if (deadline != null){
             jsonObject.put(DEADLINE, deadline.toString());
         }
-        if (doer != null){
-            jsonObject.put(DOER, doer.toJson());
+        if (doers != null && doers.size() > 0){
+            jsonObject.put(DOERS, doers());
         }
         if (result != null){
             jsonObject.put(RESULT, result);
         }
         jsonObject.put(DONE_IF, doneIfChildren);
         return jsonObject;
+    }
+
+    private JSONArray doers() {
+        JSONArray array = new JSONArray();
+        for (TaskDoer doer : doers){
+            array.add(doer.getDoer().toJson());
+        }
+        return array;
     }
 
     @Transient

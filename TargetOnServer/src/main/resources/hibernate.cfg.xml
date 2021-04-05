@@ -31,8 +31,10 @@
         <mapping class="entity.task.TaskSettings"/>
         <mapping class="entity.task.TaskStatistic"/>
         <mapping class="entity.task.TaskDependency"/>
+        <mapping class="entity.task.TaskDoer"/>
         <mapping class="entity.task.TimeLog"/>
         <mapping class="entity.goal.Goal"/>
+        <mapping class="entity.goal.ActiveGoal"/>
         <mapping class="entity.goal.GoalMember"/>
         <mapping class="entity.calendar.CalendarItem"/>
         <mapping class="entity.finance.accounts.Account"/>

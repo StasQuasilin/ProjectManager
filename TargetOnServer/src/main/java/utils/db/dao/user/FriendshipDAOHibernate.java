@@ -1,5 +1,6 @@
 package utils.db.dao.user;
 
+import constants.Keys;
 import entity.social.Friendship;
 import entity.social.FriendshipRequest;
 import entity.user.User;
@@ -24,8 +25,11 @@ public class FriendshipDAOHibernate implements FriendshipDAO {
     @Override
     public List<User> getFriends(User user) {
         final LinkedList<User> friends = new LinkedList<>();
-        for (Friendship friendship : hibernator.query(Friendship.class, "owner", user)){
+        for (Friendship friendship : hibernator.query(Friendship.class, Keys.OWNER, user)){
             friends.add(friendship.getFriend());
+        }
+        for (Friendship friendship : hibernator.query(Friendship.class, Keys.FRIEND, user)){
+            friends.add(friendship.getOwner());
         }
         return friends;
     }

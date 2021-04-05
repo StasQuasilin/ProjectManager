@@ -186,18 +186,6 @@
       </td>
     </tr>
     <tr>
-      <td colspan="2" style="text-align: right">
-        <span class="text-button" v-on:click="memberList()">
-          <fmt:message key="goal.members"/>: {{(members.length + 1).toLocaleString()}}
-        </span>
-        <span class="tips">
-          <span class="tips-content">
-            <fmt:message key="goal.members.tips"/>
-          </span>
-        </span>
-      </td>
-    </tr>
-    <tr>
       <td colspan="2" style="text-align: center">
         <button onclick="closeModal()">
           <fmt:message key="button.cancel"/>
