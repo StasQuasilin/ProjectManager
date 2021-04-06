@@ -9,18 +9,31 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<link rel="stylesheet" href="${context}/css/timePicker.css">
-<script src="${context}/vue/templates/datetime/datePicker.vue"></script>
-<script src="${context}/vue/templates/datetime/timePicker.vue"></script>
-<script src="${context}/vue/templates/inputWithSearch.vue"></script>
-<script src="${context}/vue/calendarEdit.vue"></script>
+<link rel="stylesheet" href="${context}/css/timePicker.css?v=${now}">
+<script src="${context}/vue/templates/datetime/datePicker.vue?v=${now}"></script>
+<script src="${context}/vue/templates/datetime/timePicker.vue?v=${now}"></script>
+<script src="${context}/vue/templates/inputWithSearch.vue?v=${now}"></script>
+<script src="${context}/vue/calendarEdit.vue?v=${now}"></script>
 <script>
     calendarEdit.api.save = '${save}';
     calendarEdit.props.findCategory = '${findCategory}';
-
+    <c:forEach items="${repeats}" var="r">
+    calendarEdit.repeats.push('${r}');
+    calendarEdit.repeatNames['${r}'] = '<fmt:message key="repeat.${r}"/>';
+    </c:forEach>
+    <c:forEach begin="0" end="6" var="d">
+    calendarEdit.dayNames[${d}] = '<fmt:message key="day.${d}.short"/>';
+    </c:forEach>
     <c:if test="${not empty item}">
     calendarEdit.calendarItem = ${item.toJson()};
     </c:if>
+    calendarEdit.calendarItem.weekDays = [];
+    <c:forEach items="${weekDays.days}" var="d">
+    calendarEdit.calendarItem.weekDays.push({
+        v:${d}
+    });
+    </c:forEach>
+
     now = new Date();
     if (calendarEdit.calendarItem.date){
         calendarEdit.useDate = true;
@@ -42,7 +55,7 @@
     </tr>
     <tr>
         <td colspan="2">
-            <input-search :object="calendarItem.category" :props="props"></input-search>
+            <input-search :object="calendarItem.header" :props="props"></input-search>
         </td>
     </tr>
     <tr v-if="!useDate">
@@ -99,10 +112,18 @@
         </td>
         <td>
             <select id="repeat" v-model="calendarItem.repeat">
-                <option v-for="r in repeats">
-                    {{r}}
+                <option v-for="r in repeats" :value="r">
+                    {{repeatNames[r]}}
                 </option>
             </select>
+        </td>
+    </tr>
+    <tr v-if="calendarItem.repeat === 'day'">
+        <td colspan="2" style="font-size: 10pt">
+            <template v-for="(wd, wIdx) in calendarItem.weekDays">
+                <input :id="'w' + wIdx" type="checkbox" v-model="wd.v">
+                {{dayNames[wIdx]}}
+            </template>
         </td>
     </tr>
     <tr>

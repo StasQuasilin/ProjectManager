@@ -62,6 +62,7 @@ public class AccountEdit extends ModalWindow {
         req.setAttribute(TYPES, AccountType.values());
         User user = getUser(req);
         req.setAttribute(CURRENCY, currencyDAO.getUserCurrency(user));
+        req.setAttribute(FIND_CURRENCY, ApiLinks.FIND_CURRENCY);
         req.setAttribute(SAVE, ApiLinks.ACCOUNT_EDIT);
         req.setAttribute(Keys.MEMBER_LIST, UrlLinks.ACCOUNT_MEMBERS);
         show(req, resp);

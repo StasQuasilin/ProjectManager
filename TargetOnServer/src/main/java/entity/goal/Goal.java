@@ -3,11 +3,13 @@ package entity.goal;
 import entity.Title;
 import entity.task.TaskStatistic;
 import entity.user.User;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Set;
 
 import static constants.Keys.*;
 
@@ -22,6 +24,7 @@ public class Goal extends JsonAble {
     private float budget;
     private GoalStatus status = GoalStatus.active;
     private TaskStatistic statistic;
+    private Set<GoalMember> members;
     private boolean active;
 
     @Id
@@ -88,6 +91,14 @@ public class Goal extends JsonAble {
         this.status = status;
     }
 
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = GOAL, cascade = CascadeType.ALL)
+    public Set<GoalMember> getMembers() {
+        return members;
+    }
+    public void setMembers(Set<GoalMember> members) {
+        this.members = members;
+    }
+
     @Transient
     public TaskStatistic getStatistic() {
         return statistic;
@@ -115,8 +126,20 @@ public class Goal extends JsonAble {
             jsonObject.put(STATISTIC, statistic.toJson());
         }
         jsonObject.put(ACTIVE, active);
+        jsonObject.put(MEMBERS, members());
+
         jsonObject.put(OWNER, title.getOwner().toJson());
         return jsonObject;
+    }
+
+    private JSONArray members() {
+        JSONArray array = new JSONArray();
+        if(members != null){
+            for (GoalMember member : members){
+                array.add(member.getMember().toJson());
+            }
+        }
+        return array;
     }
 
     @Override

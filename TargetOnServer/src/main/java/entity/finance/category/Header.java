@@ -35,11 +35,16 @@ public class Header extends AbstractTitle {
         return jsonObject;
     }
 
+    @Override
+    public JSONObject shortJson() {
+        return super.toJson();
+    }
+
     private JSONArray buildPath() {
         JSONArray array = new JSONArray();
         if(parent != null){
             array.addAll(parent.buildPath());
-            array.add(parent.toJson());
+            array.add(parent.shortJson());
         }
         return array;
     }

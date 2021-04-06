@@ -54,4 +54,15 @@ public class CurrencyDAOPImpl implements CurrencyDAO {
     public void saveUserCurrency(UserCurrency userCurrency) {
         hibernator.save(userCurrency);
     }
+
+    @Override
+    public void checkUserCurrency(Currency currency, User user) {
+        UserCurrency userCurrency = getUserCurrency(currency, user);
+        if (userCurrency == null){
+            userCurrency = new UserCurrency();
+            userCurrency.setUser(user);
+            userCurrency.setCurrency(currency);
+            saveUserCurrency(userCurrency);
+        }
+    }
 }

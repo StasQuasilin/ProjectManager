@@ -1,4 +1,3 @@
-
 <%--
   Created by IntelliJ IDEA.
   User: szpt-user045
@@ -143,11 +142,6 @@
                 </td>
             </tr>
         </template>
-        <tr>
-            <td>
-
-            </td>
-        </tr>
         <tr v-if="task.parent">
             <td>
                 <fmt:message key="task.parent"/>
@@ -188,9 +182,7 @@
                 </td>
                 <td>
                     <date-picker :date="task.date" :props="dateProps"></date-picker>
-                    <span class="text-button" v-on:click="useDate=false">
-                    &times;
-                </span>
+                    <span class="text-button" v-on:click="useDate=false">&times;</span>
                 </td>
             </tr>
             <tr>
@@ -239,7 +231,9 @@
         <tr>
             <td colspan="2">
                 <input id="doneIf" type="checkbox" v-model="task.doneIf">
-                <fmt:message key="task.done.if.children"/>
+                <label for="doneIf">
+                    <fmt:message key="task.done.if.children"/>
+                </label>
             </td>
         </tr>
         <tr>

@@ -41,4 +41,9 @@ public class CurrencyDAOPlug implements CurrencyDAO {
     public void saveUserCurrency(UserCurrency userCurrency) {
 
     }
+
+    @Override
+    public void checkUserCurrency(Currency currency, User user) {
+
+    }
 }

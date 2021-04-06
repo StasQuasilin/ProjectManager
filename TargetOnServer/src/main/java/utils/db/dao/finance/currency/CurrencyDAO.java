@@ -18,4 +18,6 @@ public interface CurrencyDAO {
     Currency getCurrency(String name);
 
     void saveUserCurrency(UserCurrency userCurrency);
+
+    void checkUserCurrency(Currency currency, User user);
 }

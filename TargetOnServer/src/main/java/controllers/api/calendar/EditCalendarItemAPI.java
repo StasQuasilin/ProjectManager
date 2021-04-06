@@ -4,7 +4,11 @@ import constants.ApiLinks;
 import controllers.api.API;
 import entity.calendar.CalendarItem;
 import entity.calendar.Repeat;
+import entity.calendar.WeekDays;
+import entity.finance.category.Header;
 import entity.user.User;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import utils.CategoryUtil;
 import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.daoService;
@@ -33,13 +37,14 @@ public class EditCalendarItemAPI extends API {
         final JsonObject body = parseBody(req);
         if (body != null){
             System.out.println(body);
+            final User user = getUser(req);
             CalendarItem item = calendarDAO.getCalendarItem(body.get(ID));
             if (item == null){
                 item = new CalendarItem();
+                item.setOwner(user);
             }
 
-            final User user = getUser(req);
-//            item.setHeader(categoryUtil.getCategory(new JsonObject(body.get(CATEGORY)), user));
+            setCategory(item, new JsonObject(body.get(HEADER)), user);
 
             if (body.containKey(DATE)){
                 Date date = Date.valueOf(body.getString(DATE));
@@ -47,27 +52,45 @@ public class EditCalendarItemAPI extends API {
                 if (body.containKey(TIME)){
                     Time time = Time.valueOf(body.getString(TIME));
                     item.setTime(time);
-                    if (body.containKey(LENGTH)){
-                        Time length = Time.valueOf(body.getString(LENGTH));
-                        LocalDateTime localDateTime = LocalDateTime.of(date.toLocalDate(), time.toLocalTime()).plusMinutes(length.getTime() / 1000/ 60);
-                        item.setEndDate(Date.valueOf(localDateTime.toLocalDate()));
-                        item.setEndTime(Time.valueOf(localDateTime.toLocalTime()));
-                    }
                 } else {
                     item.setTime(null);
                 }
             } else {
                 item.setDate(null);
                 item.setTime(null);
-                item.setEndDate(null);
-                item.setEndTime(null);
             }
 
             Repeat repeat = Repeat.valueOf(body.getString(REPEAT));
             item.setRepeat(repeat);
+            if(repeat == Repeat.day){
+                parseWeekDays(body.getJsonArray(WEEK_DAYS), item);
+            }
 
             calendarSaver.save(item);
         }
         write(resp, SUCCESS_ANSWER);
+    }
+
+    private void parseWeekDays(JSONArray weekDay, CalendarItem item) {
+        boolean[] booleans = new boolean[weekDay.size()];
+        JsonObject jsonObject;
+        String key = "v";
+        int i = 0;
+        for (Object o : weekDay){
+            jsonObject = new JsonObject(o);
+            booleans[i++] = jsonObject.getBoolean(key);
+        }
+        WeekDays weekDays = new WeekDays(booleans);
+        final int daysValue = weekDays.getDaysValue();
+        if(daysValue == 0){
+            item.setRepeat(Repeat.none);
+        } else {
+            item.setWeekDays(daysValue);
+        }
+    }
+
+    private void setCategory(CalendarItem item, JsonObject categoryObject, User user) {
+        final Header header = categoryUtil.getCategory(categoryObject.getInt(ID), categoryObject.getString(TITLE), user);
+        item.setHeader(header);
     }
 }

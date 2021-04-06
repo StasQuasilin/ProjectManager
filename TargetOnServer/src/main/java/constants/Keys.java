@@ -206,4 +206,6 @@ public interface Keys {
     String COAST = "coast";
     String FRIEND = "friend";
     String DOERS = "doers";
+    String WEEK_DAYS = "weekDays";
+    String REPEATS = "repeats";
 }

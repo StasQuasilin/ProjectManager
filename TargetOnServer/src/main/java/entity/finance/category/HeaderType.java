@@ -4,5 +4,6 @@ public enum HeaderType {
     task,
     category,
     goal,
-    account
+    account,
+    buy
 }

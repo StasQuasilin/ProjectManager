@@ -12,13 +12,14 @@ import utils.db.hibernate.Hibernator;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import static constants.Keys.*;
 
 public class BuyListDAOImpl implements BuyListDAO {
 
     private final Hibernator hibernator = Hibernator.getInstance();
-    private final Updater updater = new Updater();
+
 
     @Override
     public List<BuyList> getUserList(User user) {
@@ -32,14 +33,17 @@ public class BuyListDAOImpl implements BuyListDAO {
 
     @Override
     public void saveList(BuyList list) {
-        for (BuyListItem item : list.getItemSet()){
+        hibernator.save(list.getTitle());
+        hibernator.save(list);
+    }
+
+    @Override
+    public void saveItems(Set<BuyListItem> itemSet) {
+        for (BuyListItem item : itemSet){
             hibernator.save(item.getHeader());
             hibernator.save(item);
         }
-        hibernator.save(list.getTitle());
-        hibernator.save(list);
 
-        updater.update(Subscribe.buy, list, list.getOwner());
     }
 
     @Override

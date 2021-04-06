@@ -7,12 +7,14 @@ calendarEdit = new Vue({
     },
     data:{
         api:{},
-        repeats:['none','day', 'week', 'month', 'year'],
+        repeats:[],
+        repeatNames:{},
+        dayNames:{},
         useDate:true,
         useTime:true,
         calendarItem:{
             id:-1,
-            category:{
+            header:{
                 id:-1,
                 title:''
             },

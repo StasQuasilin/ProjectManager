@@ -3,14 +3,17 @@ package controllers.api.finance.accounts;
 import constants.ApiLinks;
 import controllers.api.API;
 import entity.Title;
+import entity.finance.Currency;
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountType;
 import entity.finance.accounts.CardSettings;
 import entity.finance.accounts.DepositSettings;
 import entity.finance.category.HeaderType;
 import entity.user.User;
+import utils.answers.Answer;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.accounts.AccountDAO;
+import utils.db.dao.finance.currency.CurrencyDAO;
 import utils.finances.AccountUtil;
 import utils.json.JsonObject;
 
@@ -27,10 +30,12 @@ public class EditAccountAPI extends API {
 
     private final AccountDAO accountDAO = daoService.getAccountDAO();
     private final AccountUtil accountUtil = new AccountUtil();
+    private final CurrencyDAO currencyDAO = daoService.getCurrencyDAO();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         JsonObject body = parseBody(req);
+        Answer answer;
         if (body != null){
             System.out.println(body);
             User user = getUser(req);
@@ -51,7 +56,13 @@ public class EditAccountAPI extends API {
             AccountType type = AccountType.valueOf(body.getString(TYPE));
             account.setType(type);
 
-            account.setCurrency(body.getString(CURRENCY));
+            if(body.containKey(CURRENCY)){
+                final String currencyName = body.getString(CURRENCY);
+                final Currency currency = currencyDAO.getCurrency(currencyName);
+                account.setCurrency(currency.getName());
+                currencyDAO.checkUserCurrency(currency, user);
+            }
+
             int limit = body.getInt(LIMIT);
             if (type != AccountType.card && type != AccountType.credit){
                 limit = 0;

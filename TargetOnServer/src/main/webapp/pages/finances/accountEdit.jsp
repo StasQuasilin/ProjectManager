@@ -11,10 +11,12 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue?v=${now}"></script>
+<script src="${context}/vue/templates/inputWithSearch.vue?v=${now}"></script>
 <script type="application/javascript" src="${context}/vue/finances/accountEdit.vue?v=${now}"></script>
 <script type="application/javascript">
   accountEdit.api.save = '${save}';
   accountEdit.api.memberList = '${memberList}';
+  accountEdit.newCurrencyProps.findCategory = '${findCurrency}';
   <c:forEach items="${members}" var="member">
   accountEdit.members.push(${member.member.toJson()});
   </c:forEach>
@@ -85,13 +87,17 @@
         <fmt:message key="account.amount"/>
       </label>
     </td>
-    <td>
+    <td style="display: flex">
       <input id="accountAmount" v-model.number="account.sum" style="width: 90px" autocomplete="off" onfocus="this.select()">
       <select v-model="account.currency">
         <option v-for="c in currency" :value="c">
           {{c}}
         </option>
       </select>
+      <span v-if="!addCurrency" class="text-button" v-on:click="addCurrency=true">
+        +<fmt:message key="currency.add"/>
+      </span>
+      <input-search v-else :object="newCurrency" :props="newCurrencyProps" :show="null" :create="false"></input-search>
     </td>
   </tr>
   <tr v-if="account.type === 'card' || account.type === 'credit'">
@@ -103,7 +109,7 @@
     <td>
       <input id="accountLimit" v-model="account.limit" style="width: 90px"
              autocomplete="off" onfocus="this.select()">
-      {{account.currency}}
+              {{account.currency}}
     </td>
   </tr>
   <template v-if="account.type === 'card' && account.limit > 0">

@@ -1,13 +1,18 @@
 accountEdit = new Vue({
     el:'#accountEdit',
     components:{
-        'date-picker':datePicker
+        'date-picker':datePicker,
+        'input-search':inputSearch
     },
     data:{
         api:{},
         types:[],
         typeNames:{},
         currency:[],
+        addCurrency:false,
+        newCurrency:{
+            title:''
+        },
         account:{
             id:-1,
             title:'',
@@ -21,7 +26,15 @@ accountEdit = new Vue({
             put:function (date) {
                 Vue.set(accountEdit.account.settings, 'open', date);
             }
-        }
+        },
+        newCurrencyProps:{
+            put:function (currency) {
+                accountEdit.addCurrency = false;
+                accountEdit.newCurrency.title = '';
+                accountEdit.currency.push(currency);
+                accountEdit.account.currency = currency;
+            }
+        },
     },
     methods:{
         memberList:function(){

@@ -53,6 +53,9 @@ input[type=checkbox], input[type=radio]{
 .text-button:hover{
     text-shadow: 0 0 6px #282828;
 }
+.panel-header .text-button{
+    color: white;
+}
 .mini-text-button{
     font-size: 8pt;
 }

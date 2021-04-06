@@ -65,13 +65,8 @@ public class EditTransactionAPI extends API {
             String currencyName = body.getString(CURRENCY);
             final Currency currency = currencyDAO.getCurrency(currencyName);
             transaction.setCurrency(currency);
-            UserCurrency userCurrency = currencyDAO.getUserCurrency(currency, user);
-            if (userCurrency == null){
-                userCurrency = new UserCurrency();
-                userCurrency.setUser(user);
-                userCurrency.setCurrency(currency);
-                currencyDAO.saveUserCurrency(userCurrency);
-            }
+            currencyDAO.checkUserCurrency(currency, user);
+
 
             Account prevAccountFrom = null;
             if (body.containKey(ACCOUNT_FROM)){

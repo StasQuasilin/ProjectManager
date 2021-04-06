@@ -20,7 +20,7 @@ public class GoalMember {
         this.id = id;
     }
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "goal")
     public Goal getGoal() {
         return goal;

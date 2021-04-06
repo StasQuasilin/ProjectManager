@@ -6,8 +6,12 @@ import entity.Title;
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
 import entity.finance.category.Header;
+import entity.finance.category.HeaderType;
 import entity.user.User;
 import org.json.simple.JSONArray;
+import subscribe.Subscribe;
+import utils.Updater;
+import utils.db.dao.TitleDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.buy.BuyListDAO;
 import utils.json.JsonObject;
@@ -25,6 +29,8 @@ import static constants.Keys.*;
 public class BuyListEditAPI extends API {
 
     private final BuyListDAO buyListDAO = daoService.getBuyListDAO();
+    private final TitleDAO titleDAO = daoService.getTitleDAO();
+    private final Updater updater = new Updater();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -32,24 +38,29 @@ public class BuyListEditAPI extends API {
         if (body != null){
             System.out.println(body);
             BuyList list = buyListDAO.getList(body.get(ID));
+            final User user = getUser(req);
             Title title;
             if (list == null){
                 list = new BuyList();
-                list.setOwner(getUser(req));
+                list.setOwner(user);
                 title = new Title();
+                title.setOwner(user);
+                title.setType(HeaderType.buy);
                 list.setTitle(title);
             } else {
                 title = list.getTitle();
             }
-
-            title.setValue(body.getString(TITLE));
+            if(title.getType() == HeaderType.buy) {
+                title.setValue(body.getString(TITLE));
+            }
+            buyListDAO.saveList(list);
 
             final HashMap<Integer, BuyListItem> items = new HashMap<>();
             for (BuyListItem item : list.getItemSet()){
                 items.put(item.getId(), item);
             }
             list.clearItems();
-            final User user = getUser(req);
+            final Header parent = titleDAO.getHeader(title.getId());
             for (Object o : (JSONArray)body.get(ITEMS)){
                 JsonObject item = new JsonObject(o);
                 BuyListItem remove = items.remove(item.getInt(ID));
@@ -61,15 +72,20 @@ public class BuyListEditAPI extends API {
                 if (header == null){
                     header = new Header();
                     header.setOwner(user);
+                    header.setParent(parent);
+                    header.setType(HeaderType.category);
                     remove.setHeader(header);
                 }
-                header.setValue(item.getString(TITLE));
+                if(header.getType() == HeaderType.category) {
+                    header.setValue(item.getString(TITLE));
+                }
                 remove.setCount(item.getFloat(COUNT));
                 remove.setPrice(item.getFloat(PRICE));
                 remove.setDate(item.getDate(DATE));
                 list.addItem(remove);
             }
-            buyListDAO.saveList(list);
+            buyListDAO.saveItems(list.getItemSet());
+            updater.update(Subscribe.buy, list, list.getOwner());
             buyListDAO.removeItems(items.values());
             write(resp, SUCCESS_ANSWER);
         }

@@ -8,6 +8,7 @@ import entity.user.User;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 public interface BuyListDAO {
     List<BuyList> getUserList(User user);
@@ -22,4 +23,6 @@ public interface BuyListDAO {
     void removeList(BuyList list);
 
     BuyList getBaseList(Task task);
+
+    void saveItems(Set<BuyListItem> itemSet);
 }

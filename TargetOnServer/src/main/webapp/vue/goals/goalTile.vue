@@ -36,8 +36,8 @@ goalTile = {
                     '{{goal.title}} by {{goal.owner.surname}} {{goal.owner.forename}}' +
                 '</span>' +
                 '<div class="goal-title-buttons">' +
-                    '<span title="Goal members" v-on:click="openMemberList()">' +
-                        '<img style="background: transparent; width: 8pt" :src="props.memberIcon" alt="M">1' +
+                    '<span class="text-button" title="Goal members" v-on:click="openMemberList()">' +
+                        '<img style="background: transparent; width: 10pt" :src="props.memberIcon" alt="M"> {{(1+goal.members.length).toLocaleString()}}' +
                     '</span>' +
                     '<span class="text-button" v-on:click="props.edit(goal.id)">' +
                         '&#10000;' +

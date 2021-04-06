@@ -1,7 +1,8 @@
 calendar = new Vue({
     el:'#calendar',
     components:{
-        'date-picker':datePicker
+        'date-picker':datePicker,
+        'calendar-free-item':calendarFreeItem
     },
     mixins:[list, pathBuilder, weekNumber],
     data:function(){
@@ -31,6 +32,13 @@ calendar = new Vue({
         }
     },
     methods:{
+        createItem:function(task){
+            let args = {};
+            if(task){
+                args.header = task;
+            }
+            this.edit(-1, args);
+        },
         getEventsByTime:function(time){
             let events = this.events.filter(function (item) {
                 return item.time === time;
@@ -137,6 +145,7 @@ calendar = new Vue({
         getCalendarData:function () {
             const self = this;
             PostApi(this.api.getCalendar, {date:this.date}, function (a) {
+                console.log(a);
                 self.calendar = a;
             })
         },
@@ -148,6 +157,15 @@ calendar = new Vue({
                 return a.time - b.time;
             });
             return items;
+        },
+        todayItems:function(){
+            let items = this.calendar.filter(function (item) {
+                return item.date && !item.time;
+            });
+            items.sort(function (a, b) {
+                return a.title.localeCompare(b.title);
+            });
+            return this.calendar;
         },
         getOtherItems:function(){
             let items = this.calendar.filter(function(item){

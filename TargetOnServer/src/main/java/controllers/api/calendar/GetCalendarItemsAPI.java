@@ -35,9 +35,6 @@ public class GetCalendarItemsAPI extends API {
             for (CalendarItem item : calendarDAO.getCalendarItems(date, user)){
                 array.add(item.toJson());
             }
-            for (CalendarItem item : calendarDAO.getCalendarItems(null, user)){
-                array.add(item.toJson());
-            }
             write(resp, array.toJSONString());
 
         }

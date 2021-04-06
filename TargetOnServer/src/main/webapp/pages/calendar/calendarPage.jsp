@@ -14,12 +14,13 @@
 <script type="application/javascript" src="${context}/vue/weekNumber.vue?v=${now}"></script>
 <script type="application/javascript" src="${context}/vue/templates/calendar.vue?v=${now}"></script>
 <script type="application/javascript" src="${context}/vue/templates/datetime/datePicker.vue?v=${now}"></script>
+<script src="${context}/vue/calendar/calendarFreeItem.vue"></script>
 <script type="application/javascript" src="${context}/vue/calendarPage.vue?v=${now}"></script>
 <script>
   calendar.api.edit = '${edit}';
   calendar.api.remove = '${remove}';
   calendar.api.getCalendar = '${getCalendar}';
-  // calendar.getCalendarData();
+  calendar.getCalendarData();
   subscriber.subscribe('${subscribe}', calendar.handler);
   <%--subscriber.subscribe('${subscribe}', calendar.calendarHandler);--%>
 </script>
@@ -35,16 +36,7 @@
     </div>
     <div class="panel-content">
       <div class="item-container">
-        <div v-for="item in getItems" v-on:click="edit(item.id)">
-          <div>
-            <span v-if="item.date">
-              {{item.date}}
-            </span>
-            <span>
-              {{item.title}}
-            </span>
-          </div>
-        </div>
+        <calendar-free-item v-for="item in todayItems()" :item="item" v-on:click.native="createItem(item.header)"></calendar-free-item>
       </div>
     </div>
   </div>
@@ -89,15 +81,7 @@
     </div>
     <div class="panel-content">
       <div class="item-container">
-        <div v-for="item in getItems()" v-on:click="edit(-1, {category:item.category})"
-             style="border: solid gray 1pt; padding: 2px; margin: 2px">
-          <div style="font-size: 8pt">
-            &nbsp;{{getPath(item)}}
-          </div>
-          <div>
-            {{item.title}}
-          </div>
-        </div>
+        <calendar-free-item v-for="item in getItems()" :item="item" v-on:click.native="createItem(item.header)"></calendar-free-item>
       </div>
     </div>
   </div>
