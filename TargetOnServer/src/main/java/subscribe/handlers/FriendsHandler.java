@@ -15,7 +15,7 @@ public class FriendsHandler extends SubscribeHandler {
     }
 
     @Override
-    Object getItems(User user) {
+    public Object getItems(User user) {
         final JSONArray array = new JSONArray();
 
         for (User friend : friendshipDAO.getFriends(user)){

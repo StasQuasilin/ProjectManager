@@ -2,6 +2,7 @@ package utils;
 
 import entity.finance.category.Header;
 import entity.goal.Goal;
+import entity.goal.GoalMember;
 import entity.task.*;
 import entity.user.User;
 import subscribe.Subscribe;
@@ -79,6 +80,9 @@ public class TaskUtil {
             if(goal != null){
                 goal.setStatistic(statistic);
                 updater.update(Subscribe.goal, goal, goal.getOwner());
+                for (GoalMember member : goalDAO.getGoalMembers(goal)){
+                    updater.update(Subscribe.goal, goal, member.getMember());
+                }
             }
         }else if(statistic.getId() > 0){
             taskDAO.removeStatistic(statistic);

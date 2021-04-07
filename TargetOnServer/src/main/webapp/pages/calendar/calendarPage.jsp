@@ -21,14 +21,15 @@
   calendar.api.remove = '${remove}';
   calendar.api.getCalendar = '${getCalendar}';
   calendar.getCalendarData();
-  subscriber.subscribe('${subscribe}', calendar.handler);
-  <%--subscriber.subscribe('${subscribe}', calendar.calendarHandler);--%>
+  subscriber.subscribe('${taskSubscribe}', calendar.handler);
+  subscriber.subscribe('${subscribe}', calendar.calendarHandler);
 </script>
 <div id="calendar" class="full-size">
   <div class="left-panel">
     <div class="panel-header">
       <div class="panel-header-content">
         <fmt:message key="calendar.today"/>
+        {{new Date(date).toLocaleDateString().substring(0, 5)}}
         <span class="text-button" style="float: right" v-on:click="edit()">
         <fmt:message key="button.add"/>
       </span>
@@ -36,7 +37,7 @@
     </div>
     <div class="panel-content">
       <div class="item-container">
-        <calendar-free-item v-for="item in todayItems()" :item="item" v-on:click.native="createItem(item.header)"></calendar-free-item>
+        <calendar-free-item v-for="item in todayItems()" :item="item" v-on:click.native="edit(item.id)"></calendar-free-item>
       </div>
     </div>
   </div>
@@ -58,17 +59,32 @@
     </div>
     <div class="panel-content">
       <div class="item-container">
-        <div v-for="item in calendarBuilder()" :style="{'min-height': (item.length)+ 'pt'}"
+        <div v-for="item in getCalendarItems()" v-on:click="edit(item.id)" style="display: flex" :style="{'min-height': (item.length)+ 'pt'}"
              class="calendar-item" :class="{'filled' : item.title}">
-          {{item}}
-          <div v-if="item.title">
-            {{item.title}}
+          <div style="padding-right: 5pt">
+            {{item.time.substring(0, 5)}}
+            <template v-if="item.length">
+              +{{item.length}} min
+            </template>
           </div>
-          <div style="font-size: 10px">
-            <div v-for="(v, k) in item">
-              {{k}}: {{v}}
+          <div>
+            <div v-if="item.parent" style="font-size: 10pt">
+            <span v-for="p in item.parent.path">
+              {{p.title}} /
+            </span>
+              <span>
+              {{item.parent.title}}
+            </span>
+            </div>
+            <div v-if="item.title">
+              {{item.title}}
             </div>
           </div>
+<%--          <div style="font-size: 10px">--%>
+<%--            <div v-for="(v, k) in item">--%>
+<%--              {{k}}: {{v}}--%>
+<%--            </div>--%>
+<%--          </div>--%>
         </div>
       </div>
     </div>

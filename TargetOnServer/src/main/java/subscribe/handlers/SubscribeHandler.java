@@ -38,5 +38,5 @@ public abstract class SubscribeHandler {
             }
         }
     }
-    abstract Object getItems(User user);
+    public abstract Object getItems(User user);
 }

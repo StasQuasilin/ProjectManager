@@ -128,9 +128,9 @@ public class TaskStatistic extends JsonAble {
 
     public void add(TaskStatistic statistic) {
         if (statistic != null){
-            plus += statistic.getPlus();
-            minus += statistic.getMinus();
-            coast += statistic.getCoast();
+//            plus += statistic.getPlus();
+//            minus += statistic.getMinus();
+//            coast += statistic.getCoast();
             activeChildren += statistic.getActiveChildren();
             progressingChildren += statistic.getProgressingChildren();
             doneChildren += statistic.getDoneChildren();
@@ -199,5 +199,10 @@ public class TaskStatistic extends JsonAble {
 
     public void plusOtherChild() {
         otherChildren++;
+    }
+
+    public void cleanAll() {
+        clean();
+        cleanChildren();
     }
 }

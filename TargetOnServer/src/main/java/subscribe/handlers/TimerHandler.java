@@ -15,7 +15,7 @@ public class TimerHandler extends SubscribeHandler {
     }
 
     @Override
-    Object getItems(User user) {
+    public Object getItems(User user) {
         final TimeLog log = taskDAO.getTimeLogByUser(user);
         if (log != null){
             return log.toJson();

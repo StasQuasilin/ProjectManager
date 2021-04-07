@@ -47,4 +47,10 @@ public interface Keys {
     String BUDGET = "budget";
     String BEGIN = "begin";
     String END = "end";
+    String STATISTIC = "statistic";
+    String MEMBERS = "members";
+    String ACTIVE = "active";
+    String PROGRESSING = "progressing";
+    String DONE = "done";
+    String OTHER = "other";
 }

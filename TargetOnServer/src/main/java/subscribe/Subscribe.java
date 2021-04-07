@@ -13,5 +13,6 @@ public enum Subscribe {
     friends,
     friendshipReq,
     users,
+    calendar_tasks,
     buy
 }

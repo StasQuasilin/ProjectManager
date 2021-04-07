@@ -26,6 +26,10 @@
     </c:forEach>
     <c:if test="${not empty item}">
     calendarEdit.calendarItem = ${item.toJson()};
+    calendarEdit.calendarItem.header = {
+        id:calendarEdit.calendarItem.header,
+        title:calendarEdit.calendarItem.title
+    };
     </c:if>
     calendarEdit.calendarItem.weekDays = [];
     <c:forEach items="${weekDays.days}" var="d">
@@ -37,14 +41,14 @@
     now = new Date();
     if (calendarEdit.calendarItem.date){
         calendarEdit.useDate = true;
-        if (calendarEdit.calendarItem.time){
-            calendarEdit.useTime = true;
-        } else {
-            calendarEdit.calendarItem.time = now.toLocaleTimeString()
-        }
+        calendarEdit.useTime = !!calendarEdit.calendarItem.time;
     } else {
-        calendarEdit.calendarItem.date = now.toISOString().substring(0, 10);
-        calendarEdit.calendarItem.time = now.toLocaleTimeString();
+        calendarEdit.useDate = false;
+        calendarEdit.useTime = false;
+        calendarEdit.calendarItem.date = new Date().toISOString().substring(0, 10);
+    }
+    if(!calendarEdit.useTime){
+        calendarEdit.calendarItem.time = new Date().toLocaleTimeString();
     }
 </script>
 <table id="calendarEdit">

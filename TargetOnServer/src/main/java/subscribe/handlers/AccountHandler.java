@@ -24,7 +24,7 @@ public class AccountHandler extends SubscribeHandler {
     }
 
     @Override
-    Object getItems(User user) {
+    public Object getItems(User user) {
         JSONArray array = new JSONArray();
         for (Account account : accountDAO.getUserAccounts(user)){
             final JSONObject jsonObject = account.toJson();

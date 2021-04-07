@@ -19,7 +19,7 @@ public class TransactionHandler extends SubscribeHandler {
     }
 
     @Override
-    Object getItems(User user) {
+    public Object getItems(User user) {
         JSONArray array = new JSONArray();
 
         for (Transaction transaction : transactionDAO.getUserTransactions(user)){

@@ -16,7 +16,7 @@ public class BuyListHandler extends SubscribeHandler {
     }
 
     @Override
-    Object getItems(User user) {
+    public Object getItems(User user) {
         JSONArray array = new JSONArray();
         for (BuyList list : buyListDAO.getUserList(user)){
             array.add(list.toJson());

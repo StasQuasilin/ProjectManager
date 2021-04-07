@@ -1,10 +1,14 @@
 package utils.savers;
 
+import entity.finance.category.Header;
+import entity.goal.Goal;
+import entity.goal.GoalMember;
 import entity.task.Task;
 import entity.task.TaskStatistic;
 import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.dao.daoService;
+import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.tree.TaskDAO;
 import utils.finances.CategoryStatisticUtil;
 
@@ -12,6 +16,7 @@ public class TaskSaver {
 
     private final Updater updater = new Updater();
     private final TaskDAO taskDAO = daoService.getTaskDAO();
+    private final GoalDAO goalDAO = daoService.getGoalDAO();
     private final CategoryStatisticUtil categoryStatisticUtil = new CategoryStatisticUtil();
 
     public void save(Task task){
@@ -30,5 +35,18 @@ public class TaskSaver {
             task.setStatistic(null);
         }
         updater.update(Subscribe.tree, task, task.getOwner());
+        final Goal goal = goalDAO.getGoalByCategory(getParent(task.getHeader()).getId());
+        for (GoalMember  member : goalDAO.getGoalMembers(goal)){
+            updater.update(Subscribe.tree, task, member.getMember());
+        }
+    }
+
+    private Header getParent(Header header) {
+        Header parent = header;
+        final Header p = header.getParent();
+        if(p != null){
+            parent = getParent(p);
+        }
+        return parent;
     }
 }

@@ -38,6 +38,7 @@ public final class Subscriber {
         addHandler(new TimerHandler());
         addHandler(new FriendshipReqHandler());
         addHandler(new FriendsHandler());
+        addHandler(new CalendarTaskHandler());
     }
 
     private void addHandler(SubscribeHandler handler) {

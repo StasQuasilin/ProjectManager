@@ -24,6 +24,7 @@ import ua.svasilina.targeton.adapters.SimpleListAdapter;
 import ua.svasilina.targeton.dialogs.SearchListBuilder;
 import ua.svasilina.targeton.dialogs.transactions.SearchDialogItemBuilder;
 import ua.svasilina.targeton.entity.Goal;
+import ua.svasilina.targeton.entity.TaskStatistic;
 import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
 import ua.svasilina.targeton.utils.constants.Constants;
 import ua.svasilina.targeton.utils.constants.Keys;
@@ -88,6 +89,34 @@ public class GoalsFragment extends ApplicationFragment implements DataUpdater {
                     dateProgressBar.setVisibility(View.VISIBLE);
                 } else {
                     dateProgressBar.setVisibility(View.GONE);
+                }
+
+                final TaskStatistic statistic = item.getStatistic();
+                final View statisticView = view.findViewById(R.id.statisticContent);
+                if(statistic != null){
+                    int active = statistic.getActive();
+                    final int progressing = statistic.getProgressing();
+                    final int done = statistic.getDone();
+                    final int other = statistic.getOther();
+
+                    ProgressBar progressBar = statisticView.findViewById(R.id.progressProgressBar);
+                    progressBar.setMax(active + progressing + done + other);
+                    progressBar.setProgress(done);
+
+                    final TextView activeTaskView = statisticView.findViewById(R.id.activeTask);
+                    activeTaskView.setText(String.valueOf(active));
+
+                    final TextView progressingTaskView = statisticView.findViewById(R.id.progressingTask);
+                    progressingTaskView.setText(String.valueOf(progressing));
+
+                    final TextView doneTaskView = statisticView.findViewById(R.id.doneTask);
+                    doneTaskView.setText(String.valueOf(done));
+
+                    final TextView otherTaskView = statisticView.findViewById(R.id.otherTask);
+                    otherTaskView.setText(String.valueOf(other));
+
+                } else {
+                    statisticView.setVisibility(View.GONE);
                 }
 
             }

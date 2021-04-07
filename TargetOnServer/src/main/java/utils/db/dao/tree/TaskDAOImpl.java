@@ -40,7 +40,6 @@ public class TaskDAOImpl implements TaskDAO {
         final Header header = task.getHeader();
         hibernator.save(header);
         hibernator.save(task);
-        updater.update(Subscribe.tree, task, task.getOwner());
     }
 
     @Override

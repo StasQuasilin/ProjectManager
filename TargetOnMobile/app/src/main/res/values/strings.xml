@@ -55,4 +55,9 @@
     <string name="account_sum">Сума на рахунку</string>
     <string name="account_limit">Кредитний ліміт</string>
     <string name="account_members">Користувачі рахунку</string>
+    <string name="active">Активні завдання</string>
+    <string name="progressing">Завдання виконуються</string>
+    <string name="done">Виконані завдання</string>
+    <string name="other">Інші завдання</string>
+    <string name="spend_time">Витрачений час</string>
 </resources>

@@ -14,13 +14,11 @@ public class Goal {
     private Calendar begin;
     private Calendar end;
     private int budget;
+    private TaskStatistic statistic;
 
     public Goal(JSONObject object) {
         try {
             id = object.getInt(Keys.ID);
-
-
-
             update(object);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -91,5 +89,16 @@ public class Goal {
         } else {
             budget = 0;
         }
+
+        if(object.has(Keys.STATISTIC)) {
+            statistic = new TaskStatistic((JSONObject) object.get(Keys.STATISTIC));
+        }
+        if(object.has(Keys.MEMBERS)){
+            System.out.println(object.get(Keys.MEMBERS));
+        }
+    }
+
+    public TaskStatistic getStatistic() {
+        return statistic;
     }
 }

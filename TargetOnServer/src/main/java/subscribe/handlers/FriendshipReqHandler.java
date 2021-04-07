@@ -9,7 +9,7 @@ public class FriendshipReqHandler extends SubscribeHandler {
     }
 
     @Override
-    Object getItems(User user) {
+    public Object getItems(User user) {
         return null;
     }
 }

@@ -12,28 +12,15 @@ import utils.db.dao.tree.TaskDAO;
 
 public class CalendarHandler extends SubscribeHandler {
 
-    private final TaskDAO taskDAO = daoService.getTaskDAO();
-    private final GoalDAO goalDAO = daoService.getGoalDAO();
-
+    private final JSONArray array = new JSONArray();
     public CalendarHandler() {
         super(Subscribe.calendar);
     }
 
     @Override
-    Object getItems(User user) {
-        JSONArray array = new JSONArray();
-        for(Goal goal : goalDAO.getGoals(user)){
-            addItems(goal.getTitle().getId(), array);
-        }
+    public Object getItems(User user) {
         return array;
     }
 
-    private void addItems(int headerId, JSONArray array) {
-        for (Task task : taskDAO.getTasksByParent(headerId)){
-            if(task.getStatus() == TaskStatus.active && !task.isDoneIfChildren()){
-                array.add(task.toJson());
-            }
-            addItems(task.getHeader().getId(), array);
-        }
-    }
+
 }

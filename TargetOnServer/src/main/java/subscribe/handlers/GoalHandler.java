@@ -23,7 +23,7 @@ public class GoalHandler extends SubscribeHandler{
     }
 
     @Override
-    Object getItems(User user) {
+    public Object getItems(User user) {
         JSONArray array = new JSONArray();
         final ActiveGoal activeGoal = goalDAO.getActiveGoal(user);
         for (Goal goal : goalDAO.getGoals(user)){

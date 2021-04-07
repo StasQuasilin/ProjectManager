@@ -12,6 +12,7 @@ import utils.answers.Answer;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
+import utils.savers.TaskSaver;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,6 +30,7 @@ public class TaskTimerStopAPI extends API {
     private final TaskDAO taskDAO = daoService.getTaskDAO();
     private final TaskUtil taskUtil = new TaskUtil();
     private final Updater updater = new Updater();
+    private final TaskSaver saver = new TaskSaver();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -53,6 +55,7 @@ public class TaskTimerStopAPI extends API {
             taskDAO.saveTask(task);
             taskUtil.updateStatistic(task.getHeader());
             taskDAO.removeTaskDoer(task, timeLog.getOwner());
+            saver.update(task);
 
         } else {
             answer = EMPTY_BODY;

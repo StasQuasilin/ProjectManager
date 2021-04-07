@@ -26,11 +26,13 @@ calendarEdit = new Vue({
         dateProps:{
             put:function (date) {
                 calendarEdit.calendarItem.date = date;
+                calendarEdit.$forceUpdate();
             }
         },
         timeProps:{
             put:function (time) {
                 calendarEdit.calendarItem.time = time;
+                calendarEdit.$forceUpdate();
             }
         },
         props:{

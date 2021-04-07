@@ -10,7 +10,7 @@ public class TreeHandler extends SubscribeHandler{
     }
 
     @Override
-    Object getItems(User user) {
+    public Object getItems(User user) {
         return null;
     }
 }

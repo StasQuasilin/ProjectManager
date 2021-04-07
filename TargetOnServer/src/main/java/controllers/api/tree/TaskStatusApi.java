@@ -10,6 +10,7 @@ import utils.answers.SuccessAnswer;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
+import utils.savers.TaskSaver;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +26,7 @@ public class TaskStatusApi extends API {
 
     private final TaskDAO taskDAO = daoService.getTaskDAO();
     private final TaskUtil taskUtil = new TaskUtil();
+    private final TaskSaver taskSaver = new TaskSaver();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,6 +39,7 @@ public class TaskStatusApi extends API {
             task.setStatus(status);
             taskDAO.saveTask(task);
             taskUtil.updateStatistic(task.getHeader());
+            taskSaver.update(task);
             answer = new SuccessAnswer();
         } else {
             answer =EMPTY_BODY;

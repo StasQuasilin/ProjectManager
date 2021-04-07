@@ -10,7 +10,7 @@ calendar = new Vue({
             date:new Date().toISOString().substring(0, 10),
             scales:['day', 'week', 'month'],
             scale:'day',
-            calendar:[],
+            calendar:{},
             events:[],
             props:{
                 put:function (date) {
@@ -79,7 +79,7 @@ calendar = new Vue({
             return this.calendarStructure;
         },
         buildCalendar:function(){
-            let list = this.calendar.filter(function (item) {
+            let list = Object.values(this.calendar).filter(function (item) {
                 return item.time;
             });
             list.sort(function (a, b) {
@@ -117,7 +117,6 @@ calendar = new Vue({
                     }
                 }
             }
-
             return calendar;
         },
         calendarHandler:function(data){
@@ -125,10 +124,18 @@ calendar = new Vue({
             if (data.update){
                 let update = data.update;
                 let date = update.date;
+
                 if (!date || date === this.date){
-                    this.calendar.push(update);
+                    this.addInToCalendar(update);
+                    this.$forceUpdate();
+                } else {
+                    delete this.calendar[update.id];
+                    this.$forceUpdate();
                 }
             }
+        },
+        addInToCalendar:function(item){
+            this.calendar[item.id] = item;
         },
         switchDate:function(value){
             let date = new Date(this.date);
@@ -146,29 +153,34 @@ calendar = new Vue({
             const self = this;
             PostApi(this.api.getCalendar, {date:this.date}, function (a) {
                 console.log(a);
-                self.calendar = a;
+                self.calendar = {};
+                for(let i in a){
+                    if (a.hasOwnProperty(i)){
+                        self.addInToCalendar(a[i])
+                    }
+                }
             })
         },
         getCalendarItems:function(){
-            let items = this.calendar.filter(function (item) {
+            let items = Object.values(this.calendar).filter(function (item) {
                 return item.time;
             });
             items.sort(function (a, b) {
-                return a.time - b.time;
+                return new Date (a.date + ' ' + a.time) - new Date(b.date + ' ' + b.time);
             });
             return items;
         },
         todayItems:function(){
-            let items = this.calendar.filter(function (item) {
+            let items = Object.values(this.calendar).filter(function (item) {
                 return item.date && !item.time;
             });
             items.sort(function (a, b) {
                 return a.title.localeCompare(b.title);
             });
-            return this.calendar;
+            return items;
         },
         getOtherItems:function(){
-            let items = this.calendar.filter(function(item){
+            let items = Object.values(this.calendar).filter(function(item){
                 return !item.date || !item.time;
             });
             items.sort(function (a, b) {
