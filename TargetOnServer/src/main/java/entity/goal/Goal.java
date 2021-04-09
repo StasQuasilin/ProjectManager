@@ -144,9 +144,7 @@ public class Goal extends JsonAble {
 
     @Override
     public JSONObject toJson() {
-
         final JSONObject jsonObject = shortJson();
-
         if (begin != null){
             jsonObject.put(BEGIN, begin.toString());
         }

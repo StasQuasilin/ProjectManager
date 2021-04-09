@@ -3,6 +3,7 @@ package ua.svasilina.targeton.utils.subscribes;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
@@ -53,4 +54,6 @@ public class DataHandler extends Handler {
         }
         updater.sort();
     }
+
+
 }

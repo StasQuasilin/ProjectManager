@@ -111,7 +111,8 @@ treeItem = {
                                 '</li>' +
                             '</ul>' +
                         '</div>' +
-                        '<span style="padding-left: 4pt; display: inline-block; width: 10pt">' +
+                        '<span v-if="childrenCount === 0" style="padding-left: 4pt;">&nbsp;</span>' +
+                        '<span style="display: inline-block; width: 10pt">' +
                             '<template v-if="item.status === \'active\'">' +
                                 ' ' +
                             '</template>' +

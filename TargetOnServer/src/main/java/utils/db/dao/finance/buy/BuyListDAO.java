@@ -3,7 +3,6 @@ package utils.db.dao.finance.buy;
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
 import entity.finance.category.Header;
-import entity.task.Task;
 import entity.user.User;
 
 import java.util.Collection;
@@ -22,7 +21,7 @@ public interface BuyListDAO {
     void removeItem(BuyListItem item);
     void removeList(BuyList list);
 
-    BuyList getBaseList(Task task);
+    BuyList getBaseList(Header header);
 
     void saveItems(Set<BuyListItem> itemSet);
 }

@@ -6,4 +6,5 @@
     <color name="colorError">#FF5722</color>
     <color name="transaction_spending">#FF9800</color>
     <color name="transaction_income">#4CAF50</color>
+    <color name="BLUE">#2196F3</color>
 </resources>

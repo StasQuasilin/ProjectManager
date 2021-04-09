@@ -19,11 +19,12 @@ import org.json.JSONObject;
 import java.util.Calendar;
 import java.util.HashMap;
 
+import ua.svasilina.targeton.MainActivity;
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.adapters.SimpleListAdapter;
-import ua.svasilina.targeton.dialogs.SearchListBuilder;
-import ua.svasilina.targeton.dialogs.transactions.SearchDialogItemBuilder;
-import ua.svasilina.targeton.entity.Goal;
+import ua.svasilina.targeton.dialogs.ListBuilder;
+import ua.svasilina.targeton.dialogs.transactions.ItemBuilder;
+import ua.svasilina.targeton.entity.goal.Goal;
 import ua.svasilina.targeton.entity.TaskStatistic;
 import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
 import ua.svasilina.targeton.utils.constants.Constants;
@@ -35,6 +36,7 @@ import ua.svasilina.targeton.utils.subscribes.updaters.DataUpdater;
 
 public class GoalsFragment extends ApplicationFragment implements DataUpdater {
 
+    private final MainActivity mainActivity;
     private final Context context;
     private final Subscriber subscriber = Subscriber.getInstance();
     private final DataHandler handler;
@@ -43,22 +45,33 @@ public class GoalsFragment extends ApplicationFragment implements DataUpdater {
     private DateTimeBuilder dateTimeBuilder;
 
 
-    public GoalsFragment(Context context) {
-        this.context = context;
+    public GoalsFragment(MainActivity activity) {
+        this.mainActivity = activity;
+        this.context = activity;
         handler = new DataHandler(this);
         dateTimeBuilder = new DateTimeBuilder(Constants.DATE_PATTERN);
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.goals_fragment, container, false);
-        adapter = new SimpleListAdapter<>(context, R.layout.goal_view, inflater, new SearchListBuilder<Goal>() {
+        adapter = new SimpleListAdapter<>(context, R.layout.goal_view, inflater, new ListBuilder<Goal>() {
             @Override
-            public void build(Goal item, View view) {
+            public void build(final Goal item, View view) {
                 final TextView goalTitleView = view.findViewById(R.id.goalTitle);
                 goalTitleView.setText(item.getTitle());
+
+                final TextView memberCountView = view.findViewById(R.id.membersCount);
+                memberCountView.setText(String.valueOf(1 + item.getMembers()));
+
+                final View treeButton = view.findViewById(R.id.treeButton);
+                treeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mainActivity.openPage(Pages.tree, item.getId());
+                    }
+                });
 
                 final View dateBeginGroup = view.findViewById(R.id.dateBeginGroup);
                 final TextView dateBeginView = dateBeginGroup.findViewById(R.id.dateBegin);
@@ -120,7 +133,7 @@ public class GoalsFragment extends ApplicationFragment implements DataUpdater {
                 }
 
             }
-        }, new SearchDialogItemBuilder<Goal>() {
+        }, new ItemBuilder<Goal>() {
             @Override
             public Goal create(JSONObject json) {
                 return new Goal(json);

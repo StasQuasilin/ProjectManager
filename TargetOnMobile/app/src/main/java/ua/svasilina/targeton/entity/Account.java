@@ -33,7 +33,6 @@ public class Account extends JsonAble {
         try {
             id = json.getInt(ID);
             update(json);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -103,7 +102,7 @@ public class Account extends JsonAble {
     }
 
     public void update(JSONObject json) throws JSONException {
-        title = json.getString(TITLE);
+
         if (json.has(CURRENCY)){
             currency = json.getString(CURRENCY);
         }

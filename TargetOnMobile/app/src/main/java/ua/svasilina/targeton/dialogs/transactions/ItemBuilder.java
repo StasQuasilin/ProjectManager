@@ -2,6 +2,6 @@ package ua.svasilina.targeton.dialogs.transactions;
 
 import org.json.JSONObject;
 
-public interface SearchDialogItemBuilder<T>{
+public interface ItemBuilder<T>{
     T create(JSONObject json);
 }

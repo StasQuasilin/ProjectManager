@@ -11,17 +11,17 @@ import androidx.annotation.Nullable;
 
 import org.json.JSONObject;
 
-import ua.svasilina.targeton.dialogs.SearchListBuilder;
-import ua.svasilina.targeton.dialogs.transactions.SearchDialogItemBuilder;
+import ua.svasilina.targeton.dialogs.ListBuilder;
+import ua.svasilina.targeton.dialogs.transactions.ItemBuilder;
 
 public class SimpleListAdapter<T> extends ArrayAdapter<T> {
 
     private final LayoutInflater inflater;
     private final int resource;
-    private final SearchListBuilder<T> listBuilder;
-    private final SearchDialogItemBuilder<T> itemBuilder;
+    private final ListBuilder<T> listBuilder;
+    private final ItemBuilder<T> itemBuilder;
 
-    public SimpleListAdapter(@NonNull Context context, int resource, LayoutInflater inflater, SearchListBuilder<T> listBuilder, SearchDialogItemBuilder<T> itemBuilder) {
+    public SimpleListAdapter(@NonNull Context context, int resource, LayoutInflater inflater, ListBuilder<T> listBuilder, ItemBuilder<T> itemBuilder) {
         super(context, resource);
         this.inflater = inflater;
         this.resource = resource;

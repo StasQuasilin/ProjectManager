@@ -1,44 +1,31 @@
-package ua.svasilina.targeton.entity;
+package ua.svasilina.targeton.entity.goal;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 
+import ua.svasilina.targeton.entity.TaskStatistic;
+import ua.svasilina.targeton.entity.goal.SimpleGoal;
 import ua.svasilina.targeton.utils.constants.Keys;
 
-public class Goal {
-    private int id;
-    private String title;
+public class Goal extends SimpleGoal {
     private Calendar begin;
     private Calendar end;
     private int budget;
     private TaskStatistic statistic;
+    private int members;
 
     public Goal(JSONObject object) {
+        super(object);
         try {
-            id = object.getInt(Keys.ID);
+
             update(object);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public int getBudget() {
@@ -65,9 +52,11 @@ public class Goal {
         this.end = end;
     }
 
-    public void update(JSONObject object) throws JSONException {
-        title = object.getString(Keys.TITLE);
+    public int getMembers() {
+        return members;
+    }
 
+    public void update(JSONObject object) throws JSONException {
         if (object.has(Keys.BEGIN)){
             begin = Calendar.getInstance();
             java.sql.Date date = java.sql.Date.valueOf(object.getString(Keys.BEGIN));
@@ -94,7 +83,7 @@ public class Goal {
             statistic = new TaskStatistic((JSONObject) object.get(Keys.STATISTIC));
         }
         if(object.has(Keys.MEMBERS)){
-            System.out.println(object.get(Keys.MEMBERS));
+            members = object.getJSONArray(Keys.MEMBERS).length();
         }
     }
 

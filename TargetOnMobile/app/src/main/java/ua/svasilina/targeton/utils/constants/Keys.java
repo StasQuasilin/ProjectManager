@@ -53,4 +53,10 @@ public interface Keys {
     String PROGRESSING = "progressing";
     String DONE = "done";
     String OTHER = "other";
+    String PARENT = "parent";
+    String HEADER = "header";
+    String TITLE_ID = "titleId";
+    String CHILDREN = "children";
+    String HEADER_ID = "headerId";
+    String DONE_IF = "doneIf";
 }

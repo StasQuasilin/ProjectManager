@@ -28,7 +28,7 @@ import java.util.Calendar;
 
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.dialogs.SearchDialog;
-import ua.svasilina.targeton.dialogs.SearchListBuilder;
+import ua.svasilina.targeton.dialogs.ListBuilder;
 import ua.svasilina.targeton.dialogs.common.DateDialog;
 import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.entity.Category;
@@ -333,7 +333,7 @@ public class TransactionEditDialog extends DialogFragment {
                         getContext(),
                         getLayoutInflater(),
                         API.FIND_CATEGORY,
-                        new SearchDialogItemBuilder<Category>() {
+                        new ItemBuilder<Category>() {
                             @Override
                             public Category create(JSONObject json) {
                                 return new Category(json);
@@ -346,7 +346,7 @@ public class TransactionEditDialog extends DialogFragment {
                                 updateTransactionCategory();
                             }
                         },
-                        new SearchListBuilder<Category>() {
+                        new ListBuilder<Category>() {
                             @Override
                             public void build(Category item, View view) {
                                 final TextView itemValue = view.findViewById(R.id.itemValue);

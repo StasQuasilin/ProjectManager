@@ -1,9 +1,19 @@
 package ua.svasilina.targeton.ui.main.tree;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import org.json.JSONObject;
 
+import ua.svasilina.targeton.MainActivity;
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.ui.main.ApplicationFragment;
 import ua.svasilina.targeton.utils.subscribes.DataHandler;
@@ -15,18 +25,41 @@ public class TreeFragment extends ApplicationFragment {
 
     private final Context context;
     private final Subscriber subscriber = Subscriber.getInstance();
-    private final DataHandler handler;
+    private final DataHandler goalHandler;
 
-    public TreeFragment(Context context) {
-        this.context = context;
+    private final DataHandler handler;
+    private Spinner goalList;
+    private GoalTreeHandler goalTreeHandler;
+
+    public TreeFragment(MainActivity mainActivity, int goal) {
+        this.context = mainActivity;
+        goalTreeHandler = new GoalTreeHandler(context);
+        goalHandler = new DataHandler(goalTreeHandler);
         handler = new DataHandler(new TreeUpdater(this));
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.tree_view, null);
+        goalList = view.findViewById(R.id.goalSpinner);
+
+
+        final ListView itemListView = view.findViewById(R.id.itemsList);
+        final ListView pathView = view.findViewById(R.id.pathView);
+        goalTreeHandler.setList(goalList, pathView, itemListView);
+        return view;
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        subscriber.subscribe(Subscribe.tree, handler, context);
+        subscribe();
+    }
 
+    private void subscribe() {
+        subscriber.subscribe(Subscribe.goal, goalHandler, context);
+        subscriber.subscribe(Subscribe.tree, handler, context);
     }
 
     @Override
@@ -35,6 +68,6 @@ public class TreeFragment extends ApplicationFragment {
     }
 
     public void update(JSONObject object) {
-
+        System.out.println(object);
     }
 }

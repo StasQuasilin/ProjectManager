@@ -3,10 +3,7 @@ package utils.db.dao.finance.buy;
 import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
 import entity.finance.category.Header;
-import entity.task.Task;
 import entity.user.User;
-import subscribe.Subscribe;
-import utils.Updater;
 import utils.db.hibernate.Hibernator;
 
 import java.util.Collection;
@@ -80,9 +77,9 @@ public class BuyListDAOImpl implements BuyListDAO {
     }
 
     @Override
-    public BuyList getBaseList(Task task) {
+    public BuyList getBaseList(Header header) {
         Header parent = null;
-        Header p = task.getHeader();
+        Header p = header;
         while (p != null){
             parent = p;
             p = p.getParent();

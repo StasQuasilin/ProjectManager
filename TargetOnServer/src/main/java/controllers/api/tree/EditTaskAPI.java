@@ -142,8 +142,14 @@ public class EditTaskAPI extends API {
             }
 
             if (body.containKey(BUY_LIST)){
+                if(header.getType() != HeaderType.category) {
+                    header.setType(HeaderType.category);
+                }
                 buyListUtil.taskToBuyList(task, new JsonObject(body.get(BUY_LIST)));
             } else {
+                if(header.getType() != HeaderType.task){
+                    header.setType(HeaderType.task);
+                }
                 buyListUtil.remove(task);
             }
         }

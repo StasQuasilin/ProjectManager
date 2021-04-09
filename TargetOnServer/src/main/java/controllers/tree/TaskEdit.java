@@ -52,7 +52,7 @@ public class TaskEdit extends ModalWindow {
 
             if (task != null){
                 req.setAttribute(TASK, task);
-                req.setAttribute(BUY_LIST, buyListDAO.getBaseList(task));
+
                 final Header header = task.getHeader();
 //                final BuyListItem buyListItem = buyListDAO.getItemByCategory(category);
 //                if (buyListItem != null) {
@@ -60,13 +60,17 @@ public class TaskEdit extends ModalWindow {
 //                    req.setAttribute(BUY_LIST, buyList);
 //                }
                 parent = header.getParent();
+
             } else if (body.containKey(PARENT)){
                 parent = titleDAO.getHeader(body.get(PARENT));
             }
 
             req.setAttribute(PARENT, parent);
+            if(parent != null) {
+                req.setAttribute(BUY_LIST, buyListDAO.getBaseList(parent));
+            }
 
-            if (buyList == null && parent != null){
+//            if (buyList == null && parent != null){
 //                Category root = parent.getParent();
 //                if (root != null) {
 //                    while (root.getParent() != null) {
@@ -81,7 +85,7 @@ public class TaskEdit extends ModalWindow {
 //                    final BuyList list = buyListDAO.getList(buyListId);
 //                    req.setAttribute(ROOT_BUY_LIST, list);
 //                }
-            }
+//            }
             LinkedList<Task> dependency = new LinkedList<>();
             for(TaskDependency t : taskDAO.getDependency(task)){
                 dependency.add(t.getDependency());

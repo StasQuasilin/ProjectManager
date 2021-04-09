@@ -29,7 +29,7 @@ import java.util.HashMap;
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.adapters.SimpleListAdapter;
 import ua.svasilina.targeton.dialogs.transactions.OnChangeListener;
-import ua.svasilina.targeton.dialogs.transactions.SearchDialogItemBuilder;
+import ua.svasilina.targeton.dialogs.transactions.ItemBuilder;
 import ua.svasilina.targeton.utils.TWatcher;
 import ua.svasilina.targeton.utils.connection.Connector;
 
@@ -47,16 +47,16 @@ public class SearchDialog<T> extends DialogFragment {
     private final Connector connector = Connector.getInstance();
     private final SimpleListAdapter<T> adapter;
     private final OnChangeListener<T> changeListener;
-    private final SearchDialogItemBuilder<T> itemBuilder;
+    private final ItemBuilder<T> itemBuilder;
     private EditText textInput;
     private SearchTimer<T> timer;
     private String title;
     private AlertDialog.Builder builder;
 
     public SearchDialog(Context context, LayoutInflater inflater, String searchApi,
-                        final SearchDialogItemBuilder<T> itemBuilder,
+                        final ItemBuilder<T> itemBuilder,
                         OnChangeListener<T> changeListener,
-                        SearchListBuilder<T> listBuilder, String title) {
+                        ListBuilder<T> listBuilder, String title) {
         this.inflater = inflater;
         this.searchApi = searchApi;
         this.changeListener = changeListener;

@@ -60,4 +60,6 @@
     <string name="done">Виконані завдання</string>
     <string name="other">Інші завдання</string>
     <string name="spend_time">Витрачений час</string>
+    <string name="status_done">✓</string>
+    <string name="status_progressing">▶</string>
 </resources>

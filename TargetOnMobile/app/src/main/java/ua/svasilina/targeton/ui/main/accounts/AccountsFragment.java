@@ -17,11 +17,12 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import ua.svasilina.targeton.MainActivity;
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.adapters.SimpleListAdapter;
-import ua.svasilina.targeton.dialogs.SearchListBuilder;
+import ua.svasilina.targeton.dialogs.ListBuilder;
 import ua.svasilina.targeton.dialogs.accounts.AccountEditDialog;
-import ua.svasilina.targeton.dialogs.transactions.SearchDialogItemBuilder;
+import ua.svasilina.targeton.dialogs.transactions.ItemBuilder;
 import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.ui.main.ApplicationFragment;
 import ua.svasilina.targeton.utils.constants.Keys;
@@ -40,8 +41,8 @@ public class AccountsFragment extends ApplicationFragment {
 
     private final Context context;
 
-    public AccountsFragment(Context context) {
-        this.context = context;
+    public AccountsFragment(MainActivity mainActivity) {
+        this.context = mainActivity.getApplicationContext();
         handler = new DataHandler(new AccountsUpdater(this));
 
     }
@@ -52,7 +53,7 @@ public class AccountsFragment extends ApplicationFragment {
         final View view = inflater.inflate(R.layout.accounts, container, false);
         accountsTotal = view.findViewById(R.id.accountsTotal);
         accountsList = view.findViewById(R.id.accountList);
-        adapter = new SimpleListAdapter<>(context, R.layout.account_view, inflater, new SearchListBuilder<Account>() {
+        adapter = new SimpleListAdapter<>(context, R.layout.account_view, inflater, new ListBuilder<Account>() {
             @Override
             public void build(final Account item, View view) {
                 final TextView accountNameView = view.findViewById(R.id.accountName);
@@ -81,7 +82,7 @@ public class AccountsFragment extends ApplicationFragment {
                     }
                 });
             }
-        }, new SearchDialogItemBuilder<Account>() {
+        }, new ItemBuilder<Account>() {
             @Override
             public Account create(JSONObject json) {
                 return new Account(json);

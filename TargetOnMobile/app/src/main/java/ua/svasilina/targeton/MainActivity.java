@@ -16,6 +16,7 @@ import ua.svasilina.targeton.ui.login.LoginActivity;
 import ua.svasilina.targeton.ui.main.ApplicationFragment;
 import ua.svasilina.targeton.ui.main.CalendarFragment;
 import ua.svasilina.targeton.ui.main.GoalsFragment;
+import ua.svasilina.targeton.ui.main.Pages;
 import ua.svasilina.targeton.ui.main.accounts.AccountsFragment;
 import ua.svasilina.targeton.ui.main.transactions.TransactionFragment;
 import ua.svasilina.targeton.ui.main.tree.TreeFragment;
@@ -36,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         final Context context = getApplicationContext();
 
         transactionFragment = new TransactionFragment(context);
-        accountsFragment = new AccountsFragment(context);
+        accountsFragment = new AccountsFragment(this);
         if (savedInstanceState == null) {
             setView(transactionFragment);
         }
@@ -54,16 +55,17 @@ public class MainActivity extends AppCompatActivity {
         int itemId = item.getItemId();
         switch (itemId){
             case R.id.goals:
-                setView(new GoalsFragment(getApplicationContext()));
+                setView(new GoalsFragment(this));
                 return true;
             case R.id.tree:
-                setView(new TreeFragment(getApplicationContext()));
+                openPage(Pages.tree, -1);
+
                 break;
             case R.id.transactions:
                 setView(transactionFragment = new TransactionFragment(getApplicationContext()));
                 return true;
             case R.id.accounts:
-                setView(accountsFragment = new AccountsFragment(getApplicationContext()));
+                setView(accountsFragment = new AccountsFragment(this));
                 return true;
             case R.id.calendar:
                 setView(CalendarFragment.getInstance());
@@ -125,5 +127,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
 //        BackgroundWorkerUtil.getInstance().runWorker(getApplicationContext());
+    }
+
+    public void openPage(Pages page, int attr) {
+        switch (page){
+            case goal:
+                break;
+            case tree:
+                setView(new TreeFragment(this, attr));
+                break;
+        }
+
     }
 }

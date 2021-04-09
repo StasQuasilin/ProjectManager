@@ -57,7 +57,8 @@ taskEdit = new Vue({
         principal:[],
         dependency:{},
         addDependency:false,
-        addDiscussion:false
+        addDiscussion:false,
+        saveAlready:false
     },
     computed:{
         additionally:function () {
@@ -95,24 +96,27 @@ taskEdit = new Vue({
             })
         },
         save:function () {
-            let task = Object.assign({}, this.task);
-            if (!this.useDate){
-                delete task.date;
-            }
-            if (!this.installDeadline){
-                delete  task.deadline;
-            }
-            if (task.parent){
-                task.parent = task.parent.id;
-            }
-            if (!this.addToBuyList){
-                delete task.buyList;
-            }
-            PostApi(this.api.save, task, function (a) {
-                if (a.status === 'success'){
-                    closeModal();
+            if(!this.saveAlready) {
+                this.saveAlready = true;
+                let task = Object.assign({}, this.task);
+                if (!this.useDate) {
+                    delete task.date;
                 }
-            })
+                if (!this.installDeadline) {
+                    delete task.deadline;
+                }
+                if (task.parent) {
+                    task.parent = task.parent.id;
+                }
+                if (!this.addToBuyList) {
+                    delete task.buyList;
+                }
+                PostApi(this.api.save, task, function (a) {
+                    if (a.status === 'success') {
+                        closeModal();
+                    }
+                })
+            }
         }
     }
 });

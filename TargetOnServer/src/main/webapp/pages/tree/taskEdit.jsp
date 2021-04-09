@@ -45,7 +45,7 @@
     </c:choose>
     <c:choose>
     <c:when test="${not empty buyList}">
-    taskEdit.task.buyList = ${buyList.toJson()}
+    taskEdit.task.buyList = ${buyList.shortJson()}
     </c:when>
     <c:when test="${not empty rootBuyList}">
     taskEdit.task.buyList = ${rootBuyList.toJson()};
