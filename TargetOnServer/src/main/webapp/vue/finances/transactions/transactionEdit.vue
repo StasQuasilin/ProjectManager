@@ -1,7 +1,7 @@
 transactionEdit = new Vue({
     el:'#transactionEdit',
     components:{
-        'input-search':inputSearch
+        'category-input':categoryInput
     },
     data:{
         api:{},
@@ -36,6 +36,8 @@ transactionEdit = new Vue({
             id:-1,
             title:''
         },
+        tempCategory:{},
+        showTempCategory:false,
         newCurrencyProps:{
             put:function (currency) {
                 transactionEdit.addCurrency = false;
@@ -46,6 +48,7 @@ transactionEdit = new Vue({
         },
         props:{
             put:function(header){
+                console.log(header);
                 let detail;
                 if (transactionEdit.currentDetail === -1){
                     detail = {
@@ -55,6 +58,9 @@ transactionEdit = new Vue({
                         amount:1,
                         price:0
                     };
+                    if(header.path){
+                        detail.path = header.path;
+                    }
                     transactionEdit.transaction.details.push(detail);
                 } else {
                     detail = transactionEdit.transaction.details[transactionEdit.currentDetail];
@@ -131,6 +137,20 @@ transactionEdit = new Vue({
         }
     },
     methods:{
+        detailTree:function(){
+            let tree = {};
+            for (let i in this.transaction.details){
+                if(this.transaction.details.hasOwnProperty(i)){
+                    let detail = this.transaction.details[i];
+                    if (detail.path){
+                        let path = detail.path;
+                    } else {
+
+                    }
+                }
+            }
+            return tree;
+        },
         changeAmount:function(idx, amount){
             this.transaction.details[idx].amount+=amount;
             this.updateView();

@@ -4,7 +4,6 @@ import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
 import entity.user.User;
 
-import java.util.Collection;
 import java.util.List;
 
 /**
@@ -21,8 +20,6 @@ public interface TransactionDAO {
     List<TransactionDetail> getDetails(Object transactionId);
 
     void saveDetail(TransactionDetail detail);
-
-    void removeDetails(Collection<TransactionDetail> values);
 
     void removeTransactions(User user);
 }

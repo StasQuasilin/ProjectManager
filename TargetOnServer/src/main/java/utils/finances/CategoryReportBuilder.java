@@ -34,7 +34,7 @@ public class CategoryReportBuilder {
         for (AccountPoint point : hibernator.query(AccountPoint.class, args)){
             final Header header = titleDAO.getHeader(point.getAccount());
             if (header != null) {
-                final JSONObject jsonObject = header.toJson();
+                final JSONObject jsonObject = header.shortJson();
                 jsonObject.put(Keys.PLUS, point.getPlus());
                 jsonObject.put(Keys.MINUS, point.getMinus());
                 array.add(jsonObject);

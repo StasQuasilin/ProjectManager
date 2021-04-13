@@ -35,7 +35,7 @@ public class TaskSaver {
             task.setStatistic(null);
         }
         updater.update(Subscribe.tree, task, task.getOwner());
-        final Goal goal = goalDAO.getGoalByCategory(getParent(task.getHeader()).getId());
+        final Goal goal = goalDAO.getGoalByHeader(getParent(task.getHeader()).getId());
         for (GoalMember  member : goalDAO.getGoalMembers(goal)){
             updater.update(Subscribe.tree, task, member.getMember());
         }

@@ -8,7 +8,6 @@ import subscribe.Subscribe;
 import utils.Updater;
 import utils.db.hibernate.Hibernator;
 
-import java.util.Collection;
 import java.util.List;
 
 import static constants.Keys.*;
@@ -47,13 +46,6 @@ public class TransactionDAOImpl implements TransactionDAO {
     }
 
     @Override
-    public void removeDetails(Collection<TransactionDetail> details) {
-        for (TransactionDetail detail : details){
-            removeDetail(detail);
-        }
-    }
-
-    @Override
     public void removeTransactions(User user) {
         for (Transaction transaction : hibernator.query(Transaction.class, "category/owner", user)){
             hibernator.remove(TransactionPoint.class, "transaction", transaction.getId());
@@ -61,7 +53,4 @@ public class TransactionDAOImpl implements TransactionDAO {
         }
     }
 
-    private void removeDetail(TransactionDetail detail) {
-        hibernator.remove(detail);
-    }
 }

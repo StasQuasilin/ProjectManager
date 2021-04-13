@@ -76,7 +76,7 @@ public class TaskUtil {
 
         if (statistic.any()){
             taskDAO.saveStatistic(statistic);
-            final Goal goal = goalDAO.getGoalByCategory(header.getId());
+            final Goal goal = goalDAO.getGoalByHeader(header.getId());
             if(goal != null){
                 goal.setStatistic(statistic);
                 updater.update(Subscribe.goal, goal, goal.getOwner());
@@ -103,4 +103,6 @@ public class TaskUtil {
             taskDAO.saveTaskDoer(pair);
         }
     }
+
+
 }

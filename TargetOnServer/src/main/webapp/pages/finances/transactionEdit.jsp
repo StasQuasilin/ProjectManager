@@ -11,6 +11,7 @@
 <fmt:setBundle basename="messages"/>
 <link rel="stylesheet" href="${context}/css/transactionEdit.css?v=${now}">
 <script src="${context}/vue/templates/inputWithSearch.vue?v=${now}"></script>
+<script src="${context}/vue/templates/categoryInput.vue?v=${now}"></script>
 <script src="${context}/vue/finances/transactions/transactionEdit.vue?v=${now}"></script>
 <script>
   transactionEdit.api.findCounterparty = '${findCounterparty}';
@@ -93,16 +94,30 @@
         <table class="full-size" border="1">
           <template v-if="transaction.type ==='spending' || transaction.type === 'income'">
             <tr>
-              <td>
+              <td colspan="2">
                 <fmt:message key="transaction.category"/>
               </td>
-              <td>
-                <div style="display: inline-block">
-                  <input-search :object="category" :props="props" :show="'title'" :create="true"></input-search>
-                </div>
+            </tr>
+            <tr>
+              <td colspan="2">
+                <div style="width: 100%; display: flex">
+                  <div style="display: inline-block; width: 100%;">
+                    <category-input :object="category" :props="props" :show="['title']" :create="true"></category-input>
+                  </div>
                   <span class="text-button">
-                    &checkmark;
-                  </span>
+                  &checkmark;
+                </span>
+                  <div class="tips">
+                    <div class="tips-content">
+                      <p>
+                        <fmt:message key="transaction.tips.1"/>
+                      </p>
+                      <p>
+                        <fmt:message key="transaction.tips.2"/>
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </td>
             </tr>
 <%--            <tr v-else>--%>
@@ -112,21 +127,27 @@
 <%--                </span>--%>
 <%--              </td>--%>
 <%--            </tr>--%>
-            <tr>
+            <tr v-if="transaction.details.length > 0">
               <td colspan="2">
                 <div style="max-height: 100pt; overflow-y: scroll">
                   <div v-for="(d, idx) in transaction.details">
-                    <template v-if="transaction.details.length > 1">
                     <span class="mini-button" v-on:click="removeDetail(idx)">
                       &times;
                     </span>
-                      <span>
+                    <span>
                       {{(idx + 1).toLocaleString()}}.
                     </span>
-                    </template>
                     <span style="display: inline-block; width: 100pt" v-on:click="editDetail(idx)">
-                    {{d.title}}
-                  </span>
+                      <template v-for="p in d.path">{{p.title}} / </template>{{d.title}}
+                    </span>
+<%--                    <template v-if="d.children">--%>
+<%--                      <select>--%>
+<%--                        <option v-for="c in d.children">--%>
+<%--                          {{c.title}}--%>
+<%--                        </option>--%>
+<%--                      </select>--%>
+
+<%--                    </template>--%>
                     <span style="display: inline-block; width: 40pt">
                     <span v-on:click="changeAmount(idx, -1)">
                       &#9204;
@@ -145,9 +166,22 @@
                   </span>
                   </div>
                 </div>
+
               </td>
             </tr>
           </template>
+          <tr v-if="showTempCategory">
+            <td colspan="2">
+              <label for="temp">
+                {{tempCategory.title}} /
+              </label>
+              <select id="temp">
+                <option v-for="c in tempCategory.children">
+                  {{c.title}}
+                </option>
+              </select>
+            </td>
+          </tr>
           <tr v-if="transaction.type === 'spending' || transaction.type === 'transfer'">
             <td>
               <label for="accountFrom">

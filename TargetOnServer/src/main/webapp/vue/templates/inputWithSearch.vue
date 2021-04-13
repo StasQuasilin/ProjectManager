@@ -4,7 +4,7 @@ inputSearch = {
         props:Object,
         width:String,
         enable:Boolean,
-        show:String,
+        show:Array,
         create:true,
         additionally:Object
     },
@@ -41,38 +41,44 @@ inputSearch = {
                 this.putValue(Object.assign({}, this.object));
             }
         },
-        find:function(){
+        buildData:function(){
+
+        },
+        onKeyUp:function(){
             if (event.keyCode !== 27 ) {
-                this.items = [];
-                this.canAdd = false;
-                clearTimeout(this.timer);
-                let input = this.object.title;
+                this.find();
+            }
+        },
+        find:function(){
+            this.items = [];
+            this.canAdd = false;
+            clearTimeout(this.timer);
+            let input = this.object.title;
 
-                if (input && input.length >= 1) {
-                    this.object.id = -1;
-                    const self = this;
-                    this.timer = setTimeout(function () {
-                        let data = Object.assign({},self.additionally !== null ? self.additionally : {});
-                        console.log(data);
-
-                        data.key = input;
-                        PostApi(self.props.findCategory, data, function (a) {
-                            console.log(a);
-                            if (a.status === 'success'){
-                                self.items = a.result;
-                                if (self.create) {
-                                    self.addTimer = setTimeout(function () {
-                                        self.canAdd = true;
-                                    }, 3000);
-                                }
+            if (input && input.length >= 1) {
+                this.object.id = -1;
+                const self = this;
+                this.timer = setTimeout(function () {
+                    let data = Object.assign({},self.additionally !== null ? self.additionally : {});
+                    data.key = input;
+                    PostApi(self.props.findCategory, data, function (a) {
+                        // console.log(a);
+                        if (a.status === 'success'){
+                            self.items = a.result;
+                            if (self.create) {
+                                self.addTimer = setTimeout(function () {
+                                    self.canAdd = true;
+                                }, 3000);
                             }
-                        })
-                    }, 500);
-                }
+                        }
+                    })
+                }, 500);
             }
         },
         clear:function () {
-            this.object = this.oldObject;
+            this.object.id=-1;
+            this.object.title='';
+
             this.items = [];
             this.canAdd = false;
             clearTimeout(this.timer);
@@ -84,24 +90,32 @@ inputSearch = {
                 style.width = this.width;
             }
             return style;
+        },
+        hasPrefix:function () {
+            return typeof this.prefix !== "undefined";
         }
     },
-    template: '<div v-if="object" style="position: relative" :style="inputStyle()" v-on:blur="clear">' +
+    template: '<div v-if="object" style="position: relative; display: flex" :style="inputStyle()" v-on:blur="clear">' +
+            '<span v-if="hasPrefix()">' +
+                '{{prefix()}}' +
+            '</span>' +
             '<input v-model="object.title" :disabled="isEnabled()" ' +
                 'v-on:keyup.esc.prevent="clear()" v-on:keyup.enter.prevent="putNew()" ' +
-                    'v-on:keyup="find()" onfocus="this.select()">' +
+                    'v-on:keyup="onKeyUp()" onfocus="this.select()">' +
             '<div class="custom-data-list" v-if="items.length > 0 || canAdd">' +
                 '<div class="custom-data-list-item" v-for="item in items" v-on:click="putValue(item)">' +
-                    '<span v-if="show !== null">' +
-                        '->{{item[show]}}<-' +
-                    '</span>' +
+                    '<template v-if="show !== null">' +
+                        '<span v-for="s in show">' +
+                            '{{item[s]}}' +
+                        '</span>' +
+                    '</template>' +
                     '<span v-else>' +
                         '{{item}}' +
                     '</span>' +
                 '</div>' +
                 '<div v-if="(items.length == 0 || canAdd) && create" v-on:click="putNew()">' +
                     '<span v-if="show != null">' +
-                        '+ Add {{object[show]}}' +
+                        '+ {{object[show]}}' +
                     '</span>' +
                 '</div>' +
             '</div>' +

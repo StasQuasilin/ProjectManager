@@ -208,4 +208,5 @@ public interface Keys {
     String DOERS = "doers";
     String WEEK_DAYS = "weekDays";
     String REPEATS = "repeats";
+    String EMPTY = "";
 }

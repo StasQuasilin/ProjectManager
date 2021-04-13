@@ -53,7 +53,7 @@ public class GoalDAOImpl implements GoalDAO{
     }
 
     @Override
-    public Goal getGoalByCategory(int title) {
+    public Goal getGoalByHeader(int title) {
         return hibernator.get(Goal.class, TITLE, title);
     }
 

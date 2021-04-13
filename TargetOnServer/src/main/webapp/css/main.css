@@ -131,9 +131,14 @@ button{
 .tips{
     position: relative;
     font-size: 8pt;
+    display: inline-block;
+    margin: 0 4pt;
 }
 .tips:after{
     content: '?';
+}
+.tips-content * {
+    background: transparent;
 }
 .tips .tips-content{
     display: none;
@@ -142,7 +147,7 @@ button{
     padding: 4px;
     color: white;
     left: 0;
-    z-index: 99;
+    z-index: 1199;
 }
 .tips:hover .tips-content{
     display: block;

@@ -20,6 +20,9 @@ public class TitleUtil {
         Header prev = null;
         for (int i = strings.length - 1; i >= 0; i--){
             String s = strings[i];
+            if (s.length() > 1){
+                s = s.substring(0, 1).toUpperCase() + s.substring(1);
+            }
             if (parent == null){
                 parent = titleDAO.getHeaderByName(s);
             }

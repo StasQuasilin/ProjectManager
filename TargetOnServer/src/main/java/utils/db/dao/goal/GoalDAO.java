@@ -12,7 +12,7 @@ public interface GoalDAO {
     List<Goal> getGoals(User user);
     Goal getGoal(Object id);
     void saveGoal(Goal goal);
-    Goal getGoalByCategory(int title);
+    Goal getGoalByHeader(int title);
     void removeGoals(User user);
 
     List<GoalMember> getGoalMembers(Goal goal);

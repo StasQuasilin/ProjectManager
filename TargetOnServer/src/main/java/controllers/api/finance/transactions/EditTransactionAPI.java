@@ -47,7 +47,7 @@ public class EditTransactionAPI extends API {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObject body = parseBody(req);
         if (body != null){
-            System.out.println(body);
+//            System.out.println(body);
             final User user = getUser(req);
             Transaction transaction = transactionDAO.getTransaction(body.get(ID));
             if (transaction == null){
@@ -55,19 +55,22 @@ public class EditTransactionAPI extends API {
                 transaction.setOwner(user);
             }
 
+            //Transaction Type
             TransactionType type = TransactionType.valueOf(body.getString(TYPE));
             transaction.setTransactionType(type);
 
+            //Transaction Date
             Date prevDate = transaction.getDate();
-            Date date = Date.valueOf(body.getString(DATE));
+            Date date = body.getDate(DATE);
             transaction.setDate(date);
 
+            //Transaction Currency
             String currencyName = body.getString(CURRENCY);
             final Currency currency = currencyDAO.getCurrency(currencyName);
             transaction.setCurrency(currency);
             currencyDAO.checkUserCurrency(currency, user);
 
-
+            //Account from
             Account prevAccountFrom = null;
             if (body.containKey(ACCOUNT_FROM)){
                 final Account account = accountDAO.getAccount(body.get(ACCOUNT_FROM));
@@ -76,6 +79,8 @@ public class EditTransactionAPI extends API {
             } else {
                 transaction.setAccountFrom(null);
             }
+
+            //Account to
             Account prevAccountTo = null;
             if (body.containKey(ACCOUNT_TO)){
                 final Account account = accountDAO.getAccount(body.get(ACCOUNT_TO));
@@ -85,6 +90,7 @@ public class EditTransactionAPI extends API {
                 transaction.setAccountTo(null);
             }
 
+            //When transaction is transfer - put transfer amount and remove details
             if (type == TransactionType.transfer){
                 int amount = body.getInt(AMOUNT);
                 transaction.setAmount(amount);
@@ -92,14 +98,19 @@ public class EditTransactionAPI extends API {
             }
 
             write(resp, SUCCESS_ANSWER);
-            transactionSaver.save(transaction);
 
+            transactionSaver.save(transaction);
+            LinkedList<Header> headers = new LinkedList<>();
+
+            //When transaction have details
             if(body.containKey(DETAILS)) {
+                //Save details here. Get list for build transaction title and coast
                 final LinkedList<TransactionDetail> list = tdu.saveDetails(transaction, (JSONArray) body.get(DETAILS), user);
+
                 StringBuilder builder = new StringBuilder();
                 int totalCost = 0;
                 int addedItems = 0;
-                LinkedList<Header> headers = new LinkedList<>();
+
                 for (TransactionDetail detail : list){
                     final Header header = detail.getHeader();
                     if(!headers.contains(header)){
@@ -125,32 +136,30 @@ public class EditTransactionAPI extends API {
                     transaction.setDescription(description);
                     saveIt = true;
                 }
+
                 if (transaction.getAmount() != totalCost){
                     transaction.setAmount(totalCost);
                     saveIt = true;
                 }
                 if(saveIt){
                     transactionSaver.save(transaction);
+                }
+                if (saveIt || !prevDate.equals(date)){
+                    //Calculate header coast per day
                     updateHeadersCoasts(headers, date);
                 }
             } else {
                 tdu.removeDetails(transaction);
             }
 
-//            if (type == TransactionType.income || type == TransactionType.spending) {
-//                if (prevCategory != null && !prevCategory.equals(transaction.getCategory())) {
-//                    transactionUtil.removePoint(prevCategory, transaction.getDate());
-//                }
-//            }
-            if (prevDate != null && !prevDate.equals(transaction.getDate())){
-
+            if (prevDate != null && !prevDate.equals(date)){
                 if (prevAccountFrom != null){
                     transactionUtil.removeTransactionPoint(prevAccountFrom, transaction.getId(), prevDate);
                 }
                 if (prevAccountTo != null){
                     transactionUtil.removeTransactionPoint(prevAccountTo, transaction.getId(), prevDate);
                 }
-//                transactionUtil.updateCategory(transaction.getCategory(), prevDate);
+                updateHeadersCoasts(headers, prevDate);
             }
             if (prevAccountFrom != null && prevAccountFrom.getId() != transaction.getAccountFrom().getId()){
                 transactionUtil.removeTransactionPoint(prevAccountFrom, transaction.getId(), transaction.getDate());
@@ -158,25 +167,26 @@ public class EditTransactionAPI extends API {
             if (prevAccountTo != null && prevAccountTo.getId() != transaction.getAccountTo().getId()){
                 transactionUtil.removeTransactionPoint(prevAccountTo, transaction.getId(), transaction.getDate());
             }
-//            if (prevAccountFrom != null && !prevAccountFrom.equals(transaction.getAccountFrom())){
-//                transactionUtil.removePoint(transaction, prevAccountFrom);
-//            }
-//            if (prevAccountTo != null && !prevAccountTo.equals(transaction.getAccountTo())){
-//                transactionUtil.removePoint(transaction, prevAccountTo);
-//            }
+            if (prevAccountFrom != null && !prevAccountFrom.equals(transaction.getAccountFrom())){
+                transactionUtil.removePoint(transaction, prevAccountFrom);
+            }
+            if (prevAccountTo != null && !prevAccountTo.equals(transaction.getAccountTo())){
+                transactionUtil.removePoint(transaction, prevAccountTo);
+            }
         }
     }
 
     private void updateHeadersCoasts(LinkedList<Header> headers, Date date) {
         LinkedList<Header> parents = new LinkedList<>();
         for (Header header : headers){
-            System.out.println(header);
+//            System.out.println(header);
             transactionUtil.updateCategoryDay(header, date);
             final Header parent = header.getParent();
             if (parent != null && !parents.contains(parent)){
                 parents.add(parent);
             }
         }
+        //Calculate parents coasts recursive
         if (parents.size() > 0) {
             updateHeadersCoasts(parents, date);
         }

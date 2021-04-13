@@ -20,11 +20,15 @@ public abstract class Servlet extends HttpServlet {
 
     private static final UserDAO userDao = daoService.getUserDAO();
 
-    private JSONParser parser = new JSONParser();
+    private final JSONParser parser = new JSONParser();
     public JsonObject parseBody(HttpServletRequest req) throws IOException {
-        try {
-            return new JsonObject( parser.parse(req.getReader()));
-        } catch (ParseException ignore) {}
+        if(req != null) {
+            try {
+                return new JsonObject(parser.parse(req.getReader()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         return null;
     }
     public User getUser(HttpServletRequest req){

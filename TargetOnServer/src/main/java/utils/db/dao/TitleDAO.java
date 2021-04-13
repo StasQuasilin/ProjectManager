@@ -21,4 +21,6 @@ public abstract class TitleDAO {
     public void save(Header header) {
         hibernator.save(header);
     }
+
+    public abstract List<Header> getChildren(Header parent);
 }

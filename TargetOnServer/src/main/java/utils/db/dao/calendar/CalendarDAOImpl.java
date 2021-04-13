@@ -34,7 +34,7 @@ public class CalendarDAOImpl implements CalendarDAO {
     }
 
     @Override
-    public CalendarItem getCalendarItemByCategory(Object category) {
-        return hibernator.get(CalendarItem.class, CATEGORY, category);
+    public CalendarItem getCalendarItemByCategory(Object header) {
+        return hibernator.get(CalendarItem.class, HEADER, header);
     }
 }

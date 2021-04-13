@@ -7,8 +7,7 @@ import entity.user.User;
 import java.util.HashMap;
 import java.util.List;
 
-import static constants.Keys.OWNER;
-import static constants.Keys.VALUE;
+import static constants.Keys.*;
 
 public class TitleDAOHibernate extends TitleDAO {
 
@@ -27,5 +26,10 @@ public class TitleDAOHibernate extends TitleDAO {
         final HashMap<String, Object> args = new HashMap<>();
         args.put(OWNER, user);
         return hibernator.find(Header.class, args, VALUE, key);
+    }
+
+    @Override
+    public List<Header> getChildren(Header parent) {
+        return hibernator.query(Header.class, PARENT, parent);
     }
 }

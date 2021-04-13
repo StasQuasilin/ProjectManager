@@ -92,6 +92,10 @@ public class TaskDAOImpl implements TaskDAO {
     @Override
     public void removeTask(Task task) {
         hibernator.remove(task);
+        final TaskStatistic statistic = getStatistic(task.getHeader().getId());
+        if(statistic != null && !statistic.any()){
+            hibernator.remove(statistic);
+        }
     }
 
     @Override

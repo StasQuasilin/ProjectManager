@@ -73,182 +73,185 @@
     taskEdit.buyList = ${buyList.shortJson()}
     </c:if>
 </script>
-<div id="taskEdit" style="display: flex">
-    <table>
-        <tr>
-            <td colspan="2">
-                <label for="title">
-                    <fmt:message key="task.title"/>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input id="title" v-model="task.title" autocomplete="off" onfocus="this.select()">
-            </td>
-        </tr>
-        <tr v-if="status.includes(task.status)">
-            <td>
-                <label for="status">
-                    <fmt:message key="task.current.status"/>
-                </label>
-            </td>
-            <td>
-                <select id="status" v-model="task.status">
-                    <option v-for="s in status" :value="s">
-                        {{statusNames[s]}}
-                    </option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td>
-               <label for="type">
-                   <fmt:message key="task.type"/>
-               </label>
-            </td>
-            <td>
-                <select id="type" v-model="task.type">
-                    <option v-for="t in types" :value="t">
-                        {{typeNames[t]}}
-                    </option>
-                </select>
-                <span class="tips">
+<div id="taskEdit">
+    <div style="display: flex">
+        <table>
+            <tr>
+                <td colspan="2">
+                    <label for="title">
+                        <fmt:message key="task.title"/>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input id="title" v-model="task.title" autocomplete="off" onfocus="this.select()">
+                </td>
+            </tr>
+            <tr v-if="status.includes(task.status)">
+                <td>
+                    <label for="status">
+                        <fmt:message key="task.current.status"/>
+                    </label>
+                </td>
+                <td>
+                    <select id="status" v-model="task.status">
+                        <option v-for="s in status" :value="s">
+                            {{statusNames[s]}}
+                        </option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="type">
+                        <fmt:message key="task.type"/>
+                    </label>
+                </td>
+                <td>
+                    <select id="type" v-model="task.type">
+                        <option v-for="t in types" :value="t">
+                            {{typeNames[t]}}
+                        </option>
+                    </select>
+                    <span class="tips">
                     <span class="tips-content">
                         {{typeDescriptions[task.type]}}
                     </span>
                 </span>
-            </td>
-        </tr>
-        <template v-if="task.type === 'accumulative'">
-            <tr>
-                <td>
-                    <label for="taskTarget">
-                        <fmt:message key="task.accumulative.target"/>
-                    </label>
-                </td>
-                <td>
-                    <input id="taskTarget" v-model="task.target" autocomplete="off" onfocus="this.select()">
                 </td>
             </tr>
-            <tr>
+            <template v-if="task.type === 'accumulative'">
+                <tr>
+                    <td>
+                        <label for="taskTarget">
+                            <fmt:message key="task.accumulative.target"/>
+                        </label>
+                    </td>
+                    <td>
+                        <input id="taskTarget" v-model="task.target" autocomplete="off" onfocus="this.select()">
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="taskProgress">
+                            <fmt:message key="task.accumulative.progress"/>
+                        </label>
+                    </td>
+                    <td>
+                        <input id="taskProgress" v-model="task.progress" autocomplete="off" onfocus="this.select()">
+                    </td>
+                </tr>
+            </template>
+            <tr v-if="task.parent">
                 <td>
-                    <label for="taskProgress">
-                        <fmt:message key="task.accumulative.progress"/>
-                    </label>
+                    <fmt:message key="task.parent"/>
                 </td>
                 <td>
-                    <input id="taskProgress" v-model="task.progress" autocomplete="off" onfocus="this.select()">
+                    <find-input :object="task.parent" :props="props"></find-input>
                 </td>
             </tr>
-        </template>
-        <tr v-if="task.parent">
-            <td>
-                <fmt:message key="task.parent"/>
-            </td>
-            <td>
-                <find-input :object="task.parent" :props="props"></find-input>
-            </td>
-        </tr>
-        <tr v-if="!installDeadline">
-            <td colspan="2" style="text-align: right">
+            <tr v-if="!installDeadline">
+                <td colspan="2" style="text-align: right">
             <span class="text-button" v-on:click="installDeadline = true">
                 <fmt:message key="task.install.deadline"/>
             </span>
-            </td>
-        </tr>
-        <tr v-else>
-            <td>
-                <fmt:message key="task.deadline"/>
-            </td>
-            <td>
-                <date-picker :date="task.deadline" :props="deadlineProps"></date-picker>
-                <span class="text-button" v-on:click="installDeadline = false">
+                </td>
+            </tr>
+            <tr v-else>
+                <td>
+                    <fmt:message key="task.deadline"/>
+                </td>
+                <td>
+                    <date-picker :date="task.deadline" :props="deadlineProps"></date-picker>
+                    <span class="text-button" v-on:click="installDeadline = false">
                 &times;
             </span>
-            </td>
-        </tr>
-        <tr v-if="!useDate">
-            <td colspan="2">
+                </td>
+            </tr>
+            <tr v-if="!useDate">
+                <td colspan="2">
             <span class="text-button" v-on:click="useDate = true">
                 <fmt:message key="task.date.add"/>
             </span>
-            </td>
-        </tr>
-        <template v-else>
-            <tr>
-                <td>
-                    <fmt:message key="task.date"/>
-                </td>
-                <td>
-                    <date-picker :date="task.date" :props="dateProps"></date-picker>
-                    <span class="text-button" v-on:click="useDate=false">&times;</span>
                 </td>
             </tr>
-            <tr>
-                <td>
-                    <fmt:message key="task.not.done.action"/>
-                </td>
-                <td>
-                    <div>
-                        <input type="radio" name="notDoneAction">
-                        <fmt:message key="task.next.day"/>
-                    </div>
-                    <div>
-                        <input type="radio" name="notDoneAction">
-                        <fmt:message key="task.status.paused.set"/>
-                    </div>
-                </td>
-            </tr>
-        </template>
-        <tr v-if="!addToBuyList">
-            <td colspan="2">
+            <template v-else>
+                <tr>
+                    <td>
+                        <fmt:message key="task.date"/>
+                    </td>
+                    <td>
+                        <date-picker :date="task.date" :props="dateProps"></date-picker>
+                        <span class="text-button" v-on:click="useDate=false">&times;</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <fmt:message key="task.not.done.action"/>
+                    </td>
+                    <td>
+                        <div>
+                            <input type="radio" name="notDoneAction">
+                            <fmt:message key="task.next.day"/>
+                        </div>
+                        <div>
+                            <input type="radio" name="notDoneAction">
+                            <fmt:message key="task.status.paused.set"/>
+                        </div>
+                    </td>
+                </tr>
+            </template>
+            <tr v-if="!addToBuyList">
+                <td colspan="2">
                 <span class="text-button" v-on:click="enableBuyList()">
                     <fmt:message key="task.to.buy.list"/>
                 </span>
-            </td>
-        </tr>
-        <template v-else>
-            <tr>
-                <td>
-                    <fmt:message key="buy.list"/>
-                </td>
-                <td>
-                    <find-input :object="task.buyList" :props="buyListProps"></find-input>
                 </td>
             </tr>
+            <template v-else>
+                <tr>
+                    <td>
+                        <fmt:message key="buy.list"/>
+                    </td>
+                    <td>
+                        <find-input :object="task.buyList" :props="buyListProps"></find-input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label for="coast">
+                            <fmt:message key="task.coast"/>
+                        </label>
+                    </td>
+                    <td>
+                        <input id="coast" v-model="task.coast" onfocus="this.select()" autocomplete="off">
+                    </td>
+                </tr>
+            </template>
             <tr>
-                <td>
-                    <label for="coast">
-                        <fmt:message key="task.coast"/>
+                <td colspan="2">
+                    <input id="doneIf" type="checkbox" v-model="task.doneIf">
+                    <label for="doneIf">
+                        <fmt:message key="task.done.if.children"/>
                     </label>
                 </td>
-                <td>
-                    <input id="coast" v-model="task.coast" onfocus="this.select()" autocomplete="off">
-                </td>
             </tr>
-        </template>
-        <tr>
-            <td colspan="2">
-                <input id="doneIf" type="checkbox" v-model="task.doneIf">
-                <label for="doneIf">
-                    <fmt:message key="task.done.if.children"/>
-                </label>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="text-align: center">
+            <tr>
+                <td colspan="2" style="text-align: center">
                 <span class="text-button" v-on:click="addDependency = true"
                       v-if="task.dependency.length === 0 && !addDependency">
                     <fmt:message key="dependency.add"/>
                 </span>
-                <span class="text-button"  v-on:click="createDiscussion()"
-                    v-if="task.discussions.length === 0">
+                    <span class="text-button"  v-on:click="createDiscussion()"
+                          v-if="task.discussions.length === 0">
                     <fmt:message key="task.discussion.add"/>
                 </span>
-            </td>
-        </tr>
-    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+
     <c:if test="${task.id gt 0}">
         <div v-if="(task.dependency && task.dependency.length > 0) || addDependency">
             <div style="width: 100%; text-align: center">

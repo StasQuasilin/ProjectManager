@@ -40,7 +40,7 @@ public class Header extends AbstractTitle {
         return super.toJson();
     }
 
-    private JSONArray buildPath() {
+    public JSONArray buildPath() {
         JSONArray array = new JSONArray();
         if(parent != null){
             array.addAll(parent.buildPath());

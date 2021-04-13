@@ -13,6 +13,7 @@ import utils.db.dao.category.CategoryDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.tree.TaskDAO;
 import utils.json.JsonObject;
+import utils.tree.HeaderUtil;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -27,6 +28,8 @@ public class TaskDeleteApi extends API {
     private final TaskDAO taskDAO = daoService.getTaskDAO();
     private final Updater updater = new Updater();
     private final TaskUtil taskUtil = new TaskUtil();
+    private final HeaderUtil headerUtil = new HeaderUtil();
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
@@ -36,6 +39,7 @@ public class TaskDeleteApi extends API {
             write(resp, SUCCESS_ANSWER);
             updater.remove(Subscribe.tree, task.getId(), task.getOwner());
             final Header header = task.getHeader();
+            headerUtil.checkHeader(header);
             taskUtil.updateStatistic(header);
         }
     }

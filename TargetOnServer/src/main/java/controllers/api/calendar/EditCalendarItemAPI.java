@@ -8,7 +8,6 @@ import entity.calendar.WeekDays;
 import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import utils.CategoryUtil;
 import utils.db.dao.calendar.CalendarDAO;
 import utils.db.dao.daoService;
@@ -21,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDateTime;
 
 import static constants.Keys.*;
 
@@ -90,7 +88,7 @@ public class EditCalendarItemAPI extends API {
     }
 
     private void setCategory(CalendarItem item, JsonObject categoryObject, User user) {
-        final Header header = categoryUtil.getCategory(categoryObject.getInt(ID), categoryObject.getString(TITLE), user);
+        final Header header = categoryUtil.getCategory(categoryObject.getInt(ID), categoryObject.getString(TITLE), null, user);
         item.setHeader(header);
     }
 }

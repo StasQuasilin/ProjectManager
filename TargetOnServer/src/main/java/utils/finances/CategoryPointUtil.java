@@ -46,6 +46,7 @@ public class CategoryPointUtil extends PointUtil<Header> {
     protected void updateAccount(Header acc, Date date) {
 
         final TaskStatistic statistic = taskDAO.getStatisticOrCreate(acc);
+        statistic.clean();
         statistic.add(getTotalByYear(acc));
         if (statistic.any()){
             taskDAO.saveStatistic(statistic);
@@ -65,7 +66,8 @@ public class CategoryPointUtil extends PointUtil<Header> {
         final HashMap<String, Object> param = new HashMap<>();
         param.put(HEADER, acc);
         param.put(TRANSACTION_DATE, date);
-//
+
+        //Calculate header coast by transaction details
         PlusMinus plusMinus = new PlusMinus();
         for (TransactionDetail t : hibernator.query(TransactionDetail.class, param)) {
             float amount = t.getTotalPrice();

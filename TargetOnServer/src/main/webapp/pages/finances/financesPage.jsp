@@ -53,9 +53,9 @@
     </div>
   </div>
   <div class="colon central">
-<%--    <div class="colon-cell">--%>
-<%--      <jsp:include page="fastTransactions.jsp"/>--%>
-<%--    </div>--%>
+    <div class="colon-cell">
+      <jsp:include page="fastTransactions.jsp"/>
+    </div>
     <div class="colon-cell">
       <jsp:include page="accounts.jsp"/>
     </div>

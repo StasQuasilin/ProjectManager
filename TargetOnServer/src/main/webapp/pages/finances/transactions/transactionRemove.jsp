@@ -32,17 +32,17 @@
         <td>
             <fmt:message key="transaction.category"/>
         </td>
-        <td>
-            ${transaction.category.title}
-        </td>
+<%--        <td>--%>
+<%--            ${transaction.header.title}--%>
+<%--        </td>--%>
     </tr>
     <tr>
         <td>
             <fmt:message key="tranaction.sum"/>
         </td>
-        <td>
-            ${transaction.amount} ${transaction.currency}
-        </td>
+<%--        <td>--%>
+<%--            ${transaction.amount} ${transaction.currency}--%>
+<%--        </td>--%>
     </tr>
     <tr>
         <td colspan="2" style="text-align: center">
