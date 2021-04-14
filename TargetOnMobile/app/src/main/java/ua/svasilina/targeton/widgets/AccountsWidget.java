@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.widget.RemoteViews;
 
 import ua.svasilina.targeton.R;
-import ua.svasilina.targeton.TransactionAddActivity;
+import ua.svasilina.targeton.ui.main.transactions.TransactionAddActivity;
 
 public class AccountsWidget extends AppWidgetProvider {
     @Override

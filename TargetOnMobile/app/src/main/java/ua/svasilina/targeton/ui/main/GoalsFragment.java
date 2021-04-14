@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,10 +46,10 @@ public class GoalsFragment extends ApplicationPage implements DataUpdater {
     private final DateTimeBuilder dateTimeBuilder;
 
     public GoalsFragment(MainActivity activity) {
-        this.mainActivity = activity;
-        this.context = activity;
+        this.context = activity.getApplicationContext();
         handler = new DataHandler(this);
         dateTimeBuilder = new DateTimeBuilder(Constants.DATE_PATTERN);
+        this.mainActivity = activity;
     }
 
     @Nullable

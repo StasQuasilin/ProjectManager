@@ -1,4 +1,4 @@
-package ua.svasilina.targeton;
+package ua.svasilina.targeton.ui.main.transactions;
 
 import android.app.AlertDialog;
 import android.content.Context;

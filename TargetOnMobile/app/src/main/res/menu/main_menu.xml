@@ -3,30 +3,32 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
-    <item
-        android:id="@+id/goals"
-        android:title="@string/goals"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/tree"
-        android:title="@string/tree"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/calendar"
-        android:title="@string/calendar"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/transactions"
-        android:title="@string/transactions"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/accounts"
-        android:title="@string/accounts"
-        app:showAsAction="never"/>
-    <item
-        android:id="@+id/settings"
-        android:title="@string/settings"
-        app:showAsAction="never"/>
+    <group  android:checkableBehavior="single">
+        <item
+            android:id="@+id/goals"
+            android:title="@string/goals"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/tree"
+            android:title="@string/tree"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/calendar"
+            android:title="@string/calendar"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/transactions"
+            android:title="@string/transactions"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/accounts"
+            android:title="@string/accounts"
+            app:showAsAction="never"/>
+        <item
+            android:id="@+id/settings"
+            android:title="@string/settings"
+            app:showAsAction="never"/>
+    </group>
     <item
         android:id="@+id/exit"
         android:title="@string/exit"

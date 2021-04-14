@@ -1,6 +1,5 @@
 package ua.svasilina.targeton.widgets;
 
-import android.app.AlertDialog;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -8,13 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import androidx.fragment.app.FragmentManager;
-
-import ua.svasilina.targeton.MainActivity;
 import ua.svasilina.targeton.R;
-import ua.svasilina.targeton.TransactionAddActivity;
-import ua.svasilina.targeton.receivers.TransactionAddReceiver;
-import ua.svasilina.targeton.ui.main.transactions.TransactionFragment;
+import ua.svasilina.targeton.ui.main.transactions.TransactionAddActivity;
 
 public class TransactionAddWidget extends AppWidgetProvider {
 

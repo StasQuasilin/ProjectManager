@@ -75,4 +75,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="save_transaction">Зберегти</string>
+    <string name="title_activity_main_temp">MainActivity2</string>
+    <string name="title_activity_main">MainActivity</string>
 </resources>

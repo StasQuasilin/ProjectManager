@@ -9,13 +9,11 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -31,35 +29,39 @@ import ua.svasilina.targeton.ui.main.tree.TreeFragment;
 import ua.svasilina.targeton.utils.background.BackgroundWorkerUtil;
 import ua.svasilina.targeton.utils.storage.UserAccessStorage;
 
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {// implements NavigationView.OnNavigationItemSelectedListener {
+    private DrawerLayout drawer;
     private AppBarConfiguration mAppBarConfiguration;
-    Toolbar toolbar;
+    ActionBar toolbar;
+    private Pages currentPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
+        toolbar = getSupportActionBar();
 
-        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        drawer = findViewById(R.id.drawer_layout);
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_goals)
-                .setDrawerLayout(drawer)
-                .build();
+        navigationView.setNavigationItemSelectedListener(this);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-        NavigationUI.setupWithNavController(navigationView, navController);
-    }
+//        mAppBarConfiguration = new AppBarConfiguration.Builder(
+//                R.id.nav_goals)
+//                .setDrawerLayout(drawer)
+//                .build();
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main_menu, menu);
-        return super.onCreateOptionsMenu(menu);
+
+//        NavHostFragment fragment = (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+
+//        final NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+//        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+//        NavigationUI.setupWithNavController(navigationView, navController);
+        openPage(Pages.tree, -1);
     }
 
     @Override
@@ -68,11 +70,10 @@ public class MainActivity extends AppCompatActivity {
         TransactionFragment transactionFragment;
         switch (itemId){
             case R.id.goals:
-
+                openPage(Pages.goal, -1);
                 return true;
             case R.id.tree:
                 openPage(Pages.tree, -1);
-
                 break;
             case R.id.transactions:
                 setView(transactionFragment = new TransactionFragment(this));
@@ -112,15 +113,19 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (backPressedTime + 2000 > System.currentTimeMillis()) {
-            backToast.cancel();
-            finish();
-            return;
+        if(drawer.isOpen()){
+            drawer.close();
         } else {
-            backToast = Toast.makeText(getBaseContext(), R.string.pressBack, Toast.LENGTH_SHORT);
-            backToast.show();
+            if (backPressedTime + 2000 > System.currentTimeMillis()) {
+                backToast.cancel();
+                finish();
+                return;
+            } else {
+                backToast = Toast.makeText(getBaseContext(), R.string.pressBack, Toast.LENGTH_SHORT);
+                backToast.show();
+            }
+            backPressedTime = System.currentTimeMillis();
         }
-        backPressedTime = System.currentTimeMillis();
 
     }
 
@@ -143,17 +148,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void openPage(Pages page, int attr) {
-        switch (page){
-            case goal:
-                setView(new GoalsFragment(this));
-                break;
-            case tree:
-                setView(new TreeFragment(this, attr));
-                break;
-            case transactionEdit:
-                setView(new TransactionEditFragment(this, attr));
-                break;
+        if(currentPage != page){
+            switch (page){
+                case goal:
+                    setView(new GoalsFragment(this));
+                    break;
+                case tree:
+                    setView(new TreeFragment(this, attr));
+                    break;
+                case transactionEdit:
+                    setView(new TransactionEditFragment(this, attr));
+                    break;
+            }
         }
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        drawer.close();
+        return onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
 }
