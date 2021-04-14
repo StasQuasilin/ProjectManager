@@ -34,7 +34,7 @@ import ua.svasilina.targeton.utils.subscribes.Subscribe;
 import ua.svasilina.targeton.utils.subscribes.Subscriber;
 import ua.svasilina.targeton.utils.subscribes.updaters.DataUpdater;
 
-public class GoalsFragment extends ApplicationFragment implements DataUpdater {
+public class GoalsFragment extends ApplicationPage implements DataUpdater {
 
     private final MainActivity mainActivity;
     private final Context context;
@@ -42,8 +42,7 @@ public class GoalsFragment extends ApplicationFragment implements DataUpdater {
     private final DataHandler handler;
     private final HashMap<Integer, Goal> goalHashMap = new HashMap<>();
     private SimpleListAdapter<Goal> adapter;
-    private DateTimeBuilder dateTimeBuilder;
-
+    private final DateTimeBuilder dateTimeBuilder;
 
     public GoalsFragment(MainActivity activity) {
         this.mainActivity = activity;

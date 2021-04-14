@@ -33,8 +33,6 @@ public class Connector {
 
     public <T> void addRequest(Context context, Request<T> req){
         final RequestQueue request = getRequest(context);
-
-
         request.add(req);
     }
 

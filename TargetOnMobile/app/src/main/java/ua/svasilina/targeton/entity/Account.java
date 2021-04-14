@@ -112,5 +112,6 @@ public class Account extends JsonAble {
         if (json.has(Keys.LIMIT)){
             limit = json.getInt(LIMIT);
         }
+        title = json.getString(TITLE);
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/test">
+
+    <fragment
+        android:id="@+id/nav_goals"
+        android:name="ua.svasilina.targeton.ui.main.GoalsFragment"
+        android:label="@string/goals"
+        tools:layout="@layout/goals_fragment"/>
+
+    <fragment
+        android:id="@+id/test"
+        android:name="ua.svasilina.targeton.ui.TestFragment"
+        android:label="@string/settings"
+        tools:layout="@layout/temp"/>
+
+
+</navigation>

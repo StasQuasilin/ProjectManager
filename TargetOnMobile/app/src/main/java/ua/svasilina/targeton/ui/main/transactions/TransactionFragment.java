@@ -7,11 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -22,13 +20,14 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 
+import ua.svasilina.targeton.MainActivity;
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.adapters.TransactionsAdapter;
-import ua.svasilina.targeton.dialogs.transactions.TransactionEditDialog;
 import ua.svasilina.targeton.entity.transactions.Transaction;
 import ua.svasilina.targeton.entity.transactions.UserData;
 import ua.svasilina.targeton.ui.login.LoginActivity;
-import ua.svasilina.targeton.ui.main.ApplicationFragment;
+import ua.svasilina.targeton.ui.main.ApplicationPage;
+import ua.svasilina.targeton.ui.main.Pages;
 import ua.svasilina.targeton.utils.connection.Connector;
 import ua.svasilina.targeton.utils.constants.API;
 import ua.svasilina.targeton.utils.constants.Keys;
@@ -44,15 +43,17 @@ import static ua.svasilina.targeton.utils.constants.Keys.STATUS;
 import static ua.svasilina.targeton.utils.constants.Keys.SUCCESS;
 import static ua.svasilina.targeton.utils.constants.Keys.USER;
 
-public class TransactionFragment extends ApplicationFragment {
+public class TransactionFragment extends ApplicationPage {
 
-    private Subscriber subscriber = Subscriber.getInstance();
-    private Context context;
+    private final MainActivity mainActivity;
+    private final Subscriber subscriber = Subscriber.getInstance();
+    private final Context context;
 
     private final DataHandler handler;
 
-    public TransactionFragment(Context context) {
-        this.context = context;
+    public TransactionFragment(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
+        this.context = mainActivity.getApplicationContext();
         handler = new DataHandler(new TransactionUpdater(this));
     }
 
@@ -162,9 +163,10 @@ public class TransactionFragment extends ApplicationFragment {
 
     private void editTransaction(Transaction transaction, UserData userData) {
 
-        final TransactionEditDialog ted = new TransactionEditDialog(getContext(), transaction, getLayoutInflater(), userData);
-        ted.setCancelable(false);
-        ted.show(getParentFragmentManager(), "Transaction Edit");
+//        final TransactionEditDialog ted = new TransactionEditDialog(getContext(), transaction, getLayoutInflater(), userData);
+//        ted.setCancelable(false);
+//        ted.show(getParentFragmentManager(), "Transaction Edit");
+        mainActivity.openPage(Pages.transactionEdit, transaction.getId());
     }
 
     @Override

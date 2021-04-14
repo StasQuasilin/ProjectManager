@@ -9,15 +9,23 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
+import com.google.android.material.navigation.NavigationView;
 
 import ua.svasilina.targeton.ui.login.LoginActivity;
-import ua.svasilina.targeton.ui.main.ApplicationFragment;
+import ua.svasilina.targeton.ui.main.ApplicationPage;
 import ua.svasilina.targeton.ui.main.CalendarFragment;
 import ua.svasilina.targeton.ui.main.GoalsFragment;
 import ua.svasilina.targeton.ui.main.Pages;
 import ua.svasilina.targeton.ui.main.accounts.AccountsFragment;
+import ua.svasilina.targeton.ui.main.transactions.TransactionEditFragment;
 import ua.svasilina.targeton.ui.main.transactions.TransactionFragment;
 import ua.svasilina.targeton.ui.main.tree.TreeFragment;
 import ua.svasilina.targeton.utils.background.BackgroundWorkerUtil;
@@ -25,22 +33,26 @@ import ua.svasilina.targeton.utils.storage.UserAccessStorage;
 
 public class MainActivity extends AppCompatActivity {
 
-    ActionBar actionBar;
-    private TransactionFragment transactionFragment;
-    private AccountsFragment accountsFragment;
+    private AppBarConfiguration mAppBarConfiguration;
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        actionBar = getSupportActionBar();
-        final Context context = getApplicationContext();
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        transactionFragment = new TransactionFragment(context);
-        accountsFragment = new AccountsFragment(this);
-        if (savedInstanceState == null) {
-            setView(transactionFragment);
-        }
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.nav_view);
+        mAppBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.nav_goals)
+                .setDrawerLayout(drawer)
+                .build();
+
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
+        NavigationUI.setupWithNavController(navigationView, navController);
     }
 
     @Override
@@ -53,19 +65,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
+        TransactionFragment transactionFragment;
         switch (itemId){
             case R.id.goals:
-                setView(new GoalsFragment(this));
+
                 return true;
             case R.id.tree:
                 openPage(Pages.tree, -1);
 
                 break;
             case R.id.transactions:
-                setView(transactionFragment = new TransactionFragment(getApplicationContext()));
+                setView(transactionFragment = new TransactionFragment(this));
                 return true;
             case R.id.accounts:
-                setView(accountsFragment = new AccountsFragment(this));
+                setView(new AccountsFragment(this));
                 return true;
             case R.id.calendar:
                 setView(CalendarFragment.getInstance());
@@ -78,12 +91,12 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void setView(ApplicationFragment fragment) {
+    private void setView(ApplicationPage fragment) {
         final String userAccess = UserAccessStorage.getUserAccess(getApplicationContext());
         if (userAccess == null){
             showLogin();
         } else {
-            actionBar.setTitle(fragment.getTitle());
+            toolbar.setTitle(fragment.getTitle());
             getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commitNow();
         }
     }
@@ -132,9 +145,13 @@ public class MainActivity extends AppCompatActivity {
     public void openPage(Pages page, int attr) {
         switch (page){
             case goal:
+                setView(new GoalsFragment(this));
                 break;
             case tree:
                 setView(new TreeFragment(this, attr));
+                break;
+            case transactionEdit:
+                setView(new TransactionEditFragment(this, attr));
                 break;
         }
 

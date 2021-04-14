@@ -11,8 +11,10 @@ import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.entity.Category;
 import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
 import ua.svasilina.targeton.utils.constants.Constants;
+import ua.svasilina.targeton.utils.constants.Keys;
 import ua.svasilina.targeton.utils.json.JsonAble;
 
+import static ua.svasilina.targeton.utils.constants.Keys.DESCRIPTION;
 import static ua.svasilina.targeton.utils.constants.Keys.TYPE;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_FROM;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_TO;
@@ -27,7 +29,7 @@ import static ua.svasilina.targeton.utils.constants.Keys.RATE;
 public class Transaction extends JsonAble implements Comparable<Transaction>{
     private int id;
     private Calendar date;
-    private Category category;
+    private String description;
     private double amount;
     private double rate;
     private String currency;
@@ -69,11 +71,11 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
     }
 
     public String getTitle() {
-        return category.getTitle();
+        return description;
     }
 
     public void setTitle(String title) {
-        category.setTitle(title);
+        this.description = title;
     }
 
     public double getAmount() {
@@ -98,14 +100,6 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
 
     public void setCurrency(String currency) {
         this.currency = currency;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
 
     public Account getAccountFrom() {
@@ -144,7 +138,7 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
         final DateTimeBuilder builder = new DateTimeBuilder(Constants.ISO_PATTERN);
         hashMap.put(ID, id);
         hashMap.put(DATE, builder.build(date));
-        hashMap.put(CATEGORY, category.buildJson());
+        hashMap.put(Keys.DESCRIPTION, description);
         hashMap.put(AMOUNT, amount);
         hashMap.put(CURRENCY, currency);
         hashMap.put(RATE, rate);
@@ -162,7 +156,7 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
     public void update(JSONObject json) throws JSONException {
         final Date d = Date.valueOf(json.getString(DATE));
         date.setTimeInMillis(d.getTime());
-        category = new Category(json.getJSONObject(CATEGORY));
+        description = json.getString(DESCRIPTION);
         amount = json.getDouble(AMOUNT);
         rate = json.getDouble(RATE);
         currency = json.getString(CURRENCY);

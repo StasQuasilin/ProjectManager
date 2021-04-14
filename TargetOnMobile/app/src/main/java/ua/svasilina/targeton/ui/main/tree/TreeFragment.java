@@ -15,13 +15,13 @@ import org.json.JSONObject;
 
 import ua.svasilina.targeton.MainActivity;
 import ua.svasilina.targeton.R;
-import ua.svasilina.targeton.ui.main.ApplicationFragment;
+import ua.svasilina.targeton.ui.main.ApplicationPage;
 import ua.svasilina.targeton.utils.subscribes.DataHandler;
 import ua.svasilina.targeton.utils.subscribes.Subscribe;
 import ua.svasilina.targeton.utils.subscribes.Subscriber;
 import ua.svasilina.targeton.utils.subscribes.updaters.TreeUpdater;
 
-public class TreeFragment extends ApplicationFragment {
+public class TreeFragment extends ApplicationPage {
 
     private final Context context;
     private final Subscriber subscriber = Subscriber.getInstance();

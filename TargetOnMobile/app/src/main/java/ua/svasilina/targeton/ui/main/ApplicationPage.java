@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 
 import ua.svasilina.targeton.ui.login.LoginActivity;
 
-public abstract class ApplicationFragment extends Fragment {
+public abstract class ApplicationPage extends Fragment {
 
     public abstract String getTitle();
 

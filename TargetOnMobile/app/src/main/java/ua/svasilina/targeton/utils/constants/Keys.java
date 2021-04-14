@@ -59,4 +59,6 @@ public interface Keys {
     String CHILDREN = "children";
     String HEADER_ID = "headerId";
     String DONE_IF = "doneIf";
+    String EMPTY = "";
+    String DESCRIPTION = "description";
 }

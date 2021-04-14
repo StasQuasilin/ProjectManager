@@ -24,14 +24,14 @@ import ua.svasilina.targeton.dialogs.ListBuilder;
 import ua.svasilina.targeton.dialogs.accounts.AccountEditDialog;
 import ua.svasilina.targeton.dialogs.transactions.ItemBuilder;
 import ua.svasilina.targeton.entity.Account;
-import ua.svasilina.targeton.ui.main.ApplicationFragment;
+import ua.svasilina.targeton.ui.main.ApplicationPage;
 import ua.svasilina.targeton.utils.constants.Keys;
 import ua.svasilina.targeton.utils.subscribes.DataHandler;
 import ua.svasilina.targeton.utils.subscribes.Subscribe;
 import ua.svasilina.targeton.utils.subscribes.Subscriber;
 import ua.svasilina.targeton.utils.subscribes.updaters.AccountsUpdater;
 
-public class AccountsFragment extends ApplicationFragment {
+public class AccountsFragment extends ApplicationPage {
 
     private Subscriber subscriber = Subscriber.getInstance();
     private DataHandler handler;
