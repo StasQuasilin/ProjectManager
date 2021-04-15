@@ -36,7 +36,7 @@ public class TransactionUtil {
             }
             final Account accountTo = transaction.getAccountTo();
             if (accountTo != null){
-                updatePoint(transaction, accountTo, type != TransactionType.transfer ? amount / rate: amount);
+                updatePoint(transaction, accountTo, amount * rate);
             }
         }
     }
@@ -64,7 +64,7 @@ public class TransactionUtil {
         point.setDate(transaction.getDate());
         point.setAmount(amount);
         point.setRate(transaction.getRate());
-        point.setCurrency(transaction.getCurrency().getName());
+        point.setCurrency(account.getCurrency());
         transactionPointUtil.save(point);
 
         accountPointUtil.calculateDay(account, transaction.getDate());

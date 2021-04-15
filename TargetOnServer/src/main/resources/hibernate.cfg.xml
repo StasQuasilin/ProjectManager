@@ -50,6 +50,7 @@
         <mapping class="entity.user.DemoAccount"/>
         <mapping class="entity.social.Friendship"/>
         <mapping class="entity.communication.Notification"/>
+        <mapping class="entity.ExternalService"/>
 
     </session-factory>
 </hibernate-configuration>

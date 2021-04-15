@@ -69,6 +69,11 @@ public class EditTransactionAPI extends API {
             final Currency currency = currencyDAO.getCurrency(currencyName);
             transaction.setCurrency(currency);
             currencyDAO.checkUserCurrency(currency, user);
+            System.out.println(body);
+            //Transaction Rate
+            final float rate = body.getFloat(RATE);
+            System.out.println(rate);
+            transaction.setRate(rate);
 
             //Account from
             Account prevAccountFrom = null;
@@ -92,7 +97,7 @@ public class EditTransactionAPI extends API {
 
             //When transaction is transfer - put transfer amount and remove details
             if (type == TransactionType.transfer){
-                int amount = body.getInt(AMOUNT);
+                float amount = body.getFloat(AMOUNT);
                 transaction.setAmount(amount);
                 body.remove(DETAILS);
             }
@@ -100,6 +105,7 @@ public class EditTransactionAPI extends API {
             write(resp, SUCCESS_ANSWER);
 
             transactionSaver.save(transaction);
+//            transactionSaver.updateAccounts(transaction);
             LinkedList<Header> headers = new LinkedList<>();
 
             //When transaction have details

@@ -66,6 +66,7 @@ public class TransactionEdit extends ModalWindow {
         req.setAttribute(FIND_COUNTERPARTY, ApiLinks.FIND_COUNTERPARTY);
         req.setAttribute(FIND_CATEGORY, ApiLinks.FIND_CATEGORY);
         req.setAttribute(REMOVE, UrlLinks.TRANSACTION_REMOVE);
+        req.setAttribute(EXCHANGE_RATE, ApiLinks.EXCHANGE_RATE);
         show(req, resp);
     }
 

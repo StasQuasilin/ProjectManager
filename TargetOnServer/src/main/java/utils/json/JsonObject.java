@@ -93,4 +93,8 @@ public class JsonObject {
     public JSONArray getJsonArray(String key) {
         return (JSONArray) get(key);
     }
+
+    public void put(String key, Object value) {
+        json.put(key, value);
+    }
 }

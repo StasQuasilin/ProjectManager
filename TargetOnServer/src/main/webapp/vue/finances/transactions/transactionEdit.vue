@@ -1,7 +1,8 @@
 transactionEdit = new Vue({
     el:'#transactionEdit',
     components:{
-        'category-input':categoryInput
+        'category-input':categoryInput,
+        'input-search':inputSearch
     },
     data:{
         api:{},
@@ -73,16 +74,7 @@ transactionEdit = new Vue({
                 transactionEdit.updateView();
             }
         },
-        totalSum:function(){
-            let sum = 0;
-            for (let i in this.transaction.details){
-                if (this.transaction.details.hasOwnProperty(i)){
-                    let detail = this.transaction.details[i];
-                    sum += detail.amount * detail.price;
-                }
-            }
-            return sum;
-        },
+
         detailProps:{
             put:function (item) {
                 transactionEdit.detail.category = item.id;
@@ -109,8 +101,27 @@ transactionEdit = new Vue({
         detailIndex:-1,
         locale:'uk',
         editNote:false,
+        rateInfo:{
+            base:'',
+            currency:'',
+            rate:0
+        }
     },
     computed:{
+        totalSum:function(){
+            if(this.transaction.type === 'transfer'){
+                return this.transaction.amount;
+            } else {
+                let sum = 0;
+                for (let i in this.transaction.details){
+                    if (this.transaction.details.hasOwnProperty(i)){
+                        let detail = this.transaction.details[i];
+                        sum += detail.amount * detail.price;
+                    }
+                }
+                return sum;
+            }
+        },
         accountsMap:function () {
             let accounts = {};
             for (let i in this.accounts) {
@@ -122,17 +133,28 @@ transactionEdit = new Vue({
             return accounts;
         },
         showRate:function(){
+            let c;
             if (this.transaction) {
                 let accounts = this.accountsMap;
                 let type = this.transaction.type;
                 let currency = this.transaction.currency;
                 if (type === 'income') {
-                    return currency !== accounts[this.transaction.accountTo].currency;
+                    this.rateInfo.base = currency;
+                    this.rateInfo.currency = accounts[this.transaction.accountTo].currency;
                 } else if (type === 'spending') {
-                    return currency !== accounts[this.transaction.accountFrom].currency;
+                    this.rateInfo.base = currency;
+                    this.rateInfo.currency = accounts[this.transaction.accountFrom].currency;
                 } else if (type === 'transfer') {
-                    return accounts[this.transaction.accountTo].currency !== accounts[this.transaction.accountFrom].currency;
+                    this.rateInfo.currency = accounts[this.transaction.accountTo].currency;
+                    this.rateInfo.base = accounts[this.transaction.accountFrom].currency;
                 }
+                let number = this.rateInfo.base.localeCompare(this.rateInfo.currency);
+                if(number){
+                    this.rateReq();
+                } else {
+                    this.transaction.rate = 1;
+                }
+                return number;
             }
         }
     },
@@ -150,6 +172,29 @@ transactionEdit = new Vue({
                 }
             }
             return tree;
+        },
+        rateReq:function () {
+            if(this.transaction.rate === 1) {
+                const self = this;
+                PostApi(this.api.rate, this.rateInfo, function (a) {
+                    if (a.status === 'success') {
+                        let result = a.result;
+                        let base = result['base_code'];
+                        let currency = result['target_code'];
+                        let rate = result['conversion_rate'];
+                        let info = self.rateInfo;
+                        self.transaction.rate = rate;
+                        if (info.base.localeCompare(base) && info.currency.localeCompare(currency)) {
+                            info.rate = rate;
+                            self.transaction.rate = rate;
+                            // if(self.transaction.rate !== 1){
+                            //     self.transaction.rate = rate;
+                            // }
+                        }
+                        console.log(base + '/' + currency + '=' + rate);
+                    }
+                })
+            }
         },
         changeAmount:function(idx, amount){
             this.transaction.details[idx].amount+=amount;
@@ -176,10 +221,26 @@ transactionEdit = new Vue({
                 }
             })
         },
-        changeType:function(type){
-            if (this.transaction.type === 'transfer'){
-                this.transaction.category = Object.assign({}, {id:-1, title:''});
+        initTransaction:function(){
+            transactionEdit.transaction.type = transactionEdit.types[0].id;
+
+            let currency = transactionEdit.transaction.currency = transactionEdit.currency[0];
+            let accId = 0;
+            for (let i in this.accounts){
+                if (this.accounts.hasOwnProperty(i)){
+                    let account = this.accounts[i];
+                    if(!account.currency.localeCompare(currency)){
+                        accId = i;
+                        break;
+                    }
+                }
             }
+            transactionEdit.transaction.accountFrom = transactionEdit.accounts[accId].id;
+        },
+        changeType:function(type){
+            // if (this.transaction.type === 'transfer'){
+            //     this.transaction.category = Object.assign({}, {id:-1, title:''});
+            // }
             if(type === 'income'){
                 this.transaction.accountTo = this.transaction.accountFrom;
                 this.transaction.accountFrom = -1;
@@ -187,7 +248,6 @@ transactionEdit = new Vue({
                 this.transaction.accountFrom = this.transaction.accountTo;
                 this.transaction.accountTo = -1;
             } else if (type === 'transfer'){
-
                 if(this.transaction.type === 'income'){
                     let accounts = this.getAccountsWithout(this.transaction.accountTo);
                     this.transaction.accountFrom = accounts[0].id;

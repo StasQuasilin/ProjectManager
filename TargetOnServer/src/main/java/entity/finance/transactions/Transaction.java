@@ -17,7 +17,7 @@ import static constants.Keys.*;
 public class Transaction extends JsonAble {
     private int id;
     private String description;
-    private int amount;
+    private float amount;
     private Currency currency;
     private float rate = 1;
     private Date date;
@@ -47,10 +47,10 @@ public class Transaction extends JsonAble {
 
     @Basic
     @Column(name = "_amount")
-    public int getAmount() {
+    public float getAmount() {
         return amount;
     }
-    public void setAmount(int amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 

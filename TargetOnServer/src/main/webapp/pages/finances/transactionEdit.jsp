@@ -17,6 +17,7 @@
   transactionEdit.api.findCounterparty = '${findCounterparty}';
   transactionEdit.api.save = '${save}';
   transactionEdit.api.remove = '${remove}';
+  transactionEdit.api.rate = '${exchangeRate}';
   transactionEdit.newCurrencyProps.findCategory = '${findCurrency}';
   transactionEdit.props.findCategory = '${findCategory}';
   transactionEdit.detailProps.findCategory = '${findCategory}';
@@ -53,12 +54,12 @@
   </c:if>
   </c:when>
   <c:otherwise>
-  transactionEdit.transaction.type = transactionEdit.types[0].id;
-  transactionEdit.transaction.accountFrom = transactionEdit.accounts[0].id;
-  transactionEdit.transaction.currency = transactionEdit.currency[0];
-  <c:if test="${not empty category}">
-  transactionEdit.transaction.category = ${category.shortJson()}
-  </c:if>
+  transactionEdit.initTransaction();
+
+
+<%--  <c:if test="${not empty category}">--%>
+<%--  transactionEdit.transaction.category = ${category.shortJson()}--%>
+<%--  </c:if>--%>
   </c:otherwise>
   </c:choose>
   if (!transactionEdit.transaction.counterparty){
@@ -71,13 +72,8 @@
 <table id="transactionEdit" v-if="transaction">
   <tr>
     <td>
-      <v-date-picker
-              :no-title="true"
-              class="date-picker"
-              :locale="locale"
-              :first-day-of-week="1"
-              v-model="transaction.date">
-      </v-date-picker>
+      <v-date-picker :no-title="true" class="date-picker" :locale="locale"
+              :first-day-of-week="1" v-model="transaction.date"></v-date-picker>
     </td>
     <td style="vertical-align: top">
       <div>
@@ -146,7 +142,6 @@
 <%--                          {{c.title}}--%>
 <%--                        </option>--%>
 <%--                      </select>--%>
-
 <%--                    </template>--%>
                     <span style="display: inline-block; width: 40pt">
                     <span v-on:click="changeAmount(idx, -1)">
@@ -166,7 +161,6 @@
                   </span>
                   </div>
                 </div>
-
               </td>
             </tr>
           </template>
@@ -215,36 +209,54 @@
                 <fmt:message key="tranaction.sum"/>
             </td>
             <td>
-              <template v-if="totalSum !== 0">
-                <span v-if="transaction.type === 'spending'">
-                  -
-                </span>
-                <span v-else-if="transaction.type === 'income'">
-                  +
-                </span>
-              </template>
-              <span v-if="transaction.type === 'income' || transaction.type === 'spending'">
-                {{totalSum().toLocaleString()}}
+              <span v-if="transaction.type === 'income' || transaction.type === 'spending'"
+                    style="width: 50pt; display: inline-block; text-align: right;">
+                <template v-if="totalSum !== 0">
+                  <template v-if="transaction.type === 'spending'">-</template>
+                  <template v-else-if="transaction.type === 'income'">+</template>
+                </template>
+                {{totalSum.toLocaleString()}}
               </span>
-              <input type="number" v-else v-model="transaction.amount" autocomplete="off" onfocus="this.select()" style="width: 60pt">
+              <input type="number" step="0.001" v-else v-model="transaction.amount" autocomplete="off" onfocus="this.select()" style="width: 60pt">
               <template v-if="transaction.type === 'income' || transaction.type === 'spending'">
                 <select v-model="transaction.currency" v-if="currency.length > 0">
                   <option v-for="c in currency" :value="c">
                     {{c}}
                   </option>
                 </select>
-                <span v-if="!addCurrency" class="text-button" style="font-size: 10pt" v-on:click="addCurrency = true">
-                  + <fmt:message key="currency.add"/>
-                </span>
-                <input-search v-else :object="newCurrency" :props="newCurrencyProps" :show="null" :create="false"></input-search>
+
+
               </template>
-              <span v-else-if="transaction.type === 'transfer'">
-                {{accountsMap[transaction.accountTo].currency}}
+              <span style="font-size: 9pt">
+                <template v-if="showRate && transaction.rate !== 1">
+                  <template v-if="transaction.type === 'transfer'">
+                    {{accountsMap[transaction.accountFrom].currency}}
+                  </template>
+                  &times; {{transaction.rate}} =
+                  {{(totalSum * transaction.rate).toLocaleString()}}
+                </template>
+                <template v-if="transaction.type === 'transfer' || transaction.type === 'income'">
+                  {{accountsMap[transaction.accountTo].currency}}
+                </template>
+                <template v-else-if="transaction.type === 'spending'">
+                  {{accountsMap[transaction.accountFrom].currency}}
+                </template>
               </span>
-              <span v-if="showRate && transaction.rate !== 1" style="font-size: 10pt">
-                &times; {{transaction.rate}} =
-                {{(transaction.amount * transaction.rate).toLocaleString()}}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align: right">
+              <span v-if="!addCurrency" class="text-button" style="font-size: 10pt" v-on:click="addCurrency = true">
+                  +<fmt:message key="currency.add"/>
               </span>
+              <div v-else style="display: flex">
+                <fmt:message key="currency.add.text"/>
+                <input-search :object="newCurrency" :props="newCurrencyProps" :show="null" :create="false" :width="50"></input-search>
+                <span class="text-button" v-on:click="addCurrency=false">
+                  &times;
+                </span>
+              </div>
+
             </td>
           </tr>
           <tr v-if="showRate">

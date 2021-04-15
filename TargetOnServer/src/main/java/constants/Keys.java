@@ -209,4 +209,8 @@ public interface Keys {
     String WEEK_DAYS = "weekDays";
     String REPEATS = "repeats";
     String EMPTY = "";
+    String BASE = "base";
+    String PAIR = "pair";
+    String RESPONSE_CODE = "responseCode";
+    String EXCHANGE_RATE = "exchangeRate";
 }

@@ -42,4 +42,5 @@ public interface ApiLinks {
     String BUY_LIST_REMOVE = API + "/buy/list/remove";
     String DISCUSSION_EDIT = API + "/discussion/edit";
     String SAVE_TASK_PROGRESS = API + "/task/progress/save";
+    String EXCHANGE_RATE = API + "/exchange/rate";
 }

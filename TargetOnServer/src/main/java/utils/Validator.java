@@ -26,11 +26,8 @@ public class Validator {
     static Validator validator = new Validator();
 
     public static void main(String[] args) {
-        Hibernator hibernator =Hibernator.getInstance();
-        for (Header header : hibernator.query(Header.class, Keys.TYPE, new OR(HeaderType.task, HeaderType.account))){
-            System.out.println(header.getTitle());
-        }
-        HibernateSessionFactory.shutdown();
+        String s = "0.03575";
+        System.out.println(Float.parseFloat(s));
     }
 
     private static void checkEmail(String s) {
