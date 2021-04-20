@@ -16,10 +16,10 @@
                 <span class="text-button" v-on:click="remove(item.id)">
                     &times;
                 </span>
-            <span>
-                {{item.title}}
-                <span class="text-button edit-button" v-on:click="edit(item.id)"></span>
-            </span>
+                <span v-on:click="edit(item.id)">
+                    {{item.title}}
+                    <span class="text-button edit-button"></span>
+                </span>
                 <div style="padding-left: 8px; font-size: 10pt">
                     <div v-for="i in item.items" style="display: flex; flex-direction: row">
                         <div style="flex: 0 0 auto">

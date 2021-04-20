@@ -20,6 +20,7 @@
   calendar.api.edit = '${edit}';
   calendar.api.remove = '${remove}';
   calendar.api.getCalendar = '${getCalendar}';
+  calendar.api.randomTask = '${randomTask}';
   calendar.getCalendarData();
   subscriber.subscribe('${taskSubscribe}', calendar.handler);
   subscriber.subscribe('${subscribe}', calendar.calendarHandler);
@@ -31,8 +32,8 @@
         <fmt:message key="calendar.today"/>
         {{new Date(date).toLocaleDateString().substring(0, 5)}}
         <span class="text-button" style="float: right" v-on:click="edit()">
-        <fmt:message key="button.add"/>
-      </span>
+          <fmt:message key="button.add"/>
+        </span>
       </div>
     </div>
     <div class="panel-content">
@@ -54,6 +55,9 @@
         <span class="text-button" v-if="new Date(date).toLocaleDateString() !== new Date().toLocaleDateString()"
               v-on:click="resetDate()" style="position: absolute; right: 0">
           <fmt:message key="date.today"/>
+        </span>
+        <span class="text-button" style="float: right" v-on:click="taskRandomizer()">
+          RDM
         </span>
       </div>
     </div>

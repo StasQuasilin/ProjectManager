@@ -13,7 +13,6 @@ import javax.websocket.Session;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import static constants.Keys.DATA;
 import static constants.Keys.SUBSCRIBE;
@@ -116,5 +115,9 @@ public final class Subscriber {
     public void unsubscribe(Session session, Subscribe subscribe) {
         final ArrayList<Subscribe> subscribes = this.subscribes.get(session);
         subscribes.remove(subscribe);
+    }
+
+    public SubscribeHandler getHandler(Subscribe subscribe) {
+        return handlers.get(subscribe);
     }
 }

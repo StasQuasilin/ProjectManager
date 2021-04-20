@@ -12,13 +12,9 @@ calendarFreeItem = {
                 '</span>' +
             ' </div>' +
             ' <div>' +
-                '<template v-if="item.date">' +
-                    '{{item.date}}' +
-                '</template>' +
                 '<template v-if="item.time">' +
                     '{{item.time}}' +
                 '</template>' +
-
                 '{{item.title}}' +
             ' </div>' +
         '</div>'

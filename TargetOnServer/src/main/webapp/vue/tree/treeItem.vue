@@ -125,6 +125,9 @@ treeItem = {
                             '<span v-else-if="item.status === \'impossible\'">' +
                                 '&times; ' +
                             '</span>' +
+                            '<span v-else-if="item.status === \'pause\'">' +
+                                '&#9208;' +
+                            '</span>' +
                             '<span v-else :title="item.status">' +
                                 '?' +
                             '</span>' +

@@ -1,6 +1,7 @@
 package controllers.calendar;
 
 import constants.ApiLinks;
+import constants.Keys;
 import constants.UrlLinks;
 import controllers.Page;
 import subscribe.Subscribe;
@@ -29,7 +30,9 @@ public class CalendarPage extends Page {
         req.setAttribute(GET_CALENDAR, ApiLinks.GET_CALENDAR);
         req.setAttribute(EDIT, UrlLinks.CALENDAR_EDIT);
         req.setAttribute(REMOVE, UrlLinks.CALENDAR_REMOVE);
+        req.setAttribute(Keys.RANDOM_TASK, UrlLinks.RANDOM_TASK);
         req.setAttribute(TASK_SUBSCRIBE, Subscribe.calendar_tasks);
+
         req.setAttribute(SUBSCRIBE, Subscribe.calendar);
         show(req, resp);
     }

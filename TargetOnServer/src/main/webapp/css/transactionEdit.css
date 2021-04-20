@@ -42,3 +42,16 @@
 .edited * {
     background-color: darkgreen;
 }
+.transaction-table{
+    border-collapse: collapse;
+}
+.transaction-table tr{
+    border-bottom: solid gray 1pt;
+    padding-bottom: 8pt;
+}
+.transaction-detail-list{
+    height: 100pt;
+    overflow-y: scroll;
+    border: solid gray 1pt;
+    padding: 0 4pt;
+}

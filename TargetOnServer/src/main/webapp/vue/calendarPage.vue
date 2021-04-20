@@ -32,6 +32,9 @@ calendar = new Vue({
         }
     },
     methods:{
+        taskRandomizer:function(){
+            loadModal(this.api.randomTask);
+        },
         createItem:function(task){
             let args = {};
             if(task){

@@ -20,6 +20,7 @@
   transactionEdit.api.rate = '${exchangeRate}';
   transactionEdit.newCurrencyProps.findCategory = '${findCurrency}';
   transactionEdit.props.findCategory = '${findCategory}';
+  transactionEdit.props.categoryTitle = '<fmt:message key="transaction.category.insert"/>';
   transactionEdit.detailProps.findCategory = '${findCategory}';
   transactionEdit.counterpartyProps.findCategory = '${findCounterparty}';
   transactionEdit.locale = '${locale}';
@@ -87,13 +88,8 @@
         </template>
       </div>
       <div>
-        <table class="full-size" border="1">
+        <table class="full-size transaction-table">
           <template v-if="transaction.type ==='spending' || transaction.type === 'income'">
-            <tr>
-              <td colspan="2">
-                <fmt:message key="transaction.category"/>
-              </td>
-            </tr>
             <tr>
               <td colspan="2">
                 <div style="width: 100%; display: flex">
@@ -116,16 +112,9 @@
                 </div>
               </td>
             </tr>
-<%--            <tr v-else>--%>
-<%--              <td colspan="2">--%>
-<%--                <span v-on:click="manyDetails = true" style="font-size: 10pt">--%>
-<%--                  <fmt:message key="transaction.add.detail"/>--%>
-<%--                </span>--%>
-<%--              </td>--%>
-<%--            </tr>--%>
             <tr v-if="transaction.details.length > 0">
               <td colspan="2">
-                <div style="max-height: 100pt; overflow-y: scroll">
+                <div class="transaction-detail-list">
                   <div v-for="(d, idx) in transaction.details">
                     <span class="mini-button" v-on:click="removeDetail(idx)">
                       &times;
@@ -224,8 +213,6 @@
                     {{c}}
                   </option>
                 </select>
-
-
               </template>
               <span style="font-size: 9pt">
                 <template v-if="showRate && transaction.rate !== 1">
@@ -256,7 +243,6 @@
                   &times;
                 </span>
               </div>
-
             </td>
           </tr>
           <tr v-if="showRate">

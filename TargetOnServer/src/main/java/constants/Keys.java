@@ -213,4 +213,7 @@ public interface Keys {
     String PAIR = "pair";
     String RESPONSE_CODE = "responseCode";
     String EXCHANGE_RATE = "exchangeRate";
+    String RANDOM_TASK = "randomTask";
+
+
 }

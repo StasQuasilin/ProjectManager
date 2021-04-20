@@ -17,6 +17,13 @@ inputSearch = {
             canAdd:false
         }
     },
+    computed:{
+        placeholder:function () {
+            if(this.props.categoryTitle){
+                return this.props.categoryTitle;
+            }
+        }
+    },
     mounted:function(){
         if (!this.object){
             console.warn('Object is ' + typeof this.object);
@@ -99,7 +106,7 @@ inputSearch = {
             '<span v-if="hasPrefix()">' +
                 '{{prefix()}}' +
             '</span>' +
-            '<input v-model="object.title" :disabled="isEnabled()" ' +
+            '<input v-model="object.title" :placeholder="placeholder" :disabled="isEnabled()" ' +
                 'v-on:keyup.esc.prevent="clear()" v-on:keyup.enter.prevent="putNew()" ' +
                     'v-on:keyup="onKeyUp()" onfocus="this.select()">' +
             '<div class="custom-data-list" v-if="items.length > 0 || canAdd">' +

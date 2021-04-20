@@ -32,4 +32,5 @@ public interface UrlLinks {
     String REPORT_OF_MONTH = "/month/report" + SUFFIX;
     String BUY_LIST_REMOVE = "/buy/list/remove" + SUFFIX;
     String DISCUSSION_EDIT = "/discussion/edit" + SUFFIX;
+    String RANDOM_TASK = "/tree/random" + SUFFIX;
 }
