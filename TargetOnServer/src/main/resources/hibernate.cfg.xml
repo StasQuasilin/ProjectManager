@@ -51,6 +51,7 @@
         <mapping class="entity.social.Friendship"/>
         <mapping class="entity.communication.Notification"/>
         <mapping class="entity.ExternalService"/>
+        <mapping class="entity.finance.Counterparty"/>
 
     </session-factory>
 </hibernate-configuration>

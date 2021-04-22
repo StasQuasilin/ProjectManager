@@ -57,18 +57,11 @@
   <c:otherwise>
   transactionEdit.initTransaction();
 
-
 <%--  <c:if test="${not empty category}">--%>
 <%--  transactionEdit.transaction.category = ${category.shortJson()}--%>
 <%--  </c:if>--%>
   </c:otherwise>
   </c:choose>
-  if (!transactionEdit.transaction.counterparty){
-    transactionEdit.transaction.counterparty = {
-      id:-1,
-      title:''
-    }
-  }
 </script>
 <table id="transactionEdit" v-if="transaction">
   <tr>
@@ -122,8 +115,11 @@
                     <span>
                       {{(idx + 1).toLocaleString()}}.
                     </span>
-                    <span style="display: inline-block; width: 100pt" v-on:click="editDetail(idx)">
-                      <template v-for="p in d.path">{{p.title}} / </template>{{d.title}}
+                    <span style="display: inline-block; width: 200pt" v-on:click="editDetail(idx)">
+                      <template v-if="d.path.length">
+                        <span style="font-size: 8pt" v-for="p in d.path">{{p.title}} / </span><br>
+                      </template>
+                      {{d.title}}
                     </span>
 <%--                    <template v-if="d.children">--%>
 <%--                      <select>--%>
@@ -165,7 +161,7 @@
               </select>
             </td>
           </tr>
-          <tr v-if="transaction.type === 'spending' || transaction.type === 'transfer'">
+          <tr v-if="transaction.type === 'spending' || transaction.type === 'transfer' || (transaction.type === 'debt' && !lend)">
             <td>
               <label for="accountFrom">
                 <fmt:message key="transaction.account.from"/>
@@ -179,7 +175,7 @@
               </select>
             </td>
           </tr>
-          <tr v-if="transaction.type === 'income' || transaction.type === 'transfer'">
+          <tr v-if="transaction.type === 'income' || transaction.type === 'transfer' || (transaction.type === 'debt' && lend)">
             <td>
               <label for="accountTo">
                 <fmt:message key="transaction.account.to"/>
@@ -195,7 +191,17 @@
           </tr>
           <tr>
             <td>
+              <template v-if="transaction.type === 'income' || transaction.type === 'spending' || transaction.type === 'transfer'">
                 <fmt:message key="tranaction.sum"/>
+              </template>
+              <span class="text-button" v-else v-on:click="lend=!lend">
+                <template v-if="lend">
+                  <fmt:message key="tranaction.debt.credit"/>
+                </template>
+                <template v-else>
+                  <fmt:message key="tranaction.debt.debit"/>
+                </template>
+              </span>
             </td>
             <td>
               <span v-if="transaction.type === 'income' || transaction.type === 'spending'"
@@ -207,7 +213,7 @@
                 {{totalSum.toLocaleString()}}
               </span>
               <input type="number" step="0.001" v-else v-model="transaction.amount" autocomplete="off" onfocus="this.select()" style="width: 60pt">
-              <template v-if="transaction.type === 'income' || transaction.type === 'spending'">
+              <template v-if="transaction.type === 'income' || transaction.type === 'spending' || transaction.type === 'debt'">
                 <select v-model="transaction.currency" v-if="currency.length > 0">
                   <option v-for="c in currency" :value="c">
                     {{c}}
@@ -259,12 +265,12 @@
               </span>
             </td>
           </tr>
-          <tr v-if="editCounterparty">
+          <tr v-if="editCounterparty || transaction.type === 'debt'">
             <td>
               <fmt:message key="transaction.conterparty"/>
             </td>
             <td>
-              <input-search :object="transaction.counterparty" :props="counterpartyProps"></input-search>
+              <input-search :object="counterpartyInput" :props="counterpartyProps" :show="['title']" :create="true"></input-search>
             </td>
           </tr>
           <tr v-if="!editNote || !useDetail || !editCounterparty">

@@ -4,6 +4,7 @@ import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountMember;
 import entity.finance.accounts.CardSettings;
 import entity.finance.accounts.DepositSettings;
+import entity.finance.category.Header;
 import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by DELL on 07.07.2020.
  */
 public interface AccountDAO {
-    List<Account> getUserAccounts(User user);
+    List<Account> getUserAccounts(User user, boolean all);
 
     Account getAccount(Object id);
 
@@ -42,4 +43,6 @@ public interface AccountDAO {
     void saveCardSettings(CardSettings cardSettings);
 
     void removeSettings(CardSettings cardSettings);
+
+    Account getAccountByHeader(Header header);
 }

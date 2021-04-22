@@ -2,12 +2,12 @@ package controllers.api.finance.accounts;
 
 import constants.ApiLinks;
 import controllers.api.API;
-import entity.Title;
 import entity.finance.Currency;
 import entity.finance.accounts.Account;
 import entity.finance.accounts.AccountType;
 import entity.finance.accounts.CardSettings;
 import entity.finance.accounts.DepositSettings;
+import entity.finance.category.Header;
 import entity.finance.category.HeaderType;
 import entity.user.User;
 import utils.answers.Answer;
@@ -44,14 +44,14 @@ public class EditAccountAPI extends API {
 
             if(account == null){
                 account = new Account();
-                Title title = new Title();
+                Header title = new Header();
                 title.setType(HeaderType.account);
                 title.setOwner(user);
-                account.setTitle(title);
+                account.setHeader(title);
                 newAccount = true;
             }
 
-            final Title title = account.getTitle();
+            final Header title = account.getHeader();
             title.setValue(body.getString(TITLE));
             AccountType type = AccountType.valueOf(body.getString(TYPE));
             account.setType(type);

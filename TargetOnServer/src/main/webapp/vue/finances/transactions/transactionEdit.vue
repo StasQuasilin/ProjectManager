@@ -13,6 +13,7 @@ transactionEdit = new Vue({
         manyDetails:false,
         editCounterparty:false,
         addCurrency:false,
+        lend:true,
         newCurrency:{
             title:''
         },
@@ -22,10 +23,7 @@ transactionEdit = new Vue({
             date:new Date().toISOString().substring(0, 10),
             accountFrom:-1,
             accountTo:-1,
-            counterparty:{
-                id:-1,
-                title:''
-            },
+            counterparty:null,
             amount:0,
             currency:null,
             rate:1,
@@ -34,6 +32,10 @@ transactionEdit = new Vue({
         },
         currentDetail:-1,
         category:{
+            id:-1,
+            title:''
+        },
+        counterpartyInput:{
             id:-1,
             title:''
         },
@@ -87,6 +89,9 @@ transactionEdit = new Vue({
         counterpartyProps:{
             put:function(item){
                 transactionEdit.transaction.counterparty = item;
+                transactionEdit.counterpartyInput.id = -1;
+                transactionEdit.counterpartyInput.title = '';
+                transactionEdit.counterpartyInput.title = '';
             }
         },
         detail:{
@@ -138,10 +143,10 @@ transactionEdit = new Vue({
                 let accounts = this.accountsMap;
                 let type = this.transaction.type;
                 let currency = this.transaction.currency;
-                if (type === 'income') {
+                if (type === 'income' || (type === 'debt' && this.lend)) {
                     this.rateInfo.base = currency;
                     this.rateInfo.currency = accounts[this.transaction.accountTo].currency;
-                } else if (type === 'spending') {
+                } else if (type === 'spending' || (type === 'debt' && !this.lend)) {
                     this.rateInfo.base = currency;
                     this.rateInfo.currency = accounts[this.transaction.accountFrom].currency;
                 } else if (type === 'transfer') {
@@ -206,13 +211,19 @@ transactionEdit = new Vue({
         save:function(){
             let transaction = Object.assign({}, this.transaction);
 
-            if (transaction.type === 'spending'){
+            if (transaction.type === 'spending' || (transaction.type === 'debt' && !this.lend)){
                 delete transaction.accountTo;
-            } else if (transaction.type === 'income'){
+            } else if (transaction.type === 'income' || (transaction.type === 'debt' && this.lend)){
                 delete transaction.accountFrom;
             } else if (transaction.type === 'transfer'){
                 delete transaction.category;
                 transaction.currency = this.accountsMap[transaction.accountTo].currency;
+            }
+            if (transaction.type === 'debt'){
+                transaction.lend = this.lend;
+            }
+            if (transaction.counterparty === null){
+                delete transaction.counterparty;
             }
 
             PostApi(this.api.save, transaction, function(a){
@@ -241,27 +252,18 @@ transactionEdit = new Vue({
             // if (this.transaction.type === 'transfer'){
             //     this.transaction.category = Object.assign({}, {id:-1, title:''});
             // }
-            if(type === 'income'){
+            if(type === 'income' || type === 'debt'){
                 this.transaction.accountTo = this.transaction.accountFrom;
-                this.transaction.accountFrom = -1;
-            } else if (type === 'spending'){
+            } else if (type === 'spending' || type === 'debt'){
                 this.transaction.accountFrom = this.transaction.accountTo;
-                this.transaction.accountTo = -1;
             } else if (type === 'transfer'){
                 if(this.transaction.type === 'income'){
                     let accounts = this.getAccountsWithout(this.transaction.accountTo);
                     this.transaction.accountFrom = accounts[0].id;
-                //     this.transaction.accountTo = ;
                 } else if (this.transaction.type === 'spending'){
                     let accounts = this.getAccountsWithout(this.transaction.accountFrom);
                     this.transaction.accountTo = accounts[0].id;
                 }
-
-                // if (accounts.length > 0){
-                //     this.transaction.accountTo = accounts[1];
-                // } else {
-                //     this.transaction.accountTo = accounts[0];
-                // }
             }
             this.transaction.type = type;
         },

@@ -26,7 +26,7 @@ public class AccountHandler extends SubscribeHandler {
     @Override
     public Object getItems(User user) {
         JSONArray array = new JSONArray();
-        for (Account account : accountDAO.getUserAccounts(user)){
+        for (Account account : accountDAO.getUserAccounts(user, true)){
             final JSONObject jsonObject = account.toJson();
             if (account.getType() == AccountType.deposit){
                 final DepositSettings depositSettings = accountDAO.getDepositSettings(account);

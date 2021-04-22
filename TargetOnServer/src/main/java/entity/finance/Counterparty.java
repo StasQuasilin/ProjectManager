@@ -1,30 +1,53 @@
 package entity.finance;
 
+import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
 
-import static constants.Keys.ID;
-import static constants.Keys.NAME;
-import static constants.Keys.OWNER;
+import javax.persistence.*;
 
+import static constants.Keys.*;
+
+@Entity
+@Table(name = "counterparty")
 public class Counterparty extends JsonAble {
     private int id;
-    private String name;
-    private User owner;
+    private Header header;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "_id")
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @OneToOne
+    @JoinColumn(name = "_header")
+    public Header getHeader() {
+        return header;
+    }
+    public void setHeader(Header header) {
+        this.header = header;
+    }
 
     @Override
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
-        jsonObject.put(NAME, name);
+        jsonObject.put(HEADER, header.getId());
+        jsonObject.put(NAME, header.getTitle());
+        jsonObject.put(TITLE, header.getTitle());
         return jsonObject;
     }
 
     @Override
     public JSONObject toJson() {
         JSONObject jsonObject = shortJson();
-        jsonObject.put(OWNER, owner.toJson());
+        jsonObject.put(OWNER, header.getOwner().toJson());
         return jsonObject;
     }
 }

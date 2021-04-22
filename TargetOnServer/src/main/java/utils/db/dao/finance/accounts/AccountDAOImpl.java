@@ -1,13 +1,12 @@
 package utils.db.dao.finance.accounts;
 
-import entity.finance.accounts.Account;
-import entity.finance.accounts.AccountMember;
-import entity.finance.accounts.CardSettings;
-import entity.finance.accounts.DepositSettings;
+import entity.finance.accounts.*;
+import entity.finance.category.Header;
 import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
+import utils.db.hibernate.DateContainers.NOT;
 import utils.db.hibernate.Hibernator;
 
 import java.util.HashMap;
@@ -20,9 +19,15 @@ public class AccountDAOImpl implements AccountDAO {
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
 
+    private final NOT NOT_DEBT = new NOT(AccountType.debt);
     @Override
-    public List<Account> getUserAccounts(User user) {
-        final List<Account> accounts = hibernator.query(Account.class, TITLE_OWNER, user);
+    public List<Account> getUserAccounts(User user, boolean all) {
+        final HashMap<String,Object> args = new HashMap<>();
+        args.put(HEADER_OWNER, user);
+        if(!all) {
+            args.put(TYPE, NOT_DEBT);
+        }
+        final List<Account> accounts = hibernator.query(Account.class, args);
         for (AccountMember member : hibernator.query(AccountMember.class, MEMBER, user)){
             accounts.add(member.getAccount());
         }
@@ -36,7 +41,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void saveAccount(Account account) {
-        hibernator.save(account.getTitle());
+        hibernator.save(account.getHeader());
         hibernator.save(account);
         updater.update(Subscribe.accounts, account, account.getOwner());
     }
@@ -76,7 +81,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<AccountMember> getMembers(Object account) {
-        return hibernator.query(AccountMember.class, "account", account);
+        return hibernator.query(AccountMember.class, ACCOUNT, account);
     }
 
     @Override
@@ -102,5 +107,10 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public void removeSettings(CardSettings cardSettings) {
         hibernator.remove(cardSettings);
+    }
+
+    @Override
+    public Account getAccountByHeader(Header header) {
+        return hibernator.get(Account.class, HEADER, header);
     }
 }

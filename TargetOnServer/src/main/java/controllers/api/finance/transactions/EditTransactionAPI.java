@@ -3,9 +3,10 @@ package controllers.api.finance.transactions;
 import constants.ApiLinks;
 import constants.Keys;
 import controllers.api.API;
+import entity.finance.Counterparty;
 import entity.finance.Currency;
-import entity.finance.UserCurrency;
 import entity.finance.accounts.Account;
+import entity.finance.accounts.AccountType;
 import entity.finance.category.Header;
 import entity.finance.transactions.Transaction;
 import entity.finance.transactions.TransactionDetail;
@@ -17,6 +18,7 @@ import utils.db.dao.daoService;
 import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.finance.currency.CurrencyDAO;
 import utils.db.dao.finance.transactions.TransactionDAO;
+import utils.finances.CounterpartyUtil;
 import utils.finances.TransactionUtil;
 import utils.json.JsonObject;
 import utils.savers.TransactionDetailUtil;
@@ -47,7 +49,7 @@ public class EditTransactionAPI extends API {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObject body = parseBody(req);
         if (body != null){
-//            System.out.println(body);
+            System.out.println(body);
             final User user = getUser(req);
             Transaction transaction = transactionDAO.getTransaction(body.get(ID));
             if (transaction == null){
@@ -75,6 +77,8 @@ public class EditTransactionAPI extends API {
             System.out.println(rate);
             transaction.setRate(rate);
 
+
+
             //Account from
             Account prevAccountFrom = null;
             if (body.containKey(ACCOUNT_FROM)){
@@ -95,8 +99,39 @@ public class EditTransactionAPI extends API {
                 transaction.setAccountTo(null);
             }
 
+            //Counterparty
+            CounterpartyUtil counterpartyUtil = new CounterpartyUtil();
+            if (body.containKey(COUNTERPARTY)){
+                final Counterparty counterparty = counterpartyUtil.getCounterparty(body.getJsonObject(COUNTERPARTY), user);
+                transaction.setCounterparty(counterparty);
+            } else {
+                transaction.setCounterparty(null);
+            }
+
+            if (type == TransactionType.debt){
+                final Counterparty counterparty = transaction.getCounterparty();
+                if(counterparty != null){
+                    final Header header = counterparty.getHeader();
+                    Account debtAccount = accountDAO.getAccountByHeader(header);
+                    if(debtAccount ==null){
+                        debtAccount = new Account();
+                        debtAccount.setHeader(header);
+                        debtAccount.setType(AccountType.debt);
+                        debtAccount.setCurrency(transaction.getCurrency().getName());
+//                        debtAccount.setShow(false);
+                        accountDAO.saveAccount(debtAccount);
+                    }
+                    final boolean lend = body.getBoolean(LEND);
+                    if (lend){
+                        transaction.setAccountFrom(debtAccount);
+                    } else {
+                        transaction.setAccountTo(debtAccount);
+                    }
+                }
+            }
+
             //When transaction is transfer - put transfer amount and remove details
-            if (type == TransactionType.transfer){
+            if (type == TransactionType.transfer || type == TransactionType.debt){
                 float amount = body.getFloat(AMOUNT);
                 transaction.setAmount(amount);
                 body.remove(DETAILS);
@@ -134,7 +169,7 @@ public class EditTransactionAPI extends API {
                 }
                 int others = list.size() - addedItems;
                 if (others > 0){
-                    builder.append(PLUS).append(others);
+                    builder.append("+").append(others);
                 }
                 final String description = builder.toString();
                 boolean saveIt = false;

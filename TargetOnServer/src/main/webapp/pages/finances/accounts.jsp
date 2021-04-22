@@ -16,26 +16,31 @@
     </div>
     <div class="full-size item-container">
         <div class="item-container-wrapper">
-            <div v-for="item in getItems()" class="account-item" :class="item.type">
-                <div class="account-title">
-                    {{item.title}}
-                    <span class="account-menu" style="padding: 4px; background-color: gray; border-radius: 8pt">
+            <div v-for="(items, key) in accountMap">
+                <div>
+                    {{key}}
+                </div>
+                <div v-for="item in items" class="account-item" :class="item.type" style="padding-left: 18pt">
+                    <div class="account-title">
+                        {{item.title}}
+                        <span class="account-menu" style="padding: 4px; background-color: gray; border-radius: 8pt">
                         <div class="text-button edit-button" v-on:click="edit(item.id)"></div>
 <%--                        <span class="text-button" v-on:click="accountExtract(item.id)">--%>
 <%--                            R--%>
 <%--                        </span>--%>
                     </span>
-                </div>
-                <div style="font-size: 10pt; color: gray; padding-left: 16px">
+                    </div>
+                    <div style="font-size: 10pt; color: gray; padding-left: 16px">
                     <span>
                         {{(item.sum + item.limit).toLocaleString()}}
                     </span>
-                    <span v-if="item.limit">
+                        <span v-if="item.limit">
                         ( {{item.sum.toLocaleString()}} + {{item.limit.toLocaleString()}} )
                     </span>
-                    <span>
+                        <span>
                         {{item.currency}}
                     </span>
+                    </div>
                 </div>
             </div>
         </div>

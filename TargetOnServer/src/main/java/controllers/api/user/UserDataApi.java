@@ -31,7 +31,7 @@ public class UserDataApi extends API {
         final User user = getUser(req);
         Answer answer = new SuccessAnswer();
         JSONArray accounts = new JSONArray();
-        for (Account account : accountDAO.getUserAccounts(user)){
+        for (Account account : accountDAO.getUserAccounts(user, false)){
             accounts.add(account.toJson());
         }
         answer.addAttribute(ACCOUNTS, accounts);

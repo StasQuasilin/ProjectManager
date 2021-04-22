@@ -1,6 +1,5 @@
 package entity.finance.accounts;
 
-import entity.Title;
 import entity.finance.category.Header;
 import entity.user.User;
 import org.json.simple.JSONObject;
@@ -15,7 +14,7 @@ import static constants.Keys.*;
 public class Account extends JsonAble{
     private int id;
     private AccountType type;
-    private Title title;
+    private Header header;
     private float sum;
     private String currency;
     private int limit;
@@ -42,11 +41,11 @@ public class Account extends JsonAble{
 
     @OneToOne
     @JoinColumn(name = "_title")
-    public Title getTitle() {
-        return title;
+    public Header getHeader() {
+        return header;
     }
-    public void setTitle(Title title) {
-        this.title = title;
+    public void setHeader(Header title) {
+        this.header = title;
     }
 
     @Basic
@@ -89,7 +88,7 @@ public class Account extends JsonAble{
     public JSONObject shortJson() {
         JSONObject jsonObject = getJsonObject();
         jsonObject.put(ID, id);
-        jsonObject.put(TITLE, title.getValue());
+        jsonObject.put(TITLE, header.getValue());
         jsonObject.put(SUM, sum);
         jsonObject.put(CURRENCY, currency);
         return jsonObject;
@@ -116,6 +115,6 @@ public class Account extends JsonAble{
 
     @Transient
     public User getOwner() {
-        return title.getOwner();
+        return header.getOwner();
     }
 }

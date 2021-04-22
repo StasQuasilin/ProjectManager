@@ -216,4 +216,5 @@ public interface Keys {
     String RANDOM_TASK = "randomTask";
 
 
+    String LEND = "lend";
 }

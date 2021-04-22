@@ -86,8 +86,8 @@ public class Transaction extends JsonAble {
     public Account getAccountFrom() {
         return accountFrom;
     }
-    public void setAccountFrom(Account account1) {
-        this.accountFrom = account1;
+    public void setAccountFrom(Account account) {
+        this.accountFrom = account;
     }
 
     @OneToOne
@@ -95,13 +95,12 @@ public class Transaction extends JsonAble {
     public Account getAccountTo() {
         return accountTo;
     }
-    public void setAccountTo(Account account2) {
-        this.accountTo = account2;
+    public void setAccountTo(Account account) {
+        this.accountTo = account;
     }
 
-//    @OneToOne
-//    @JoinColumn(name = "counterparty")
-    @Transient
+    @OneToOne
+    @JoinColumn(name = "_counterparty")
     public Counterparty getCounterparty() {
         return counterparty;
     }
