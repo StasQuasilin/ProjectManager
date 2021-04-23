@@ -35,9 +35,9 @@ public class daoService {
     private static final AccountDAO     accountDao;
     private static final CurrencyDAO    currencyDAO = new CurrencyDAOPImpl();
     private static final TransactionDAO transactionDAO = new TransactionDAOImpl();
-    private static final GoalDAO        goalDAO = new GoalDAOImpl();
     private static final CategoryDAO    categoryDAO;
-    private static final TaskDAO        taskDAO;
+    private static final TaskDAO        taskDAO = new TaskDAOImpl();
+    private static final GoalDAO        goalDAO = new GoalDAOImpl();
     private static final CalendarDAO    calendarDAO = new CalendarDAOImpl();
     private static final BuyListDAO     buyListDAO = new BuyListDAOImpl();
     private static final UserAccessDAO  userAccessDAO = new UserAccessDAOImpl();
@@ -50,7 +50,6 @@ public class daoService {
     static {
         accountDao = new AccountDAOImpl();
         categoryDAO = new CategoryDAOImpl();
-        taskDAO = new TaskDAOImpl();
     }
 
     public static AccountDAO getAccountDAO() {

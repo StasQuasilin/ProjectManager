@@ -16,7 +16,6 @@ import static constants.Keys.*;
 public class TaskDAOImpl implements TaskDAO {
 
     private final Hibernator hibernator = Hibernator.getInstance();
-    private final Updater updater = new Updater();
 
     @Override
     public List<Task> getTasksByParent(Object parent) {

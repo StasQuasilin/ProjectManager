@@ -5,7 +5,7 @@
     position: relative;
 }
 .filled{
-    background-color: #3788d8;
+    background-color: rgb(159, 194, 229);
 }
 .filled *{
     background-color: transparent;

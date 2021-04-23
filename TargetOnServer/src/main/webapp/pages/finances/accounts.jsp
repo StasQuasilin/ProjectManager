@@ -11,8 +11,10 @@
         </div>
     </div>
     <div>
-        <fmt:message key="total.balance"/>:{{totalBalance.toLocaleString()}}
-        <fmt:message key="personal.balance"/>:{{personalBalance.toLocaleString()}}
+        <fmt:message key="total.balance"/>:
+        <span v-for="(b, c) in totalBalance" v-if="b > 0">
+            {{b.toLocaleString()}} {{c}}
+        </span>
     </div>
     <div class="full-size item-container">
         <div class="item-container-wrapper">

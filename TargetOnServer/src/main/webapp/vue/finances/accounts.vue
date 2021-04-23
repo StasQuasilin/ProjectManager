@@ -3,12 +3,16 @@ accounts = new Vue({
     mixins:[list],
     computed:{
         totalBalance:function () {
-            let balance = 0;
+            let balance = {};
             let items = this.getItems();
             for (let i in items){
                 if (items.hasOwnProperty(i)){
-                    let item = items[i];
-                    balance += item.limit + item.sum;
+                    let item = items[i]; //account
+                    let currency = item.currency;
+                    if(!balance[currency]){
+                        balance[currency] = 0;
+                    }
+                    balance[currency] += item.sum;
                 }
             }
             return balance;

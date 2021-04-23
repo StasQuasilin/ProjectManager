@@ -99,7 +99,7 @@ goalTile = {
                         '{{goal.statistic.other.toLocaleString()}}' +
                     '</div>' +
                 '</div>' +
-                '<div v-if="goal.statistic.spend > 0">' +
+                '<div v-if="goal.statistic && goal.statistic.spend > 0">' +
                     '{{props.spendTime}}:' +
                         '<template v-if="timeLength.hours > 0">' +
                             ' {{prettyNumber(timeLength.hours)}} hr' +

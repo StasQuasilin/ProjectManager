@@ -1,9 +1,11 @@
 package utils.db.dao.goal;
 
+import entity.Title;
 import entity.finance.category.Header;
 import entity.goal.ActiveGoal;
 import entity.goal.Goal;
 import entity.goal.GoalMember;
+import entity.task.TaskStatistic;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -21,7 +23,7 @@ public class GoalDAOImpl implements GoalDAO{
 
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
-    private TaskDAO taskDAO = daoService.getTaskDAO();
+    private final TaskDAO taskDAO = daoService.getTaskDAO();
 
     @Override
     public List<Goal> getGoals(User user) {
@@ -32,7 +34,7 @@ public class GoalDAOImpl implements GoalDAO{
         List<Goal> goals = hibernator.query(Goal.class, params);
         params.clear();
         params.put(MEMBER, user);
-        //Goals where i am member
+        //Goals where i am a member
         for (GoalMember member : hibernator.query(GoalMember.class, params)){
             goals.add(member.getGoal());
         }

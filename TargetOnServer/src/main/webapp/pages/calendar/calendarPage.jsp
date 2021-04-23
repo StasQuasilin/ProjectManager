@@ -46,11 +46,11 @@
     <div class="panel-header">
       <div class="panel-header-content">
         <span class="text-button" v-on:click="switchDate(-1)">
-          <
+          &#9204;
         </span>
         <date-picker :date="date" :props="props"></date-picker>
         <span class="text-button" v-on:click="switchDate(1)">
-          >
+          &#9205;
         </span>
         <span class="text-button" v-if="new Date(date).toLocaleDateString() !== new Date().toLocaleDateString()"
               v-on:click="resetDate()" style="position: absolute; right: 0">
@@ -63,26 +63,32 @@
     </div>
     <div class="panel-content">
       <div class="item-container">
-        <div v-for="item in getCalendarItems()" v-on:click="edit(item.id)" style="display: flex" :style="{'min-height': (item.length)+ 'pt'}"
+        <div v-for="item in getCalendarItems()" v-on:click="edit(item.id)" style="display: flex; border: dotted white 1pt" :style="{'min-height': (item.length)+ 'pt'}"
              class="calendar-item" :class="{'filled' : item.title}">
+<%--          Date-Time--%>
           <div style="padding-right: 5pt">
             {{item.time.substring(0, 5)}}
             <template v-if="item.length">
               +{{item.length}} min
             </template>
           </div>
+<%--  Path--%>
           <div>
             <div v-if="item.parent" style="font-size: 10pt">
-            <span v-for="p in item.parent.path">
-              {{p.title}} /
-            </span>
+              <span v-for="p in item.parent.path">
+                {{p.title}} /
+              </span>
               <span>
-              {{item.parent.title}}
-            </span>
+                {{item.parent.title}}
+              </span>
             </div>
             <div v-if="item.title">
               {{item.title}}
             </div>
+          </div>
+<%--  Menu--%>
+          <div style="float: right">
+            !!!!
           </div>
 <%--          <div style="font-size: 10px">--%>
 <%--            <div v-for="(v, k) in item">--%>
