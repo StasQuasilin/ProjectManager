@@ -12,7 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-import static constants.Keys.USER;
+import static constants.Keys.*;
+
 /**
  * Created by DELL on 05.07.2020.
  */
@@ -41,6 +42,15 @@ public abstract class Servlet extends HttpServlet {
             }
         } else {
             return (User) attribute;
+        }
+        return null;
+    }
+
+    public String getLanguage(HttpServletRequest req){
+        final HttpSession session = req.getSession();
+        final Object attribute = session.getAttribute(LOCALE);
+        if(attribute != null){
+            return attribute.toString();
         }
         return null;
     }

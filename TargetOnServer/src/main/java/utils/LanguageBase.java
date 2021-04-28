@@ -15,8 +15,16 @@ public class LanguageBase{
         return base;
     }
 
-    public String get(String key){
-        return get(DEFAULT_LANGUAGE, key);
+    public String getOrDefault(String key){
+        return getOrDefault(DEFAULT_LANGUAGE, key);
+    }
+    public String getOrDefault(String language, String key){
+        final String value = get(language, key);
+         if(value != null) {
+            return value;
+        } else {
+             return "???" + key + "???";
+         }
     }
     public String get(String language, String key){
         if (language == null){
@@ -25,10 +33,10 @@ public class LanguageBase{
         ResourceBundle bundle = ResourceBundle.getBundle(BASE_NAME + language);
         if (bundle.containsKey(key)){
             return bundle.getString(key);
-        } else {
-            return "???" + key + "???";
         }
+        return null;
     }
+
 
     public String getLocale(String lang) {
         final HashSet<String> strings = new HashSet<>(Arrays.asList(LANGUAGES));

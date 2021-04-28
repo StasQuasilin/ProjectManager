@@ -1,19 +1,16 @@
 package filters;
 
 import constants.Keys;
-import entity.user.User;
 import utils.CalendarReplaceUtil;
+import utils.categories.SystemCategoryUtil;
 import utils.db.hibernate.HibernateSessionFactory;
-import utils.db.hibernate.Hibernator;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static constants.Keys.*;
@@ -22,10 +19,10 @@ import static constants.Keys.*;
 public class ContextFilter implements Filter {
 
     private static long now;
-
+    private final SystemCategoryUtil systemCategoryUtil = new SystemCategoryUtil();
     @Override
     public void init(FilterConfig filterConfig) {
-        Hibernator instance = Hibernator.getInstance();
+        systemCategoryUtil.checkCategories();
         CalendarReplaceUtil.init();
         now = Timestamp.valueOf(LocalDateTime.now()).getTime();
     }

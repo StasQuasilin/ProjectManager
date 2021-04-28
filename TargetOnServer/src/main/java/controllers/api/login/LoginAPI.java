@@ -14,8 +14,6 @@ import utils.answers.SuccessAnswer;
 import utils.db.dao.access.UserAccessDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.user.UserDAO;
-import utils.db.dao.user.UserDAOImpl;
-import utils.json.JsonAble;
 import utils.json.JsonObject;
 
 import javax.servlet.ServletException;
@@ -44,7 +42,7 @@ public class LoginAPI extends API {
 
             Answer answer;
             if (!validator.emailValid(String.valueOf(email))){
-                answer = new ErrorAnswer(languageBase.get(language, "email.invalid"));
+                answer = new ErrorAnswer(languageBase.getOrDefault(language, "email.invalid"));
             } else {
                 final UserAccess userAccess = userAccessDAO.getUserAccess(email);
 
@@ -74,10 +72,10 @@ public class LoginAPI extends API {
                         answer.addAttribute(REDIRECT, UrlLinks.HOME);
                         answer.addAttribute(TOKEN, user.getId());
                     } else {
-                        answer = new ErrorAnswer(languageBase.get(language, "wrong.password"));
+                        answer = new ErrorAnswer(languageBase.getOrDefault(language, "wrong.password"));
                     }
                 } else {
-                    answer = new ErrorAnswer(languageBase.get(language, "user.not.found"));
+                    answer = new ErrorAnswer(languageBase.getOrDefault(language, "user.not.found"));
                 }
             }
 

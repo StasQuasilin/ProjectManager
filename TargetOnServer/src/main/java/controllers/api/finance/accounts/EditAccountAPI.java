@@ -39,6 +39,7 @@ public class EditAccountAPI extends API {
         if (body != null){
             System.out.println(body);
             User user = getUser(req);
+
             Account account = accountDAO.getAccount(body.get(ID));
             boolean newAccount = false;
 
@@ -92,7 +93,6 @@ public class EditAccountAPI extends API {
                     accountDAO.removeSettings(depositSettings);
                 }
             }
-
             CardSettings cardSettings = accountDAO.getCardSettings(account);
             if (type == AccountType.card){
                 if (cardSettings == null){
@@ -109,7 +109,7 @@ public class EditAccountAPI extends API {
 
             final float sum = body.getFloat(SUM);
             if (account.getSum() != sum){
-                accountUtil.updateSum(account, sum, newAccount);
+                accountUtil.updateSum(account, sum, newAccount, getLanguage(req));
             }
 
             write(resp, SUCCESS_ANSWER);

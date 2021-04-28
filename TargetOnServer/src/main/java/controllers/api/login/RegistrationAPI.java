@@ -45,7 +45,7 @@ public class RegistrationAPI extends API {
 
             final Object email = body.get(EMAIL);
             if (!validEmail(String.valueOf(email))){
-                answer = new ErrorAnswer(languageBase.get(locale, "email.invalid"));
+                answer = new ErrorAnswer(languageBase.getOrDefault(locale, "email.invalid"));
                 errors.put(EMAIL, true);
             } else {
                 UserAccess userAccess = userAccessDAO.getUserAccess(email);
@@ -55,7 +55,7 @@ public class RegistrationAPI extends API {
                     userAccess.setLogin(String.valueOf(email));
                     final String password = body.getString(PASSWORD);
                     if (!validator.passwordValid(password)){
-                        answer = new ErrorAnswer(languageBase.get(locale, "wrong.password"));
+                        answer = new ErrorAnswer(languageBase.getOrDefault(locale, "wrong.password"));
                     } else {
                         userAccess.setPasswordHash(password.hashCode());
                         User user = new User();
@@ -76,14 +76,14 @@ public class RegistrationAPI extends API {
                             answer = new SuccessAnswer();
                             answer.addAttribute(REDIRECT, UrlLinks.LOGIN);
                         } else {
-                            answer = new ErrorAnswer(languageBase.get(locale, "wrong.name"));
+                            answer = new ErrorAnswer(languageBase.getOrDefault(locale, "wrong.name"));
                             errors.put(SURNAME, true);
                             errors.put(FORENAME, true);
                         }
                     }
 
                 } else {
-                    answer = new ErrorAnswer(languageBase.get(locale, "email.already.use"));
+                    answer = new ErrorAnswer(languageBase.getOrDefault(locale, "email.already.use"));
                     errors.put(EMAIL, true);
                 }
             }

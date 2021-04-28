@@ -19,6 +19,7 @@ import utils.db.dao.finance.accounts.AccountDAO;
 import utils.db.dao.finance.currency.CurrencyDAO;
 import utils.db.dao.finance.transactions.TransactionDAO;
 import utils.finances.CounterpartyUtil;
+import utils.finances.TransactionNameUtil;
 import utils.finances.TransactionUtil;
 import utils.json.JsonObject;
 import utils.savers.TransactionDetailUtil;
@@ -36,7 +37,7 @@ import static constants.Keys.*;
 @WebServlet(ApiLinks.TRANSACTION_SAVE)
 public class EditTransactionAPI extends API {
 
-    private static final int TITLE_LIMIT = 30;
+
     private final AccountDAO accountDAO = daoService.getAccountDAO();
     private final TransactionSaver transactionSaver = new TransactionSaver();
     private final TransactionDAO transactionDAO = daoService.getTransactionDAO();
@@ -44,6 +45,7 @@ public class EditTransactionAPI extends API {
     private final UserSystemCategoryUtil uscu = new UserSystemCategoryUtil();
     private final TransactionDetailUtil tdu = new TransactionDetailUtil();
     private final CurrencyDAO currencyDAO = daoService.getCurrencyDAO();
+    private final TransactionNameUtil transactionNameUtil = new TransactionNameUtil();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -148,40 +150,8 @@ public class EditTransactionAPI extends API {
                 //Save details here. Get list for build transaction title and coast
                 final LinkedList<TransactionDetail> list = tdu.saveDetails(transaction, (JSONArray) body.get(DETAILS), user);
 
-                StringBuilder builder = new StringBuilder();
-                int totalCost = 0;
-                int addedItems = 0;
+                boolean saveIt = transactionNameUtil.updateTransactionName(transaction, list, headers);
 
-                for (TransactionDetail detail : list){
-                    final Header header = detail.getHeader();
-                    if(!headers.contains(header)){
-                        headers.add(header);
-                    }
-                    final String title = header.getTitle();
-                    if (builder.length() + title.length() < TITLE_LIMIT){
-                        if (builder.length() > 0){
-                            builder.append(Keys.COMMA).append(SPACE);
-                        }
-                        builder.append(title);
-                        addedItems++;
-                    }
-                    totalCost += detail.getPrice() * detail.getAmount();
-                }
-                int others = list.size() - addedItems;
-                if (others > 0){
-                    builder.append("+").append(others);
-                }
-                final String description = builder.toString();
-                boolean saveIt = false;
-                if (transaction.getDescription() == null || !transaction.getDescription().equals(description)){
-                    transaction.setDescription(description);
-                    saveIt = true;
-                }
-
-                if (transaction.getAmount() != totalCost){
-                    transaction.setAmount(totalCost);
-                    saveIt = true;
-                }
                 if(saveIt){
                     transactionSaver.save(transaction);
                 }

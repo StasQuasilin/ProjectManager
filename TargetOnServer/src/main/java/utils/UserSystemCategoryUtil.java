@@ -22,21 +22,21 @@ public class UserSystemCategoryUtil {
         }
 
         if (userSystemCategory.getCreateAccount() == null){
-            Category create = createCategory(languageBase.get("transaction.account.create"), owner);
+            Category create = createCategory(languageBase.getOrDefault("transaction.account.create"), owner);
             hibernator.save(create);
             userSystemCategory.setCreateAccount(create);
             saveIt = true;
         }
 
         if (userSystemCategory.getAccountCorrection() == null){
-            Category correction = createCategory(languageBase.get("transaction.account.correction"), owner);
+            Category correction = createCategory(languageBase.getOrDefault("transaction.account.correction"), owner);
             hibernator.save(correction);
             userSystemCategory.setAccountCorrection(correction);
             saveIt = true;
         }
 
         if (userSystemCategory.getTransferTransaction() == null){
-            Category category = createCategory(languageBase.get("transaction.transfer"), owner);
+            Category category = createCategory(languageBase.getOrDefault("transaction.transfer"), owner);
             hibernator.save(category);
             userSystemCategory.setTransferTransaction(category);
             saveIt = true;

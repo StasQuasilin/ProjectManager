@@ -217,4 +217,5 @@ public interface Keys {
 
 
     String LEND = "lend";
+    String DOT = ".";
 }

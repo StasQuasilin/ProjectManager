@@ -52,6 +52,7 @@
         <mapping class="entity.communication.Notification"/>
         <mapping class="entity.ExternalService"/>
         <mapping class="entity.finance.Counterparty"/>
+        <mapping class="entity.finance.category.SystemCategory"/>
 
     </session-factory>
 </hibernate-configuration>
