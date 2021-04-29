@@ -117,6 +117,7 @@ public interface Keys {
     String PLUS = "plus";
     String MINUS = "minus";
     String SPEND = "spend";
+    String COST = "cost";
     String ACTIVE = "active";
     String PROGRESSING = "progressing";
     String REMOVE = "remove";

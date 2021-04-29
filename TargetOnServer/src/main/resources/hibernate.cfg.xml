@@ -53,6 +53,8 @@
         <mapping class="entity.ExternalService"/>
         <mapping class="entity.finance.Counterparty"/>
         <mapping class="entity.finance.category.SystemCategory"/>
+        <mapping class="entity.finance.category.TitleCost"/>
+        <mapping class="entity.task.TaskFile"/>
 
     </session-factory>
 </hibernate-configuration>

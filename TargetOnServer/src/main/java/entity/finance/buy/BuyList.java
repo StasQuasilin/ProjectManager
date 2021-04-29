@@ -1,6 +1,7 @@
 package entity.finance.buy;
 
 import entity.Title;
+import entity.finance.category.TitleCost;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -10,15 +11,14 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-import static constants.Keys.ID;
-import static constants.Keys.ITEMS;
-import static constants.Keys.TITLE;
+import static constants.Keys.*;
 
 @Entity
 @Table(name = "buy_list")
 public class BuyList extends JsonAble {
     private int id;
     private Title title;
+    private TitleCost cost;
     private User owner;
     private Set<BuyListItem> itemSet = new HashSet<>();
 
@@ -38,6 +38,14 @@ public class BuyList extends JsonAble {
     }
     public void setTitle(Title title) {
         this.title = title;
+    }
+
+    @Transient
+    public TitleCost getCost() {
+        return cost;
+    }
+    public void setCost(TitleCost cost) {
+        this.cost = cost;
     }
 
     @OneToOne
@@ -75,6 +83,9 @@ public class BuyList extends JsonAble {
     @Override
     public JSONObject toJson() {
         final JSONObject json = shortJson();
+        if(cost != null){
+            json.put(COST, cost.toJson());
+        }
         json.put(ITEMS, items());
         return json;
     }

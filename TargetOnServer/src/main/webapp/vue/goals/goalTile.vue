@@ -112,9 +112,11 @@ goalTile = {
                         '</template>' +
                 '</div>' +
                 '<div style="font-size: 8pt; color: gray">' +
+                    '{{goal.cost}}' +
+                '</div>' +
+                '<div style="font-size: 8pt; color: gray">' +
                     '{{goal.statistic}}' +
                 '</div>' +
-
             '</div>' +
         '</div>' +
     '</div>'

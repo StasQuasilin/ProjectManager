@@ -51,6 +51,11 @@ public class GoalDAOImpl implements GoalDAO{
         hibernator.save(goal.getTitle());
         hibernator.save(goal);
         goal.setStatistic(taskDAO.getStatistic(goal.getTitle().getId()));
+        update(goal);
+    }
+
+    @Override
+    public void update(Goal goal){
         updater.update(Subscribe.goal, goal, goal.getOwner());
     }
 

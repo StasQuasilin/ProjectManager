@@ -1,8 +1,10 @@
 package entity.goal;
 
 import entity.Title;
+import entity.finance.category.TitleCost;
 import entity.task.TaskStatistic;
 import entity.user.User;
+import org.hibernate.annotations.Where;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import utils.json.JsonAble;
@@ -18,6 +20,7 @@ import static constants.Keys.*;
 public class Goal extends JsonAble {
     private int id;
     private Title title;
+    private TitleCost cost;
     private int buyList;
     private Date begin;
     private Date end;
@@ -44,6 +47,14 @@ public class Goal extends JsonAble {
     }
     public void setTitle(Title header) {
         this.title = header;
+    }
+
+    @Transient
+    public TitleCost getCost() {
+        return cost;
+    }
+    public void setCost(TitleCost cost) {
+        this.cost = cost;
     }
 
     @Basic
@@ -124,6 +135,9 @@ public class Goal extends JsonAble {
         jsonObject.put(TITLE, title.getValue());
         if(statistic != null){
             jsonObject.put(STATISTIC, statistic.toJson());
+        }
+        if(cost != null){
+            jsonObject.put(COST, cost.toJson());
         }
         jsonObject.put(ACTIVE, active);
         jsonObject.put(MEMBERS, members());

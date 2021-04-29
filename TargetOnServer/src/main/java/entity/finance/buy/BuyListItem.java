@@ -126,4 +126,9 @@ public class BuyListItem extends JsonAble {
         json.put(DONE, done);
         return json;
     }
+
+    @Transient
+    public float getCost() {
+        return price * count;
+    }
 }

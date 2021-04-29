@@ -7,6 +7,7 @@ import entity.finance.buy.BuyList;
 import entity.finance.buy.BuyListItem;
 import entity.finance.category.Header;
 import entity.finance.category.HeaderType;
+import entity.finance.category.TitleCost;
 import entity.user.User;
 import org.json.simple.JSONArray;
 import subscribe.Subscribe;
@@ -14,6 +15,7 @@ import utils.Updater;
 import utils.db.dao.TitleDAO;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.buy.BuyListDAO;
+import utils.finances.TitleCostUtil;
 import utils.json.JsonObject;
 
 import javax.servlet.ServletException;
@@ -26,11 +28,12 @@ import java.util.HashMap;
 import static constants.Keys.*;
 
 @WebServlet(ApiLinks.BUY_LIST_EDIT)
-public class BuyListEditAPI extends API {
+public class EditBuyListAPI extends API {
 
     private final BuyListDAO buyListDAO = daoService.getBuyListDAO();
     private final TitleDAO titleDAO = daoService.getTitleDAO();
     private final Updater updater = new Updater();
+    private final TitleCostUtil titleCostUtil = new TitleCostUtil();
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -61,6 +64,7 @@ public class BuyListEditAPI extends API {
             }
             list.clearItems();
             final Header parent = titleDAO.getHeader(title.getId());
+            float cost = 0;
             for (Object o : (JSONArray)body.get(ITEMS)){
                 JsonObject item = new JsonObject(o);
                 BuyListItem remove = items.remove(item.getInt(ID));
@@ -82,9 +86,13 @@ public class BuyListEditAPI extends API {
                 remove.setCount(item.getFloat(COUNT));
                 remove.setPrice(item.getFloat(PRICE));
                 remove.setDate(item.getDate(DATE));
+                cost += remove.getCost();
                 list.addItem(remove);
             }
             buyListDAO.saveItems(list.getItemSet());
+
+            final TitleCost titleCost = titleCostUtil.updateCost(list.getTitle(), cost);
+            list.setCost(titleCost);
             updater.update(Subscribe.buy, list, list.getOwner());
             buyListDAO.removeItems(items.values());
             write(resp, SUCCESS_ANSWER);

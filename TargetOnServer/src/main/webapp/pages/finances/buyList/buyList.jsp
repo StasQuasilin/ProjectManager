@@ -20,6 +20,9 @@
                     {{item.title}}
                     <span class="text-button edit-button"></span>
                 </span>
+                <div v-if="item.cost">
+                    {{item.cost.cost.toLocaleString()}} / {{item.cost.spend.toLocaleString()}}
+                </div>
                 <div style="padding-left: 8px; font-size: 10pt">
                     <div v-for="i in item.items" style="display: flex; flex-direction: row">
                         <div style="flex: 0 0 auto">
