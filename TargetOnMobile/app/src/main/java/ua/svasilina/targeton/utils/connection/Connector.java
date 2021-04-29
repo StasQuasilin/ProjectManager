@@ -47,7 +47,6 @@ public class Connector {
         if (userToken == null){
             userToken = UserAccessStorage.getUserAccess(context);
         }
-        System.out.println(jsonObject);
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.POST,
                 address,

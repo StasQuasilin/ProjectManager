@@ -32,6 +32,11 @@ treeItem = {
                 }
             }
         },
+        fileList:function(){
+            if (this.props.fileList);{
+                loadModal(this.props.fileList, {task:this.item.id});
+            }
+        },
         runTimer:function(){
             PostApi(this.props.runTimer, {task:this.item.id});
         },
@@ -159,6 +164,9 @@ treeItem = {
                     '<div class="tree-menu">' +
                         '<span class="tree-menu-button" v-on:click="addItem()">' +
                             '&#43;' +
+                        '</span>' +
+                        '<span class="tree-menu-button" v-on:click="fileList()">' +
+                            '&#128193;' +
                         '</span>' +
                         '<template v-if="item.status !== \'done\'" >' +
                             '<span class="tree-menu-button" v-on:click="runTimer()" v-on:click.right="taskTimer()">' +

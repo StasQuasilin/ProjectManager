@@ -1,11 +1,13 @@
 package ua.svasilina.targeton.entity.transactions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.entity.Category;
@@ -15,6 +17,7 @@ import ua.svasilina.targeton.utils.constants.Keys;
 import ua.svasilina.targeton.utils.json.JsonAble;
 
 import static ua.svasilina.targeton.utils.constants.Keys.DESCRIPTION;
+import static ua.svasilina.targeton.utils.constants.Keys.DETAILS;
 import static ua.svasilina.targeton.utils.constants.Keys.TYPE;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_FROM;
 import static ua.svasilina.targeton.utils.constants.Keys.ACCOUNT_TO;
@@ -30,6 +33,7 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
     private int id;
     private Calendar date;
     private String description;
+    private LinkedList<TransactionDetail> details = new LinkedList<>();
     private double amount;
     private double rate;
     private String currency;
@@ -172,5 +176,9 @@ public class Transaction extends JsonAble implements Comparable<Transaction>{
         }
 
         type = TransactionType.valueOf(json.getString(TYPE));
+    }
+
+    public LinkedList<TransactionDetail> getDetails() {
+        return details;
     }
 }

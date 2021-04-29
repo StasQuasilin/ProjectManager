@@ -33,4 +33,5 @@ public interface UrlLinks {
     String BUY_LIST_REMOVE = "/buy/list/remove" + SUFFIX;
     String DISCUSSION_EDIT = "/discussion/edit" + SUFFIX;
     String RANDOM_TASK = "/tree/random" + SUFFIX;
+    String TASK_FILE_LIST = "/task/file/list" + SUFFIX;
 }

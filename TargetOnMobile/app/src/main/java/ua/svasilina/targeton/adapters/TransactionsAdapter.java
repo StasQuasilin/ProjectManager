@@ -68,15 +68,21 @@ public class TransactionsAdapter extends ArrayAdapter<Transaction> {
             } else {
                 dateView.setVisibility(GONE);
             }
-
+            final TransactionType type = item.getType();
             final TextView transactionID = view.findViewById(R.id.transactionTitle);
-            final String title = item.getTitle();
-            if (title.isEmpty()){
-                transactionID.setTextColor(Color.GRAY);
-                transactionID.setText(context.getResources().getString(R.string.without_category));
+
+            if(type ==  TransactionType.income || type == TransactionType.spending) {
+                transactionID.setVisibility(View.VISIBLE);
+                final String title = item.getTitle();
+                if (title.isEmpty()) {
+                    transactionID.setTextColor(Color.GRAY);
+                    transactionID.setText(context.getResources().getString(R.string.without_category));
+                } else {
+                    transactionID.setTextColor(Color.BLACK);
+                    transactionID.setText(title);
+                }
             } else {
-                transactionID.setTextColor(Color.BLACK);
-                transactionID.setText(title);
+                transactionID.setVisibility(GONE);
             }
 
 

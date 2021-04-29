@@ -98,6 +98,10 @@ public class Account extends JsonAble {
     @Override
     public HashMap<String, Object> buildHashMap() {
         final HashMap<String, Object> map = new HashMap<>();
+        map.put(ID, id);
+        map.put(TITLE, title);
+        map.put(AMOUNT, amount);
+        map.put(CURRENCY, currency);
         return map;
     }
 
@@ -108,6 +112,9 @@ public class Account extends JsonAble {
         }
         if (json.has(SUM)){
             amount = json.getDouble(SUM);
+        } else
+        if(json.has(AMOUNT)){
+            amount = json.getDouble(AMOUNT);
         }
         if (json.has(Keys.LIMIT)){
             limit = json.getInt(LIMIT);

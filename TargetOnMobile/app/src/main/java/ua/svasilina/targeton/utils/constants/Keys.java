@@ -61,4 +61,8 @@ public interface Keys {
     String DONE_IF = "doneIf";
     String EMPTY = "";
     String DESCRIPTION = "description";
+    String DETAILS = "details";
+    String COUNT = "count";
+    String PRICE = "price";
+    String TRANSACTION = "transaction";
 }

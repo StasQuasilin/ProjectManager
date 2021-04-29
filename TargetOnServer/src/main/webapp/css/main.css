@@ -49,6 +49,9 @@ input[type=checkbox], input[type=radio]{
 }
 .text-button{
     color: #41b883;
+    font-size: 10pt;
+    border-bottom: dashed #41b883 1px;
+    padding: 0 2pt;
 }
 .text-button:hover{
     text-shadow: 0 0 6px #282828;

@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 openPage(Pages.tree, -1);
                 break;
             case R.id.transactions:
-                setView(transactionFragment = new TransactionFragment(this));
+                openPage(Pages.transactions, -1);
                 return true;
             case R.id.accounts:
                 setView(new AccountsFragment(this));
@@ -98,7 +98,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             showLogin();
         } else {
             toolbar.setTitle(fragment.getTitle());
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).commitNow();
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, fragment)
+                    .setReorderingAllowed(true)
+                    .commitNow();
         }
     }
 
@@ -156,8 +159,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 case tree:
                     setView(new TreeFragment(this, attr));
                     break;
+                case transactions:
+                    setView(new TransactionFragment(this));
+                    break;
                 case transactionEdit:
-                    setView(new TransactionEditFragment(this, attr));
+                    setView(new TransactionEditFragment(this, attr, getSupportFragmentManager()));
                     break;
             }
         }

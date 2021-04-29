@@ -219,4 +219,7 @@ public interface Keys {
 
     String LEND = "lend";
     String DOT = ".";
+    String FILE_LIST = "fileList";
+    String FILES = "files";
+    String FILE_API = "fileApi";
 }

@@ -24,6 +24,7 @@
   transactionEdit.detailProps.findCategory = '${findCategory}';
   transactionEdit.counterpartyProps.findCategory = '${findCounterparty}';
   transactionEdit.locale = '${locale}';
+
   <c:forEach items="${types}" var="type">
   transactionEdit.types.push({
     id:'${type}',

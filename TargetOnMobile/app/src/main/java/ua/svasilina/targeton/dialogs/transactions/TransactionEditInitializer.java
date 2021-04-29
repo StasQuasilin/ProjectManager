@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -17,12 +18,14 @@ import org.json.JSONObject;
 import java.util.Calendar;
 
 import ua.svasilina.targeton.R;
+import ua.svasilina.targeton.adapters.SimpleListAdapter;
 import ua.svasilina.targeton.dialogs.ListBuilder;
 import ua.svasilina.targeton.dialogs.SearchDialog;
 import ua.svasilina.targeton.dialogs.common.DateDialog;
 import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.entity.Category;
 import ua.svasilina.targeton.entity.transactions.Transaction;
+import ua.svasilina.targeton.entity.transactions.TransactionDetail;
 import ua.svasilina.targeton.entity.transactions.TransactionType;
 import ua.svasilina.targeton.entity.transactions.UserData;
 import ua.svasilina.targeton.utils.NameUtil;
@@ -46,6 +49,7 @@ public class TransactionEditInitializer {
     private Spinner currencies;
     private View rateGroup;
     private EditText rate;
+    private ListView detailList;
 
     private final Context context;
     private final LayoutInflater inflater;
@@ -74,15 +78,36 @@ public class TransactionEditInitializer {
         rateGroup = view.findViewById(R.id.rateGroup);
         amount = view.findViewById(R.id.transactionAmount);
         rate = view.findViewById(R.id.transactionRate);
+        detailList = view.findViewById(R.id.detailList);
 
-        initTypeButton();
-        initDateButton();
-        initTransactionCategory();
-        initAccountFrom();
-        initAccountTo();
-        initTransactionAmount();
-        initCurrency();
-        showRate();
+        if(transaction != null) {
+            initTypeButton();
+            initDateButton();
+            initTransactionCategory();
+            initAccountFrom();
+            initAccountTo();
+            initTransactionAmount();
+            initCurrency();
+            initDetailList();
+            showRate();
+        }
+    }
+
+    private void initDetailList() {
+        SimpleListAdapter<TransactionDetail> detailAdapter = new SimpleListAdapter<>(context, R.layout.transaction_detail_view, inflater, new ListBuilder<TransactionDetail>() {
+            @Override
+            public void build(TransactionDetail item, View view) {
+                final TextView detailTitleView = view.findViewById(R.id.detailTitle);
+
+                final TextView amount = view.findViewById(R.id.detailCount);
+                amount.setText(String.valueOf(item.getCount()));
+
+                final TextView price = view.findViewById(R.id.price);
+                price.setText(String.valueOf(item.getPrice()));
+            }
+        }, null);
+        detailAdapter.addAll(transaction.getDetails());
+        detailList.setAdapter(detailAdapter);
     }
 
     private void initTransactionAmount() {
@@ -128,10 +153,8 @@ public class TransactionEditInitializer {
         boolean show;
 
         if (type == TransactionType.spending){
-            System.out.println(currency + ":" + accountFrom.getCurrency());
             show = !currency.equals(accountFrom.getCurrency());
         } else if (type == TransactionType.income){
-            System.out.println(currency + ":" + accountTo.getCurrency());
             show = !currency.equals(accountTo.getCurrency());
         } else {
             show = !accountFrom.getCurrency().equals(accountTo.getCurrency());
@@ -224,18 +247,23 @@ public class TransactionEditInitializer {
 
     private void updateDialogView() {
         final TransactionType type = transaction.getType();
-        if (type == TransactionType.spending){
+        if (type == TransactionType.spending || type == TransactionType.income){
             categoryGroup.setVisibility(View.VISIBLE);
+            detailList.setVisibility(View.VISIBLE);
+            amount.setEnabled(false);
+        }
+
+        if (type == TransactionType.spending){
             accountFromGroup.setVisibility(View.VISIBLE);
             accountToGroup.setVisibility(View.GONE);
         } else if (type == TransactionType.income){
-            categoryGroup.setVisibility(View.VISIBLE);
             accountFromGroup.setVisibility(View.GONE);
             accountToGroup.setVisibility(View.VISIBLE);
         } else if (type == TransactionType.transfer){
             categoryGroup.setVisibility(View.GONE);
             accountFromGroup.setVisibility(View.VISIBLE);
             accountToGroup.setVisibility(View.VISIBLE);
+            detailList.setVisibility(View.GONE);
         }
     }
 

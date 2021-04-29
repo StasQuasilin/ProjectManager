@@ -31,6 +31,7 @@ import ua.svasilina.targeton.ui.main.Pages;
 import ua.svasilina.targeton.utils.connection.Connector;
 import ua.svasilina.targeton.utils.constants.API;
 import ua.svasilina.targeton.utils.constants.Keys;
+import ua.svasilina.targeton.utils.storage.StorageUtil;
 import ua.svasilina.targeton.utils.storage.UserAccessStorage;
 import ua.svasilina.targeton.utils.storage.UserDataStorage;
 import ua.svasilina.targeton.utils.subscribes.DataHandler;
@@ -160,12 +161,15 @@ public class TransactionFragment extends ApplicationPage {
             }
         });
     }
-
+    final StorageUtil storageUtil = new StorageUtil();
     private void editTransaction(Transaction transaction, UserData userData) {
 
 //        final TransactionEditDialog ted = new TransactionEditDialog(getContext(), transaction, getLayoutInflater(), userData);
 //        ted.setCancelable(false);
 //        ted.show(getParentFragmentManager(), "Transaction Edit");
+        final int id = transaction.getId();
+        storageUtil.save("transaction_" + id, transaction.buildJson().toString(), context);
+        storageUtil.save("user_data_" + id, userData.buildJson().toString(), context);
         mainActivity.openPage(Pages.transactionEdit, transaction.getId());
     }
 

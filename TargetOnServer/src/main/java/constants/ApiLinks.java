@@ -45,4 +45,6 @@ public interface ApiLinks {
     String EXCHANGE_RATE = API + "/exchange/rate";
     String RANDOM_TASK = API + "/random/task";
     String SAVE_RANDOM_TASK = API + "/save/random/task";
+    String SAVE_FILE_API = API + "/task/files";
+    String DATA = "/data";
 }
