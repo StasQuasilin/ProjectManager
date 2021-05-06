@@ -17,7 +17,6 @@ public class BuyListDAOImpl implements BuyListDAO {
 
     private final Hibernator hibernator = Hibernator.getInstance();
 
-
     @Override
     public List<BuyList> getUserList(User user) {
         return hibernator.query(BuyList.class, TITLE_OWNER, user);
@@ -37,10 +36,19 @@ public class BuyListDAOImpl implements BuyListDAO {
     @Override
     public void saveItems(Set<BuyListItem> itemSet) {
         for (BuyListItem item : itemSet){
-            hibernator.save(item.getHeader());
-            hibernator.save(item);
+            saveItem(item);
         }
+    }
 
+    @Override
+    public void saveItem(BuyListItem item) {
+        hibernator.save(item.getHeader());
+        hibernator.save(item);
+    }
+
+    @Override
+    public BuyListItem getItem(Object id) {
+        return hibernator.get(BuyListItem.class, ID, id);
     }
 
     @Override

@@ -23,6 +23,8 @@ import ua.svasilina.targeton.ui.main.CalendarFragment;
 import ua.svasilina.targeton.ui.main.GoalsFragment;
 import ua.svasilina.targeton.ui.main.Pages;
 import ua.svasilina.targeton.ui.main.accounts.AccountsFragment;
+import ua.svasilina.targeton.ui.main.buys.BuyListEditFragment;
+import ua.svasilina.targeton.ui.main.buys.BuyListFragment;
 import ua.svasilina.targeton.ui.main.transactions.TransactionEditFragment;
 import ua.svasilina.targeton.ui.main.transactions.TransactionFragment;
 import ua.svasilina.targeton.ui.main.tree.TreeFragment;
@@ -67,7 +69,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int itemId = item.getItemId();
-        TransactionFragment transactionFragment;
         switch (itemId){
             case R.id.goals:
                 openPage(Pages.goal, -1);
@@ -77,6 +78,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.transactions:
                 openPage(Pages.transactions, -1);
+                return true;
+            case R.id.buys:
+                openPage(Pages.buys, -1);
                 return true;
             case R.id.accounts:
                 setView(new AccountsFragment(this));
@@ -164,6 +168,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     break;
                 case transactionEdit:
                     setView(new TransactionEditFragment(this, attr, getSupportFragmentManager()));
+                    break;
+                case buys:
+                    setView(new BuyListFragment(this, attr));
+                    break;
+                case buys_edit:
+                    setView(new BuyListEditFragment(this, attr, getSupportFragmentManager()));
                     break;
             }
         }

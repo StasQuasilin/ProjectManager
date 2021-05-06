@@ -261,9 +261,6 @@
             <td>
               <input id="rate" v-model="transaction.rate" v-on:keyup="checkField('rate')"
                      autocomplete="off" onfocus="this.select()" style="width: 75pt">
-              <span class="text-button" v-on:click="invertRate()">
-                &#8617;
-              </span>
             </td>
           </tr>
           <tr v-if="editCounterparty || transaction.type === 'debt'">

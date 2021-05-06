@@ -27,7 +27,7 @@
             &#9654;
         </span>
     </div>
-    <div>
+    <div style="overflow: scroll; max-height: 200pt">
         <div v-for="(v, k) in result" style="border-bottom: dashed gray 1pt">
             <span>
                 {{(k + 1).toLocaleString()}}:

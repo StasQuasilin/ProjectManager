@@ -39,7 +39,7 @@ public class SystemCategory {
     }
 
     @OneToOne
-    @JoinColumn(name = "_category")
+    @JoinColumn(name = "_header")
     public Header getHeader() {
         return header;
     }

@@ -2,7 +2,6 @@ package ua.svasilina.targeton.ui.main.transactions;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,17 +35,16 @@ import ua.svasilina.targeton.ui.main.Pages;
 import ua.svasilina.targeton.utils.connection.Connector;
 import ua.svasilina.targeton.utils.constants.API;
 import ua.svasilina.targeton.utils.constants.Keys;
-import ua.svasilina.targeton.utils.storage.StorageUtil;
 
 import static ua.svasilina.targeton.utils.constants.Keys.DETAILS;
 import static ua.svasilina.targeton.utils.constants.Keys.ID;
+import static ua.svasilina.targeton.utils.constants.Keys.TRANSACTION;
 
 public class TransactionEditFragment extends ApplicationPage {
 
     private final MainActivity mainActivity;
     private final Context context;
     private TransactionEditInitializer transactionEditInitializer;
-    private final Connector connector = new Connector();
     final HashMap<String, Object> args = new HashMap<>();
     View view;
 
@@ -54,18 +52,24 @@ public class TransactionEditFragment extends ApplicationPage {
         this.mainActivity = mainActivity;
         context = mainActivity.getApplicationContext();
 
-
         args.put(ID, attr);
+        Connector connector = new Connector();
         connector.newJsonReq(context, API.SAVE_TRANSACTION + API.DATA, new JSONObject(args), new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Transaction transaction = null;
                 try {
-                    transaction = new Transaction(response.getJSONObject(Keys.TRANSACTION));
-                    final JSONArray detailsArray = response.getJSONArray(DETAILS);
-                    final LinkedList<TransactionDetail> details = transaction.getDetails();
-                    for (int i = 0; i < detailsArray.length(); i++){
-                        details.add(new TransactionDetail(detailsArray.getJSONObject(i)));
+                    if (response.has(TRANSACTION)){
+                        transaction = new Transaction(response.getJSONObject(Keys.TRANSACTION));
+                    } else {
+                        transaction = new Transaction();
+                    }
+                    if (response.has(DETAILS)) {
+                        final JSONArray detailsArray = response.getJSONArray(DETAILS);
+                        final LinkedList<TransactionDetail> details = transaction.getDetails();
+                        for (int i = 0; i < detailsArray.length(); i++) {
+                            details.add(new TransactionDetail(detailsArray.getJSONObject(i)));
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -99,32 +103,28 @@ public class TransactionEditFragment extends ApplicationPage {
                 System.out.println(error);
             }
         });
-
-
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.transaction_edit, null);
-
         setHasOptionsMenu(true);
         return view;
     }
 
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        inflater.inflate(R.menu.transaction_menu_edit, menu);
+        inflater.inflate(R.menu.edit_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         final int itemId = item.getItemId();
-        System.out.println(itemId);
-        if (itemId == R.id.save_transaction){
+        if (itemId == R.id.save){
             save();
-        } else if(itemId == R.id.close_transaction){
+        } else if(itemId == R.id.close){
             mainActivity.openPage(Pages.transactions, -1);
         }
         return super.onOptionsItemSelected(item);

@@ -41,7 +41,7 @@ public class FindCategoryAPI extends API {
             if (user != null){
                 JSONArray array = new JSONArray();
                 for(Header header : categoryDAO.findCategory(key, user)){
-                    final JSONObject json = header.shortJson();
+                    final JSONObject json = header.toJson();
                     final List<Header> children = titleDAO.getChildren(header);
                     if(children.size() > 0) {
                         JSONArray childrenArray = new JSONArray();

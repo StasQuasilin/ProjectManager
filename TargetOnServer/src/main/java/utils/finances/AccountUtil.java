@@ -49,14 +49,14 @@ public class AccountUtil {
             TransactionDetail detail = new TransactionDetail();
             detail.setTransaction(transaction);
             detail.setHeader(header);
-            detail.setPrice(amount);
+            detail.setPrice(Math.abs(amount));
             detail.setAmount(1);
             detail.setRate(1);
 
             transaction.setDate(Date.valueOf(LocalDate.now()));
             transaction.setOwner(owner);
             transaction.setCurrency(currencyDAO.getCurrency(account.getCurrency()));
-            transaction.setAmount(amount);
+//            transaction.setAmount(amount);
 
             LinkedList<TransactionDetail> details = new LinkedList<>();
             details.push(detail);

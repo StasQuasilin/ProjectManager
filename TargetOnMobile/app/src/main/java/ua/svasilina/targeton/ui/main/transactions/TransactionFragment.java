@@ -11,8 +11,6 @@ import android.widget.ListView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONException;
@@ -24,25 +22,14 @@ import ua.svasilina.targeton.MainActivity;
 import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.adapters.TransactionsAdapter;
 import ua.svasilina.targeton.entity.transactions.Transaction;
-import ua.svasilina.targeton.entity.transactions.UserData;
-import ua.svasilina.targeton.ui.login.LoginActivity;
 import ua.svasilina.targeton.ui.main.ApplicationPage;
 import ua.svasilina.targeton.ui.main.Pages;
-import ua.svasilina.targeton.utils.connection.Connector;
-import ua.svasilina.targeton.utils.constants.API;
-import ua.svasilina.targeton.utils.constants.Keys;
-import ua.svasilina.targeton.utils.storage.StorageUtil;
-import ua.svasilina.targeton.utils.storage.UserAccessStorage;
-import ua.svasilina.targeton.utils.storage.UserDataStorage;
 import ua.svasilina.targeton.utils.subscribes.DataHandler;
 import ua.svasilina.targeton.utils.subscribes.Subscribe;
 import ua.svasilina.targeton.utils.subscribes.Subscriber;
 import ua.svasilina.targeton.utils.subscribes.updaters.TransactionUpdater;
 
 import static ua.svasilina.targeton.utils.constants.Keys.ID;
-import static ua.svasilina.targeton.utils.constants.Keys.STATUS;
-import static ua.svasilina.targeton.utils.constants.Keys.SUCCESS;
-import static ua.svasilina.targeton.utils.constants.Keys.USER;
 
 public class TransactionFragment extends ApplicationPage {
 
@@ -107,7 +94,11 @@ public class TransactionFragment extends ApplicationPage {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 final Transaction transaction = adapter.getItem(position);
-                editTransaction(transaction);
+                if (transaction != null) {
+                    editTransaction(transaction.getId());
+                } else {
+                    newTransaction();
+                }
             }
         });
         final FloatingActionButton newTransaction = view.findViewById(R.id.newTransaction);
@@ -121,56 +112,11 @@ public class TransactionFragment extends ApplicationPage {
     }
 
     private void newTransaction() {
-        editTransaction(new Transaction());
+        editTransaction(-1);
     }
 
-    private void editTransaction(final Transaction transaction){
-        final Connector instance = Connector.getInstance();
-        final Context ctx = getContext();
-        final HashMap<String, Object> param = new HashMap<>();
-        param.put(USER, UserAccessStorage.getUserAccess(ctx));
-        instance.newJsonReq(ctx, API.USER_DATA, new JSONObject(param), new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    final String status = response.getString(STATUS);
-                    if (status.equals(SUCCESS)){
-                        final UserData userData = new UserData(response);
-                        editTransaction(transaction, userData);
-                        UserDataStorage.saveUserData(ctx, response.toString());
-                    } else {
-                        final String reason = response.getString(Keys.REASON);
-                        if (reason.equals(Keys.UNAUTHORISED)){
-                            startActivity(ctx, LoginActivity.class);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                System.out.println(error.getMessage());
-                try {
-                    final UserData userData = new UserData(new JSONObject(UserDataStorage.getUserData(ctx)));
-                    editTransaction(transaction, userData);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    final StorageUtil storageUtil = new StorageUtil();
-    private void editTransaction(Transaction transaction, UserData userData) {
-
-//        final TransactionEditDialog ted = new TransactionEditDialog(getContext(), transaction, getLayoutInflater(), userData);
-//        ted.setCancelable(false);
-//        ted.show(getParentFragmentManager(), "Transaction Edit");
-        final int id = transaction.getId();
-        storageUtil.save("transaction_" + id, transaction.buildJson().toString(), context);
-        storageUtil.save("user_data_" + id, userData.buildJson().toString(), context);
-        mainActivity.openPage(Pages.transactionEdit, transaction.getId());
+    private void editTransaction(int transaction) {
+        mainActivity.openPage(Pages.transactionEdit, transaction);
     }
 
     @Override

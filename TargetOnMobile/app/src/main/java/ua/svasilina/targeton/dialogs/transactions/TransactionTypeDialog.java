@@ -55,13 +55,13 @@ public class TransactionTypeDialog extends DialogFragment {
         }
 
         builder.setView(view);
+        builder.setTitle(R.string.transaction_type);
         builder.setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 save();
             }
         });
-
         builder.setNegativeButton(R.string.cancel, null);
 
         return builder.create();

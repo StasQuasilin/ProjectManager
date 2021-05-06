@@ -24,7 +24,7 @@ public interface Keys {
     String PLUS = "+";
     String LEFT_BRACE = "(";
     String RIGHT_BRACE = ")";
-    String TIMES = "*";
+    String TIMES = "⨉";
     String EQUALS = "=";
     String ID = "id";
     String ACCOUNT_FROM = "accountFrom";
@@ -65,4 +65,10 @@ public interface Keys {
     String COUNT = "count";
     String PRICE = "price";
     String TRANSACTION = "transaction";
+    String ITEMS = "items";
+    String COST = "cost";
+    String SPEND = "spend";
+    char SLASH = '/';
+    String LIST = "list";
+    String PATH = "path";
 }

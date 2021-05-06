@@ -47,4 +47,5 @@ public interface ApiLinks {
     String SAVE_RANDOM_TASK = API + "/save/random/task";
     String SAVE_FILE_API = API + "/task/files";
     String DATA = "/data";
+    String SAVE_BUY_LIST_ITEM = API + "/buy/list/item/save";
 }

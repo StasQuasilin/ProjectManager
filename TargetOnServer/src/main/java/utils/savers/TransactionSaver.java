@@ -1,6 +1,7 @@
 package utils.savers;
 
 import entity.finance.transactions.Transaction;
+import entity.finance.transactions.TransactionDetail;
 import utils.BuyListChecker;
 import utils.db.dao.daoService;
 import utils.db.dao.finance.transactions.TransactionDAO;
@@ -20,5 +21,9 @@ public class TransactionSaver {
 
     public void updateAccounts(Transaction transaction){
         transactionUtil.updateAccounts(transaction);
+    }
+
+    public void save(TransactionDetail detail) {
+        transactionDAO.saveDetail(detail);
     }
 }

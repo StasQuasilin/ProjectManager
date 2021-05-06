@@ -49,8 +49,8 @@ public class SearchDialog<T> extends DialogFragment {
     private final OnChangeListener<T> changeListener;
     private final ItemBuilder<T> itemBuilder;
     private EditText textInput;
-    private SearchTimer<T> timer;
-    private String title;
+    private final SearchTimer<T> timer;
+    private final String title;
     private AlertDialog.Builder builder;
 
     public SearchDialog(Context context, LayoutInflater inflater, String searchApi,

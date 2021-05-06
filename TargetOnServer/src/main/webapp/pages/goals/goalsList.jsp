@@ -29,6 +29,7 @@
         goalList.props.spendTime = '<fmt:message key="goal.spend.time"/>';
         goalList.props.memberList = '${memberList}';
         goalList.props.memberIcon = '${context}/images/member.svg';
+        goalList.props.user = ${user.id};
 
     </script>
     <jsp:include page="goalHeader.jsp"/>

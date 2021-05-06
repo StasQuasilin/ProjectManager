@@ -28,9 +28,11 @@ import ua.svasilina.targeton.entity.transactions.Transaction;
 import ua.svasilina.targeton.entity.transactions.TransactionDetail;
 import ua.svasilina.targeton.entity.transactions.TransactionType;
 import ua.svasilina.targeton.entity.transactions.UserData;
+import ua.svasilina.targeton.utils.FloatDecorator;
 import ua.svasilina.targeton.utils.NameUtil;
 import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
 import ua.svasilina.targeton.utils.constants.API;
+import ua.svasilina.targeton.utils.constants.Keys;
 import ua.svasilina.targeton.utils.listeners.ChangeListener;
 
 import static ua.svasilina.targeton.utils.constants.Constants.DATE_PATTERN;
@@ -56,13 +58,91 @@ public class TransactionEditInitializer {
     private final Transaction transaction;
     private final UserData userData;
     private final FragmentManager manager;
+    final SearchDialog<Category> findCategoryDialog;
+    SimpleListAdapter<TransactionDetail> detailListAdapter;
 
-    public TransactionEditInitializer(Context context, Transaction transaction, UserData userData, FragmentManager manager) {
+    private final FloatDecorator decorator;
+
+    public TransactionEditInitializer(Context context, final Transaction transaction, UserData userData, FragmentManager manager) {
         this.context = context;
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.transaction = transaction;
         this.userData = userData;
         this.manager = manager;
+        decorator = new FloatDecorator(context);
+
+        detailListAdapter = new SimpleListAdapter<>(context, R.layout.transaction_detail_view, inflater, new ListBuilder<TransactionDetail>() {
+            @Override
+            public void build(TransactionDetail item, View view) {
+
+                final TextView detailPathView = view.findViewById(R.id.detailPath);
+                StringBuilder builder = new StringBuilder();
+                for (String s : item.getPath()) {
+                    builder.append(s).append(Keys.SLASH);
+                }
+                detailPathView.setText(builder.toString());
+
+                final TextView detailTitleView = view.findViewById(R.id.detailTitle);
+                final Category category = item.getCategory();
+                detailTitleView.setText(category.getTitle());
+
+                final float count = item.getCount();
+                final float price = item.getPrice();
+                StringBuilder b = new StringBuilder();
+                if (count > 1) {
+                    b.append(decorator.prettify(count));
+
+                }
+                if (count > 1 && price > 0){
+                    b.append(Keys.SPACE).append(Keys.TIMES).append(Keys.SPACE);
+                }
+                if (price > 0) {
+                    b.append(decorator.prettify(price));
+                }
+                if(count > 1){
+                    b.append(Keys.EQUALS);
+                    b.append(count * price);
+                }
+                if (price > 0) {
+                    b.append(Keys.SPACE).append(transaction.getCurrency());
+                }
+
+                final TextView amountView = view.findViewById(R.id.detailAmount);
+                if (b.length() > 0) {
+                    amountView.setText(b.toString());
+                }
+            }
+        }, null);
+        findCategoryDialog = new SearchDialog<>(context, inflater, API.FIND_CATEGORY,
+                new ItemBuilder<Category>() {
+                    @Override
+                    public Category create(JSONObject json) {
+                        System.out.println(json);
+                        return new Category(json);
+                    }
+                },
+                new OnChangeListener<Category>() {
+                    @Override
+                    public void onChange(Category item) {
+                        TransactionDetail detail = new TransactionDetail();
+                        detail.setCategory(item);
+                        detailListAdapter.add(detail);
+                    }
+                },
+                new ListBuilder<Category>() {
+                    @Override
+                    public void build(Category item, View view) {
+                        final TextView detailView = view.findViewById(R.id.itemDetails);
+                        final String[] path = item.getPath();
+                        StringBuilder builder = new StringBuilder();
+                        for (String s : path) {
+                            builder.append(s).append(Keys.SLASH);
+                        }
+                        detailView.setText(builder.toString());
+                        final TextView itemValue = view.findViewById(R.id.itemValue);
+                        itemValue.setText(item.getTitle());
+                    }
+                }, context.getResources().getString(R.string.find_category_title));
     }
 
     public void initView(View view) {
@@ -83,7 +163,7 @@ public class TransactionEditInitializer {
         if(transaction != null) {
             initTypeButton();
             initDateButton();
-            initTransactionCategory();
+            initCategoryButton();
             initAccountFrom();
             initAccountTo();
             initTransactionAmount();
@@ -94,24 +174,13 @@ public class TransactionEditInitializer {
     }
 
     private void initDetailList() {
-        SimpleListAdapter<TransactionDetail> detailAdapter = new SimpleListAdapter<>(context, R.layout.transaction_detail_view, inflater, new ListBuilder<TransactionDetail>() {
-            @Override
-            public void build(TransactionDetail item, View view) {
-                final TextView detailTitleView = view.findViewById(R.id.detailTitle);
 
-                final TextView amount = view.findViewById(R.id.detailCount);
-                amount.setText(String.valueOf(item.getCount()));
-
-                final TextView price = view.findViewById(R.id.price);
-                price.setText(String.valueOf(item.getPrice()));
-            }
-        }, null);
-        detailAdapter.addAll(transaction.getDetails());
-        detailList.setAdapter(detailAdapter);
+        detailListAdapter.addAll(transaction.getDetails());
+        detailList.setAdapter(detailListAdapter);
     }
 
     private void initTransactionAmount() {
-        amount.setText(String.valueOf(transaction.getAmount()));
+        amount.setText(decorator.prettify(transaction.getAmount()));
         amount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -290,39 +359,13 @@ public class TransactionEditInitializer {
         updateDateButton();
     }
 
-    private void initTransactionCategory() {
+    private void initCategoryButton() {
         transactionCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final SearchDialog<Category> dialog = new SearchDialog<>(
-                        context,
-                        inflater,
-                        API.FIND_CATEGORY,
-                        new ItemBuilder<Category>() {
-                            @Override
-                            public Category create(JSONObject json) {
-                                return new Category(json);
-                            }
-                        },
-                        new OnChangeListener<Category>() {
-                            @Override
-                            public void onChange(Category item) {
-//                                transaction.setCategory(item);
-                                updateTransactionCategory();
-                            }
-                        },
-                        new ListBuilder<Category>() {
-                            @Override
-                            public void build(Category item, View view) {
-                                final TextView itemValue = view.findViewById(R.id.itemValue);
-                                itemValue.setText(item.getTitle());
-                            }
-                        }, context.getResources().getString(R.string.find_category_title));
-                dialog.show(manager, "Find Category");
-
+                findCategoryDialog.show(manager, null);
             }
         });
-        updateTransactionCategory();
     }
 
     private void updateDateButton() {

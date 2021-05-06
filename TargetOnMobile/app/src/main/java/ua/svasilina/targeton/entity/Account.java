@@ -81,7 +81,8 @@ public class Account extends JsonAble {
     @NonNull
     @Override
     public String toString() {
-        return title + SPACE + LEFT_BRACE + SPACE + amount + SPACE + currency + SPACE + RIGHT_BRACE;
+        return (title.length() > 30 ? title.substring(0, 30) + "..." : title)
+         + SPACE + LEFT_BRACE + SPACE + amount + SPACE + currency + SPACE + RIGHT_BRACE;
     }
 
     @Override

@@ -2,5 +2,8 @@ package ua.svasilina.targeton.ui.main;
 
 public enum Pages {
     goal,
-    transactionEdit, transactions, tree
+    transactionEdit,
+    transactions,
+    buys,
+    buys_edit, tree
 }

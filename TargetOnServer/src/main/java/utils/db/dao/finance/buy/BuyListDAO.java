@@ -24,4 +24,8 @@ public interface BuyListDAO {
     BuyList getBaseList(Header header);
 
     void saveItems(Set<BuyListItem> itemSet);
+
+    void saveItem(BuyListItem item);
+
+    BuyListItem getItem(Object id);
 }

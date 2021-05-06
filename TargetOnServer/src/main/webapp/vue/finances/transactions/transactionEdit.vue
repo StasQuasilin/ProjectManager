@@ -117,14 +117,18 @@ transactionEdit = new Vue({
             if(this.transaction.type === 'transfer'){
                 return this.transaction.amount;
             } else {
-                let sum = 0;
-                for (let i in this.transaction.details){
-                    if (this.transaction.details.hasOwnProperty(i)){
-                        let detail = this.transaction.details[i];
-                        sum += detail.amount * detail.price;
+                if (this.transaction.details.length > 0) {
+                    let sum = 0;
+                    for (let i in this.transaction.details) {
+                        if (this.transaction.details.hasOwnProperty(i)) {
+                            let detail = this.transaction.details[i];
+                            sum += detail.amount * detail.price;
+                        }
                     }
+                    return sum;
+                } else {
+                    return this.transaction.amount;
                 }
-                return sum;
             }
         },
         accountsMap:function () {

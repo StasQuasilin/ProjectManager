@@ -43,13 +43,15 @@ public class TransactionEditDataApi extends API {
             Answer answer = new SuccessAnswer();
             if (body.containKey(ID)) {
                 Transaction transaction = transactionDAO.getTransaction(body.get(ID));
-                answer.addAttribute(TRANSACTION, transaction.toJson());
-                req.setAttribute(TRANSACTION, transaction);
-                JSONArray detailArray = new JSONArray();
-                for (TransactionDetail detail : transactionDAO.getDetails(transaction.getId())){
-                    detailArray.add(detail.toJson());
+                if (transaction != null){
+                    answer.addAttribute(TRANSACTION, transaction.toJson());
+                    req.setAttribute(TRANSACTION, transaction);
+                    JSONArray detailArray = new JSONArray();
+                    for (TransactionDetail detail : transactionDAO.getDetails(transaction.getId())){
+                        detailArray.add(detail.toJson());
+                    }
+                    answer.addAttribute(DETAILS, detailArray);
                 }
-                answer.addAttribute(DETAILS, detailArray);
             } else {
                 if (body.containKey(CATEGORY)){
                     final Header header = categoryDAO.getCategory(body.get(CATEGORY));

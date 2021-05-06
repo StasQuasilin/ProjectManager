@@ -78,4 +78,15 @@
     <string name="title_activity_main_temp">MainActivity2</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="times">⨉</string>
+    <string name="buys">Списки покупок</string>
+    <string name="buy_list_edit">Редагування списку покупок</string>
+    <string name="name">Назва</string>
+    <string name="add_item">Додати елемент</string>
+    <string name="items">Елементи списку</string>
+    <string name="delete_item">Видалити елемент</string>
+    <string name="buy_date">Дата покупки</string>
+    <string name="buy_count">Кількість</string>
+    <string name="buy_price">Ціна</string>
+    <string name="buy_list_item_edit">Редагування елемента</string>
+    <string name="transaction_type">Тип транзакції</string>
 </resources>

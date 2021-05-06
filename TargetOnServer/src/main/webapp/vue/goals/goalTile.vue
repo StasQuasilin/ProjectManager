@@ -33,18 +33,23 @@ goalTile = {
         '<div style="width: 100%">' +
             '<div class="goal-header">' +
                 '<span class="goal-title" v-on:click="onClick">' +
-                    '{{goal.title}} by {{goal.owner.surname}} {{goal.owner.forename}}' +
+                    '{{goal.title}}' +
+                    '<template v-if="props.user !== goal.owner.id">' +
+                        ' by {{goal.owner.surname}} {{goal.owner.forename}}' +
+                    '</template>' +
                 '</span>' +
                 '<div class="goal-title-buttons">' +
                     '<span class="text-button" title="Goal members" v-on:click="openMemberList()">' +
                         '<img style="background: transparent; width: 10pt" :src="props.memberIcon" alt="M"> {{(1+goal.members.length).toLocaleString()}}' +
                     '</span>' +
-                    '<span class="text-button" v-on:click="props.edit(goal.id)">' +
-                        '&#10000;' +
-                    '</span>' +
-                    '<span class="text-button" v-on:click="props.remove(goal.id)">' +
-                        '&times;' +
-                    '</span> ' +
+                    '<template v-if="props.user === goal.owner.id">' +
+                        '<span class="text-button" v-on:click="props.edit(goal.id)">' +
+                            '&#10000;' +
+                        '</span>' +
+                        '<span class="text-button" v-on:click="props.remove(goal.id)">' +
+                            '&times;' +
+                        '</span> ' +
+                    '</template>' +
                 '</div>' +
             '</div>' +
             '<div class="goal-content" v-on:click="onClick">' +

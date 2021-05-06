@@ -45,6 +45,7 @@ public class TaskEdit extends ModalWindow {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         final JsonObject body = parseBody(req);
         if (body != null){
+            System.out.println(body);
             final Task task = taskDAO.getTask(body.get(ID));
 
             Header parent = null;

@@ -79,6 +79,8 @@
             android:id="@+id/transactionAccountFrom"
             android:layout_width="0dp"
             android:layout_height="25dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView6"
@@ -123,12 +125,14 @@
             android:text="@string/transaction_account_to"
             app:layout_constraintBottom_toBottomOf="@+id/transactionAccountTo"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="@+id/transactionAccountTo" />
 
         <Spinner
             android:id="@+id/transactionAccountTo"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView13"

@@ -10,6 +10,10 @@ import utils.db.hibernate.HibernateSessionFactory;
 import utils.db.hibernate.Hibernator;
 import utils.tree.TreeUtil;
 
+import java.text.FieldPosition;
+import java.text.NumberFormat;
+import java.text.ParsePosition;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,8 +30,11 @@ public class Validator {
     static Validator validator = new Validator();
 
     public static void main(String[] args) {
-        String s = "0.03575";
-        System.out.println(Float.parseFloat(s));
+        float f = 14586.20f;
+        int i = 14586;
+        NumberFormat nf = NumberFormat.getInstance(new Locale("uk", "UA"));
+        System.out.println(nf.format(f));
+        System.out.println(nf.format(i));
     }
 
     private static void checkEmail(String s) {
@@ -51,3 +58,4 @@ public class Validator {
         return password.length() > 4;
     }
 }
+

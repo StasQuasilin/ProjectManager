@@ -19,4 +19,6 @@ public interface API {
     String SAVE_TRANSACTION = API + "/transaction/save";
     String GET_TREE_ITEMS = API + "/get/task";
     String DATA = "/data";
+    String SAVE_BUY_LIST = API + "/buy/list/save";
+    String SAVE_BUY_LIST_ITEM = API + "/buy/list/item/save";
 }

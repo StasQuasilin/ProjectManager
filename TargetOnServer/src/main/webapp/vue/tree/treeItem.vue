@@ -48,7 +48,8 @@ treeItem = {
             PostApi(this.props.taskStatus, {status:status, task:this.item.id});
         },
         addItem:function () {
-            loadModal(this.props.edit, {parent:this.item.header});
+            let parent = (typeof this.item.header === "undefined") ? this.item.id : this.item.header;
+            loadModal(this.props.edit, {parent:parent});
         },
         deleteItem:function () {
             loadModal(this.props.delete, {id:this.item.id});
