@@ -8,8 +8,8 @@
     padding: 4pt 0;
 }
 .tree-parent{
-    background-color: #3498db;
-    border-bottom: solid white;
+    background-color: var(--main-header-color, #3498db);
+    border-bottom: solid var(--main-text-color, #f7f7f7) 1pt;
     color: white;
     font-weight: bold;
     padding: 2pt 4pt 2pt 4pt;
@@ -27,7 +27,7 @@
     display: none;
 }
 .tree-item:hover{
-background: linear-gradient( 87deg, cornflowerblue, transparent);
+background: linear-gradient( 87deg, var(--main-header-color, cornflowerblue), transparent);
 }
 .tree-item:hover .tree-menu{
     display: inline;
@@ -46,7 +46,7 @@ background: linear-gradient( 87deg, cornflowerblue, transparent);
     content: '  ';
 }
 .task-done{
-    color: gray;
+    color: var(--secondary-color, gray);
     text-decoration: line-through;
 }
 .task-impossible{

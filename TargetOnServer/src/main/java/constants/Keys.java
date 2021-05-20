@@ -222,4 +222,5 @@ public interface Keys {
     String FILE_LIST = "fileList";
     String FILES = "files";
     String FILE_API = "fileApi";
+    String GOAL_REMOVE = "goalRemove";
 }

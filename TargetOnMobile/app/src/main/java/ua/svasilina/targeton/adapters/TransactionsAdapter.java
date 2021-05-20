@@ -20,6 +20,7 @@ import ua.svasilina.targeton.R;
 import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.entity.transactions.Transaction;
 import ua.svasilina.targeton.entity.transactions.TransactionType;
+import ua.svasilina.targeton.utils.FloatDecorator;
 import ua.svasilina.targeton.utils.builders.DateTimeBuilder;
 
 import static android.view.View.GONE;
@@ -37,12 +38,14 @@ public class TransactionsAdapter extends ArrayAdapter<Transaction> {
     private final int resource;
     private final LayoutInflater inflater;
     private final DateTimeBuilder dtb = new DateTimeBuilder(DATE_PATTERN);
+    private final FloatDecorator decorator;
 
     public TransactionsAdapter(@NonNull Context context, int resource, LayoutInflater inflater) {
         super(context, resource);
         this.context = context;
         this.resource = resource;
         this.inflater = inflater;
+        decorator = new FloatDecorator(context);
     }
 
     @SuppressLint("SetTextI18n")
@@ -118,9 +121,9 @@ public class TransactionsAdapter extends ArrayAdapter<Transaction> {
         return view;
     }
 
-    private final StringBuilder builder = new StringBuilder();
+
     private String buildSumString(Transaction transaction){
-        builder.delete(0, builder.capacity());
+        final StringBuilder builder = new StringBuilder();
 
         switch (transaction.getType()){
             case spending:
@@ -130,12 +133,12 @@ public class TransactionsAdapter extends ArrayAdapter<Transaction> {
                 builder.append(PLUS).append(SPACE);
         }
 
-        builder.append(transaction.getAmount());
+        builder.append(decorator.prettify(transaction.getAmount()));
         if(transaction.getRate() != 1){
             builder.append(SPACE).append(TIMES);
-            builder.append(transaction.getRate());
+            builder.append(decorator.prettify(transaction.getRate()));
             builder.append(EQUALS);
-            builder.append(transaction.getAmount() * transaction.getRate());
+            builder.append(decorator.prettify(transaction.getAmount() * transaction.getRate()));
         }
         builder.append(SPACE).append(transaction.getCurrency());
         return builder.toString();

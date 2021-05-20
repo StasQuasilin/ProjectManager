@@ -48,4 +48,5 @@ public interface ApiLinks {
     String SAVE_FILE_API = API + "/task/files";
     String DATA = "/data";
     String SAVE_BUY_LIST_ITEM = API + "/buy/list/item/save";
+    String LEAVE_GOAL = API + "/leave/goal";
 }

@@ -12,14 +12,14 @@
 <link rel="stylesheet" href="${context}/css/finances/financePage.css?v=${now}">
 <script src="${context}/vue/pathBuilder.vue?v=${now}"></script>
 <script src="${context}/vue/finances/transactions/transactionsList.vue?v=${now}"></script>
-<script src="${context}/vue/finances/fastTransactions.vue?v=${now}"></script>
+<%--<script src="${context}/vue/finances/fastTransactions.vue?v=${now}"></script>--%>
 <script src="${context}/vue/finances/accounts.vue?v=${now}"></script>
 <script src="${context}/vue/finances/buyList.vue?v=${now}"></script>
 <script>
   transactionsList.api.edit = '${transactionEdit}';
   transactionsList.limit = ${transactionLimit};
-  fastTransactions.api.edit = '${fastTransactionEdit}';
-  accounts.api.edit = '${accountEdit}';
+  <%--fastTransactions.api.edit = '${fastTransactionEdit}';--%>
+  accounts.api.edit  = '${accountEdit}';
   accounts.api.extract = '${accountExtract}';
   buyList.api.edit = '${buyListEdit}';
   buyList.api.changeStatus = '${transactionEdit}';
@@ -53,9 +53,9 @@
     </div>
   </div>
   <div class="colon central">
-    <div class="colon-cell">
-      <jsp:include page="fastTransactions.jsp"/>
-    </div>
+<%--    <div class="colon-cell" style="height: 50%">--%>
+<%--      <jsp:include page="fastTransactions.jsp"/>--%>
+<%--    </div>--%>
     <div class="colon-cell">
       <jsp:include page="accounts.jsp"/>
     </div>

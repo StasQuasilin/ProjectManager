@@ -23,7 +23,8 @@ let list = {
             }
         },
         handler:function(items){
-            // console.log(items);
+            console.log(items);
+
             if(items) {
                 for (let a in items.add) {
                     if (items.add.hasOwnProperty(a)) {
@@ -35,6 +36,7 @@ let list = {
                     this.update(items.update);
                 }
                 if (items.remove){
+
                     Vue.delete(this.items, items.remove.id);
                 }
                 this.removeOverLimit();

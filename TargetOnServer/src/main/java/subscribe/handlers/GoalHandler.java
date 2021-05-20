@@ -36,6 +36,7 @@ public class GoalHandler extends SubscribeHandler{
             if(activeGoal != null) {
                 goal.setActive(goal.getTitle().getId() == activeGoal.getHeader().getId());
             }
+
             final JSONObject object = goal.toJson();
             final TaskStatistic statistic = taskDAO.getStatistic(goal.getTitle().getId());
             if (statistic != null){

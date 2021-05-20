@@ -18,12 +18,12 @@
     height: -moz-fit-content;
 }
 .modal-title{
-    background-color: darkgoldenrod;
+    background-color: var(--main-header-color, black);
     width: 100%;
 }
 .modal-title-content{
     display: block;
-    padding: 0 8pt;
+    padding: 4pt 8pt;
 }
 .modal-title * {
     background-color: transparent;
@@ -35,7 +35,7 @@
 }
 .modal-content{
     padding: 4px;
-
+    background-color: var(--main-bg-color, white);
 }
 .modal-window{
     transform: translate(0, -50%);

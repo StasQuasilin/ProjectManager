@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
-<div id="transactions" class="full-size">
+<div id="transactions" class="full-size vertical-flex">
     <div class="cell-header">
         <div class="header-wrapper">
             <fmt:message key="title.transactions"/>
@@ -16,12 +16,9 @@
     <div class="full-size item-container">
         <div class="item-container-wrapper">
             <div v-for="(values, date) in compoundItems">
-                <div style="font-size: 10pt; font-weight: bold">{{new Date(date).toLocaleDateString()}}</div>
+                <div class="date-label">{{new Date(date).toLocaleDateString()}}</div>
                 <div style="padding-left: 32px">
-                    <div v-for="item in values"  v-on:click="edit(item.id)" style="border-bottom: dashed gray 1px">
-                        <div style="font-size: 8pt; color: gray">
-                            {{item.id}}:{{item.type}}
-                        </div>
+                    <div v-for="item in values"  v-on:click="edit(item.id)" style="border-bottom: dashed var(--secondary-color, gray) 1px">
                         <div>
                             <template v-if="item.type === 'income' || item.type === 'spending'">
                                 <span v-if="item.category && item.category.title">

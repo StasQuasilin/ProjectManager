@@ -12,10 +12,12 @@
 <html>
     <head>
         <title><fmt:message key="login.title"/></title>
+
         <link rel="icon" href="${context}/images/icon.svg">
-        <link rel="stylesheet" href="${context}/css/main.css">
-        <link rel="stylesheet" href="${context}/css/login.css">
-        <script src="${context}/js/connection.js"></script>
+        <link rel="stylesheet" href="${context}/css/MainTheme.css?v=${now}">
+        <link rel="stylesheet" href="${context}/css/main.css?v=${now}">
+        <link rel="stylesheet" href="${context}/css/login.css?v=${now}">
+        <script src="${context}/js/connection.js?v=${now}"></script>
         <script>
             if (typeof context === 'undefined'){
                 context = '${context}'

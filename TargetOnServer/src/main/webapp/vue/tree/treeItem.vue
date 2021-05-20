@@ -125,7 +125,7 @@ treeItem = {
                             '<span v-else-if="item.status === \'progressing\'" style="color: forestgreen">' +
                                 '&#9654;' +
                             '</span>' +
-                            '<span v-else-if="item.status === \'done\'" style="color: forestgreen">' +
+                            '<span v-else-if="item.status === \'done\'" style="color: \'-var(--secondary-color, forestgreen)\'">' +
                                 '&checkmark;' +
                             '</span>' +
                             '<span v-else-if="item.status === \'impossible\'">' +

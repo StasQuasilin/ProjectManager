@@ -5,6 +5,7 @@
   Time: 18:25
 --%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
@@ -17,8 +18,13 @@
     <script type="application/javascript" src="${context}/vue/goalList.vue?v=${now}"></script>
     <script>
         goalList.api.edit = '${goalEdit}';
+        goalList.api.remove = '${goalRemove}';
         goalList.api.tree = '${tree}';
-        goalList.api.remove = '${remove}';
+
+        goalList.statusNames['all'] = '<fmt:message key="all.name"/>';
+        <c:forEach items="${types}" var="status">
+        goalList.statusNames['${status}'] = '<fmt:message key="${status}.name"/>';
+        </c:forEach>
         goalList.props.budget = '<fmt:message key="goal.budget"/>';
         goalList.props.dateBegin = '<fmt:message key="goal.begin.date"/>';
         goalList.props.dateEnd = '<fmt:message key="goal.end.date"/>';
@@ -33,11 +39,17 @@
 
     </script>
     <jsp:include page="goalHeader.jsp"/>
+
     <div id="goalList" class="goal-page item-container">
+        <select v-model="status">
+            <option v-for="status in statusList" :value="status">
+                {{statusNames[status]}}
+            </option>
+        </select>
 <%--        <template v-if="itemsCount > 0">--%>
-            <goal-tile v-for="goal in getItems()"
+            <goal-tile v-for="goal in filteredItems()"
                    :tree="openTree" :key="goal.id" :goal="goal" :props="props"
-                       class="goal-item"></goal-tile>
+                       class="goal-item" ></goal-tile>
 <%--        </template>--%>
 <%--        <p v-else>--%>
 <%--            ...Press add for do something...--%>

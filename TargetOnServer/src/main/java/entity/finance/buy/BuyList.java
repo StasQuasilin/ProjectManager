@@ -87,6 +87,7 @@ public class BuyList extends JsonAble {
             json.put(COST, cost.toJson());
         }
         json.put(ITEMS, items());
+        json.put(OWNER, owner.toJson());
         return json;
     }
 

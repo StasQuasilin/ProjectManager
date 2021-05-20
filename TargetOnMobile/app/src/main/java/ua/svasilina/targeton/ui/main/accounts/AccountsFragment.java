@@ -25,6 +25,7 @@ import ua.svasilina.targeton.dialogs.accounts.AccountEditDialog;
 import ua.svasilina.targeton.dialogs.transactions.ItemBuilder;
 import ua.svasilina.targeton.entity.Account;
 import ua.svasilina.targeton.ui.main.ApplicationPage;
+import ua.svasilina.targeton.utils.FloatDecorator;
 import ua.svasilina.targeton.utils.constants.Keys;
 import ua.svasilina.targeton.utils.subscribes.DataHandler;
 import ua.svasilina.targeton.utils.subscribes.Subscribe;
@@ -33,18 +34,19 @@ import ua.svasilina.targeton.utils.subscribes.updaters.AccountsUpdater;
 
 public class AccountsFragment extends ApplicationPage {
 
-    private Subscriber subscriber = Subscriber.getInstance();
-    private DataHandler handler;
+    private final Subscriber subscriber = Subscriber.getInstance();
+    private final DataHandler handler;
     private TextView accountsTotal;
     private ListView accountsList;
     private SimpleListAdapter<Account> adapter;
+    private FloatDecorator decorator;
 
     private final Context context;
 
     public AccountsFragment(MainActivity mainActivity) {
         this.context = mainActivity.getApplicationContext();
         handler = new DataHandler(new AccountsUpdater(this));
-
+        decorator = new FloatDecorator(context);
     }
 
     @Nullable
@@ -64,12 +66,12 @@ public class AccountsFragment extends ApplicationPage {
                 final double amount = item.getAmount();
                 final int limit = item.getLimit();
 
-                builder.append(item.getAmount() + limit);
+                builder.append(decorator.prettify(item.getAmount() + limit));
 
                 if (limit > 0){
                     builder.append(Keys.SPACE).append(Keys.LEFT_BRACE);
-                    builder.append(amount).append(Keys.SPACE).append(Keys.PLUS);
-                    builder.append(limit).append(Keys.RIGHT_BRACE);
+                    builder.append(decorator.prettify(amount)).append(Keys.SPACE).append(Keys.PLUS);
+                    builder.append(decorator.prettify(limit)).append(Keys.RIGHT_BRACE);
                 }
 
                 builder.append(Keys.SPACE).append(item.getCurrency());
@@ -125,13 +127,12 @@ public class AccountsFragment extends ApplicationPage {
 
         StringBuilder builder = new StringBuilder();
         if (total.size() > 0) {
-            int i = 0;
             for (Map.Entry<String, Float> entry : total.entrySet()) {
-                builder.append(entry.getValue()).append(Keys.SPACE).append(entry.getKey());
-                if (i < total.size() - 1) {
-                    builder.append(Keys.COMMA).append(Keys.SPACE);
+                final Float value = entry.getValue();
+                if(value != 0) {
+                    builder.append(decorator.prettify(value)).append(Keys.SPACE).append(entry.getKey());
+                    builder.append(Keys.SPACE);
                 }
-                i++;
             }
         } else {
             builder.append(0);

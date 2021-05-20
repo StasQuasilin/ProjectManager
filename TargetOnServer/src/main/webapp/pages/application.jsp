@@ -14,6 +14,7 @@
     <head>
         <title><fmt:message key="application.title"/></title>
         <link rel="icon" href="${context}/images/icon.svg">
+        <link rel="stylesheet" href="${context}/css/MainTheme.css?v=${now}">
         <link rel="stylesheet" href="${context}/css/main.css?v=${now}">
         <link rel="stylesheet" href="${context}/css/application.css?v=${now}">
         <link rel="stylesheet" href="${context}/css/modalLayer.css?v=${now}">

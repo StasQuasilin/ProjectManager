@@ -1,7 +1,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
-<div id="accountsList" class="full-size">
+<div id="accountsList" class="full-size vertical-flex">
     <div class="cell-header">
         <div class="header-wrapper">
             <fmt:message key="title.accounts"/>

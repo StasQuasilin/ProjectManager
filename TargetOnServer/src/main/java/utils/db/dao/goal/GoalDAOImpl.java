@@ -1,11 +1,9 @@
 package utils.db.dao.goal;
 
-import entity.Title;
 import entity.finance.category.Header;
 import entity.goal.ActiveGoal;
 import entity.goal.Goal;
 import entity.goal.GoalMember;
-import entity.task.TaskStatistic;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
@@ -19,7 +17,6 @@ import java.util.List;
 import static constants.Keys.*;
 
 public class GoalDAOImpl implements GoalDAO{
-
 
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
@@ -57,6 +54,14 @@ public class GoalDAOImpl implements GoalDAO{
     @Override
     public void update(Goal goal){
         updater.update(Subscribe.goal, goal, goal.getOwner());
+    }
+
+    @Override
+    public GoalMember getGoalMember(Goal goal, User user) {
+        final HashMap<String, Object> args = new HashMap<>();
+        args.put(GOAL, goal);
+        args.put(MEMBER, user);
+        return hibernator.get(GoalMember.class, args);
     }
 
     @Override

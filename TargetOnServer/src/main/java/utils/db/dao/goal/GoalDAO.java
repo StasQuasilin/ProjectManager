@@ -26,4 +26,6 @@ public interface GoalDAO {
     ActiveGoal getActiveGoal(User user);
 
     void update(Goal goal);
+
+    GoalMember getGoalMember(Goal goal, User user);
 }

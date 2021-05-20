@@ -29,9 +29,9 @@ goalTile = {
         }
     },
     template:'<div style="display: flex">' +
-        '<div v-if="goal.active" class="active-goal"></div>' +
+        // '<div v-if="goal.active" class="current-goal" :class="\'current-\' + goal.status + \'-goal\'"></div>' +
         '<div style="width: 100%">' +
-            '<div class="goal-header">' +
+            '<div class="goal-header" :class="goal.status + \'-goal\'">' +
                 '<span class="goal-title" v-on:click="onClick">' +
                     '{{goal.title}}' +
                     '<template v-if="props.user !== goal.owner.id">' +
@@ -39,17 +39,17 @@ goalTile = {
                     '</template>' +
                 '</span>' +
                 '<div class="goal-title-buttons">' +
-                    '<span class="text-button" title="Goal members" v-on:click="openMemberList()">' +
-                        '<img style="background: transparent; width: 10pt" :src="props.memberIcon" alt="M"> {{(1+goal.members.length).toLocaleString()}}' +
-                    '</span>' +
+                    '<div class="text-button" title="Goal members" v-on:click="openMemberList()">' +
+                        '<div class="member-icon"></div> {{(1+goal.members.length).toLocaleString()}}' +
+                    '</div>' +
                     '<template v-if="props.user === goal.owner.id">' +
                         '<span class="text-button" v-on:click="props.edit(goal.id)">' +
                             '&#10000;' +
                         '</span>' +
-                        '<span class="text-button" v-on:click="props.remove(goal.id)">' +
-                            '&times;' +
-                        '</span> ' +
                     '</template>' +
+                    '<span class="text-button" v-on:click="props.remove(goal.id)">' +
+                        '&times;' +
+                    '</span> ' +
                 '</div>' +
             '</div>' +
             '<div class="goal-content" v-on:click="onClick">' +

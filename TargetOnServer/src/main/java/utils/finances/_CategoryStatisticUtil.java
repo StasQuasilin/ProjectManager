@@ -9,12 +9,12 @@ import utils.db.hibernate.Hibernator;
 
 import static constants.Keys.CATEGORY;
 
-public class CategoryStatisticUtil {
+public class _CategoryStatisticUtil {
 
     private final Hibernator hibernator = Hibernator.getInstance();
     private final CategoryDAO categoryDAO = daoService.getCategoryDAO();
-    private static final CategoryStatisticUtil instance = new CategoryStatisticUtil();
-    public static CategoryStatisticUtil getInstance() {
+    private static final _CategoryStatisticUtil instance = new _CategoryStatisticUtil();
+    public static _CategoryStatisticUtil getInstance() {
         return instance;
     }
 

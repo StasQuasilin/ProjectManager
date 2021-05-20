@@ -37,4 +37,17 @@ public class GoalMember {
     public void setMember(User member) {
         this.member = member;
     }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
+
+    @Override
+    public String toString() {
+        return "GoalMember{" +
+                "goal=" + goal +
+                ", member=" + member +
+                '}';
+    }
 }

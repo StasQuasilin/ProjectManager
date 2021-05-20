@@ -5,5 +5,5 @@ public enum Pages {
     transactionEdit,
     transactions,
     buys,
-    buys_edit, tree
+    buys_edit, settings, tree
 }

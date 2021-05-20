@@ -100,9 +100,7 @@ public class LoginActivity extends Activity {
 
         final GoogleSignInClient mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-
-        final GoogleSignInClient client = GoogleSignIn.getClient(this, gso);
-        System.out.println(client.getApiOptions().getAccount().toString());
+//        final GoogleSignInClient client = GoogleSignIn.getClient(this, gso);
 
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
 

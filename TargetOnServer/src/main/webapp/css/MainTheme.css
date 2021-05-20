@@ -1,0 +1,9 @@
+body{
+    --main-bg-color: #eef9bf;
+    --main-header-color: #a7e9af;
+    --main-text-color: #75b79e;
+    --secondary-color:#6a8caf;
+}
+*{
+    color: var(--main-text-color, black);
+}

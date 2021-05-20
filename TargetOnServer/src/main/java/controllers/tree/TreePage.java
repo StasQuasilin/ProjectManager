@@ -4,6 +4,7 @@ import constants.ApiLinks;
 import constants.Keys;
 import constants.UrlLinks;
 import controllers.Page;
+import entity.goal.GoalStatus;
 import entity.task.TaskStatus;
 import entity.user.User;
 import subscribe.Subscribe;
@@ -49,9 +50,12 @@ public class TreePage extends Page {
         req.setAttribute(TASK_TIMER, UrlLinks.TASK_TIMER);
         req.setAttribute(GOAL_SUBSCRIBE, Subscribe.goal);
         req.setAttribute(GOAL_EDIT, UrlLinks.GOAL_EDIT);
+        req.setAttribute(GOAL_REMOVE, UrlLinks.GOAL_REMOVE);
+        req.setAttribute(MEMBER_LIST, UrlLinks.GOAL_MEMBERS);
+        req.setAttribute(TYPES, GoalStatus.values());
         req.setAttribute(TREE_SUBSCRIBE, Subscribe.tree);
         req.setAttribute(DEPENDENCY_LIST, ApiLinks.DEPENDENCY_LIST);
-        req.setAttribute(MEMBER_LIST, UrlLinks.GOAL_MEMBERS);
+
         req.setAttribute(RUN_TIMER, ApiLinks.TIMER_START);
         req.setAttribute(TASK_STATUS, ApiLinks.TASK_STATUS);
         req.setAttribute(FILE_LIST, UrlLinks.TASK_FILE_LIST);

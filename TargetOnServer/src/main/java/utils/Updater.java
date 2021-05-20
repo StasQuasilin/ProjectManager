@@ -1,6 +1,8 @@
 package utils;
 
 import entity.RemovePack;
+import entity.goal.Goal;
+import entity.goal.GoalMember;
 import entity.user.User;
 import subscribe.Subscribe;
 import subscribe.Subscriber;
@@ -12,6 +14,7 @@ import utils.json.JsonAble;
 public class Updater {
 
     public void update(Subscribe subscribe, JsonAble jsonAble, User user) {
+        System.out.println("Update " + subscribe + " for " + user);
         Subscriber subscriber = Subscriber.getInstance();
         if (subscriber != null){
             subscriber.send(subscribe, UpdateAction.update, jsonAble, user);
@@ -21,8 +24,15 @@ public class Updater {
     }
 
     public void remove(Subscribe subscribe, int id, User user) {
+        System.out.println("Remove " + subscribe + " for " + user);
         final Subscriber subscriber = Subscriber.getInstance();
         subscriber.send(subscribe, UpdateAction.remove, new RemovePack(id), user);
     }
+
+    public void update(Goal goal) {
+        update(Subscribe.goal, goal, goal.getOwner());
+        for (GoalMember member : goal.getMembers()){
+            update(Subscribe.goal, goal, member.getMember());
+        }
+    }
 }
-;

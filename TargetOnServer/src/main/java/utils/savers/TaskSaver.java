@@ -10,14 +10,14 @@ import utils.Updater;
 import utils.db.dao.daoService;
 import utils.db.dao.goal.GoalDAO;
 import utils.db.dao.tree.TaskDAO;
-import utils.finances.CategoryStatisticUtil;
+import utils.finances._CategoryStatisticUtil;
 
 public class TaskSaver {
 
     private final Updater updater = new Updater();
     private final TaskDAO taskDAO = daoService.getTaskDAO();
     private final GoalDAO goalDAO = daoService.getGoalDAO();
-    private final CategoryStatisticUtil categoryStatisticUtil = new CategoryStatisticUtil();
+    private final _CategoryStatisticUtil categoryStatisticUtil = new _CategoryStatisticUtil();
 
     public void save(Task task){
         taskDAO.saveTask(task);

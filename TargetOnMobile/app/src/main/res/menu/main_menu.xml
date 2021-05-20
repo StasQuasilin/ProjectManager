@@ -5,7 +5,7 @@
     tools:context=".MainActivity">
     <group  android:checkableBehavior="single">
         <item
-            android:id="@+id/goals"
+            android:id="@+id/menu_goals"
             android:title="@string/goals"
             app:showAsAction="never"/>
         <item

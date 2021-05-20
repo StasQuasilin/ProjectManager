@@ -99,6 +99,18 @@
         </td>
     </tr>
     <tr>
+        <td>
+            <span style="font-size: 8pt">
+                <template v-if="list.owner.forename">
+                    {{list.owner.forename}}
+                </template>
+                <template v-if="list.owner.surname">
+                    {{list.owner.surname}}
+                </template>
+            </span>
+        </td>
+    </tr>
+    <tr>
         <td style="text-align: center">
             <button onclick="closeModal()">
                 <fmt:message key="button.cancel"/>

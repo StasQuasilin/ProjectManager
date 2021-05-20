@@ -2,6 +2,7 @@ package controllers.goals;
 
 import constants.UrlLinks;
 import controllers.Page;
+import entity.goal.GoalStatus;
 import subscribe.Subscribe;
 
 import javax.servlet.ServletException;
