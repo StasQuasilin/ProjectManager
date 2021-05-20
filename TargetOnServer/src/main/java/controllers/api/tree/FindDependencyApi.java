@@ -41,7 +41,7 @@ public class FindDependencyApi extends API {
                 final User user = getUser(req);
                 final String key = body.getString(KEY);
                 JSONArray array = new JSONArray();
-                for (Header header : categoryDAO.findCategory(key, user)){
+                for (Header header : categoryDAO.findCategory(key, user, null)){
                     final Task taskByHeader = taskDAO.getTaskByHeader(header);
                     if(!task.equals(taskByHeader)) {
                         boolean add = true;

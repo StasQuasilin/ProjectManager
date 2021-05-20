@@ -119,12 +119,15 @@ input[type=checkbox], input[type=radio]{
     z-index: 10;
 }
 .custom-data-list-item{
-    border-bottom: dashed gray 1px;
-    padding: 4px;
-    font-size: 10pt;
+    border-bottom: dashed var(--main-text-color, gray) 1px;
+    padding: 8px;
+    font-size: 12pt;
+}
+.custom-data-list-item *{
+    background: transparent;
 }
 .custom-data-list-item:hover{
-    background-color: #d0d0d0;
+    background-color: var(--secondary-color, #d0d0d0);
 }
 
 button{

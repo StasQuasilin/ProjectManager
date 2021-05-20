@@ -22,8 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import static constants.Keys.KEY;
-import static constants.Keys.RESULT;
+import static constants.Keys.*;
 
 @WebServlet(ApiLinks.FIND_CATEGORY)
 public class FindCategoryAPI extends API {
@@ -36,20 +35,16 @@ public class FindCategoryAPI extends API {
         final JsonObject body = parseBody(req);
         if (body != null){
             final String key = body.getString(KEY);
+            Header parent = null;
+            if (body.containKey(PARENT)){
+                parent = categoryDAO.getCategory(body.get(PARENT));
+            }
             final User user = getUser(req);
             Answer answer;
             if (user != null){
                 JSONArray array = new JSONArray();
-                for(Header header : categoryDAO.findCategory(key, user)){
+                for(Header header : categoryDAO.findCategory(key, user, parent)){
                     final JSONObject json = header.toJson();
-                    final List<Header> children = titleDAO.getChildren(header);
-                    if(children.size() > 0) {
-                        JSONArray childrenArray = new JSONArray();
-                        for (Header child : children) {
-                            childrenArray.add(child.shortJson());
-                        }
-                        json.put(Keys.CHILDREN, childrenArray);
-                    }
                     array.add(json);
                 }
                 answer = new SuccessAnswer();

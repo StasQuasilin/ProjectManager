@@ -56,7 +56,6 @@ public class Hibernator {
 
                 Path<Date> path = parsePath(root, entry.getKey());
 
-
                 final Object value = entry.getValue();
                 if (entry.getValue() == null || entry.getValue().equals(State.isNull)){
                     predicates[i] = criteriaBuilder.isNull(path);
@@ -120,9 +119,7 @@ public class Hibernator {
 
     private <T> CriteriaQuery<T> getCriteriaQuery(CriteriaBuilder builder, Class<T> tClass, HashMap<String, Object> parameters) {
         CriteriaQuery<T> query = builder.createQuery(tClass);
-
         buildQuery(builder, query, tClass, parameters);
-
         return query;
     }
 

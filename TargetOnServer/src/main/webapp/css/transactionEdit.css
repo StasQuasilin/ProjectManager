@@ -55,3 +55,9 @@
     border: solid gray 1pt;
     padding: 0 4pt;
 }
+.add-to-path{
+    border: dashed var(--secondary-color, gray) 1pt;
+    padding: 0 6pt;
+    float: right;
+    border-radius: 2pt;
+}

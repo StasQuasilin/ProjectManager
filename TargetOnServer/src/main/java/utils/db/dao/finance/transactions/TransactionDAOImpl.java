@@ -6,8 +6,12 @@ import entity.finance.transactions.TransactionPoint;
 import entity.user.User;
 import subscribe.Subscribe;
 import utils.Updater;
+import utils.db.hibernate.DateContainers.LE;
 import utils.db.hibernate.Hibernator;
 
+import java.sql.Date;
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 
 import static constants.Keys.*;
@@ -16,10 +20,13 @@ public class TransactionDAOImpl implements TransactionDAO {
 
     private final Hibernator hibernator = Hibernator.getInstance();
     private final Updater updater = new Updater();
+    private final HashMap<String, Object> args = new HashMap<>();
 
     @Override
     public List<Transaction> getUserTransactions(User user) {
-        return hibernator.query(Transaction.class, OWNER, user, LIMIT);
+        args.put(OWNER, user);
+        args.put(DATE, new LE(Date.valueOf(LocalDate.now().plusMonths(1))));
+        return hibernator.query(Transaction.class, args, LIMIT);
     }
 
     @Override

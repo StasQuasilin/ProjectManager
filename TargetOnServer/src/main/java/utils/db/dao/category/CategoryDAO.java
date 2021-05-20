@@ -12,7 +12,9 @@ import java.util.List;
  * Created by DELL on 10.07.2020.
  */
 public abstract class CategoryDAO {
-    public abstract List<Header> findCategory(String name, User user);
+
+    public abstract List<Header> findCategory(String name, User user, Header parent);
+
     public abstract Header getCategory(Object id);
     public void saveCategory(Category category){
         save(category);

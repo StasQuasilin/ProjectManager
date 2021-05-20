@@ -37,7 +37,6 @@ import static constants.Keys.*;
 @WebServlet(ApiLinks.TRANSACTION_SAVE)
 public class EditTransactionAPI extends API {
 
-
     private final AccountDAO accountDAO = daoService.getAccountDAO();
     private final TransactionSaver transactionSaver = new TransactionSaver();
     private final TransactionDAO transactionDAO = daoService.getTransactionDAO();
@@ -51,6 +50,7 @@ public class EditTransactionAPI extends API {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         JsonObject body = parseBody(req);
         if (body != null){
+            write(resp, SUCCESS_ANSWER);
             System.out.println(body);
             final User user = getUser(req);
             Transaction transaction = transactionDAO.getTransaction(body.get(ID));
@@ -76,10 +76,7 @@ public class EditTransactionAPI extends API {
             System.out.println(body);
             //Transaction Rate
             final float rate = body.getFloat(RATE);
-            System.out.println(rate);
             transaction.setRate(rate);
-
-
 
             //Account from
             Account prevAccountFrom = null;
@@ -138,8 +135,6 @@ public class EditTransactionAPI extends API {
                 transaction.setAmount(amount);
                 body.remove(DETAILS);
             }
-
-            write(resp, SUCCESS_ANSWER);
 
             transactionSaver.save(transaction);
 //            transactionSaver.updateAccounts(transaction);

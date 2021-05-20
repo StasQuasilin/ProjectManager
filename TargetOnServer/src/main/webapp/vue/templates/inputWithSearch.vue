@@ -5,8 +5,10 @@ inputSearch = {
         width:String,
         enable:Boolean,
         show:Array,
-        create:true,
-        additionally:Object
+        create:true
+    },
+    components: {
+        'item-view': itemView
     },
     data:function (){
         return{
@@ -56,18 +58,21 @@ inputSearch = {
                 this.find();
             }
         },
+        reqData:function(input){
+            return {
+                data:input
+            }
+        },
         find:function(){
             this.items = [];
             this.canAdd = false;
             clearTimeout(this.timer);
             let input = this.object.title;
-
             if (input && input.length >= 1) {
                 this.object.id = -1;
                 const self = this;
                 this.timer = setTimeout(function () {
-                    let data = Object.assign({},self.additionally !== null ? self.additionally : {});
-                    data.key = input;
+                    let data = self.reqData(input);
                     PostApi(self.props.findCategory, data, function (a) {
                         // console.log(a);
                         if (a.status === 'success'){
@@ -102,24 +107,17 @@ inputSearch = {
             return typeof this.prefix !== "undefined";
         }
     },
-    template: '<div v-if="object" style="position: relative; display: flex" :style="inputStyle()" v-on:blur="clear">' +
-            '<span v-if="hasPrefix()">' +
-                '{{prefix()}}' +
-            '</span>' +
-            '<input v-model="object.title" :placeholder="placeholder" :disabled="isEnabled()" ' +
-                'v-on:keyup.esc.prevent="clear()" v-on:keyup.enter.prevent="putNew()" ' +
-                    'v-on:keyup="onKeyUp()" onfocus="this.select()">' +
+    template: '<div v-if="object" style="position: relative;" :style="inputStyle()" v-on:blur="clear">' +
+            '<div style="display: flex">' +
+                '<span v-if="hasPrefix()">' +
+                    '{{prefix()}}' +
+                '</span>' +
+                '<input v-model="object.title" :placeholder="placeholder" :disabled="isEnabled()" ' +
+                    'v-on:keyup.esc.prevent="clear()" v-on:keyup.enter.prevent="putNew()" ' +
+                        'v-on:keyup="onKeyUp()" onfocus="this.select()">' +
+            '</div>' +
             '<div class="custom-data-list" v-if="items.length > 0 || canAdd">' +
-                '<div class="custom-data-list-item" v-for="item in items" v-on:click="putValue(item)">' +
-                    '<template v-if="show !== null">' +
-                        '<span v-for="s in show">' +
-                            '{{item[s]}}' +
-                        '</span>' +
-                    '</template>' +
-                    '<span v-else>' +
-                        '{{item}}' +
-                    '</span>' +
-                '</div>' +
+                '<item-view :item="item" :show="show" v-for="item in items" :put="putValue"></item-view>' +
                 '<div v-if="(items.length == 0 || canAdd) && create" v-on:click="putNew()">' +
                     '<span v-if="show != null">' +
                         '+ {{object[show]}}' +

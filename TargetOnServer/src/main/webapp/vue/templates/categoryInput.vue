@@ -21,10 +21,18 @@ categoryInput = {
         // }
     },
     methods:{
+        reqData:function(input){
+            let data = {
+                key:input
+            };
+            if (this.parent){
+                data.parent = this.parent.id
+            }
+            return data;
+        },
         putValue:function (item) {
             if(item.children && item.children.length > 0){
                 this.addPath(item);
-
             } else {
                 this.props.put(Object.assign({path:this.path}, item));
                 this.path = [];
@@ -58,7 +66,6 @@ categoryInput = {
                 this.find();
             }
         },
-
         prefix:function () {
             if(this.path.length > 0) {
                 let values = [];

@@ -10,6 +10,7 @@
 <fmt:setLocale value="${locale}"/>
 <fmt:setBundle basename="messages"/>
 <link rel="stylesheet" href="${context}/css/transactionEdit.css?v=${now}">
+<script src="${context}/vue/templates/categoryInputItem.vue?v=${now}"></script>
 <script src="${context}/vue/templates/inputWithSearch.vue?v=${now}"></script>
 <script src="${context}/vue/templates/categoryInput.vue?v=${now}"></script>
 <script src="${context}/vue/finances/transactions/transactionEdit.vue?v=${now}"></script>
@@ -91,8 +92,8 @@
                     <category-input :object="category" :props="props" :show="['title']" :create="true"></category-input>
                   </div>
                   <span class="text-button">
-                  &checkmark;
-                </span>
+                    &checkmark;
+                  </span>
                   <div class="tips">
                     <div class="tips-content">
                       <p>

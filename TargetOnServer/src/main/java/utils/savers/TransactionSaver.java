@@ -20,7 +20,7 @@ public class TransactionSaver {
     }
 
     public void updateAccounts(Transaction transaction){
-        transactionUtil.updateAccounts(transaction);
+        new Thread(() -> transactionUtil.updateAccounts(transaction)).start();
     }
 
     public void save(TransactionDetail detail) {

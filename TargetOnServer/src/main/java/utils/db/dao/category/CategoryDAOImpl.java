@@ -19,10 +19,13 @@ public class CategoryDAOImpl extends CategoryDAO {
     private final Hibernator hibernator = Hibernator.getInstance();
 
     @Override
-    public List<Header> findCategory(String name, User user) {
+    public List<Header> findCategory(String name, User user, Header parent) {
         final HashMap<String, Object> params = new HashMap<>();
         params.put(OWNER, user);
         params.put(TYPE, new OR(HeaderType.task, HeaderType.category));
+        if (parent != null){
+            params.put(PARENT, parent);
+        }
 
         return hibernator.find(Header.class, params, VALUE, name);
     }
