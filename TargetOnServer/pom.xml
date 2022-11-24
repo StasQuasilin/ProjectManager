@@ -10,7 +10,7 @@
     <packaging>war</packaging>
 
     <properties>
-        <hibenate.version>5.3.7.Final</hibenate.version>
+        <hibenate.version>5.3.20.Final</hibenate.version>
     </properties>
 
     <dependencies>
